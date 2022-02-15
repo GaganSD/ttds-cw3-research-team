@@ -1,0 +1,6 @@
+pandas
+tqdm
+numpy 
+json
+kaggle
+pymongo
