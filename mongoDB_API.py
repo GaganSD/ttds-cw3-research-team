@@ -36,8 +36,8 @@ class MongoDBClient():
             return -1
 
         # rename unique identifier field
-        df.rename(columns={identifier_field_name: "_id"}, inplace = True)
-        df["_id"] = df["_id"].map(lambda x: self.create_unique_identifier(source_identifier, x))
+        df["_id"] = df[identifier_field_name].map(
+            lambda x: self.create_unique_identifier(source_identifier, x) )
         print(df.to_dict('records'))
 
         ret = self.client[db_name][dataset_collec_name].insert_many(df.to_dict('records'))
@@ -51,7 +51,7 @@ class MongoDBClient():
         raise NotImplementedError
 
     def create_unique_identifier(self, source_name, ori_ui):
-        return str(source_name) + '-' + str(source_name)
+        return str(source_name) + '-' + str(ori_ui)
 
 if __name__ == "__main__":    
     client = MongoDBClient()
@@ -59,5 +59,5 @@ if __name__ == "__main__":
     # dict_ = dataset_df_.to_dict('records')
     print(dataset_df_.head())
     print(list(dataset_df_.columns))
-    client.insert_dataset_data(dataset_df_, "test_file","dataset_slug" )
+    client.insert_dataset_data(dataset_df_, "test_file", "dataset_slug")
 
