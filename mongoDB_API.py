@@ -23,7 +23,14 @@ class MongoDBClient():
             raise
         pass
         
+
     # TODO Avoid repeat data from different source (can be removed later)
+
+    # Insert_dataset_data
+    # df: The data to be inserted. Type: pandas.Dataframe
+    # source_identifier: name of the source, e.g. "Kaggle", "arvix". Type:string
+    # identifier_field_name: name of the field of identifier in the df, could be the "url", or "title"
+    #                   should be unique for each datapoint, better be breif. Type:string
     def insert_dataset_data(self, df, source_identifier, identifier_field_name):
         # check fields
         missing_field = list()
@@ -38,10 +45,11 @@ class MongoDBClient():
         # rename unique identifier field
         df["_id"] = df[identifier_field_name].map(
             lambda x: self.create_unique_identifier(source_identifier, x) )
+
         total_num = df.shape[0]
         error_num = 0
         try:
-            ret = self.client[db_name][dataset_collec_name].insert_many(df.to_dict('records'), ordered=False)
+            self.client[db_name][dataset_collec_name].insert_many(df.to_dict('records'), ordered=False)
         except errors.BulkWriteError as e:
             error_num = len(e.details['writeErrors'])
             panic_list = list(filter(lambda x: x['code'] != 11000, e.details['writeErrors']))
@@ -59,10 +67,15 @@ class MongoDBClient():
     def create_unique_identifier(self, source_name, ori_ui):
         return str(source_name) + '-' + str(ori_ui)
 
-if __name__ == "__main__":    
+
+# example of using API
+if __name__ == "__main__": 
+
+    # create a client instance
     client = MongoDBClient()
     dataset_df_ = pd.read_csv('kaggle_dataset_df_page500.csv')
-    # dict_ = dataset_df_.to_dict('records')
     print(dataset_df_.head())
+
+    # insert_dataset_data
     success_num = client.insert_dataset_data(dataset_df_, "kaggle", "dataset_slug")
     print(success_num)
