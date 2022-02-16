@@ -1,4 +1,4 @@
-from pymongo import MongoClient
+from pymongo import MongoClient, errors
 from pymongo.errors import ConnectionFailure
 import pymongo
 import pandas as pd
@@ -14,7 +14,7 @@ dataset_fields = ['title', 'subtitle', 'keywords', 'description', '#downloads',
 
 class MongoDBClient():
     def __init__(self):
-        GCP_CONNECTION_STRING_INTERNAL = "mongodb://10.138.0.3:27017"
+        GCP_CONNECTION_STRING_INTERNAL = "mongodb://10.154.0.4:27017"
         self.client = MongoClient(GCP_CONNECTION_STRING_INTERNAL)
         try:
             self.client.admin.command('ping')
@@ -38,11 +38,17 @@ class MongoDBClient():
         # rename unique identifier field
         df["_id"] = df[identifier_field_name].map(
             lambda x: self.create_unique_identifier(source_identifier, x) )
-        print(df.to_dict('records'))
-
-        ret = self.client[db_name][dataset_collec_name].insert_many(df.to_dict('records'))
-        print(ret.inserted_ids, ret.acknowledged)
-        return len(ret.inserted_ids)
+        total_num = df.shape[0]
+        error_num = 0
+        try:
+            ret = self.client[db_name][dataset_collec_name].insert_many(df.to_dict('records'), ordered=False)
+        except errors.BulkWriteError as e:
+            error_num = len(e.details['writeErrors'])
+            panic_list = list(filter(lambda x: x['code'] != 11000, e.details['writeErrors']))
+            if len(panic_list) > 0:
+                print(f"these are not duplicate errors {panic_list}")
+            print(f"Errors: {error_num - len(panic_list)} data duplicated, {len(panic_list)} data with other errors.")
+        return total_num-error_num
 
     def get_data(self):
         raise NotImplementedError
@@ -55,9 +61,8 @@ class MongoDBClient():
 
 if __name__ == "__main__":    
     client = MongoDBClient()
-    dataset_df_ = pd.read_csv('test.csv')
+    dataset_df_ = pd.read_csv('kaggle_dataset_df_page500.csv')
     # dict_ = dataset_df_.to_dict('records')
     print(dataset_df_.head())
-    print(list(dataset_df_.columns))
-    client.insert_dataset_data(dataset_df_, "test_file", "dataset_slug")
-
+    success_num = client.insert_dataset_data(dataset_df_, "kaggle", "dataset_slug")
+    print(success_num)
