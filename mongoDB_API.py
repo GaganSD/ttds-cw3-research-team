@@ -27,9 +27,12 @@ fields_name["dataset"] = ['title', 'description']
 
 class MongoDBClient():
     def __init__(self):
-        CONNECTION_STRING_INTERNAL = "mongodb://127.0.0.1:27017"
-        # GCP_CONNECTION_STRING_INTERNAL = "mongodb://10.154.0.4:27017"
-        self.client = MongoClient(CONNECTION_STRING_INTERNAL)
+        # CONNECTION_STRING_INTERNAL = "mongodb://127.0.0.1:27017" # for test
+        GCP_CONNECTION_STRING_INTERNAL = "mongodb://10.154.0.4:27017"
+        self.client = MongoClient('10.154.0.4:27017',
+                     username='team',
+                     password='TTDS-CourseWork_3',
+                     authSource='admin')
         try:
             self.client.admin.command('ping')
         except ConnectionFailure:
@@ -138,7 +141,7 @@ if __name__ == "__main__":
     print(dataset_df_.head())
 
     # insert_dataset_data
-    # success_num = client.insert_data(dataset_df_, "dataset", "kaggle", "dataset_slug")
-    # print("# data inserted ", success_num)
+    success_num = client.insert_data(dataset_df_, "dataset", "kaggle", "dataset_slug")
+    print("# data inserted ", success_num)
 
     client.update_data("dataset", "kaggle", "my-datase", {"subtitle": "new new subtitle"})
