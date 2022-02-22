@@ -1,0 +1,17 @@
+.App {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+}
+/* 
+html, body, #app, #app>div {
+  height: 100%
+} */
+
+
+
+.SearchOptions {
+  display: flex;
+  justify-content: center;
+}
