@@ -3,6 +3,7 @@ from pymongo.errors import ConnectionFailure
 import pymongo
 import pandas as pd
 import logging
+from tqdm import tqdm
 
 db_name = "TTDS"
 collec_name = dict()
@@ -26,13 +27,23 @@ fields_name["paper"] = ['title', 'abstract', 'text']
 fields_name["dataset"] = ['title', 'description']
 
 class MongoDBClient():
-    def __init__(self):
+
+    # init
+    ## Input
+    # IP: The ip of the mongodb instance. can be internal, or external. Type: string
+    def __init__(self, IP = "10.154.0.4"):
         # CONNECTION_STRING_INTERNAL = "mongodb://127.0.0.1:27017" # for test
-        GCP_CONNECTION_STRING_INTERNAL = "mongodb://10.154.0.4:27017"
-        self.client = MongoClient('10.154.0.4:27017',
+        EXTERNAL_IP = "34.142.18.57"
+        INTERNAL_IP = "10.154.0.4"
+
+        self.client = MongoClient(IP + ':27017',
                      username='team',
                      password='TTDS-CourseWork_3',
                      authSource='admin')
+
+        self.logger = logging.getLogger('mongoDB-API')
+        self.logger.setLevel(logging.DEBUG)
+
         try:
             self.client.admin.command('ping')
         except ConnectionFailure:
@@ -40,9 +51,6 @@ class MongoDBClient():
             raise
         pass
         
-
-    # TODO Avoid repeat data from different source (can be removed later)
-
     # insert_data
     ## Input
     # df: The data to be inserted. Type: pandas.Dataframe
@@ -50,12 +58,15 @@ class MongoDBClient():
     # source_identifier: name of the source, e.g. "Kaggle", "arvix". Type:string
     # identifier_field_name: name of the field of identifier in the df, could be the "url", or "title"
     #                   should be unique for each datapoint, better be breif. Type:string
+    # overwrite: whether to overwrite if doc id duplicated. default Flase. Type: bool
     #
     ## Output(Return)
-    # number of documents successfully inserted
-    def insert_data(self, df, data_type, source_identifier, identifier_field_name):
+    # number of documents successfully inserted / overwrited
+    def insert_data(self, df, data_type, source_identifier, identifier_field_name, overwrite = False) -> int:
         if not self.check_data_type(data_type):
             return -1
+
+        cur_table = self.client[db_name][collec_name[data_type]]
 
         # check fields
         missing_field = list()
@@ -71,56 +82,85 @@ class MongoDBClient():
         df["_id"] = df[identifier_field_name].map(
             lambda x: self.create_unique_identifier(source_identifier, x) )
         df["source"] = source_identifier
-        # print(df)
 
         total_num = df.shape[0]
         error_num = 0
+
         try:
-            self.client[db_name][collec_name[data_type]].insert_many(df.to_dict('records'), ordered=False)
+            cur_table.insert_many(df.to_dict('records'), ordered=False)
         except errors.BulkWriteError as e:
             error_num = len(e.details['writeErrors'])
             panic_list = list(filter(lambda x: x['code'] != 11000, e.details['writeErrors']))
             if len(panic_list) > 0:
                 logging.warning(f"these are not duplicate errors {panic_list}")
-            logging.info(f"Errors: {error_num - len(panic_list)} data duplicated, {len(panic_list)} data with other errors.")
-        
+            logging.warning(f"Errors: {error_num - len(panic_list)} data duplicated, {len(panic_list)} data with other errors.")
+            if overwrite:
+                for error in e.details['writeErrors']:
+                    if error['code'] != 11000:
+                        continue
+                    cur_table.find_one_and_update(filter = {"_id":error['keyValue']['_id']},
+                        update = {'$set':error['op']}, upsert=True)
+                    error_num -= 1
+
         return total_num-error_num
 
 
-    def get_data(self, data_type, source, identifier, fields):
+    # get_data
+    ## Input
+    # data_type: The type of data. Should either be "paper" or "dataset". Type:string
+    # filter: Filter for the data you want. e.g. { "source": "kaggle" }. Type: python dictionary
+    # fields: Fields of information you want. e.g. [ "title", "text", "description" ]. Type: python list
+    #
+    ## Output(Return)
+    # pymongo.cursor.Cursor: a mongodb cursor, USE IN THIS WAY ONLY:
+    #           for doc in cursor:
+    #               print(doc)
+    def get_data(self, data_type, filter, fields)-> pymongo.cursor.Cursor:
         if not self.check_data_type(data_type):
             return -1
 
         cur_table = self.client[db_name][collec_name[data_type]]
-        update = dict()
 
-        res = cur_table.find(filter = {"_id":self.create_unique_identifier(source, identifier)},
-                            projection = fields)
-        
-        if len(res) == 0:
-            logging.warning("No document found in database for " + self.create_unique_identifier(source, identifier))
-        else:
-            logging.info(f"Found {len(res)} documents.")
+        logging.info("start searching...")
 
-        return res
+        cursor = cur_table.find(filter = filter, projection = fields)
+        num = cur_table.count_documents(filter)
 
+        try:
+            cursor[0]
+        except IndexError as e:
+            logging.warning("can't find documents")
+            
+        return cursor, num
 
-    def update_data(self, data_type, source, identifier, update_content):
+    # update_data
+    ## Input
+    # data_type: The type of data. Should either be "paper" or "dataset". Type:string
+    # source: name of the source, e.g. "Kaggle", "arvix". Type:string
+    # identifier: identifier you used before. e.g. "0704.0001" (if from arxiv). Type:string  
+    # update_content: content you want to set. Type:python dictionary
+    #
+    ## Output(Return)
+    # bool: flag of successful update
+    def update_data(self, data_type, source, identifier, update_content) -> bool:
         if not self.check_data_type(data_type):
             return -1
 
         cur_table = self.client[db_name][collec_name[data_type]]
-        update = dict()
 
-        res = cur_table.find_one_and_update(filter = {"_id":self.create_unique_identifier(source, identifier)},
-                                            update = {'$set':update_content}, upsert=False)
-
+        res = cur_table.find_one({"_id":self.create_unique_identifier(source, identifier)})
         if res == None:
             logging.warning("No document found in database for " + self.create_unique_identifier(source, identifier))
             return -1
+
+        cur_table.find_one_and_update(filter = {"_id":self.create_unique_identifier(source, identifier)},
+                                            update = {'$set':update_content}, upsert=False)
+
+        if res.modified_count == 0:
+            logging.warning("Update failed. " + self.create_unique_identifier(source, identifier))
+            return -1
         else:
             return 1
-
 
     def create_unique_identifier(self, source_name, ori_ui):
         return str(source_name) + '-' + str(ori_ui)
@@ -132,16 +172,47 @@ class MongoDBClient():
         else :
             return True
 
+    def duplicate_removal(self):
+        data_type = 'paper'
+        cur_table = self.client[db_name][collec_name[data_type]]
+
+        cursor = cur_table.find({'source':'arxiv'})
+        t = tqdm(total=2018090)
+        remove_cnt = 0
+        print("start!")
+        for doc in cursor:
+            cur_url = doc['url']
+            num = cur_table.count_documents({'url':cur_url})
+            remove_cnt += num - 1
+            if num > 1:
+                cur_table.delete_many({'url':cur_url})
+                cur_table.insert_one(doc)
+
+            t.update()
+            
+        t.close()
+        print("removed ", remove_cnt)
+
 # example of using API
 if __name__ == "__main__": 
-
     # create a client instance
-    client = MongoDBClient()
-    dataset_df_ = pd.read_csv('test.csv')
-    print(dataset_df_.head())
+    client = MongoDBClient(IP = "34.142.18.57")
+    # dataset_df_ = pd.read_csv('test.csv')
+    # print(dataset_df_.head())
 
     # insert_dataset_data
-    success_num = client.insert_data(dataset_df_, "dataset", "kaggle", "dataset_slug")
-    print("# data inserted ", success_num)
+    # insert_num = client.insert_data(dataset_df_, "dataset", "kaggle", "dataset_slug", overwrite=True)
 
-    client.update_data("dataset", "kaggle", "my-datase", {"subtitle": "new new subtitle"})
+    # update data
+    # client.update_data("dataset", "kaggle", "my-datase", {"subtitle": "new subtitle"})
+
+
+    # get cursor for documents
+    # cursor, num = client.get_data("dataset", {'source':'kaggle'}, ['title', 'description', 'text'])
+    # # print(num)
+    # for doc in cursor:
+    #     print(doc)
+
+
+    # duplicate_removal
+    client.duplicate_removal()
