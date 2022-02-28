@@ -1,0 +1,7 @@
+pandas
+tqdm
+numpy 
+kaggle
+pymongo
+jupyter
+logging
