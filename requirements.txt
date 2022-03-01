@@ -4,3 +4,4 @@ numpy
 kaggle
 pymongo
 jupyter
+logging
