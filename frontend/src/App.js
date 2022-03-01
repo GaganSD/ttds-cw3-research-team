@@ -21,7 +21,9 @@ function App() {
       </div>
       <div className='SearchOptions'>
         <SearchField/>
-        <Options/>
+        <div className='Options'>
+          <Options/>
+        </div>
       </div>
       <SearchButton/>
     </div>

@@ -17,3 +17,8 @@ html, body, #app, #app>div {
   flex-direction: column;
 
 }
+
+.Options {
+  margin-top: 50px;
+  margin-bottom: 30px;
+}
