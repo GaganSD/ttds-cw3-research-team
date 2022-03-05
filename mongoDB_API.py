@@ -27,14 +27,20 @@ fields_name["paper"] = ['title', 'abstract', 'text']
 fields_name["dataset"] = ['title', 'description']
 
 class MongoDBClient():
+    def __init__(self, IP: str="10.154.0.4"):
+        """
+        The initialation function of MongoDB client.
 
-    # init
-    ## Input
-    # IP: The ip of the mongodb instance. can be internal, or external. Type: string
-    def __init__(self, IP = "10.154.0.4"):
+        Parameters:
+            IP - The ip of the mongodb instance. Could be "10.154.0.4"(internal on GCP, default) 
+                    or "34.142.18.57"(external)
+
+        Raises:
+            ConnectionFailure - raises an exception
+        """
         # CONNECTION_STRING_INTERNAL = "mongodb://127.0.0.1:27017" # for test
-        EXTERNAL_IP = "34.142.18.57"
-        INTERNAL_IP = "10.154.0.4"
+        # EXTERNAL_IP = "34.142.18.57"
+        # INTERNAL_IP = "10.154.0.4"
 
         self.client = MongoClient(IP + ':27017',
                      username='team',
@@ -43,26 +49,32 @@ class MongoDBClient():
 
         self.logger = logging.getLogger('mongoDB-API')
         self.logger.setLevel(logging.DEBUG)
+        self.success = True
 
         try:
             self.client.admin.command('ping')
         except ConnectionFailure:
-            print("Server not available")
+            logging.error("Can't connect to database server.")
+            self.success = False
             raise
         pass
         
-    # insert_data
-    ## Input
-    # df: The data to be inserted. Type: pandas.Dataframe
-    # data_type: The type of data. Should either be "paper" or "dataset". Type:string
-    # source_identifier: name of the source, e.g. "Kaggle", "arvix". Type:string
-    # identifier_field_name: name of the field of identifier in the df, could be the "url", or "title"
-    #                   should be unique for each datapoint, better be breif. Type:string
-    # overwrite: whether to overwrite if doc id duplicated. default Flase. Type: bool
-    #
-    ## Output(Return)
-    # number of documents successfully inserted / overwrited
-    def insert_data(self, df, data_type, source_identifier, identifier_field_name, overwrite = False) -> int:
+    def insert_data(self, df: pd.DataFrame , data_type: str, source_identifier: str, 
+                        identifier_field_name: str, overwrite: bool = False):
+        """
+        The method to insert data.
+
+        Parameters:
+            df - The data to be inserted.
+            data_type - The type of data. Should either be "paper" or "dataset".
+            source_identifier - name of the source, e.g. "Kaggle", "arvix".
+            identifier_field_name - name of the field of identifier in the df, could be the "url", or "title"
+            overwrite - whether to overwrite if doc id duplicated. default Flase.
+
+        Return:
+            number of documents successfully inserted / overwrited
+        """
+
         if not self.check_data_type(data_type):
             return -1
 
@@ -105,17 +117,21 @@ class MongoDBClient():
         return total_num-error_num
 
 
-    # get_data
-    ## Input
-    # data_type: The type of data. Should either be "paper" or "dataset". Type:string
-    # filter: Filter for the data you want. e.g. { "source": "kaggle" }. Type: python dictionary
-    # fields: Fields of information you want. e.g. [ "title", "text", "description" ]. Type: python list
-    #
-    ## Output(Return)
-    # pymongo.cursor.Cursor: a mongodb cursor, USE IN THIS WAY ONLY:
-    #           for doc in cursor:
-    #               print(doc)
-    def get_data(self, data_type, filter, fields)-> pymongo.cursor.Cursor:
+    def get_data(self, data_type: str, filter: dict, fields: list):
+        """
+        The method to get a pymongo data cursor.
+
+        Parameters:
+            data_type - The type of data. Should either be "paper" or "dataset".
+            filter - Filter for the data you want. e.g. { "source": "kaggle" }.
+            fields -  Fields of information you want. e.g. [ "title", "text", "description" ].
+
+        Returns:
+            a mongodb cursor. Type: pymongo.cursor.Cursor
+            the cursor can only be iterated in the following way:
+                for doc in cursor:
+            Don't use index or len() method.
+        """
         if not self.check_data_type(data_type):
             return -1
 
@@ -133,34 +149,55 @@ class MongoDBClient():
             
         return cursor, num
 
-    # update_data
-    ## Input
-    # data_type: The type of data. Should either be "paper" or "dataset". Type:string
-    # source: name of the source, e.g. "Kaggle", "arvix". Type:string
-    # identifier: identifier you used before. e.g. "0704.0001" (if from arxiv). Type:string  
-    # update_content: content you want to set. Type:python dictionary
-    #
-    ## Output(Return)
-    # bool: flag of successful update
-    def update_data(self, data_type, source, identifier, update_content) -> bool:
+
+    def update_data(self, data_type: str, source: str, identifier: str, update_content: dict):
+        """
+        The method to update a certain piece of data
+
+        Parameters:
+            data_type - The type of data. Should either be "paper" or "dataset". Type:string
+            source - name of the source, e.g. "Kaggle", "arvix". Type:string
+            identifier - identifier you used before. e.g. "0704.0001" (if from arxiv). Type:string  
+            update_content - content you want to set. Type:python dictionary
+
+        Returns:
+            A boolean value suggesting whether the update successed. 
+        """
         if not self.check_data_type(data_type):
-            return -1
+            return False
 
         cur_table = self.client[db_name][collec_name[data_type]]
 
         res = cur_table.find_one({"_id":self.create_unique_identifier(source, identifier)})
         if res == None:
             logging.warning("No document found in database for " + self.create_unique_identifier(source, identifier))
-            return -1
+            return False
 
         cur_table.find_one_and_update(filter = {"_id":self.create_unique_identifier(source, identifier)},
                                             update = {'$set':update_content}, upsert=False)
 
         if res.modified_count == 0:
             logging.warning("Update failed. " + self.create_unique_identifier(source, identifier))
-            return -1
+            return False
         else:
-            return 1
+            return True
+
+
+    def update_index(self, term: str, update_list: list):
+        """
+        The method to update the index content of a term
+        WARNING: DO OVERWRITE at [term][doc_id] level. (pos and len)
+
+        Parameters:
+            term - The term to be updated.
+            doc_dict - The content to be updated. e.g. {doc_id: {"pos":[], "len":X}}
+        """
+        self.client[db_name]["index"].find_one_and_update(
+                    filter = {"_id":term}, 
+                    update = {'$inc':{"doc_count" : len(update_list)},
+                            '$push':{ "docs" : {'$each' : update_list}} 
+                             }, 
+                    upsert=True)
 
     def create_unique_identifier(self, source_name, ori_ui):
         return str(source_name) + '-' + str(ori_ui)
@@ -193,21 +230,22 @@ class MongoDBClient():
         t.close()
         print("removed ", remove_cnt)
 
+
 # example of using API
 if __name__ == "__main__": 
     # create a client instance
     client = MongoDBClient(IP = "34.142.18.57")
-    # dataset_df_ = pd.read_csv('test.csv')
-    # print(dataset_df_.head())
+    dataset_df_ = pd.read_csv('kaggle_dataset_df_page500.csv')
+    print(dataset_df_.head())
 
     # insert_dataset_data
-    # insert_num = client.insert_data(dataset_df_, "dataset", "kaggle", "dataset_slug", overwrite=True)
+    insert_num = client.insert_data(dataset_df_, "dataset", "kaggle", "dataset_slug", overwrite=True)
 
-    # update data
+    # # update data
     # client.update_data("dataset", "kaggle", "my-datase", {"subtitle": "new subtitle"})
 
 
-    # get cursor for documents
+    # # get cursor for documents
     # cursor, num = client.get_data("dataset", {'source':'kaggle'}, ['title', 'description', 'text'])
     # # print(num)
     # for doc in cursor:
@@ -215,4 +253,4 @@ if __name__ == "__main__":
 
 
     # duplicate_removal
-    client.duplicate_removal()
+    # client.duplicate_removal()
