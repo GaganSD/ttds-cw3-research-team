@@ -3,6 +3,7 @@ import sys
 import os
 import nltk
 import string
+import html
 
 from nltk.stem import PorterStemmer
 from nltk.corpus import stopwords
@@ -39,6 +40,7 @@ def preprocess(string, stemming=True, stop=True):
     '''This functioon takes a string of text as an argument, calls the "tokenize" function,
     removes the stop words, then calls the "stem" function to stem the filtered text
     it returns a list of all the preprocessed tokens '''
+    string = html.unescape(string)
     string = re.sub("[\<].*?[\>]", "", string).replace("\n", " ").replace("\t", " ")
     tokenized = tokenize(string)
     filtered = [term.lower() for term in tokenized if term not in stop_words or not stop]
