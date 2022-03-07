@@ -121,7 +121,8 @@ class MongoDBClient():
         return total_num-error_num
 
 
-    def get_data(self, data_type: str, filter: dict, fields: list):
+    def get_data(self, data_type: str, filter: dict, fields: list, skip: int = 0, 
+                    limit:int = 0):
         """
         The method to get a pymongo data cursor.
 
@@ -129,6 +130,8 @@ class MongoDBClient():
             data_type - The type of data. Should either be "paper" or "dataset".
             filter - Filter for the data you want. e.g. { "source": "kaggle" }.
             fields -  Fields of information you want. e.g. [ "title", "text", "description" ].
+            skip - start point, or docs to be skip at begining. default 0
+            limit - max size of return result. default 0 (which means no limit)
 
         Returns:
             a mongodb cursor. Type: pymongo.cursor.Cursor
@@ -141,17 +144,16 @@ class MongoDBClient():
 
         cur_table = self.client[db_name][collec_name[data_type]]
 
-        logging.info("start searching...")
-
-        cursor = cur_table.find(filter = filter, projection = fields)
-        num = cur_table.count_documents(filter)
+        cursor = cur_table.find(filter = filter, projection = fields, skip = skip, 
+                                    limit = limit)
+        # num = cur_table.count_documents(filter)
 
         try:
             cursor[0]
         except IndexError as e:
             logging.warning("can't find documents")
             
-        return cursor, num
+        return cursor
 
 
     def update_data(self, data_type: str, source: str, identifier: str, update_content: dict):
@@ -194,7 +196,7 @@ class MongoDBClient():
 
         Parameters:
             term - The term to be updated.
-            doc_dict - The content to be updated. e.g. {doc_id: {"pos":[], "len":X}}
+            update_list - The content to be updated. e.g. {doc_id: {"pos":[], "len":X}}
         """
 
         cur_table = self.client[db_name]["index"]
@@ -244,7 +246,6 @@ class MongoDBClient():
 
         Return:
             ans : the list of docs
-            n : the number of docs
         """
         cur_table = self.client[db_name]["index"]
         hq = cur_table.find_one({"_id": term})
@@ -295,7 +296,7 @@ if __name__ == "__main__":
     # dataset_df_ = pd.read_csv('kaggle_dataset_df_page500.csv')
     # print(dataset_df_.head())
 
-    # # insert_dataset_data
+    # # # insert_dataset_data
     # insert_num = client.insert_data(dataset_df_, "dataset", "kaggle", "dataset_slug", overwrite=True)
 
     # # update data
@@ -311,3 +312,10 @@ if __name__ == "__main__":
 
     # duplicate_removal
     # client.duplicate_removal()
+
+    # cursor = client.get_data("paper", {}, [], 3, 100)
+    # for doc in cursor:
+    #     print(doc)
+
+    # res = client.get_doc_from_index("data")
+    # print(len(res), res[100])
