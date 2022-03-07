@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+from math import ceil
 import os
 import sys
 import json
@@ -11,6 +12,9 @@ from mongoDB_API import MongoDBClient
 import argparse
 import logging
 from collections import defaultdict
+
+from concurrent.futures import ThreadPoolExecutor
+import multiprocessing
 
 from tqdm import tqdm
 
@@ -35,9 +39,10 @@ class IndexGenerator:
         self.activate_stop = activate_stop
         self.start = start_index
         self.local_dataset = local_dataset
-        self.client = MongoDBClient("34.142.18.57")
+        self.client = MongoDBClient("127.0.0.1")
         
         self.temp = dict()
+
     
     def run_indexing(self):
         """ This function gets the sentences from db and updates the inverted index in db by iterating the sentences.
@@ -47,26 +52,30 @@ class IndexGenerator:
             if not self.client.success:
                 return
 
-            cnt = 0
-            cursor, num = self.client.get_data("dataset", {}, ['title', 'description', 'text'])
-            t = tqdm(total=num)
+            chunk_size = 100000
+            chunk_num = ceil(23254165/chunk_size)
+            for i in tqdm(range(chunk_num)):
+                if i < self.start:
+                    continue
+                executor = ThreadPoolExecutor()
 
-            for doc in cursor:
-                # print(doc["_id"])
-                text = doc.get('title', "") + ' '
-                text += str(doc.get('subtitle', "")) + ' ' 
-                text += str(doc.get('description', "")) + ' ' 
-                text += str(doc.get('abstract', "")) + ' ' 
-                text += str(doc.get('text', ""))
-                self.__load_tempfile(doc.get('_id'), text)
-                t.update()
-                cnt += 1
-                if cnt % 100000 == 0:
-                    self.__save_db()
-            if len(self.temp) > 0:
+                # logger.info("processing chunk %i / %i", i, chunk_num)
+                cursor= self.client.get_data("dataset", {}, ['title', 'abstract', 'text'], 
+                                i*chunk_size, chunk_size)
+                
+                m = multiprocessing.Manager()
+                lock = m.Lock()
+
+                for doc in cursor:
+                    text = doc.get('title', "") + ' ' 
+                    text += str(doc.get('abstract', "")) + ' ' 
+                    text += str(doc.get('text', ""))
+                    id = doc.get('_id')
+                    executor.submit(self.__load_tempfile, id, text, lock)
+
+                executor.shutdown(wait=True)
+                # logger.info("saving chunk to db %i / %i", i, chunk_num)
                 self.__save_db()
-
-            t.close()
 
         else:
             for i in range(self.local_dataset.shape[0]):
@@ -76,7 +85,7 @@ class IndexGenerator:
             self.__save_pickle('last')
             
 
-    def __load_tempfile(self, ds_id, sentence):
+    def __load_tempfile(self, ds_id, sentence, lock):
         preprocessed = preprocessing.preprocess(sentence, stemming=self.activate_stemming, stop=self.activate_stop)
         preprocessed = list(filter(None, preprocessed))
 
@@ -84,18 +93,18 @@ class IndexGenerator:
         
         for term in set(preprocessed):
             positions = [n for n,item in enumerate(preprocessed) if item==term]
-            self.temp[term] = self.temp.get(term, {
-                'term': term,
-                'doc_count': 0,
-                'docs': list()
-            })
-            self.temp[term]['doc_count'] += 1
-            self.temp[term]['docs'].append({
-                        'id': ds_id,
-                        'len': word_count,
-                        'pos': positions
-                    })
-                    
+            with lock:
+                self.temp[term] = self.temp.get(term, {
+                    'term': term,
+                    'doc_count': 0,
+                    'docs': list()
+                })
+                self.temp[term]['doc_count'] += 1
+                self.temp[term]['docs'].append({
+                            'id': ds_id,
+                            'len': word_count,
+                            'pos': positions
+                        })
 
     def __save_pickle(self, name):
         with open(name + '.pickle', 'wb') as handle:
@@ -103,8 +112,10 @@ class IndexGenerator:
         self.temp.clear()
 
     def __save_db(self):
+        executor = ThreadPoolExecutor()
         for term, content in tqdm(self.temp.items()):
-            self.client.update_index(term, content['docs']);
+            executor.submit(self.client.update_index, term, content['docs'])
+        executor.shutdown(wait=True)
         self.temp.clear()
 
 def run_with_arguments(stem, stop, start, local_dataset=None):
@@ -115,11 +126,13 @@ def run_with_arguments(stem, stop, start, local_dataset=None):
         indexGen = IndexGenerator(activate_stop=stop, activate_stemming=stem, start_index=start, local_dataset= df)
     indexGen.run_indexing()
 
-parser = argparse.ArgumentParser(description='Inverted Index Generator')
-parser.add_argument('--stemming', nargs="?", type=str, default='True', help='Activate stemming')
-parser.add_argument('--remove_stopwords', nargs="?", type=str, default='True', help='Remove stopwords')
-parser.add_argument('--start', nargs="?", type=int, default=0, help='Start batch index')
-parser.add_argument('--local_dataset', type=str, default=True, help='Local dataset path')
-args = parser.parse_args()
 
-run_with_arguments(eval(args.stemming), eval(args.remove_stopwords), args.start)
+if __name__ == '__main__': 
+    parser = argparse.ArgumentParser(description='Inverted Index Generator')
+    parser.add_argument('--stemming', nargs="?", type=str, default='True', help='Activate stemming')
+    parser.add_argument('--remove_stopwords', nargs="?", type=str, default='True', help='Remove stopwords')
+    parser.add_argument('--start', nargs="?", type=int, default=0, help='Start batch index')
+    parser.add_argument('--local_dataset', type=str, default=True, help='Local dataset path')
+    args = parser.parse_args()
+
+    run_with_arguments(eval(args.stemming), eval(args.remove_stopwords), args.start)
