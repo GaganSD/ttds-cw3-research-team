@@ -1,0 +1,289 @@
+title,subtitle,description,Source
+SemEval 2014 Task 4: AspectBasedSentimentAnalysis,SemEval-2014 ABSA Task is based on laptop and restaurant reviews,"Copied from [https://alt.qcri.org/semeval2014/task4/#](https://alt.qcri.org/semeval2014/task4/#), all credits to respective authors. 
+# SemEval-2014 Task 4
+## Task Description: Aspect Based Sentiment Analysis (ABSA)
+ 
+
+Sentiment analysis is increasingly viewed as a vital task both from an academic and a commercial standpoint. The majority of current approaches, however, attempt to detect the overall polarity of a sentence, paragraph, or text span, regardless of the entities mentioned (e.g., laptops, restaurants) and their aspects (e.g., battery, screen; food, service). By contrast, this task is concerned with aspect based sentiment analysis (ABSA), where the goal is to identify the aspects of given target entities and the sentiment expressed towards each aspect. Datasets consisting of customer reviews with human-authored annotations identifying the mentioned aspects of the target entities and the sentiment polarity of each aspect will be provided.
+
+ 
+
+In particular, the task consists of the following subtasks:
+
+
+### Subtask 1: Aspect term extraction
+
+Given a set of sentences with pre-identified entities (e.g., restaurants), identify the aspect terms present in the sentence and return a list containing all the distinct aspect terms. An aspect term names a particular aspect of the target entity.
+
+ 
+
+For example, ""I liked the service and the staff, but not the food”, “The food was nothing much, but I loved the staff”. Multi-word aspect terms (e.g., “hard disk”) should be treated as single terms (e.g., in “The hard disk is very noisy” the only aspect term is “hard disk”).
+
+### Subtask 2: Aspect term polarity
+
+For a given set of aspect terms within a sentence, determine whether the polarity of each aspect term is positive, negative, neutral or conflict (i.e., both positive and negative).
+
+ 
+
+For example:
+
+“I loved their fajitas” → {fajitas: positive}
+“I hated their fajitas, but their salads were great” → {fajitas: negative, salads: positive}
+“The fajitas are their first plate” → {fajitas: neutral}
+“The fajitas were great to taste, but not to see” → {fajitas: conflict}
+
+### Subtask 3: Aspect category detection
+
+Given a predefined set of aspect categories (e.g., price, food), identify the aspect categories discussed in a given sentence. Aspect categories are typically coarser than the aspect terms of Subtask 1, and they do not necessarily occur as terms in the given sentence.
+
+ 
+For example, given the set of aspect categories {food, service, price, ambience, anecdotes/miscellaneous}:
+
+“The restaurant was too expensive”  → {price}
+“The restaurant was expensive, but the menu was great” → {price, food}
+
+### Subtask 4: Aspect category polarity
+
+Given a set of pre-identified aspect categories (e.g., {food, price}), determine the polarity (positive, negative, neutral or conflict) of each aspect category.
+
+ 
+
+For example:
+
+“The restaurant was too expensive” → {price: negative}
+“The restaurant was expensive, but the menu was great” → {price: negative, food: positive}
+
+ ---
+
+### Datasets:
+
+Two domain-specific datasets for laptops and restaurants, consisting of over 6K sentences with fine-grained aspect-level human annotations have been provided for training.
+
+ 
+
+*Restaurant reviews*:
+
+This dataset consists of over 3K English sentences from the restaurant reviews of Ganu et al. (2009). The original dataset of Ganu et al. included annotations for coarse aspect categories (Subtask 3) and overall sentence polarities; we modified the dataset to include annotations for aspect terms occurring in the sentences (Subtask 1), aspect term polarities (Subtask 2), and aspect category-specific polarities (Subtask 4). We also corrected some errors (e.g., sentence splitting errors) of the original dataset. Experienced human annotators identified the aspect terms of the sentences and their polarities (Subtasks 1 and 2). Additional restaurant reviews, not in the original dataset of Ganu et al. (2009), are being annotated in the same manner, and they will be used as test data. 
+
+ 
+
+*Laptop reviews*:
+
+This dataset consists of over 3K English sentences extracted from customer reviews of laptops. Experienced human annotators tagged the aspect terms of the sentences (Subtask 1) and their polarities (Subtask 2). This dataset will be used only for Subtasks 1 and 2. Part of this dataset will be reserved as test data. 
+
+ 
+
+### Dataset format:
+
+The sentences in the datasets are annotated using XML tags.
+
+The following example illustrates the format of the annotated sentences of the restaurants dataset.
+```xml
+
+```
+ 
+
+The possible values of the polarity field are: “positive”, “negative”, “conflict”, “neutral”. The possible values of the category field are: “food”, “service”, “price”, “ambience”, “anecdotes/miscellaneous”.
+
+ 
+
+The following example illustrates the format of the annotated sentences of the laptops dataset. The format is the same as in the restaurant datasets, with the only exception that there are no annotations for aspect categories. Notice that we annotate only aspect terms naming particular aspects (e.g., “everything about it” does not name a particular aspect).
+
+ 
+```xml
+
+```
+ 
+
+In the sentences of both datasets, there is an ",Kaggle
+Amazon Fine Foods,,"Amazon Fine Foods is a dataset that consists of reviews of fine foods from amazon. The data span a period of more than 10 years, including all ~500,000 reviews up to October 2012. Reviews include product and user information, ratings, and a plaintext review.
+
+Source: [https://snap.stanford.edu/data/web-FineFoods.html](https://snap.stanford.edu/data/web-FineFoods.html)",Paper_with_code
+Amazon Food,List of Amazon Food with UserId & ProductId,"### Context
+
+This dataset consists of product details from amazon. The details include product and user information (added productName), ratings, and a plain text review. It also includes reviews from all other Amazon categories.
+
+
+### Content
+
+Comprises of a very small and simple subset of the wide number of food products in Amazon, but it will suffice for working on some simple projects/projects that needs the product name to be present",Kaggle
+⭐ McDonalds Review Sentiment,"2000 collected samples, technical information","
+### About this dataset
+&gt; <p>A sentiment analysis of negative McDonald's reviews. Contributors were given reviews culled from low-rated McDonald's from random metro areas and asked to classify why the locations received low reviews. Options given were: * Rude Service</p>
+<ul>
+<li>Slow Service</li>
+<li>Problem with Order</li>
+<li>Bad Food</li>
+<li>Bad Neighborhood</li>
+<li>Dirty Location</li>
+<li>Cost</li>
+<li>Missing Item     Added: March 6, 2015 by CrowdFlower | Data Rows: 1500 Download Now</li>
+</ul>
+<p>Source: <a href=""https://www.crowdflower.com/data-for-everyone/"" target=""_blank"" rel=""nofollow"">https://www.crowdflower.com/data-for-everyone/</a></p>
+ This dataset was created by [CrowdFlower](https://data.world/crowdflower) and contains around 2000 samples along with Unit State, Policies Violated, technical information and other features such as:
+- Review
+- Policies Violated Gold
+- and more.
+
+### How to use this dataset
+&gt; - Analyze Policies Violated:confidence in relation to City
+- Study the influence of Last Judgment At on Trusted Judgments
+- [More datasets](https://www.kaggle.com/yamqwe/datasets)
+
+### Acknowledgements
+If you use this dataset in your research, please credit [CrowdFlower](https://data.world/crowdflower) 
+
+
+# [Start A New Notebook!](https://www.kaggle.com/yamqwe/mcdonalds-review-sentimente/kernels?modal=true)
+
+
+",Kaggle
+Chocolate Ratings,Reviews on more than 2400 chocolate bars!,"# About this dataset :chocolate_bar:
+&gt; Chocolate is paramount in our society, it is a food product made from roasted and ground cacao pods, that is available as a liquid, solid or paste, on its own or as a flavoring agent in other foods. Cacao has been consumed in some form since at least the Olmec civilization (19th-11th century BCE) and the majority of Mesoamerican people - including the Maya and Aztecs - made chocolate beverages.
+
+&gt; The first solid chocolate bar put into production was made by J. S. Fry & Sons of Bristol, England in 1847 and today it is estimated to be an **USD 130.56 billion dollar industry**.
+
+&gt; In light of all of this, this dataset contains **reviews on more than 2400 different chocolate bars** along with metadata and information on US and Canadian based producers. A rating scale is provided and is defined as follows:
+- 4.0 - 5.0 = Outstanding
+- 3.5 - 3.9 = Highly Recommended
+- 3.0 - 3.4 = Recommended
+- 2.0 - 2.9 = Disappointing
+- 1.0 - 1.9 = Unpleasant
+
+
+
+# How to use this dataset
+&gt; - Create a regression model to predict chocolate bar rating;
+- Explore the most memorable features/ingredients associated with chocolate bars.
+
+
+# Highlighted Notebooks
+&gt; - Your kernel can be featured here!
+- [More datasets](https://www.kaggle.com/andrewmvd/datasets)
+
+
+
+# Acknowledgements
+If you use this dataset in your research, please credit the authors.
+&gt; ### Citation
+&gt; Manhattan Chocolate Society, Flavors of Cacao [Internet]. Available from: http://flavorsofcacao.com/
+
+
+&gt; ### License
+Public Domain
+
+
+&gt; ### Splash banner
+Icon by [Freepik](https://www.flaticon.com/authors/freepik).
+Photo by [Universal Eye](https://unsplash.com/@universaleye?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText) available on [Unsplash](https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText).
+
+
+",Kaggle
+Urdu Online Reviews,Urdu Online Reviews,"This corpus was constructed by collecting 10,008 reviews from various domains, including sports, food, software, politics, and entertainment. Human annotators manually tagged the reviews into positive (n = 3662), negative (n = 2619), and neutral (n = 3727) categories.",Paper_with_code
+Affordability of Diets,Cost and affordability of nutritious diets across and within countries,"
+### About this dataset
+&gt; <h2><strong>About</strong></h2>
+<p>These data were used in the article <a href=""https://ourworldindata.org/diet-affordability"" target=""_blank"" rel=""nofollow"">Three billion people cannot afford a healthy diet</a> published on <a href=""https://ourworldindata.org/"" target=""_blank"" rel=""nofollow"">Our World in Data</a> in July 2021.</p>
+<p>This data is sourced from the work of <a href=""https://sites.tufts.edu/foodpricesfornutrition"" target=""_blank"" rel=""nofollow"">Hereforth et al. (2020)</a>, which is a background paper for the UN FAO State of Food Security and Nutrition in the World report. It is based on data on prices for locally available food items from the <a href=""https://icp.worldbank.org/"" target=""_blank"" rel=""nofollow"">World Bank's International Comparison Program (ICP)</a> attached to other data on food composition and dietary requirements.</p>
+<p>The nutritional requirements used in this study are in line with the WHO's recommendations for the median woman of reproductive age. The authors note two key two reasons for this:</p>
+<ol>
+<li>Requirements fall roughly at the median of the entire population distribution, in the sense that least-cost diets to meet energy and nutrient requirements for people in this reference group approximate the median level of least costs for all sex-age groups over the entire life cycle. This reference group is therefore a good representation of the population as a whole.</li>
+<li>Women of reproductive age are typically a nutritionally vulnerable population group, as seen in their increased risk of dietary inadequacies (due to social practices and norms that often disadvantage them in terms of access to food), which have important consequences for themselves and their children. Previous studies have also based their analyses on this reference group.</li>
+</ol>
+<p><strong>Citation</strong><br>
+Herforth, A., Y. Bai, A. Venkat, K. Mahrt, A. Ebel &amp; W.A. Masters (2020). Cost and affordability of healthy diets across and within countries. Background paper for the State of Food Security and Nutrition in the World 2020. FAO Agricultural Development Economics Technical Study No. 9. Rome: FAO (108 pages).</p>
+<h2><strong>Types of Diets</strong></h2>
+<ol>
+<li><em>“Energy sufficient”</em> diets provide adequate calories for energy balance at a given level of physical activity and body size, using only the least-cost starchy staple in each country. For example, such a diet could consist of only the lowest cost type of rice in that country, or only maize porridge.</li>
+<li><em>“Nutrient adequate”</em> diets provide not only adequate calories but also adequate levels of all essential nutrients – namely, carbohydrates, protein, fat, vitamins and minerals, within the upper and lower bounds needed to prevent deficiencies and avoid toxicity.</li>
+<li><em>“Healthy”</em> diets meet a set of dietary recommendations intended to provide nutrient adequacy and long-term health. There are many definitions of a “healthy” diet pattern at national, regional and global levels. In this case, we select the national food-based dietary guidelines (FBDGs) of several countries from diverse regions, in order to represent a range of dietary recommendations which have been articulated by UN Member States. Dietary patterns have been studied extensively in the nutrition epidemiology literature, relating specific foods and proportionality of different food groups to disease incidence and prevention. Nutrients alone do not explain the relationship of food to health, as there are many non-nutrient components of food, including but not limited to fibre, phytochemicals, the food matrix, and interactions between these. FBDGs focus on foods rather than nutrients, and typically concentrate on proportionality of food group intake. Furthermore, proportionality in food group intake ensures a culturally acceptable diet meeting at least a minimum standard for palatability and cultural norms, so the healthy diet is closer to actual food preferences, in terms of dietary pattern, than the energy sufficient or nutrient adequate diets.</li>
+</ol>
+<h2><strong>Findings</strong></h2>
+<p>Some findings from this data are available in <a href=""https://ourworldindata.org/diet-affordability"" target=""_blank"" rel=""nofollow"">article form</a>, written by Hannah Ritchie and more can be found in Our World in Data's <a href=""https://ourworldindata.org/explorers/food-prices"" target=""_blank"" rel=""nofollow"">Food Prices Data Explorer</a>.</p>
+<p><img src=""https://media.data.world/84AgmvRHTMa0BRrl4Rz8_Diet-costs-marimekko.png"" alt=""A bar chart showing how the cost of a healthy diet compares to daily median income for countries around the world. For many countries, the cost of a healthy diet exceeds that median income for that country"" style=""""></p>
+<h2><strong>License</strong></h2>
+<p>These data are released under the most restrictive license of the source material: <a href=""https://creativecommons.org/licenses/by-nc-sa/2.0/"" target=""_blank"" rel=""nofollow"">CC-BY-NC-SA</a></p>
+ This dataset was created by [Amber Thomas](https://data.world/amberthomas) and contains around 200 samples along with Cost Of Healthy Diet (2017 Usd Per Day), Healthy Diet Cost (number Cannot Afford), technical information and other features such as:
+- Healthy Diet Cost (% Of $1.20 Poverty Line)
+- Calorie Sufficient Diet Cost (% Of $1.20 Poverty Line)
+- and more.
+
+### How to use this dataset
+&gt; - Analyze Calorie Sufficient Diet Cost (% Of Average Food Expenditure) in relation to Nutrient Adequate Diet Cost (% Of $1.20 Poverty Line)
+- Study the influence of Cost Of Calorie Sufficient Diet (2017 Usd Per Day) on Calorie Sufficient Diet Cost (% Cannot Afford)
+- [More datasets](https://www.kaggle.com/yamqwe/datasets)
+
+### Acknowledgements
+If you use this dataset in your research, please credit [Amber Thomas](https://data.world/amberthomas) 
+
+
+# [Start A New Notebook!](https://www.kaggle.com/yamqwe/affordability-of-dietse/kernels?modal=true)
+
+
+",Kaggle
+  🍔 Fast Food Restaurants Across America,"A list of 10,000 fast food restaurants provided by Datafiniti.co","
+### About this dataset
+&gt; <h1>About This Data</h1>
+<p>This is a list of 10,000 fast food restaurants provided by <a href=""https://datafiniti.co/products/business-data/"" target=""_blank"" rel=""nofollow"">Datafiniti's Business Database</a>. The dataset includes the restaurant's address, city, latitude and longitude coordinates, name, and more.</p>
+<p><em>Note that this is a sample of a large dataset. The full dataset is available through Datafiniti.</em></p>
+<h1>What You Can Do With This Data</h1>
+<p>You can use this data to <a href=""https://datafiniti.co/fast-food-restaurants-america/"" target=""_blank"" rel=""nofollow"">rank cities with the most and least fast food restaurants across the U.S.</a> E.g.:</p>
+<ul>
+<li>Cities with the most and least McDonald's per capita</li>
+<li>Fast food restaurants per capita for all states</li>
+<li>Fast food restaurants with the most locations nationally</li>
+<li>Major cities with the most and least fast food restaurants per capita</li>
+<li>Small cities with the most fast food restaurants per capita</li>
+<li>States with the most and least fast food restaurants per capita</li>
+<li>The number of fast food restaurants per capita</li>
+</ul>
+<h1>Data Schema</h1>
+<p>A full schema for the data is available in our <a href=""https://developer.datafiniti.co/docs/business-data-schema"" target=""_blank"" rel=""nofollow"">support documentation</a>.</p>
+<h1>About Datafiniti</h1>
+<p>Datafiniti provides instant access to web data. We compile data from thousands of websites to create standardized databases of business, product, and property information. <a href=""https://datafiniti.co/"" target=""_blank"" rel=""nofollow"">Learn more</a>.</p>
+<h1>Interested in the Full Dataset?</h1>
+<p>You can access the full dataset by running the following query with <a href=""https://developer.datafiniti.co/docs/getting-started-with-business-data"" target=""_blank"" rel=""nofollow"">Datafiniti’s Business API</a>.</p>
+<p><code>{   ""query"": ""dateUpdated:[2018-04-01 TO *] AND categories:\""Fast Food\"" AND country:US* AND name:*"", ""format"": ""csv"", ""download"": true, ""view"": ""datasets_fast_food_restaurants"" }</code></p>
+<p>*<em>This query generated 97,965 records as of December 10, 2018. The total number of results may vary.</em></p>
+<p>Get this data and more by <a href=""https://datafiniti.co/pricing/business-data-pricing/"" target=""_blank"" rel=""nofollow"">creating a free Datafiniti account</a> or <a href=""https://datafiniti.co/request-a-demo/"" target=""_blank"" rel=""nofollow"">requesting a demo</a>.</p>
+ This dataset was created by [Datafiniti](https://data.world/datafiniti) and contains around 10000 samples along with Websites, Postal Code, technical information and other features such as:
+- Date Updated
+- Primary Categories
+- and more.
+
+### How to use this dataset
+&gt; - Analyze Country in relation to Date Added
+- Study the influence of Name on Longitude
+- [More datasets](https://www.kaggle.com/yamqwe/datasets)
+
+### Acknowledgements
+If you use this dataset in your research, please credit [Datafiniti](https://data.world/datafiniti) 
+
+
+# [Start A New Notebook!](https://www.kaggle.com/yamqwe/fast-food-restaurants-across-americae/kernels?modal=true)
+
+
+",Kaggle
+Food2K,,"Food2K is a large food recognition dataset with 2,000 categories and over 1 million images. Compared with existing food recognition datasets, Food2K bypasses them in both categories and images by one order of magnitude, and thus establishes a new challenging benchmark to develop advanced models for food visual representation learning.  Food2K can be further explored to benefit more food-relevant tasks including emerging and more complex ones (e.g., nutritional understanding of food), and the trained models on Food2K can be expected as backbones to improve the performance of more food-relevant tasks.",Paper_with_code
+Food Recognition 2022: Dataset,Detecting & Segmenting various kinds of food from an image,"
+# 🍕 Food Recognition 2022
+
+## Problem Statement
+
+Detecting & Segmenting various kinds of food from an image. For ex. Someone got into new restaurent and get a food that he has never seen, well our DL model is in rescue, so our DL model will help indentifying which food it is from the class our model is being trained on!
+
+## Dataset
+
+We will be using data from Food Recognition Challenge - A benchmark for image-based food recognition challange which is running since 2020.
+
+https://www.aicrowd.com/challenges/food-recognition-benchmark-2022#datasets
+
+We have a total of 39k training images with 3k validation set and 4k public-testing set. All the images are RGB and annotations exist in MS-COCO format.
+
+## Evaluation
+
+The evaluation metrics is IOU aka. Intersection Over Union ( more about that later ).
+
+The actualy metric is computed by averaging over all the precision and recall values for IOU which greater than 0.5.
+
+https://www.aicrowd.com/challenges/food-recognition-challenge#evaluation-criteria",Kaggle
