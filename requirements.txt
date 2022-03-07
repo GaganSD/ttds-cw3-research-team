@@ -5,5 +5,4 @@ kaggle
 pymongo
 jupyter
 logging
-urlib
 xlrd

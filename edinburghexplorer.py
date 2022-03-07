@@ -1,10 +1,4 @@
-from json.tool import main
-import urllib.request as _urllib
 import pandas as pd
-import numpy as np
-import os
-
-
 
 
 class Parser:
@@ -13,7 +7,7 @@ class Parser:
         self.default_url = "https://www.research.ed.ac.uk/en/datasets/"
         self.url_prefix = "?format=&page="
         self.url_suffix = "&export=xls"
-        self.max_limit = 10
+        self.max_limit = 50
         self.main_dataset = None
 
 
@@ -41,7 +35,7 @@ class Parser:
                     fst = False
                 else:
                     self.main_dataset = pd.concat([self.main_dataset, dataset]) 
-                print("---")
+
                 if curr_page == self.max_limit:
                     self.max_limit += 50
                     print(f"Max limit reached. max_limit updated to {self.max_limit}")
@@ -69,16 +63,7 @@ class Parser:
 
     def _save_to_csv(self):
         self.main_dataset.to_csv('edinburgh_research_datasets_info.csv')
-        
-    # def ed_research_print_all(self):
 
-    #     if not self.ed_research_repo_path:
-    #         print("Update variable 'ed_research_repo_path' with path")
-    #         return None
-        
-        dataset = pd.read_excel(self.ed_research_repo_path)
-
-        # dataset.
         
 curr_parser = Parser()
 print(curr_parser.ed_research_get_repo())
