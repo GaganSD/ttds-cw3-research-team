@@ -12,11 +12,13 @@ import Options from './components/options'
 
 
 function App() {
+
+
   return (
     <div className="App">
       <div className="Logo">
         <Typography variant='h1' gutterbottom>
-          ReSearch
+          ReSearchEd
         </Typography>
       </div>
       <div className='SearchOptions'>
@@ -25,7 +27,7 @@ function App() {
           <Options/>
         </div>
       </div>
-      <SearchButton/>
+      <SearchButton />
     </div>
   );
 }
