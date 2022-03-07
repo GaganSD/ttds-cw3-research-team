@@ -4,6 +4,7 @@ import pymongo
 import pandas as pd
 import logging
 from tqdm import tqdm
+import pickle
 
 db_name = "TTDS"
 collec_name = dict()
@@ -50,6 +51,7 @@ class MongoDBClient():
         self.logger = logging.getLogger('mongoDB-API')
         self.logger.setLevel(logging.DEBUG)
         self.success = True
+        self.block_size = 200000
 
         try:
             self.client.admin.command('ping')
@@ -58,6 +60,8 @@ class MongoDBClient():
             self.success = False
             raise
         pass
+
+        self.hit_list = set()
         
     def insert_data(self, df: pd.DataFrame , data_type: str, source_identifier: str, 
                         identifier_field_name: str, overwrite: bool = False):
@@ -192,12 +196,67 @@ class MongoDBClient():
             term - The term to be updated.
             doc_dict - The content to be updated. e.g. {doc_id: {"pos":[], "len":X}}
         """
-        self.client[db_name]["index"].find_one_and_update(
-                    filter = {"_id":term}, 
-                    update = {'$inc':{"doc_count" : len(update_list)},
-                            '$push':{ "docs" : {'$each' : update_list}} 
-                             }, 
-                    upsert=True)
+
+        cur_table = self.client[db_name]["index"]
+        hq = cur_table.find_one({"_id": term})
+        cur_size = 0
+        cur_chain = [term]
+        if hq == None:
+            cur_table.insert_one({"_id": term, "doc_count": 0, "docs": [], "chain": [term]})
+        else:
+            cur_size = hq["doc_count"] 
+            cur_chain = hq["chain"]
+
+        chain_id = 0
+
+        new_chain = [cur_chain[-1]]
+        s = 0
+        e = min(len(update_list), self.block_size - cur_size % self.block_size)
+        while 1:
+            if chain_id >= len(new_chain):
+                id = cur_table.insert_one({"term": term, "docs": []}).inserted_id
+                new_chain.append(id)
+
+            cur_table.find_one_and_update(
+                filter = {"_id":new_chain[chain_id]}, 
+                update = {'$push':{ "docs" : {'$each' : update_list[s:e]}} 
+                        }, upsert=False)
+
+            chain_id += 1
+            s = e
+            if s >= len(update_list):
+                break
+            e = min(len(update_list), s + self.block_size)
+
+        cur_table.find_one_and_update(
+                filter = {"_id": term}, 
+                update = {'$inc':{"doc_count" : len(update_list)},
+                        '$push':{ "chain" : {'$each' : new_chain[1:]}} 
+                        }, upsert=False)
+
+
+    def get_doc_from_index(self, term: str):
+        """
+        The method to get the docs with an index
+
+        Parameters:
+            term - The index to be searched.
+
+        Return:
+            ans : the list of docs
+            n : the number of docs
+        """
+        cur_table = self.client[db_name]["index"]
+        hq = cur_table.find_one({"_id": term})
+        if hq == None:
+            return []
+        else:
+            ans = hq["docs"]
+            for chain in hq["chain"][1:]:
+                ans.extend(cur_table.find_one({"_id": chain}, {'docs': 1})['docs'] )
+
+        return ans
+
 
     def create_unique_identifier(self, source_name, ori_ui):
         return str(source_name) + '-' + str(ori_ui)
@@ -213,17 +272,15 @@ class MongoDBClient():
         data_type = 'paper'
         cur_table = self.client[db_name][collec_name[data_type]]
 
-        cursor = cur_table.find({'source':'arxiv'})
-        t = tqdm(total=2018090)
+        cursor = cur_table.find({})
+        t = tqdm(total=23243349)
         remove_cnt = 0
         print("start!")
         for doc in cursor:
-            cur_url = doc['url']
-            num = cur_table.count_documents({'url':cur_url})
-            remove_cnt += num - 1
-            if num > 1:
-                cur_table.delete_many({'url':cur_url})
-                cur_table.insert_one(doc)
+            cur_title = doc['title']
+            res = cur_table.delete_many({'title':cur_title})
+            cur_table.insert_one(doc)
+            remove_cnt += res.deletedCount - 1
 
             t.update()
             
@@ -235,11 +292,11 @@ class MongoDBClient():
 if __name__ == "__main__": 
     # create a client instance
     client = MongoDBClient(IP = "34.142.18.57")
-    dataset_df_ = pd.read_csv('kaggle_dataset_df_page500.csv')
-    print(dataset_df_.head())
+    # dataset_df_ = pd.read_csv('kaggle_dataset_df_page500.csv')
+    # print(dataset_df_.head())
 
-    # insert_dataset_data
-    insert_num = client.insert_data(dataset_df_, "dataset", "kaggle", "dataset_slug", overwrite=True)
+    # # insert_dataset_data
+    # insert_num = client.insert_data(dataset_df_, "dataset", "kaggle", "dataset_slug", overwrite=True)
 
     # # update data
     # client.update_data("dataset", "kaggle", "my-datase", {"subtitle": "new subtitle"})
