@@ -106,7 +106,12 @@ if __name__ == '__main__':
     inverted_index = load_file_binary(index_path)
     bm25_result_df = pd.DataFrame(columns=['title','subtitle','description'])
     tfidf_result_df = pd.DataFrame(columns=['title','subtitle','description'])
-    df = pd.read_csv('kaggle_dataset_df_page500.csv')
+    kaggle_df = pd.read_csv('kaggle_dataset_df_page500.csv')
+    kaggle_df['Source'] = 'Kaggle'
+    paperwithcode_df = pd.read_csv('paperwithcode_df.csv')
+    paperwithcode_df['Source'] = 'Paper_with_code'
+    df = pd.concat([kaggle_df, paperwithcode_df])
+    df = df.reset_index(drop=True)
     # query_params = {'query': ["father"]} #, "boy", "girl"]}
     query_params = {'query': ["covid", "2021"]}
     bm25_scores = ranking_query_BM25(query_params, index=inverted_index)
@@ -115,7 +120,7 @@ if __name__ == '__main__':
     # print(scores[:10])
     for result in bm25_scores[:10]:
         tmp_df = df.iloc[result[0]]
-        bm25_result_df = bm25_result_df.append(tmp_df[['title','subtitle','description']])
+        bm25_result_df = bm25_result_df.append(tmp_df[['title','subtitle','description', 'Source']])
         print(tmp_df['title'])
         print(tmp_df['subtitle'])
         print(tmp_df['description'])
@@ -126,7 +131,7 @@ if __name__ == '__main__':
     # print(scores[:10])
     for result in tfidf_scores[:10]:
         tmp_df = df.iloc[result[0]]
-        tfidf_result_df = tfidf_result_df.append(tmp_df[['title','subtitle','description']])
+        tfidf_result_df = tfidf_result_df.append(tmp_df[['title','subtitle','description','Source']])
         print(tmp_df['title'])
         print(tmp_df['subtitle'])
         print(len(str(tmp_df['description'])))
@@ -144,7 +149,7 @@ if __name__ == '__main__':
     # print(scores[:10])
     for result in scores[:10]:
         tmp_df = df.iloc[result[0]]
-        bm25_result_df = bm25_result_df.append(tmp_df[['title','subtitle','description']])
+        bm25_result_df = bm25_result_df.append(tmp_df[['title','subtitle','description','Source']])
         print(tmp_df['title'])
         print(tmp_df['subtitle'])
         print(len(str(tmp_df['description'])))
@@ -155,7 +160,7 @@ if __name__ == '__main__':
     # print(scores[:10])
     for result in tfidf_scores[:10]:
         tmp_df = df.iloc[result[0]]
-        tfidf_result_df = tfidf_result_df.append(tmp_df[['title','subtitle','description']])
+        tfidf_result_df = tfidf_result_df.append(tmp_df[['title','subtitle','description','Source']])
         print(tmp_df['title'])
         print(tmp_df['subtitle'])
         print(len(str(tmp_df['description'])))

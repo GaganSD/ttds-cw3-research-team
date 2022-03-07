@@ -84,11 +84,14 @@ class IndexGenerator:
             pickle.dump(list(self.temp.values()), handle, protocol=pickle.HIGHEST_PROTOCOL)
         self.temp.clear()
 
-def run_with_arguments(stem, stop, start, local_dataset=None):
-    if local_dataset is None:
+def run_with_arguments(stem, stop, start, local_kaggle_dataset=None, local_paperwithcode_dataset=None):
+    if (local_kaggle_dataset is None) & (local_paperwithcode_dataset is None):
         indexGen = IndexGenerator(activate_stop=stop, activate_stemming=stem, start_index=start, local_dataset=None)
     else:
-        df = pd.read_csv(local_dataset)
+        kaggle_df = pd.read_csv(local_kaggle_dataset)
+        paperwithcode_df = pd.read_csv(local_paperwithcode_dataset)
+        df = pd.concat([kaggle_df, paperwithcode_df])
+        df = df.reset_index(drop=True)
         indexGen = IndexGenerator(activate_stop=stop, activate_stemming=stem, start_index=start, local_dataset= df)
     indexGen.run_indexing()
 
@@ -96,7 +99,8 @@ parser = argparse.ArgumentParser(description='Inverted Index Generator')
 parser.add_argument('--stemming', nargs="?", type=str, default='True', help='Activate stemming')
 parser.add_argument('--remove_stopwords', nargs="?", type=str, default='False', help='Remove stopwords')
 parser.add_argument('--start', nargs="?", type=int, default=0, help='Start batch index')
-parser.add_argument('--local_dataset', type=str, default=True, help='Local dataset path')
+parser.add_argument('--local_kaggle_dataset', type=str, default=True, help='Local Kaggle dataset path')
+parser.add_argument('--local_paperwithcode_dataset', type=str, default=True, help='Local paperwithcode dataset path')
 args = parser.parse_args()
 
-run_with_arguments(eval(args.stemming), eval(args.remove_stopwords), args.start, args.local_dataset)
+run_with_arguments(eval(args.stemming), eval(args.remove_stopwords), args.start, args.local_kaggle_dataset, args.local_paperwithcode_dataset)
