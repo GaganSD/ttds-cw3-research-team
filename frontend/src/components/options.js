@@ -9,9 +9,13 @@ const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
 export default function Options(){
+    function handleChange(e){
+        alert(e.target.renderOption);
+    }
 
     return (
         <Autocomplete
+        onChange={handleChange}
         multiple
         id="checkboxes-tags-demo"
         options={top100Films}
@@ -30,7 +34,7 @@ export default function Options(){
         )}
         style={{ width: 500 }}
         renderInput={(params) => (
-            <TextField {...params} label="Checkboxes" placeholder="Favorites" />
+            <TextField {...params} label="Select what kind of data you wish to search for" placeholder="." />
         )}
         />
   );

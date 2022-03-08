@@ -13,6 +13,18 @@ import Options from './components/options'
 
 function App() {
 
+  const [search, setSearch] = React.useState('');
+ 
+
+  function Search() {
+    alert(search);
+  }
+
+  function TextEntered(searchval){
+      setSearch(searchval);
+  }
+
+
 
   return (
     <div className="App">
@@ -22,12 +34,12 @@ function App() {
         </Typography>
       </div>
       <div className='SearchOptions'>
-        <SearchField/>
+        <SearchField parentCallback = {TextEntered}/>
         <div className='Options'>
           <Options/>
         </div>
       </div>
-      <SearchButton />
+      <SearchButton parentCallback = {Search}/>
     </div>
   );
 }

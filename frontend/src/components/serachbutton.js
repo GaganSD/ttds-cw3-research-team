@@ -1,9 +1,9 @@
 import Button from '@mui/material/Button';
 
-export default function SearchButton(){
+export default function SearchButton(props){
     return(
         <Button variant="contained" color="success" onClick = {() => {
-            alert('clicked');
+            props.parentCallback();
         }
 
         }>
