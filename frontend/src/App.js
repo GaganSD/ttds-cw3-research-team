@@ -8,7 +8,7 @@ import SearchField from './components/search';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import Options from './components/options'
-
+import JsonResults from './example.json'
 
 
 function App() {
@@ -25,7 +25,6 @@ function App() {
   }
 
 
-
   return (
     <div className="App">
       <div className="Logo">
@@ -40,8 +39,20 @@ function App() {
         </div>
       </div>
       <SearchButton parentCallback = {Search}/>
+      <div>
+      {JsonResults.Results.map((name, key) => {
+        return <p key={key}>
+          <h1>{name.title}</h1>
+          <p>{name.date}</p>
+          <a>{name.url}</a>
+          <p>{name.description}</p>
+          </p>;
+      })}
+      </div>
     </div>
-  );
+  )
+
 }
+
 
 export default App;
