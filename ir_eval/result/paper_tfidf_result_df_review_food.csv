@@ -1,0 +1,137 @@
+title,abstract
+"Social Capital Contributions to Food Security: A Comprehensive
+  Literature Review","  Social capital creates a synergy that benefits all members of a community.
+This review examines how social capital contributes to the food security of
+communities. A systematic literature review, based on Prisma, is designed to
+provide a state-of-the-art review on capacity social capital in this realm. The
+output of this method led to finding 39 related articles. Studying these
+articles illustrates that social capital improves food security through two
+mechanisms of knowledge sharing and product sharing (i.e., sharing food
+products). It reveals that social capital through improving the food security
+pillars (i.e., food availability, food accessibility, food utilization, and
+food system stability) affects food security. In other words, the interaction
+among the community members results in sharing food products and information
+among community members, which facilitates food availability and access to
+food. There are many shreds of evidence in the literature that sharing food and
+food products among the community member decreases household food security and
+provides healthy nutrition to vulnerable families and improves the food
+utilization pillar of food security. It is also disclosed that belonging to the
+social networks increases the community members' resilience and decreases the
+community's vulnerability that subsequently strengthens the stability of a food
+system. This study contributes to the common literature on food security and
+social capital by providing a conceptual model based on the literature. In
+addition to researchers, policymakers can use this study's findings to provide
+solutions to address food insecurity problems.
+"
+Machine Learning for Food Review and Recommendation,"  Food reviews and recommendations have always been important for online food
+service websites. However, reviewing and recommending food is not simple as it
+is likely to be overwhelmed by disparate contexts and meanings. In this paper,
+we use different deep learning approaches to address the problems of sentiment
+analysis, automatic review tag generation, and retrieval of food reviews. We
+propose to develop a web-based food review system at Nanyang Technological
+University (NTU) named NTU Food Hunter, which incorporates different deep
+learning approaches that help users with food selection. First, we implement
+the BERT and LSTM deep learning models into the system for sentiment analysis
+of food reviews. Then, we develop a Part-of-Speech (POS) algorithm to
+automatically identify and extract adjective-noun pairs from the review content
+for review tag generation based on POS tagging and dependency parsing. Finally,
+we also train a RankNet model for the re-ranking of the retrieval results to
+improve the accuracy in our Solr-based food reviews search system. The
+experimental results show that our proposed deep learning approaches are
+promising for the applications of real-world problems.
+"
+Machine Learning for Food Review and Recommendation,"Food reviews and recommendations have always been important for online food service websites. However, reviewing and recommending food is not simple as it is likely to be overwhelmed by disparate contexts and meanings. In this paper, we use different deep learning approaches to address the problems of sentiment analysis, automatic review tag generation, and retrieval of food reviews. We propose to develop a web-based food review system at Nanyang Technological University (NTU) named NTU Food Hunter, which incorporates different deep learning approaches that help users with food selection. First, we implement the BERT and LSTM deep learning models into the system for sentiment analysis of food reviews. Then, we develop a Part-of-Speech (POS) algorithm to automatically identify and extract adjective-noun pairs from the review content for review tag generation based on POS tagging and dependency parsing. Finally, we also train a RankNet model for the re-ranking of the retrieval results to improve the accuracy in our Solr-based food reviews search system. The experimental results show that our proposed deep learning approaches are promising for the applications of real-world problems."
+"The Development and Applications of Food Knowledge Graphs in the Food
+  Science and Industry","  The deployment of various networks (e.g., Internet of Things (IoT) and mobile
+networks), databases (e.g., nutrition tables and food compositional databases)
+and social media (e.g., Instagram and Twitter) generates huge amounts of
+multi-type food data, which plays critical roles in the food science and
+industry. However, these multi-source food data appear as information silos due
+to the well-known data harmonization problem, leading to the difficulty in
+fully exploiting these food data. The food knowledge graph provides a unified
+and standardized conceptual terminology and their relationships in a structured
+form, and thus can transform food information silos to a more reusable globally
+digitally connected Internet of Food to benefit various applications. To our
+knowledge, this is the first comprehensive review on food knowledge graphs in
+the food science and industry. We first provide a brief introduction of
+knowledge graphs, and then review the evolution of food knowledge organization
+mainly from food classification, food ontology to food knowledge graphs.
+Representative applications of food knowledge graphs will be summarized with
+respect to new recipe development, food traceability, food data visualization,
+personalized dietary recommendation, food search and question-answering, visual
+food object recognition, and food machinery intelligent manufacturing. We also
+discuss future directions in this field, such as food knowledge graphs for food
+supply chain systems and human health, which deserve further study. Their great
+potentials will attract more research efforts to apply food knowledge graphs
+into the field of food science and industry.
+"
+The Development and Applications of Food Knowledge Graphs in the Food Science and Industry,"The deployment of various networks (e.g., Internet of Things (IoT) and mobile networks), databases (e.g., nutrition tables and food compositional databases) and social media (e.g., Instagram and Twitter) generates huge amounts of multi-type food data, which plays critical roles in the food science and industry. However, these multi-source food data appear as information silos due to the well-known data harmonization problem, leading to the difficulty in fully exploiting these food data. The food knowledge graph provides a unified and standardized conceptual terminology and their relationships in a structured form, and thus can transform food information silos to a more reusable globally digitally connected Internet of Food to benefit various applications. To our knowledge, this is the first comprehensive review on food knowledge graphs in the food science and industry. We first provide a brief introduction of knowledge graphs, and then review the evolution of food knowledge organization mainly from food classification, food ontology to food knowledge graphs. Representative applications of food knowledge graphs will be summarized with respect to new recipe development, food traceability, food data visualization, personalized dietary recommendation, food search and question-answering, visual food object recognition, and food machinery intelligent manufacturing. We also discuss future directions in this field, such as food knowledge graphs for food supply chain systems and human health, which deserve further study. Their great potentials will attract more research efforts to apply food knowledge graphs into the field of food science and industry."
+Beyond water activity: recent advances based on an alternative approach to the assessment of food quality and safety.,"Water, the most abundant constituent of natural foods, is a ubiquitous plasticizer of most natural and fabricated food ingredients and products. Many of the new concepts and developments in modern food science and technology revolve around the role of water, and its manipulation, in food manufacturing, processing, and preservation. This article reviews the effects of water, as a near-universal solvent and plasticizer, on the behavior of polymeric (as well as oligomeric and monomeric) food materials and systems, with emphasis on the impact of water content (in terms of increasing system mobility and eventual water ""availability"") on food quality, safety, stability, and technological performance. This review describes a new perspective on moisture management, an old and established discipline now evolving to a theoretical basis of fundamental structure-property principles from the field of synthetic polymer science, including the innovative concepts of ""water dynamics"" and ""glass dynamics"". These integrated concepts focus on the non-equilibrium nature of all ""real world"" food products and processes, and stress the importance to successful moisture management of the maintenance of food systems in kinetically metastable, dynamically constrained glassy states rather than equilibrium thermodynamic phases. The understanding derived from this ""food polymer science"" approach to water relationships in foods has led to new insights and advances beyond the limited applicability of traditional concepts involving water activity. This article is neither a conventional nor comprehensive review of water activity, but rather a critical overview that presents and discusses current, usable information on moisture management theory, research, and practice applicable to food systems covering the broadest ranges of moisture content and processing/storage temperature conditions."
+A Survey on Food Computing,"  Food is very essential for human life and it is fundamental to the human
+experience. Food-related study may support multifarious applications and
+services, such as guiding the human behavior, improving the human health and
+understanding the culinary culture. With the rapid development of social
+networks, mobile networks, and Internet of Things (IoT), people commonly
+upload, share, and record food images, recipes, cooking videos, and food
+diaries, leading to large-scale food data. Large-scale food data offers rich
+knowledge about food and can help tackle many central issues of human society.
+Therefore, it is time to group several disparate issues related to food
+computing. Food computing acquires and analyzes heterogenous food data from
+disparate sources for perception, recognition, retrieval, recommendation, and
+monitoring of food. In food computing, computational approaches are applied to
+address food related issues in medicine, biology, gastronomy and agronomy. Both
+large-scale food data and recent breakthroughs in computer science are
+transforming the way we analyze food data. Therefore, vast amounts of work has
+been conducted in the food area, targeting different food-oriented tasks and
+applications. However, there are very few systematic reviews, which shape this
+area well and provide a comprehensive and in-depth summary of current efforts
+or detail open problems in this area. In this paper, we formalize food
+computing and present such a comprehensive overview of various emerging
+concepts, methods, and tasks. We summarize key challenges and future directions
+ahead for food computing. This is the first comprehensive survey that targets
+the study of computing technology for the food area and also offers a
+collection of research studies and technologies to benefit researchers and
+practitioners working in different food-related fields.
+"
+AI-enabled Efficient and Safe Food Supply Chain,"  This paper provides a review of an emerging field in the food processing
+sector, referring to efficient and safe food supply chains, from farm to fork,
+as enabled by Artificial Intelligence (AI). Recent advances in machine and deep
+learning are used for effective food production, energy management and food
+labeling. Appropriate deep neural architectures are adopted and used for this
+purpose, including Fully Convolutional Networks, Long Short-Term Memories and
+Recurrent Neural Networks, Auto-Encoders and Attention mechanisms, Latent
+Variable extraction and clustering, as well as Domain Adaptation. Three
+experimental studies are presented, illustrating the ability of these AI
+methodologies to produce state-of-the-art performance in the whole food supply
+chain. In particular, these concern: (i) predicting plant growth and tomato
+yield in greenhouses, thus matching food production to market needs and
+reducing food waste or food unavailability; (ii) optimizing energy consumption
+across large networks of food retail refrigeration systems, through optimal
+selection of systems that can get shut-down and through prediction of the
+respective food de-freezing times, during peaks of power demand load; (iii)
+optical recognition and verification of food consumption expiry date in
+automatic inspection of retail packaged food, thus ensuring safety of food and
+people's health.
+"
+AI-enabled Efficient and Safe Food Supply Chain,"This paper provides a review of an emerging field in the food processing sector, referring to efficient and safe food supply chains, from farm to fork, as enabled by Artificial Intelligence (AI). Recent advances in machine and deep learning are used for effective food production, energy management and food labeling. Appropriate deep neural architectures are adopted and used for this purpose, including Fully Convolutional Networks, Long Short-Term Memories and Recurrent Neural Networks, Auto-Encoders and Attention mechanisms, Latent Variable extraction and clustering, as well as Domain Adaptation. Three experimental studies are presented, illustrating the ability of these AI methodologies to produce state-of-the-art performance in the whole food supply chain. In particular, these concern: (i) predicting plant growth and tomato yield in greenhouses, thus matching food production to market needs and reducing food waste or food unavailability; (ii) optimizing energy consumption across large networks of food retail refrigeration systems, through optimal selection of systems that can get shut-down and through prediction of the respective food de-freezing times, during peaks of power demand load; (iii) optical recognition and verification of food consumption expiry date in automatic inspection of retail packaged food, thus ensuring safety of food and people's health."
+"The Good, The Bad & The Ugly Features: A Meta-analysis on User Review
+  About Food Journaling Apps","  Users review about an app is a crucial component for open mobile application
+market, such as the AppStore and the Google play. Analyzing these reviews can
+reveal user's sentiment towards a feature in the app. There exist several
+analytical tools to summarize user reviews and extract meaningful sense out of
+them. However, these tools are still limited in terms of expressiveness and
+accurately classifying the reviews into more than a positive and a negative
+review. There is a need to get more insights from user app reviews and direct
+it to future app development. In this paper, we present our result of analyzing
+user reviews of 20 food journaling and health tracking apps. We gathered and
+analyzed reviews per app and classified them into three distinct categories
+using the sentiment treebank with recursive neural tensor network. We then
+analyzed the vocabulary frequency per category using the Gensim implementation
+of Word2Vec model. The analysis result clustered the reviews into good, bad and
+ugly feature reviews. Different usage patterns were detected from users review.
+We identified major reasons why users express a certain sentiment towards an
+app and learned how users' satisfaction or complaints was related to a specific
+feature. This research could be a guideline for app developers to follow when
+developing an app to refrain from adopting techniques that might demotivate
+(hinder) the application use or adopt those perceived positively by the users.
+"
