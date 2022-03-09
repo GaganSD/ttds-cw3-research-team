@@ -154,6 +154,26 @@ class MongoDBClient():
             logging.warning("can't find documents")
             
         return cursor
+    
+    def get_one(self, data_type: str, filter: dict, fields: list):
+        """
+        The method to get ONLY ONE data from db. should be more efficient than get_data. 
+
+        Parameters:
+            data_type - The type of data. Should either be "paper" or "dataset".
+            filter - Filter for the data you want. e.g. { "source": "kaggle" }.
+            fields -  Fields of information you want. e.g. [ "title", "text", "description" ].
+
+        Returns:
+            the doc in form of python dictionary.
+            could be None if no data meets the filter.
+        """
+        if not self.check_data_type(data_type):
+            return -1
+
+        res = self.client[db_name][collec_name[data_type]].find_one(filter = filter, projection = fields)
+
+        return res
 
 
     def update_data(self, data_type: str, source: str, identifier: str, update_content: dict):
