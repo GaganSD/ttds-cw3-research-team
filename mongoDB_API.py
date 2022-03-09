@@ -209,7 +209,7 @@ class MongoDBClient():
             return True
 
 
-    def update_index(self, term: str, update_list: list):
+   def update_index(self, term: str, update_list: list):
         """
         The method to update the index content of a term
         WARNING: DO OVERWRITE at [term][doc_id] level. (pos and len)
@@ -234,15 +234,23 @@ class MongoDBClient():
         new_chain = [cur_chain[-1]]
         s = 0
         e = min(len(update_list), self.block_size - cur_size % self.block_size)
+        cnt = 0
         while 1:
             if chain_id >= len(new_chain):
                 id = cur_table.insert_one({"term": term, "docs": []}).inserted_id
                 new_chain.append(id)
-
-            cur_table.find_one_and_update(
-                filter = {"_id":new_chain[chain_id]}, 
-                update = {'$push':{ "docs" : {'$each' : update_list[s:e]}} 
-                        }, upsert=False)
+            try:
+                cur_table.find_one_and_update(
+                    filter = {"_id":new_chain[chain_id]}, 
+                    update = {'$push':{ "docs" : {'$each' : update_list[s:e]}} 
+                            }, upsert=False)
+                cnt = 0
+            except pymongo.errors.OperationFailure:
+                if cnt > 1:
+                    raise pymongo.errors.OperationFailure
+                chain_id += 1
+                cnt += 1
+                continue
 
             chain_id += 1
             s = e
@@ -255,7 +263,6 @@ class MongoDBClient():
                 update = {'$inc':{"doc_count" : len(update_list)},
                         '$push':{ "chain" : {'$each' : new_chain[1:]}} 
                         }, upsert=False)
-
 
     def get_doc_from_index(self, term: str):
         """
