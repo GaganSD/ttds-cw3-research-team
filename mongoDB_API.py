@@ -209,7 +209,7 @@ class MongoDBClient():
             return True
 
 
-   def update_index(self, term: str, update_list: list):
+    def update_index(self, term: str, update_list: list):
         """
         The method to update the index content of a term
         WARNING: DO OVERWRITE at [term][doc_id] level. (pos and len)
