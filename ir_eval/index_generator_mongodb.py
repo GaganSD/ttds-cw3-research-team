@@ -75,7 +75,7 @@ class IndexGenerator:
 #                     executor.submit(self.__load_tempfile, id, text, lock)
                     self.__load_tempfile(id, text)
 
-                executor.shutdown(wait=True)
+#                 executor.shutdown(wait=True)
                 # logger.info("saving chunk to db %i / %i", i, chunk_num)
                 self.__save_db()
 
