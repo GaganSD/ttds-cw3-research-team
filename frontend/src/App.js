@@ -53,12 +53,12 @@ function App() {
       <div>
         {JsonResults.Results.map((name, key) => {
           return <Box bgcolor="#E8E8E8"
-          //  display="flex"
+          //  display="flex" //probably dont need this anymore but keeping it here just in case...
           //  sx={{ overflow: 'auto' }}
           //  sx={{ width: '50%' }}
           //  style={{justifyContent: "center"}}
           //  style={{alignItems: "center"}}
-          //  style={{position: "relative"}} //this doesnt work -- unsure how to add sth like "left:50%" into it...
+          //  style={{position: "relative"}}
             marginTop={1}
             padding={2}
           >
