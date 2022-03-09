@@ -8,6 +8,7 @@ import pickle
 import pandas as pd
 
 import preprocessing
+sys.path.append("..")
 from mongoDB_API import MongoDBClient
 import argparse
 import logging
@@ -57,21 +58,22 @@ class IndexGenerator:
             for i in tqdm(range(chunk_num)):
                 if i < self.start:
                     continue
-                executor = ThreadPoolExecutor()
+#                 executor = ThreadPoolExecutor()
 
                 # logger.info("processing chunk %i / %i", i, chunk_num)
-                cursor= self.client.get_data("dataset", {}, ['title', 'abstract', 'text'], 
+                cursor= self.client.get_data("paper", {}, ['title', 'abstract', 'text'], 
                                 i*chunk_size, chunk_size)
                 
-                m = multiprocessing.Manager()
-                lock = m.Lock()
+#                 m = multiprocessing.Manager()
+#                 lock = m.Lock()
 
                 for doc in cursor:
                     text = doc.get('title', "") + ' ' 
                     text += str(doc.get('abstract', "")) + ' ' 
                     text += str(doc.get('text', ""))
                     id = doc.get('_id')
-                    executor.submit(self.__load_tempfile, id, text, lock)
+#                     executor.submit(self.__load_tempfile, id, text, lock)
+                    self.__load_tempfile(id, text)
 
                 executor.shutdown(wait=True)
                 # logger.info("saving chunk to db %i / %i", i, chunk_num)
@@ -85,7 +87,7 @@ class IndexGenerator:
             self.__save_pickle('last')
             
 
-    def __load_tempfile(self, ds_id, sentence, lock):
+    def __load_tempfile(self, ds_id, sentence):
         preprocessed = preprocessing.preprocess(sentence, stemming=self.activate_stemming, stop=self.activate_stop)
         preprocessed = list(filter(None, preprocessed))
 
@@ -93,18 +95,18 @@ class IndexGenerator:
         
         for term in set(preprocessed):
             positions = [n for n,item in enumerate(preprocessed) if item==term]
-            with lock:
-                self.temp[term] = self.temp.get(term, {
-                    'term': term,
-                    'doc_count': 0,
-                    'docs': list()
-                })
-                self.temp[term]['doc_count'] += 1
-                self.temp[term]['docs'].append({
-                            'id': ds_id,
-                            'len': word_count,
-                            'pos': positions
-                        })
+#             with lock:
+            self.temp[term] = self.temp.get(term, {
+                'term': term,
+                'doc_count': 0,
+                'docs': list()
+            })
+            self.temp[term]['doc_count'] += 1
+            self.temp[term]['docs'].append({
+                        'id': ds_id,
+                        'len': word_count,
+                        'pos': positions
+                    })
 
     def __save_pickle(self, name):
         with open(name + '.pickle', 'wb') as handle:
@@ -112,10 +114,11 @@ class IndexGenerator:
         self.temp.clear()
 
     def __save_db(self):
-        executor = ThreadPoolExecutor()
+#         executor = ThreadPoolExecutor()
         for term, content in tqdm(self.temp.items()):
-            executor.submit(self.client.update_index, term, content['docs'])
-        executor.shutdown(wait=True)
+#             executor.submit(self.client.update_index, term, content['docs'])
+            self.client.update_index(term, content['docs'])
+#         executor.shutdown(wait=True)
         self.temp.clear()
 
 def run_with_arguments(stem, stop, start, local_dataset=None):
