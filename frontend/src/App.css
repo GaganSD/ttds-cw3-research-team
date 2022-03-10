@@ -1,0 +1,24 @@
+.App {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+}
+/* 
+html, body, #app, #app>div {
+  height: 100%
+} */
+
+
+
+.SearchOptions {
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: column;
+
+}
+
+.Options {
+  margin-top: 50px;
+  margin-bottom: 30px;
+}
