@@ -10,6 +10,7 @@ import Typography from '@mui/material/Typography';
 import Options from './components/options'
 import JsonResults from './example.json'
 import Box from '@mui/material/Box';
+import research_logo from './logos/Re-Search-logos_transparent.png';
 
 
 function App() {
@@ -32,12 +33,8 @@ function App() {
       marginLeft: '5em',
       marginRight: '5em'
     }}>
-      <div className="Logo">
-        <Typography
-          style={{ textAlign: 'center' }}
-          variant='h1' gutterbottom>
-          ReSearchEd
-        </Typography>
+      <div className="logo">
+        <img src={research_logo} className="center" width="25%" height="10%" />
       </div>
       <div className='SearchOptions' style={{
       }}>
