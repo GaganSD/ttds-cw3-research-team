@@ -9,7 +9,13 @@ html, body, #app, #app>div {
   height: 100%
 } */
 
-
+.logo {
+  margin: auto;
+  width: 10%;
+  border: 3px solid green;
+  padding: 10%;
+  text-align: center;
+}
 
 .SearchOptions {
   display: flex;

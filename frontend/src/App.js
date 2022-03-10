@@ -37,9 +37,9 @@ function App() {
       marginLeft: '5em',
       marginRight: '5em'
     }}>
-      <div className="logo">
-        <img src={research_logo} className="center" width="25%" height="10%" />
-      </div>
+      {/* <div className="logo"> */}
+      <img src={research_logo} width="300em" height="150em" />
+      {/* </div> */}
       <div className='SearchOptions' style={{
       }}>
         <SearchField
