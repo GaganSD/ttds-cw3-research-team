@@ -94,7 +94,13 @@ function App() {
   }
 
   function authorlist(authors){
-    return authors    
+    var lower=authors.toLowerCase()
+    if (authors.includes(",")){
+      return "Authors: "+ authors
+    }
+    else if (!(lower=="n/a" || lower=="na" || lower=="n-a" || lower=="")){
+      return "Author: "+ authors
+    }
   }
 
 
