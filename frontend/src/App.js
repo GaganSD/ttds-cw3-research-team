@@ -13,6 +13,7 @@ import Box from '@mui/material/Box';
 import research_logo from './logos/Re-Search-logos_transparent.png';
 
 import Switch from '@mui/material/Switch';
+import SwipeableTemporaryDrawer from './components/advancedOptions';
 
 
 function App() {
@@ -20,7 +21,6 @@ function App() {
   const [search, setSearch] = React.useState('');
   const [json, setJson] = React.useState({Results:[]});
   const label = { inputProps: { 'aria-label': 'Switch demo' } };
-
 
   function Search() {
     return fetch('http://127.0.0.1:5000/' + search).then(response => response.json()).then(data => {
@@ -52,16 +52,15 @@ function App() {
       marginLeft: '5em',
       marginRight: '5em'
     }}>
-    <div className="toggle_switch" id="toggle_switch">
-      <UseSwitchesCustom  float="right" parentCallback={BasicSwitches} />
+    <div className="toggle_switch" float="center" id="toggle_switch">
       {/* display='flex' justifyContent="flex-end"  
       tried:
       flaot:right
       */}
-    </div>  ;
+    </div>
 
-
-      <img src={research_logo} width="300em" height="150em" />
+    <img src={research_logo} width="300em" height="150em"/>
+    <UseSwitchesCustom  float="right" parentCallback={BasicSwitches} />
       <div className='SearchOptions' style={{
       }}>
         <SearchField
@@ -94,6 +93,7 @@ function App() {
             </p></Box>;
         })}
       </div>
+      <SwipeableTemporaryDrawer/>
     </div>
   )
 
