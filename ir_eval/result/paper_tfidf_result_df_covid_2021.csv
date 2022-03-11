@@ -1,4 +1,4 @@
-title,abstract
+title,abstract,id
 "Explainable AI Framework for COVID-19 Prediction in Different Provinces
   of India","  In 2020, covid-19 virus had reached more than 200 countries. Till December
 20th 2021, 221 nations in the world had collectively reported 275M confirmed
@@ -24,7 +24,7 @@ Explainable AI is involved in this study for the better interpretation &
 understanding of the model behavior. The proposed model is used to forecast the
 active cases in India from 16th December, 2021 to 5th March, 2022. It is
 notated that there will be a emergence of third wave on January, 2022 in India.
-"
+",arxiv-2201.06997
 Acceptance of COVID-19 Vaccine and Its Determinants in Bangladesh,"  Background: Bangladesh govt. launched a nationwide vaccination drive against
 SARS-CoV-2 infection from early February 2021. The objectives of this study
 were to evaluate the acceptance of the COVID-19 vaccines and examine the
@@ -50,8 +50,7 @@ immunization strategy to remove the vaccination barriers. To improve vaccine
 acceptance among people, false rumors and misconceptions about the COVID-19
 vaccines must be dispelled (especially on the internet) and people must be
 exposed to the actual scientific facts.
-"
-Acceptance of COVID-19 Vaccine and Its Determinants in Bangladesh,"Background: Bangladesh govt. launched a nationwide vaccination drive against SARS-CoV-2 infection from early February 2021. The objectives of this study were to evaluate the acceptance of the COVID-19 vaccines and examine the factors associated with the acceptance in Bangladesh. Method: In between January 30 to February 6, 2021, we conducted a web-based anonymous cross-sectional survey among the Bangladeshi general population. The multivariate logistic regression was used to identify the factors that influence the acceptance of the COVID-19 vaccination. Results: 61.16% (370/605) of the respondents were willing to accept/take the COVID-19 vaccine. Among the accepted group, only 35.14% showed the willingness to take the COVID-19 vaccine immediately, while 64.86% would delay the vaccination until they are confirmed about the vaccine's efficacy and safety or COVID-19 become deadlier in Bangladesh. The regression results showed age, gender, location (urban/rural), level of education, income, perceived risk of being infected with COVID-19 in the future, perceived severity of infection, having previous vaccination experience after age 18, having higher knowledge about COVID-19 and vaccination were significantly associated with the acceptance of COVID-19 vaccines. Conclusion: The research reported a high prevalence of COVID-19 vaccine refusal and hesitancy in Bangladesh. To diminish the vaccine hesitancy and increase the uptake, the policymakers need to design a well-researched immunization strategy to remove the vaccination barriers. To improve vaccine acceptance among people, false rumors and misconceptions about the COVID-19 vaccines must be dispelled (especially on the internet) and people must be exposed to the actual scientific facts."
+",arxiv-2103.15206
 "MMCoVaR: Multimodal COVID-19 Vaccine Focused Data Repository for Fake
   News Detection and a Baseline Architecture for Classification","  The outbreak of COVID-19 has resulted in an ""infodemic"" that has encouraged
 the propagation of misinformation about COVID-19 and cure methods which, in
@@ -75,7 +74,7 @@ find that the proposed architecture has an F-Score of 0.919 and accuracy of
 for misinformation detection on tweet dataset. This new multimodal dataset can
 be used in research on COVID-19 vaccine, including misinformation detection,
 influence of fake COVID-19 vaccine information, etc.
-"
+",arxiv-2109.06416
 "Projecting the Impact of Covid-19 Variants and Vaccination Strategies in
   Disease Transmission using a Multilayer Network Model in Costa Rica","  For countries starting to receive steady supplies of vaccines against
 SARS-CoV-2, the course of Covid-19 for the following months will be determined
@@ -94,9 +93,7 @@ Delta variant, new Covid-19 hospitalizations and ICU admission would experience
 an average increase of $24.26\%$ and $27.19\%$ respectively in the same period
 if the vaccination pace drops. Our results can help decision-makers better
 prepare for the COVID-19 pandemic in the months to come.
-"
-MMCoVaR: Multimodal COVID-19 Vaccine Focused Data Repository for Fake News Detection and a Baseline Architecture for Classification,"The outbreak of COVID-19 has resulted in an ""infodemic"" that has encouraged the propagation of misinformation about COVID-19 and cure methods which, in turn, could negatively affect the adoption of recommended public health measures in the larger population. In this paper, we provide a new multimodal (consisting of images, text and temporal information) labeled dataset containing news articles and tweets on the COVID-19 vaccine. We collected 2,593 news articles from 80 publishers for one year between Feb 16th 2020 to May 8th 2021 and 24184 Twitter posts (collected between April 17th 2021 to May 8th 2021). We combine ratings from two news media ranking sites: Medias Bias Chart and Media Bias/Fact Check (MBFC) to classify the news dataset into two levels of credibility: reliable and unreliable. The combination of two filters allows for higher precision of labeling. We also propose a stance detection mechanism to annotate tweets into three levels of credibility: reliable, unreliable and inconclusive. We provide several statistics as well as other analytics like, publisher distribution, publication date distribution, topic analysis, etc. We also provide a novel architecture that classifies the news data into misinformation or truth to provide a baseline performance for this dataset. We find that the proposed architecture has an F-Score of 0.919 and accuracy of 0.882 for fake news detection. Furthermore, we provide benchmark performance for misinformation detection on tweet dataset. This new multimodal dataset can be used in research on COVID-19 vaccine, including misinformation detection, influence of fake COVID-19 vaccine information, etc."
-Projecting the Impact of Covid-19 Variants and Vaccination Strategies in Disease Transmission using a Multilayer Network Model in Costa Rica,"For countries starting to receive steady supplies of vaccines against SARS-CoV-2, the course of Covid-19 for the following months will be determined by the emergence of new variants and successful roll-out of vaccination campaigns. To anticipate this scenario, we used a multilayer network model developed to forecast the transmission dynamics of Covid-19 in Costa Rica, and to estimate the impact of the introduction of the Delta variant in the country, under two plausible vaccination scenarios, one sustaining Costa Rica's July 2021 vaccination pace of 30,000 doses per day and with high acceptance from the population and another with declining vaccination pace to 13,000 doses per day and with lower acceptance. Results suggest that the introduction and gradual dominance of the Delta variant would increase Covid-19 hospitalizations and ICU admissions between $35\%$ and $33.25\%$, from August 2021 to December 2021, depending on vaccine administration and acceptance. In the presence of the Delta variant, new Covid-19 hospitalizations and ICU admission would experience an average increase of $24.26\%$ and $27.19\%$ respectively in the same period if the vaccination pace drops. Our results can help decision-makers better prepare for the COVID-19 pandemic in the months to come."
+",arxiv-2109.11425
 "Bayesian hypothesis testing and hierarchical modelling of ivermectin
   effectiveness in treating Covid-19","  Ivermectin is an antiparasitic drug that some have claimed is an effective
 treatment for reducing Covid-19 deaths. To test this claim, two recent peer
@@ -121,8 +118,7 @@ single study by removing one study at a time. In the worst case, where
 to moderate Covid-19. The paper also highlights advantages of using Bayesian
 methods over classical statistical methods for meta-analysis. All studies
 included in the analysis were prior to data on the delta variant.
-"
-Bayesian hypothesis testing and hierarchical modelling of ivermectin effectiveness in treating Covid-19,"Ivermectin is an antiparasitic drug that some have claimed is an effective treatment for reducing Covid-19 deaths. To test this claim, two recent peer reviewed papers both conducted a meta-analysis on a similar set of randomized controlled trials data, applying the same classical statistical approach. Although the statistical results were similar, one of the papers (Bryant et al, 2021) concluded that ivermectin was effective for reducing Covid-19 deaths, while the other (Roman et al, 2021) concluded that there was insufficient quality of evidence to support the conclusion Ivermectin was effective. This paper applies a Bayesian approach, to a subset of the same trial data, to test several causal hypotheses linking Covid-19 severity and ivermectin to mortality and produce an alternative analysis to the classical approach. Applying diverse alternative analysis methods which reach the same conclusions should increase overall confidence in the result. We show that there is strong evidence to support a causal link between ivermectin, Covid-19 severity and mortality, and: i) for severe Covid-19 there is a 90.7% probability the risk ratio favours ivermectin; ii) for mild/moderate Covid-19 there is an 84.1% probability the risk ratio favours ivermectin. To address concerns expressed about the veracity of some of the studies we evaluate the sensitivity of the conclusions to any single study by removing one study at a time. In the worst case, where (Elgazzar 2020) is removed, the results remain robust, for both severe and mild to moderate Covid-19. The paper also highlights advantages of using Bayesian methods over classical statistical methods for meta-analysis. All studies included in the analysis were prior to data on the delta variant."
+",arxiv-2109.13739
 "COVID-19 Diagnosis from Cough Acoustics using ConvNets and Data
   Augmentation","  With the periodic rise and fall of COVID-19 and countries being inflicted by
 its waves, an efficient, economic, and effortless diagnosis procedure for the
@@ -145,4 +141,4 @@ with Data Augmentation further increased the AUC-ROC percentage from 72.23 to
 thus, claiming the top position on the DiCOVA 2021 Challenge leaderboard. This
 paper proposes the use of Mel frequency cepstral coefficients as the feature
 input for the proposed model.
-"
+",arxiv-2110.06123
