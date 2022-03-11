@@ -1,0 +1,507 @@
+title,subtitle,description,Source
+COVID-QU ,,"### COVID-QU-Ex Dataset
+The researchers of Qatar University have compiled the COVID-QU-Ex dataset, which consists of 33,920 chest X-ray (CXR) images including:
+-	11,956 COVID-19
+-	11,263 Non-COVID infections (Viral or Bacterial Pneumonia)
+-	10,701 Normal
+Ground-truth lung segmentation masks are provided for the entire dataset. This is the largest ever created lung mask dataset. 
+
+**If you use  COVID-QU-Ex Dataset in your research, please consider to cite the publications/dataset below:**
+[1] A. M. Tahir, M. E. H. Chowdhury, A. Khandakar, Y. Qiblawey, U. Khurshid, S. Kiranyaz, N. Ibtehaz, M. S. Rahman, S. Al-Madeed, S. Mahmud, M. Ezeddin, K. Hameed, and T. Hamid, “COVID-19 Infection Localization and Severity Grading from Chest X-ray Images”, Computers in Biology and Medicine, vol. 139, p. 105002, 2021, https://doi.org/10.1016/j.compbiomed.2021.105002.
+[2] Anas M. Tahir, Muhammad E. H. Chowdhury, Yazan Qiblawey, Amith Khandakar, Tawsifur Rahman, Serkan Kiranyaz, Uzair Khurshid, Nabil Ibtehaz, Sakib Mahmud, and Maymouna Ezeddin, “COVID-QU-Ex .” Kaggle, 2021, https://doi.org/10.34740/kaggle/dsv/3122958.
+[3] T. Rahman, A. Khandakar, Y. Qiblawey A. Tahir S. Kiranyaz, S. Abul Kashem, M. Islam, S. Al Maadeed, S. Zughaier, M. Khan, M. Chowdhury, ""Exploring the Effect of Image Enhancement Techniques on COVID-19 Detection using Chest X-rays Images,"" Computers in Biology and Medicine, p. 104319, 2021, https://doi.org/10.1016/j.compbiomed.2021.104319.
+[4] A. Degerli, M. Ahishali, M. Yamac, S. Kiranyaz, M. E. H. Chowdhury, K. Hameed, T. Hamid, R. Mazhar, and M. Gabbouj, ""Covid-19 infection map generation and detection from chest X-ray images,"" Health Inf Sci Syst 9, 15 (2021), https://doi.org/10.1007/s13755-021-00146-8.
+[5] M. E. H. Chowdhury, T. Rahman, A. Khandakar, R. Mazhar, M. A. Kadir, Z. B. Mahbub, K. R. Islam, M. S. Khan, A. Iqbal, N. A. Emadi, M. B. I. Reaz, M. T. Islam, ""Can AI Help in Screening Viral and COVID-19 Pneumonia?,"" IEEE Access, vol. 8, pp. 132665-132676, 2020, https://doi.org/10.1109/ACCESS.2020.3010287.
+
+To the best of our knowledge, this is the first study that utilizes both lung and infection segmentation to detect, localize and quantify COVID-19 infection from X-ray images. Therefore, it can assist the medical doctors to better diagnose the severity of COVID-19 pneumonia and follow up the progression of the disease easily.
+
+The experiments were conducted on two CXR sets, where each set is divided into train, validation and test sets: 
+1)	Lung Segmentation Data
+        Entire COVID-QU-Ex dataset (33,920 CXR images with corresponding ground-truth lung masks)
+2)	COVID-19 Infection Segmentation Data
+         A subset of COVID-QU-Ex dataset (1,456 Normal and 1,457 Non-COVID-19 CXRs with corresponding lung mask, plus 2,913 COVID-19 CXRs with 
+         corresponding lung mask from COVID-QU-Ex dataset and corresponding infections masks from QaTaCov19 dataset).
+### References
+In COVID-QU-Ex, the X-ray images are collected from the following repositories and studies:
+•	COVID-19 Samples: [1- 7].
+•	Non-COVID Samples: [8- 10].
+•	Normal Samples: [8- 10].
+
+[1] QaTa-COV19 Database. https://www.kaggle.com/aysendegerli/qatacov19-dataset. Accessed 14 March 2021.
+[2] Covid-19-image-repository. Available: https://github.com/ml-workgroup/covid-19-image-repository/tree/master/png. Accessed 14 March 2021.
+[3] Eurorad. Available: https://www.eurorad.org/. Accessed 14 March 2021.
+[4] Covid-chestxray-dataset. Available: https://github.com/ieee8023/covid-chestxray-dataset. Accessed 14 March 2021.
+[5] COVID-19 DATABASE. Available: https://www.sirm.org/category/senza-categoria/covid-19/. Accessed 14 March 2021.
+[6] Kaggle. (2020). COVID-19 Radiography Database. Available: https://www.kaggle.com/tawsifurrahman/covid19-radiography-database. Accessed 14 March 2021.
+[7] GitHub. (2020). COVID-CXNet. Available: https://github.com/armiro/COVID-CXNet. Accessed 14 March 2021.
+[8] RSNA Pneumonia Detection Challenge. Available: https://www.kaggle.com/c/rsna-pneumonia-detection-challenge/data. Accessed 14 March 2021.
+[9] Chest X-Ray Images (Pneumonia). Available: https://www.kaggle.com/paultimothymooney/chest-xray-pneumonia. Accessed 14 March 2021.
+[10] Medical Imaging Databank of the Valencia Region. PadChest: A large chest x-ray image dataset with multi-label annotated reports. Available: https://bimcv.cipf.es/bimcv-projects/padchest/. Accessed 14 March 2021.",Kaggle
+Huge Dataset - COVID 19 worldwide case,"COVID 19 dataset from Jan 28, 2020  to Jan 8, 2022","### Context
+
+The dataset contains COVID 19 details till Jan 8 2 2022.
+
+
+### Content
+
+It contains 67 columns and 153172 rows
+Column details :
+
+**iso_code:**	 ISO 3166-1 alpha-3 – three-letter country codes
+**continent:**	Continent of the geographical location
+**location:**	Geographical location
+**date:**	Date of observation
+**total_cases:**  Total confirmed cases of COVID-19
+**new_cases:**	New confirmed cases of COVID-19
+**new_cases_smoothed:** New confirmed cases of COVID-19 (7-day smoothed)
+**total_cases_per_million:**	Total confirmed cases of COVID-19 per 1,000,000 people
+**new_cases_per_million:**	New confirmed cases of COVID-19 per 1,000,000 people
+**new_cases_smoothed_per_million:**	New confirmed cases of COVID-19 (7-day smoothed) per 1,000,000 people
+**total_deaths:**	Total deaths attributed to COVID-19
+**new_deaths:**	New deaths attributed to COVID-19
+**new_deaths_smoothed:**	New deaths attributed to COVID-19 (7-day smoothed)
+**total_deaths_per_million:**	Total deaths attributed to COVID-19 per 1,000,000 people
+**new_deaths_per_million:**	New deaths attributed to COVID-19 per 1,000,000 people
+**new_deaths_smoothed_per_million:**	New deaths attributed to COVID-19 (7-day smoothed) per 1,000,000 people
+**excess_mortality:**	 Percentage difference between the reported number of weekly or monthly deaths in 2020–2021 and the projected number of deaths for the same period based on previous years.
+**excess_mortality_cumulative:** 	Percentage difference between the cumulative number of deaths since 1 January 2020 and the cumulative projected deaths for the same period based on previous years.
+**excess_mortality_cumulative_absolute:** 	Cumulative difference between the reported number of deaths since 1 January 2020 and the projected number of deaths for the same period based on previous years.
+**excess_mortality_cumulative_per_million:**  Cumulative difference between the reported number of deaths since 1 January 2020 and the projected number of deaths for the same period based on previous years, per million people. 
+**icu_patients:**	Number of COVID-19 patients in intensive care units (ICUs) on a given day
+**icu_patients_per_million:**	Number of COVID-19 patients in intensive care units (ICUs) on a given day per 1,000,000 people
+**hosp_patients:**	Number of COVID-19 patients in the hospital on a given day
+**hosp_patients_per_million:**	Number of COVID-19 patients in hospital on a given day per 1,000,000 people
+**weekly_icu_admissions**:	 Number of COVID-19 patients newly admitted to intensive care units (ICUs) in a given week
+**weekly_icu_admissions_per_million:**	Number of COVID-19 patients newly admitted to intensive care units (ICUs) in a given week per 1,000,000 people
+**weekly_hosp_admissions:**	Number of COVID-19 patients newly admitted to hospitals in a given week
+**weekly_hosp_admissions_per_million:**	Number of COVID-19 patients newly admitted to hospitals in a given week per 1,000,000 people
+**stringency_index: **   Government Response Stringency Index: composite measure based on 9 response indicators including school closures, workplace closures, and travel bans, rescaled to a value from 0 to 100 (100 = strictest response)
+**reproduction_rate: **	Real-time estimate of the effective reproduction rate (R) of COVID-19. 
+**total_tests:**	Total tests for COVID-19
+**new_tests:**	New tests for COVID-19 (only calculated for consecutive days)
+**total_tests_per_thousand:**	Total tests for COVID-19 per 1,000 people
+**new_tests_per_thousand:**	New tests for COVID-19 per 1,000 people
+**new_tests_smoothed:**	New tests for COVID-19 (7-day smoothed). For countries that don't report testing data on a daily basis, we assume that testing changed equally on a daily basis over any periods in which no data was reported. This produces a complete series of daily figures, which is then averaged over a rolling 7-day window
+**new_tests_smoothed_per_thousand:** New tests for COVID-19 (7-day smoothed) per 1,000 people
+**positive_rate:**	The share of COVID-19 tests that are positive, given as a rolling 7-day average (this is the inverse of tests_per_case)
+**tests_per_case:**	Tests conducted per new confirmed case of COVID-19, given as a rolling 7-day average (this is the inverse of positive_rate)
+**tests_units:**	Units used by the location to report its testing data
+**total_vaccinations:** Total number of COVID-19 vaccination doses administered
+people_vaccinated:	Total number of people who received at least one vaccine dose
+**people_fully_vaccinated:**	Total number of people who received all doses prescribed by the vaccination protocol
+**total_boosters:**	Total number of COVID-19 vaccination booster doses administered (doses administered beyond the number prescribed by the vaccination protocol)
+**new_vaccinations:**	New COVID-19 vaccination doses administered (only calculated for consecutive days)
+**new_vaccinations_smoothed:**	New COVID-19 vaccination doses administered (7-day smoothed). For countries that don't report vaccination data on a daily basis, we assume that vaccination changed equally on a daily basis over any periods in which no data was reported. This produces a complete series of daily figures, which is then averaged over a rolling 7-day window
+**total_vaccinations_per_hundred:**	Total number of COVID-19 vaccination doses administered per 100 people in the total population
+**people_vaccinated_per_hundred:**	Total number of people who received at least one vaccine dose per 100 people in the total population
+**people_fully_vaccinated_per_hundred:**	Total number of people who received all doses prescribed by the vaccination protocol per 100 people in the total population
+**total_boosters_per_hundred:**	Total number of COVID-19 vaccination booster doses administered per 100 people in the total population
+**new_vaccinations_smoothed_per_million:**	New COVID-19 vaccination doses administered (7-day smoothed) per 1,000,000 people in the total population
+**new_people_vaccinated_smoothed:**	Daily number of people receiving their first vaccine dose (7-day smoothed)
+**new_people_vaccinated_smoothed_per_hundred:**	Daily number of people receiving their first vaccine dose (7-day smoothed) per 100 people in the total population
+**population:** latest available values of population
+**population_density:**	Number of people divided by land area, measured in square kilometers, most recent year available
+**median_age:**	Median age of the population, UN projection for 2020
+**aged_65_older:**	Share of the population that is 65 years and older, most recent year available
+**aged_70_older:**	Share of the population that is 70 years and older in 2015
+**gdp_per_capita:**	Gross domestic product at purchasing power parity (constant 2011 international dollars), most recent year available
+**extreme_poverty:**	Share of the population living in extreme poverty, most recent year available since 2010
+**cardiovasc_death_rate:** Death rate from cardiovascular disease in 2017 (annual number of deaths per 100,000 people)
+**diabetes_prevalence:**	Diabetes prevalence (% of population aged 20 to 79) in 2017
+**female_smokers:**	Share of women who smoke, most recent year available
+**male_smokers:**	Share of men who smoke, most recent year available
+**handwashing_facilities:**	Share of the population with basic handwashing facilities on-premises, most recent year available
+**hospital_beds_per_thousand:**	Hospital beds per 1,000 people, most recent year available since 2010
+**life_expectancy:**	Life expectancy at birth in 2019
+**human_development_index: ** A composite index measuring average achievement in three basic dimensions of human development—a long and healthy life, knowledge, and a decent standard of living. 
+
+### Acknowledgements
+
+Hasell, J., Mathieu, E., Beltekian, D. et al. A cross-country database of COVID-19 testing. Sci Data 7, 345 (2020)
+
+### License
+ Creative Commons BY license. 
+
+### Inspiration
+
+visualize the data with the dataset for insights.********",Kaggle
+COVID-19 India Dataset @ IndoML 2021,Detailed COVID-19 Data from Daily Health Bulletins Published by Indian States,"# COVID-19 Datathon @ IndoML 2021
+
+The COVID-19 India Dataset is one of the most comprehensive datasets on the pandemic in India. It aggregates data from health bulletins published online daily by governments of major Indian states. This Datathon event challenges you to flex your brains on this dataset and come up with your own models for analysis, prediction, and insights on the evolution of the pandemic in India.
+
+Unlike the other entries into the IndoML Datathon, this challenge is completely open-ended. This means that there is no specific task to solve. Instead, we want you to push your limits. However, if you do want some sample tasks you can get started with, we have some examples¸below. 
+ 
+[`The Dataset`](https://ibm.biz/covid-data-india) &nbsp; [`Challenge Tasks`](https://github.com/IBM/covid19-india-data/wiki/Challenge-Tasks)
+
+## Participating in the Datathon 
+
++ Join our Slack community and follow instructions pinned to the [#indoml](https://covid-19-india-data.slack.com/archives/C02P3G1EU1H) channel. 
++ Clone this repository and start exploring the COVID-19 India Dataset. 
++ Let your imagination run wild. 🤓 
+
+### 🔢 Submissions
+
+Your final submission will require two elements: 
+
+1. A report documenting your efforts to be judged by our judges, and
+2. A GitHub (or equivalent) link to your code that generated the findings in the report. This could be either a link to a PR merged into this codebase or a standalone repository containing your code. 
+
+[`Submit`](https://forms.gle/XtNko6E7V7ZRTm7h9)
+
+### 🏆 Prizes
+
+Winners at the end of the Datathon will be determined by our selection of judges. The Top 3 participants, as determined by our judges, will receive cash prizes with a combined worth of approximately 75,000 INR. In addition, all major contributors will be invited to join the whitepaper on the COVID-19 India Dataset to include their findings, analysis, and models. **Make sure to read the terms and conditions to ensure eligibility for cash prizes.**
+
+To encourage participation from India, we require that your team must have one collaborator from India. Please make sure to read the terms and conditions before participating.
+ 
+[`Terms and Conditions`](https://india-covid-19-data.mybluemix.net/shared/TnC.pdf) &nbsp; [`Slack`](https://join.slack.com/t/covid-19-india-data/shared_invite/zt-uej5v98i-mjggggkLMASKFbZRXzq4xw) &nbsp; [`Kaggle`](https://www.kaggle.com/dataset/cb06e66c26c46ed9e701be6750e08f956d63c91d1be2bc633d19e201c7704c5b)  
+
+## Timeline 
+
++ **Dec 1 2021** Start of Datathon
++ **Dec 16 - 18** IndoML Symposium
++ **Dec 06 - 14** NeurIPS 2021 (Progress Report)
++ **Jan 31 2022** End of Datathon
++ **Feb 22 - Mar 01 2022** AAAI 2022 (Progress Report)
++ **Mar 01 2022** Winners Announced  
+
+## Judges
+
+Thank you to all our judges and mentors who have joined us to guide our participants along the way. 🙌 
+
++ [Tavpritesh Sethi](https://www.iiitd.ac.in/tavpritesh) 
++ [Biplav Srivastava](https://sc.edu/study/colleges_schools/engineering_and_computing/faculty-staff/srivastava.php)
++ [Pawan Goyal](https://cse.iitkgp.ac.in/~pawang/)
+",Kaggle
+Proyecto 1: Exceso de Muertes por COVID19,Realiza una estimación de las muertes por COVID19 en Latinoamérica,"### Introducción
+
+En este proyecto realizarás un análisis utilizando hojas de cálculo a partir de un conjunto de datos sobre las muertes de COVID-19 en 5 países de latinoamérica. Para realizar este análisis deberás entender los datos, pensar críticamente para determinar los indicadores relevantes y construir visualizaciones que permitan comunicar tus hallazgos. 
+
+### La situación
+
+El fin de semana pasado te encontrabas con un grupo de amigos y amigas reflexionando acerca del impacto de la pandemia en nuestras vidas. En medio de la conversación, alguien preguntó cuál sería el país de Latinoamérica más afectado por la pandemia. Los medios han hablado de [Perú como uno de los países más afectados en el mundo](https://www.elfinanciero.com.mx/mundo/2021/06/05/acuerdo-de-asociacion-transpacifico-peru-debe-rechazarlo-ya-que-afectaria-el-acceso-a-medicamentos/), pero en tu grupo de amistades hay personas de varios países de la región y cada una considera que la situación en su país ha sido tremendamente grave, por lo que no logran ponerse de acuerdo. Luego de un breve debate, deciden que lo mejor para responder la pregunta es ir a los datos y formar un juicio basado no en anécdotas y experiencias personales, sino en datos. 
+
+La conversación entonces se volcó a determinar **qué datos exactamente utilizar para el análisis**. El COVID-19 ha causado contagios, hospitalizaciones, muertes, pérdidas económicas y laborales, daños psicológicos y un sin fin de efectos adicionales. Tu grupo coincide que tratar de abarcar todos los posibles impactos sería excesivo, y determinan que lo más lógico para un análisis inicial es centrarse en **analizar los datos de muertes por consecuencia de la pandemia**. 
+
+Para esto, alguien sugiere simplemente **calcular el total acumulado de muertes COVID-19 reportadas y hacer un ranking de los países**, pero rápidamente se dan cuenta de que eso pondría a Brasil y México naturalmente en las primeras posiciones dado que tienen la mayor cantidad de habitantes y, por lo tanto, la mayor cantidad de muertes. Para comparar “manzanas con manzanas” alguien sugiere utilizar el indicador: **muertes COVID-19 por cada 100 mil habitantes**, y el grupo estuvo de acuerdo. 
+
+Tú decides llevarte la tarea de realizar estos cálculos y regresar al grupo con algunas conclusiones. Sin embargo, justo cuando ya estabas por empezar a buscar los datos oficiales de muertes de COVID-19 de los gobiernos, una compañera mencionó que en algún hilo de Twitter había leído que **las cifras oficiales de muertes por causa de COVID-19 podrían estar subestimando significativamente la cantidad real de muertes**. El hilo hacía referencia a un artículo en un reconocido medio internacional que mencionaba varias razones por las que podría suceder esta subestimación:
+
+&gt; “Primero, las estadísticas oficiales [de muertes COVID-19] en muchos países excluyen a las víctimas que no dieron positivo por coronavirus antes de morir, lo que puede ser una mayoría sustancial en lugares con poca capacidad de realizar pruebas. En segundo lugar, es posible que los hospitales y los registros civiles no procesen los certificados de defunción durante varios días, o incluso semanas, lo que genera retrasos en los datos. Y tercero, la pandemia ha dificultado que los médicos traten otras afecciones y ha disuadido a las personas de ir al hospital, lo que puede haber provocado indirectamente un aumento en las muertes por enfermedades distintas del Covid-19. ” 
+&gt;
+&gt; **The Economist - “La verdaderas muertes de la pandemia”**
+
+Tu amiga propone entonces que **un mejor indicador para analizar el impacto del COVID-19 en la mortalidad de los países es calculando el “exceso de muertes”**. Te explica que esto se calcula tomando el número de personas que murieron por cualquier causa (no solo COVID-19) en un período de tiempo determinado y en un lugar determinado, y comparándolo con las muertes que hubiesen acontecido si COVID-19 no hubiese sucedido - lo cual puede estimarse con una línea base histórica de las muertes que sucedieron durante los últimos años pre-pandemia. Por ejemplo, si en México (un lugar determinado), durante la tercera semana de enero del 2021 (un período de tiempo determinado), se reportaron 44,667 muertes totales (por todas las causas, no solo COVID-19), y sabemos que en los 5 años previos a la pandemia, en esa misma semana, en México, en promedio, murieron 15,454 personas (línea base histórica), podríamos decir que la diferencia de 29,213 muertes (44,667 menos 15,454), pueden ser atribuidas a la pandemia. Es decir, el “exceso de muertes” (comparado con un estimado de los 5 años anteriores) es lo que se atribuye a la pandemia. 
+
+![esquema](https://drive.google.com/uc?export=view&id=1RSELGfobG1ue3wJcmW6NJCy-1T9HfMTy)
+
+Así, el reto que has asumido entonces es **calcular los estimados del exceso de muertes por Covid-19 por cada 100 mil habitantes** y comparar las cifras entre los países de la región
+
+### Entregable
+
+Para considerar completado este proyecto deberás entregar tu copia de la hoja de cálculo (con tu nombre agregado al título) por medio de la [plataforma de aprendizaje](http://app.laboratoria.la).
+
+Tu hoja de cálculo deberá tener, como mínimo, lo siguiente:
+
+- Una tabla comparativa con el total de muertes reportadas por COVID-19 por cada 100 mil habitantes, el total de “exceso de muertes” por cada 100 mil habitantes y la diferencia entre ambas cifras, por país. 
+- Un gráfico que muestre los datos de la tabla anterior en forma de gráfico de barras. 
+- Un gráfico por cada país que muestre el comparativo de la evolución en el tiempo de las muertes reportadas COVID-19 vs. el cálculo de “exceso de muertes” semana a semana, ambos datos por cada 100 mil habitantes.
+- Un gráfico por cada país que muestre las mismas variables que el punto anterior, pero acumuladas en el tiempo.
+
+Además deberás entregar un video de máximo 3 minutos explicando tus conclusiones. Para grabarte te recomendamos la plataforma [Loom](https://www.youtube.com/watch?v=-8mwLqvNOPY).
+
+En la misma plataforma de aprendizaje deberás responder tres preguntas para validar que tus cálculos están correctos. Estas son:
+1. Considerando cifras **por cada 100,000 habitantes**, ¿en qué país se observa ****mayor** diferencia** entre las muertes oficiales COVID reportadas y el estimado de exceso de muertes?
+2. Considerando cifras **por cada 100,000 habitantes**, ¿en qué país se observa **menor** diferencia entre las muertes oficiales COVID reportadas y el estimado de exceso de muertes?
+3. Considerando cifras **por cada 100,000 habitantes**, ¿cuál es el país con el **mayor** número de exceso de muertes?
+
+&gt; 👩‍💻¿Te parece muy complejo? ¡No te preocupes! Hemos preparado una súper [guía paso-a-paso](https://docs.google.com/document/d/1St5QHHGkH37EOY97sKK45q-2tRStAirWRlm_Oob9KzU/edit#heading=h.gjdgxs) para ayudarte a resolver el proyecto. Tenemos confianza que con tu esfuerzo, esta guía y el apoyo de tus compañeras por [Slack](https://join.slack.com/t/certificado-datos-lab/shared_invite/zt-zw3s89lh-lAJTLMEK3f3LHZyBLiMp9g) podrás resolver el proyecto y aprender en el proceso. 
+
+### Objetivos de aprendizaje
+
+Al resolver este proyecto serás capaz de:
+
+- **Organizar datos en hojas de cálculo**: conoces los distintos tipos de datos que acepta una celda y eres capaz de dar formato a monedas, fechas, números para mostrar de mejor forma la información. Adicionalmente ocupas filtros para organizar los datos y puedes ordenar columnas de mayor a menor (o viceversa) según su tipo de dato.
+- **Manipular datos en hojas de cálculo**: utilizas tablas dinámicas para calcular, resumir y analizar datos con el fin de ver comparaciones, patrones y tendencias en ellos. Además, logras conectar dos o más fuentes de datos utilizando la función BUSCAV (VLOOKUP).
+- **Visualizar datos en hojas de cálculo**: confeccionas gráficas de línea y barra para visualizar información con el fin de resumir hallazgos, encontrar patrones o comparar distintas series de datos.
+- **Organizar y comunicar hallazgos**: estructuras tu análisis en un reporte ordenado y claro. Comunicas efectivamente las conclusiones a las que llegaste en tu proyecto.
+
+### Consideraciones generales
+
+- Este proyecto debe ser realizado de forma individual. Sin embargo, como uno de los principios de este programa es la colaboración, te puedes apoyar en tus compañeras a través de la comunidad de Slack.
+- **IMPORTANTE**: el objetivo de este proyecto es que desarrolles las habilidades descritas en los objetivos de aprendizaje. Bajo ninguna circunstancia busca ser una análisis profundo y conclusivo del impacto de la pandemia en América Latina. Ni tampoco buscamos que los cálculos aquí realizados nos lleven a tomar conclusiones apresuradas. Solo buscamos que aprendas y te diviertas. Al mismo tiempo, a pesar de que este proyecto nos recuerda de las pérdidas de personas queridas que han vivido todas y cada una de las personas en el mundo a raíz de la pandemia, reconocemos que este tipo de análisis es el que utilizan líderes mundiales para afrontar la crisis sanitaria y, por ejemplo, definir qué países requieren más asistencia en términos de donaciones de vacunas, oxígeno u otros recursos. También, es un análisis que se hace desde la ciudadanía para exigir una mejor gestión y transparencia a sus gobernantes. Aquí compartimos un par de ejemplos de este análisis de la vida real (artículos en inglés): 
+    - [The Economist: Tracking covid-19 excess deaths across countries](https://www.economist.com/graphic-detail/coronavirus-excess-deaths-tracker)
+    - [Financial Times: Coronavirus tracker: the latest figures as countries fight the Covid-19 resurgence](https://www.ft.com/content/a2901ce8-5eb7-4633-b89c-cbdf5b386938)
+
+¡Te deseamos mucho éxito!
+",Kaggle
+COVID-19 Tracking Germany,Daily Updated Cases & Deaths - Augmented with geospatial & demographics info,"Read the [associated blogpost](https://heads0rtai1s.github.io/2020/04/30/animate-map-covid/) for a detailed description of how this dataset was prepared; plus extra code for producing animated maps.
+ 
+### Context
+
+The 2019 Novel Coronavirus (COVID-19) continues to spread in countries around the world. This dataset provides daily updated number of reported cases & deaths in Germany on the federal state (Bundesland) and county (Landkreis/Stadtkreis) level. In April 2021 I added a dataset on vaccination progress. In addition, I provide geospatial shape files and general state-level population demographics to aid the analysis.
+
+### Content
+
+The dataset consists of thre main csv files: `covid_de.csv`, `demgraphics_de.csv`, and `covid_de_vaccines.csv`. The geospatial shapes are included in the `de_state.*` files. See the column descriptions below for more detailed information.
+
+- `covid_de.csv`: COVID-19 cases and deaths which will be updated daily. The original data are being collected by Germany's [Robert Koch Institute](https://www.rki.de/EN/Home/homepage_node.html) and can be download through the [National Platform for Geographic Data](https://npgeo-corona-npgeo-de.hub.arcgis.com/) (the latter site also hosts an interactive dashboard). I reshaped and translated the data (using R tidyverse tools) to make it better accessible. [This blogpost](https://heads0rtai1s.github.io/2020/04/30/animate-map-covid/) explains how I prepared the data, and describes how to produces animated maps.
+
+- `demographics_de.csv`: General Demographic Data about Germany on the federal state level. Those have been downloaded from Germany's Federal Office for Statistics ([Statistisches Bundesamt](https://www.destatis.de/EN/Home/_node.html)) through their Open Data platform [GENESIS](https://www-genesis.destatis.de/genesis/online/data?operation=sprachwechsel&language=en). The data reflect the (most recent available) estimates on 2018-12-31. You can find the corresponding table [here](https://www-genesis.destatis.de/genesis//online?operation=table&code=12411-0013&bypass=true&levelindex=1&levelid=1615126323625#abreadcrumb ).
+
+- `covid_de_vaccines.csv`: In April 2021 I added this file that contains the Covid-19 vaccination progress for Germany as a whole. It details daily doses, broken down cumulatively by manufacturer, as well as the cumulative number of people having received their first and full vaccination. The earliest data are from 2020-12-27.
+
+- `de_state.*`: Geospatial shape files for Germany's 16 federal states. Downloaded via Germany's [Federal Agency for Cartography and Geodesy ](https://www.bkg.bund.de/EN/Home/home.html). Specifically, the shape file was obtained from [this link](https://gdz.bkg.bund.de/index.php/default/open-data/verwaltungsgebiete-1-2-500-000-stand-01-01-vg2500.html).
+
+
+### Column Description
+
+COVID-19 dataset `covid_de.csv`:
+
+- `state`: Name of the German federal state. Germany has 16 federal states. I removed converted special characters from the original data.
+
+- `county`: The name of the German Landkreis (LK) or Stadtkreis (SK), which correspond roughly to US counties.
+
+- `age_group`: The COVID-19 data is being reported for 6 age groups: 0-4, 5-14, 15-34, 35-59, 60-79, and above 80 years old. As a shortcut the last category I'm using ""80-99"", but there might well be persons above 99 years old in this dataset. This column has a few NA entries.
+
+- `gender`: Reported as male (M) or female (F). This column has a few NA entries.
+
+- `date`: The calendar date of when a case or death were reported. There might be delays that will be corrected by retroactively assigning cases to earlier dates.
+
+- `cases`: COVID-19 cases that have been confirmed through laboratory work. This and the following 2 columns are counts per day, not cumulative counts.
+
+- `deaths`: COVID-19 related deaths.
+
+- `recovered`: Recovered cases.
+
+
+Demographic dataset `demographics_de.csv`:
+
+- `state`, `gender`, `age_group`: same as above. The demographic data is available in higher age resolution, but I have binned it here to match the corresponding age groups in the `covid_de.csv` file.
+
+- `population`: Population counts for the respective categories. These numbers reflect the (most recent available) estimates on 2018-12-31.
+
+
+Vaccination progress dataset `covid_de_vaccines.csv`:
+
+- `date`: calendar date of vaccination
+
+- `doses`, `doses_first`, `doses_second`: Daily count of administered doses: total, 1st shot, 2nd shot.
+
+- `pfizer_cumul`, `moderna_cumul`, `astrazeneca_cumul`: Daily cumulative number of administered vaccinations by manufacturer.
+
+- `persons_first_cumul`, `persons_full_cumul`: Daily cumulative number of people having received their 1st shot and full vaccination, respectively.
+
+
+### Acknowledgements
+
+All the data have been extracted from open data sources which are being gratefully acknowledged:
+
+- The [Robert Koch Institute](https://www.rki.de/EN/Home/homepage_node.html) for collecting, verifying, and publishing the COVID-19 cases.
+
+- The [National Platform for Geographic Data](https://npgeo-corona-npgeo-de.hub.arcgis.com/) provided by [ESRI Germany](https://www.esri.de/de-de/home) for the COVID-19 dashboard and data access.
+
+- The [Statistisches Bundesamt](https://www.destatis.de/EN/Home/_node.html)) and their open data platform [GENESIS](https://www-genesis.destatis.de/genesis/online/data?operation=sprachwechsel&language=en) for providing access to detailed demographic information about Germany.
+
+- The [Federal Agency for Cartography and Geodesy](https://www.bkg.bund.de/EN/Home/home.html) for providing geospatial shape files.
+
+- The website [Impfdashboard.de](https://impfdashboard.de/) for providing up-to-date vaccination numbers.
+
+
+### Licence
+
+The demographic data & geospatial shape files are being licensed via the  ""Data licence Germany – attribution – Version 2.0"" available [here](https://www.govdata.de/dl-de/by-2-0). 
+
+
+### Version Notes
+
+- Version 8: The source data was incomplete on 2020-04-04, therefore the file `covid_de.csv` remained unchanged. I added county-level shape files.
+
+- Version 11: A `recovered` column was added to the main `covid_de.csv` file. This reflects the addition of daily counts of recovered cases to the source data. In addition, the 2020-04-07 source data was incomplete and I didn't upload a new update that day.
+
+- Version 13: The previous day 2020-04-10 had incomplete source data and I didn't upload a new update that day.",Kaggle
+COVID19_datasets,COVID-19 datasets obtained from github.com/nytimes/covid-19-data/ and cdc sites,"Collected COVID-19 datasets from various sources as part of DAAN-888 course, Penn State, Spring 2022.
+Collaborators: Mohamed Abdelgayed, Heather Beckwith, Mayank Sharma, Suradech Kongkiatpaiboon, and Alex Stroud
+
+**1 - COVID-19 Data in the United States **
+Source:  The data is collected from multiple public health official sources by NY Times journalists and compiled in one single file. 
+Description:  Daily count of new COVID-19 cases and deaths for each state. Data is updated daily and runs from 1/21/2020 to 2/4/2022. 
+URL:  https://github.com/nytimes/covid-19-data/blob/master/us-states.csv 
+Data size:  38,814 row and 5 columns.  
+
+**2 - Mask-Wearing Survey Data **
+Source:  The New York Times is releasing estimates of mask usage by county in the United States. 
+Description:  This data comes from a large number of interviews conducted online by the global data and survey firm Dynata, at the request of The New York Times. The firm asked a question about mask usage to obtain 250,000 survey responses between July 2 and July 14, enough data to provide estimates more detailed than the state level. 
+URL:  https://github.com/nytimes/covid-19-data/blob/master/mask-use/mask-use-by-county.csv 
+Data size:  3,142 rows and 6 columns 
+
+**3a - Vaccine Data – Global **
+Source: This data comes from the US Centers for Disease Control and Prevention (CDC), Our World in Data (OWiD) and the World Health Organization (WHO). 
+Description:  Time series data of vaccine doses administered and the number of fully and partially vaccinated people by country.  This data was last updated on February 3, 2022 
+URL: https://github.com/govex/COVID-19/blob/master/data_tables/vaccine_data/global_data/time_series_covid19_vaccine_global.csv  
+Data Size: 162,521 rows and 8 columns 
+
+**3b -Vaccine Data – United States **
+Source: The data is comprised of individual State's public dashboards and data from the US Centers for Disease Control and Prevention (CDC). 
+Description: Time series data of the total vaccine doses shipped and administered by manufacturer, the dose number (first or second) by state. This data was last updated on February 3, 2022. 
+URL: https://github.com/govex/COVID-19/blob/master/data_tables/vaccine_data/us_data/time_series/vaccine_data_us_timeline.csv  
+Data Size: 141,503 rows and 13 columns 
+
+**4 - Testing Data **
+Source: The data is comprised of individual State's public dashboards and data from the U.S. Department of Health & Human Services. 
+Description:  Time series data of total tests administered by county and state. This data was last updated on January 25, 2022. 
+URL: https://github.com/govex/COVID-19/blob/master/data_tables/testing_data/county_time_series_covid19_US.csv  
+Data size:  322,154 rows and 8 columns 
+
+**5 – US State and Territorial Public Mask Mandates **
+Source:  Data from state and territory executive orders, administrative orders, resolutions, and proclamations is gathered from government websites and cataloged and coded by one coder using Microsoft Excel, with quality checking provided by one or more other coders. 
+Description:  US State and Territorial Public Mask Mandates from April 10, 2020 through August 15, 2021 by County by Day 
+URL:  https://data.cdc.gov/Policy-Surveillance/U-S-State-and-Territorial-Public-Mask-Mandates-Fro/62d6-pm5i 
+Data Size:  1,593,869 rows and 10 columns 
+ 
+**6 – Case Counts & Transmission Level   **
+Source:  This open-source dataset contains seven data items that describe community transmission levels across all counties. This dataset provides the same numbers used to show transmission maps on the COVID Data Tracker and contains reported daily transmission levels at the county level. The dataset is updated every day to include the most current day's data. The calculating procedures below are used to adjust the transmission level to low, moderate, considerable, or high.   
+Description: US State and County case counts and transmission level from 16-Aug-2021 to 03-Feb-2022 
+URL:  https://data.cdc.gov/Public-Health-Surveillance/United-States-COVID-19-County-Level-of-Community-T/8396-v7yb 
+Data Size: 550,702 rows and 7 columns   
+
+**7 - World Cases & Vaccination Counts **
+Source: This is an open-source dataset collected and maintained by Our World in Data. OWID provides research and data to help against the world’s largest problems.  
+Description: This dataset includes vaccinations, tests & positivity, hospital & ICU, confirmed cases, confirmed deaths, reproduction rate, policy responses and other variables of interest. 
+URL: https://github.com/owid/covid-19-data/tree/master/public/data 
+Data Size: 67 columns and 157,000 rows 
+
+**8 - COVID-19 Data in the European Union **
+Source: This is an open-source dataset collected and maintained by ECDC. It is an EU agency aimed at strengthening Europe's defenses against infectious diseases.  
+Description: This dataset contains information on COVID-19 vaccinations in the EU/EEA region. This dataset includes weekly vaccination counts (split into first, second and booster dose), vaccine name, country, population, and region. 
+URL: https://www.ecdc.europa.eu/en/covid-19/data 
+Data Size: 14 columns and 221,000 rows 
+
+**9 – State and County FIPS **
+Source: A single GitHub user created this dataset to act as a tool for linking county identifiers to the county name.  
+Description:  The Federal Information Processing System (FIPS) code for each county in the United States with the county name, state name, region, and division.  
+URL: https://github.com/kjhealy/fips-codes/blob/master/county_fips_master.csv 
+Data Size: 3,147 rows and 13 columns ",Kaggle
+ICC T20 World Cup 2021 Tweets 🏏,Explore the tweets made by fans with the #T20Worldcup hashtag,"
+![](https://www.timesofsports.com/wp-content/uploads/2021/10/T20-World-cup-2021.png)
+### Content
+
+The 2021 ICC Men's T20 World Cup is the seventh ICC Men's T20 World Cup tournament, with the matches taking place in the United Arab Emirates and Oman from 17 October to 14 November 2021. The West Indies are the defending champions.
+
+There was due to be a preceding 2020 T20 World Cup held in Australia from 18 October to 15 November 2020, but in July 2020, the International Cricket Council (ICC) confirmed that this tournament had been postponed, due to the COVID-19 pandemic. In August 2020, the ICC confirmed that India would host the 2021 tournament as planned, with Australia being named as the host for the succeeding 2022 tournament. However, in June 2021, the ICC announced that the tournament had been moved to the United Arab Emirates due to growing concerns over the COVID-19 pandemic situation in India, and a possible third wave of the pandemic in the country. The tournament began on 17 October 2021, with the tournament's final scheduled to be played on 14 November 2021. The preliminary rounds of the tournament were played in the UAE and Oman.
+
+
+### Acknowledgements
+
+### Content
+
+The tweets have the #T20WorldCup hashtag. The collection started on 20/10/2021 and will be updated on a daily basis.
+
+### Information regarding the data 
+
+The data totally consists of 11,000+ records with 13 columns. The description of the features is given below
+| No |Columns | Descriptions |
+| -- | -- | -- |
+| 1 | user_name | The name of the user, as they’ve defined it.  |
+| 2 | user_location | The user-defined location for this account’s profile. |
+| 3 | user_description | The user-defined UTF-8 string describing their account. |
+| 4 | user_created | Time and date, when the account was created. |
+| 5 | user_followers | The number of followers an account currently has. |
+| 6 | user_friends | The number of friends an account currently has. |
+| 7 | user_favourites | The number of favorites an account currently has |
+| 8 | user_verified | When true, indicates that the user has a verified account |
+| 9 | date | UTC time and date when the Tweet was created |
+| 10 | text | The actual UTF-8 text of the Tweet |
+| 11 | hashtags | All the other hashtags posted in the tweet along with #T20WorldCup |
+| 12 | source | Utility used to post the Tweet, Tweets from the Twitter website have a source value - web  |
+| 13 | is_retweet | Indicates whether this Tweet has been Retweeted by the authenticating user. |
+
+
+### Starter Notebook: 
+[ICC T20 Worldcup 2021 Tweets EDA ](https://www.kaggle.com/kaushiksuresh147/icc-t20-worldcup-2021-tweets-eda)
+
+### Inspiration
+You can use this data to dive into the subjects that use this hashtag, look to the geographical distribution, evaluate sentiments, looks to trends.",Kaggle
+COVID-19 Indonesia Dataset (Case and Vaccination),COVID-19 Daily Case and Vaccination Progress  Dataset in Indonesia,"### Context
+
+Since the first time the Covid 19 case in Indonesia attacked, which was announced for the first time on March 2, 2020, it has affected many fields such as the economy to education. many companies or businesses are bankrupt and education is not running properly which is very likely to cause a decline in the academic ability of the nation's young generation. In 2021, Indonesia has started efforts to solve this pandemic through one way, namely vaccines. Several vaccines are used, one of which is Sinovac and will then follow the Nusantara Vaccine.
+
+The reason I created this dataset is not only because I am still pursuing my first professional career (im fresher guys😄 )which is still unclear and also provides data which can then be processed as insight to convince the public that this pandemic will end soon🔥 .
+
+
+### Content
+
+This data was scraped from several source ( I'll write it down in the Acknowledgments section) on March, 15 2021 by Thoriqul Aziz👋 
+
+Some data represented all province in Indonesia
+
+The records of each location (province/city/regency) have different date first case or first vaccinated. but the announcement of first case is March, 2 2020 and first vaccination in January, 13 2021
+
+Indonesia Coronavirus daily data Columns Description:
+- **Date:** Means the Date of Observation
+- **Province:** Means Location/ Province which the data was observed
+- **Daily_Case:** Means Daily new number of confirmed case in observed province
+- **Daily_Death:** Means Daily new number of confirmed death in observed province
+- **Daily_Recovered:** Means Daily new number of confirmed recover in observed province
+- **Active_Case:** Means Daily new number of active case such as isolated or threated in hospital (still didnt recover nor die)
+- **Cumulative_Case:** Means total for each day number number of confirmed case of the row's date, for the row's province
+- **Cumulative_Recovered:** Means total for each day number number of confirmed Recover of the row's date, for the row's province
+- **Cumulative_Death:** Means total for each day  number of confirmed death of the row's date, for the row's province
+- **Cumulative_Active_Case:** Means total for each day number of active case of the row's date, for the row's province
+
+Vaccination Data columns Description:
+- **City_or_Regency:** Location which data was observed (regency or city)
+- **Vaccinated:** Total person who get Vaccinated ( first vaccination)
+- **Fully_Vaccinated:** Total person who get Full Vaccinated (second vaccination)
+- **Total:** Total vaccin each day each location
+- **Date:** Date of observation
+- **URL:** Source of Data
+
+### Acknowledgements
+
+All data present in this dataset is get or scraped from:
+1. [covid19.go.id](https://covid19.go.id/peta-sebaran)
+2. [Diskominfo JATIM Twitter Account](https://twitter.com/KominfoJatim)
+
+
+### Inspiration
+
+From this data, you can makes some visualization from trend in several province in indonesia.
+you can also combine this dataset with  other dataset like GDP Each Province or news in some point time like Lebaran, christmas day, or last PILKADA(regional head elections) in order to get insight and effect of these events on the progression of Covid-19 
+
+### Source
+images cover : [Unsplash](https://unsplash.com/photos/_ts3NfjvaXo?utm_source=unsplash&utm_medium=referral&utm_content=creditShareLink)",Kaggle
+Covid-19 in Singapore : Latest Detailed Data,Latest and regularly updated covid 19 in Singapore dataset,"### Latest Covid 19 Data of Singapore 
+
+Data with detailed columns and metrics such as breakdown of cases - local,  imported, linked, unlinked, ICU, Oxygen Requirements etc. In Singapore, from 3 January 2020 to14 October 2021, there have been 135,395 confirmed cases of COVID-19 with 192 deaths, reported to WHO. As of 8 October 2021, a total of 9,401,855 vaccine doses have been administered.
+
+### Inspiration
+Some insights could be
+
+- Changes in number of affected cases over time
+- Change in cases over time at country level
+- Latest number of affected cases
+
+## Acknowledgements 
+
+Originally Collected and Maintained by : 
+- Ministry of Health (MOH) Singapore
+- Hui Xiang Chu (https://twitter.com/hxchuaruns)
+",Kaggle
+covid-19 data of india,Weekly/Dialy Updated covid-19 dataset of india,"[![forthebadge](https://forthebadge.com/images/badges/made-with-python.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/uses-git.svg)](https://forthebadge.com)
+
+### Want Dialy Updated?
+Head to the github repo of this dataset
+
+### Want something to be added?
+Then make tell me about what you need to be added in the discussion section.
+
+
+### Source
+covid19india.org
+
+# License
+[CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)
+
+### About Covid-19
+The COVID-19 pandemic, also known as the coronavirus pandemic, is an ongoing pandemic of coronavirus disease 2019 (COVID-19) caused by severe acute respiratory syndrome coronavirus 2 (SARS-CoV-2). It was first identified in December 2019 in Wuhan, China. The World Health Organization declared the outbreak a Public Health Emergency of International Concern in January 2020 and a pandemic in March 2020. As of 8 March 2021, more than 117 million cases have been confirmed, with more than 2.59 million deaths attributed to COVID-19, making it one of the deadliest pandemics in history. [wikipedia](https://en.wikipedia.org/wiki/Covid-19_pandemic)",Kaggle
