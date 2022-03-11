@@ -5,17 +5,21 @@ import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import SearchButton from './components/serachbutton';
 import SearchField from './components/search';
+import UseSwitchesCustom from './components/toggle';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import Options from './components/options'
 import Box from '@mui/material/Box';
 import research_logo from './logos/Re-Search-logos_transparent.png';
 
+import Switch from '@mui/material/Switch';
+
 
 function App() {
 
   const [search, setSearch] = React.useState('');
   const [json, setJson] = React.useState({Results:[]});
+  const label = { inputProps: { 'aria-label': 'Switch demo' } };
 
 
   function Search() {
@@ -26,6 +30,17 @@ function App() {
     });
   }
 
+  function BasicSwitches() {
+    return (
+      <div>
+        <Switch {...label} defaultChecked />
+        <Switch {...label} />
+        <Switch {...label} disabled defaultChecked />
+        <Switch {...label} disabled />
+      </div>
+    );
+  }
+  
   function TextEntered(searchval) {
     setSearch(searchval);
   }
@@ -37,9 +52,16 @@ function App() {
       marginLeft: '5em',
       marginRight: '5em'
     }}>
-      {/* <div className="logo"> */}
+    <div className="toggle_switch" id="toggle_switch">
+      <UseSwitchesCustom  float="right" parentCallback={BasicSwitches} />
+      {/* display='flex' justifyContent="flex-end"  
+      tried:
+      flaot:right
+      */}
+    </div>  ;
+
+
       <img src={research_logo} width="300em" height="150em" />
-      {/* </div> */}
       <div className='SearchOptions' style={{
       }}>
         <SearchField
