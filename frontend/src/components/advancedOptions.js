@@ -124,10 +124,7 @@ export default function SwipeableTemporaryDrawer() {
           </Stack>
         </LocalizationProvider>
 
-
-
       </List>
-
 
       <Divider />
 

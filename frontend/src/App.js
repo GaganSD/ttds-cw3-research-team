@@ -26,6 +26,7 @@ function App() {
   function Search() {
     return fetch('http://127.0.0.1:5000/' + search).then(response => response.json()).then(data => {
       console.log(data);
+
       setJson(data);
       console.log(json);
     });
