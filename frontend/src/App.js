@@ -1,9 +1,9 @@
-import logo from './logo.svg';
 import './App.css';
 import * as React from 'react';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
-import SearchButton from './components/serachbutton';
+import SearchButton from './components/SearchButton';
+import QEButton from './components/QueryExpansionButton';
 import SearchField from './components/search';
 import UseSwitchesCustom from './components/toggle';
 import { styled } from '@mui/material/styles';
@@ -24,6 +24,68 @@ function App() {
   const label = { inputProps: { 'aria-label': 'Switch demo' } };
 
   function Search() {
+    return fetch('http://127.0.0.1:5000/' + search).then(response => response.json()).then(data => {
+      console.log(data);
+
+      setJson(data);
+      console.log(json);
+    });
+  }
+
+  function standardize_dates(string_date) {
+    string_date=string_date.replaceAll('-','/');
+    string_date = string_date.replace(/\s+/g,"");
+
+    var _format="d/m/y"
+    var formatItems=_format.split('/');
+    var dateItems=string_date.split('/');
+    var dayIndex=formatItems.indexOf("d");
+    var monthIndex=formatItems.indexOf("m");
+    var yearIndex=formatItems.indexOf("y");
+    var yr = parseInt(dateItems[yearIndex]);
+    if (yr<100 && yr<=21){ //handling 2 digit years
+        var year="20"+yr;
+    }
+    else if (yr<100){
+        var year="19"+yr;
+    }
+    else{
+      var year = yr;
+    }
+
+    if (isNaN(dateItems[monthIndex])){ //in case the month is written as a word
+      var d = new Date(string_date);
+    }
+    else {
+      var month=parseInt(dateItems[monthIndex]);
+      month-=1;
+      var d = new Date(year,month,dateItems[dayIndex]);
+    }
+
+    let formatted = [String ("0" + d.getDate()).slice(-2), String ("0" + (d.getMonth() +1)).slice(-2), d.getFullYear()].join('/');
+
+    return formatted;
+  }
+
+  var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+  function abstractgenerator(text){
+    if (text!=""){
+      if (isMobile){
+        return text.substring(0,100)+"..."
+      }
+      else{
+        return text.substring(0,500)+"..."
+      }
+    }
+  }
+
+  function authorlist(authors){
+    return authors    
+  }
+
+
+  function QueryExpansion() {
     return fetch('http://127.0.0.1:5000/' + search).then(response => response.json()).then(data => {
       console.log(data);
 
@@ -73,28 +135,26 @@ function App() {
 
       </div>
       <SwipeableTemporaryDrawer/>
+      <ButtonGroup variant="contained" aria-label="outlined primary button group">
       <SearchButton parentCallback={Search} />
+      <QEButton parentCallback={QueryExpansion} />
+      </ButtonGroup>
       <div>
-        {json.Results.map((name, key) => {
-            return <Box bgcolor="#E8E8E8"
-            //  display="flex" //probably dont need this anymore but keeping it here just in case...
-            //  sx={{ overflow: 'auto' }}
-            //  sx={{ width: '50%' }}
-            //  style={{justifyContent: "center"}}
-            //  style={{alignItems: "center"}}
-            //  style={{position: "relative"}}
-              marginTop={1}
-              padding={2}
-            >
-              <p key={key}>
-                <p><font COLOR="grey" SIZE="2" face="Arial">{name.url}</font></p>
-                <a href={name.url}><font COLOR="green" SIZE="5" face="Arial">{name.title}</font></a>
-                <p><font COLOR="grey" face="Arial">{name.date}</font></p>
-                <p><font face="Arial">{name.description}</font></p>
-                <p><font face="Arial">Author(s): {name.authors}</font></p>
-              </p></Box>;
-          
-        })}
+        {json.Results.map(curr_element => {
+          let std_date = standardize_dates(curr_element.date);
+
+            return <Box
+            padding={1}
+           // if statements: one for modile devices, one for all desktops. 
+           >
+             <p>
+               <p><font COLOR="grey" SIZE="2" face="Arial">{curr_element.url}</font></p>
+               <a href={curr_element.url}><font COLOR="green" SIZE="5" face="Arial">{curr_element.title}</font></a>
+               <p><font COLOR="grey" face="Arial">{std_date}</font></p>
+               <p><font face="Arial">{abstractgenerator(curr_element.description)}</font></p>
+               <p><font face="Arial">{authorlist(curr_element.authors)}</font></p>
+             </p></Box>;
+         })} 
       </div>
     </div>
   )
