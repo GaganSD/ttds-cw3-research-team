@@ -142,3 +142,88 @@ thus, claiming the top position on the DiCOVA 2021 Challenge leaderboard. This
 paper proposes the use of Mel frequency cepstral coefficients as the feature
 input for the proposed model.
 ",arxiv-2110.06123
+"The effect of COVID-19 vaccinations on self-reported depression and
+  anxiety during February 2021","  Using the COVID-19 Trends and Impacts Survey (CTIS), we examine the effect of
+COVID-19 vaccinations on (self-reported) feelings of depression and anxiety
+(""depression""), isolation, and worries about health, among vaccine-accepting
+survey respondents during February 2021. Assuming no unmeasured confounding, we
+estimate that vaccinations caused a -4.3 (-4.7, -3.8), -3.4 (-3.9, -2.9), and
+-4.8 (-5.4, -4.1) percentage point change in these outcomes, respectively. We
+further argue that these effects provide a lower bound on the mental health
+burden of the pandemic, implying that the COVID-19 pandemic was responsible for
+at least a 28.6 (25.3, 31.9) percent increase in feelings of depression and a
+20.5 (17.3, 23.6) percent increase in feelings of isolation during February
+2021 among vaccine-accepting CTIS survey respondents. We also posit a model
+where vaccinations affect depression through worries about health and feelings
+of isolation, and estimate the proportion mediated by each pathway. We find
+that feelings of social isolation is the stronger mediator, accounting for 41.0
+(37.3, 44.7) percent of the total effect, while worries about health accounts
+for 9.4 (7.6, 11.1) percent of the total effect. We caution that the causal
+interpretation of these findings rests on strong assumptions. Nevertheless, as
+the pandemic continues, policymakers should also target interventions aimed at
+managing the substantial mental health burden associated with the COVID-19
+pandemic.
+",arxiv-2110.06834
+"COVID-19 Vaccine and Social Media: Exploring Emotions and Discussions on
+  Twitter","  The understanding of the public response to COVID-19 vaccines is the key
+success factor to control the COVID-19 pandemic. To understand the public
+response, there is a need to explore public opinion. Traditional surveys are
+expensive and time-consuming, address limited health topics, and obtain
+small-scale data. Twitter can provide a great opportunity to understand public
+opinion regarding COVID-19 vaccines. The current study proposes an approach
+using computational and human coding methods to collect and analyze a large
+number of tweets to provide a wider perspective on the COVID-19 vaccine. This
+study identifies the sentiment of tweets using a machine learning rule-based
+approach, discovers major topics, explores temporal trend and compares topics
+of negative and non-negative tweets using statistical tests, and discloses top
+topics of tweets having negative and non-negative sentiment. Our findings show
+that the negative sentiment regarding the COVID-19 vaccine had a decreasing
+trend between November 2020 and February 2021. We found Twitter users have
+discussed a wide range of topics from vaccination sites to the 2020 U.S.
+election between November 2020 and February 2021. The findings show that there
+was a significant difference between tweets having negative and non-negative
+sentiment regarding the weight of most topics. Our results also indicate that
+the negative and non-negative tweets had different topic priorities and
+focuses. This research illustrates that Twitter data can be used to explore
+public opinion regarding the COVID-19 vaccine.
+",arxiv-2108.04816
+"Associational and plausible causal effects of COVID-19 public health
+  policies on economic and mental distress","  Background The COVID-19 pandemic has increased mental distress globally. The
+proportion of people reporting anxiety is 26%, and depression is 34% points.
+Disentangling associational and causal contributions of behavior, COVID-19
+cases, and economic distress on mental distress will dictate different
+mitigation strategies to reduce long-term pandemic-related mental distress.
+Methods We use the Household Pulse Survey (HPS) April 2020 to February 2021
+data to examine mental distress among U.S. citizens attributable to COVID-19.
+We combined HPS survey data with publicly available state-level weekly:
+COVID-19 case and death data from the Centers for Disease Control, public
+policies, and Apple and Google mobility data. Finally, we constructed economic
+and mental distress measures to estimate structural models with lag dependent
+variables to tease out public health policies' associational and causal path
+coefficients on economic and mental distress. Findings From April 2020 to
+February 2021, we found that anxiety and depression had steadily climbed in the
+U.S. By design, mobility restrictions primarily affected public health policies
+where businesses and restaurants absorbed the biggest hit. Period t-1 COVID-19
+cases increased job loss by 4.1% and economic distress by 6.3% points in the
+same period. Job-loss and housing insecurity in t-1 increased period t mental
+distress by 29.1% and 32.7%, respectively. However, t-1 food insecurity
+decreased mental distress by 4.9% in time t. The pandemic-related potential
+causal path coefficient of period t-1 economic distress on period t depression
+is 57.8%, and anxiety is 55.9%. Thus, we show that period t-1 COVID-19 case
+information, behavior, and economic distress may be causally associated with
+pandemic related period t mental distress.
+",arxiv-2112.11564
+"The African School of Fundamental Physics and Applications Activity
+  Report 2019-2021","  The sixth edition of the African School of Fundamental and Applied Physics
+(ASP) was planned for Morocco in July 2020 and was referred to as ASP2020.
+Preparations were at an advanced stage when ASP2020 was postponed because of
+the COVID-19 pandemic. The three-week event was restructured into two
+activities in 2021 -- an online event on July 19-30, 2021 and a hybrid event on
+December 12-18, 2021 -- and was renamed ASP2021. At the beginning of the
+COVID-19 pandemic, an online lecture series was integrated into the ASP
+activities. The ASP mentorship program, which consists of online engagements
+between lecturers and assigned mentees, continued in this way. ASP alumni
+studied one year of COVID-19 data of ten African countries to offer insights
+into pandemic containment measures. In this note, we report on ASP activities
+since the last in-person edition of ASP in 2018 in Namibia.
+",arxiv-2109.00509

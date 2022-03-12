@@ -1,0 +1,333 @@
+title,abstract,id
+R00 at NLP4IF-2021 Fighting COVID-19 Infodemic with Transformers and More Transformers,"This paper describes the winning model in the Arabic NLP4IF shared task for fighting the COVID-19 infodemic. The goal of the shared task is to check disinformation about COVID-19 in Arabic tweets. Our proposed model has been ranked 1st with an F1-Score of 0.780 and an Accuracy score of 0.762. A variety of transformer-based pre-trained language models have been experimented with through this study. The best-scored model is an ensemble of AraBERT-Base, Asafya-BERT, and ARBERT models. One of the study’s key findings is showing the effect the pre-processing can have on every model’s score. In addition to describing the winning model, the current study shows the error analysis.",p
+Reproducibility of COVID-19 pre-prints,"  To examine the reproducibility of COVID-19 research, we create a dataset of
+pre-prints posted to arXiv, bioRxiv, medRxiv, and SocArXiv between 28 January
+2020 and 30 June 2021 that are related to COVID-19. We extract the text from
+these pre-prints and parse them looking for keyword markers signalling the
+availability of the data and code underpinning the pre-print. For the
+pre-prints that are in our sample, we are unable to find markers of either open
+data or open code for 75 per cent of those on arXiv, 67 per cent of those on
+bioRxiv, 79 per cent of those on medRxiv, and 85 per cent of those on SocArXiv.
+We conclude that there may be value in having authors categorize the degree of
+openness of their pre-print as part of the pre-print submissions process, and
+more broadly, there is a need to better integrate open science training into a
+wide range of fields.
+",a
+"COVID-19 Pneumonia and Influenza Pneumonia Detection Using Convolutional
+  Neural Networks","  In the research, we developed a computer vision solution to support
+diagnostic radiology in differentiating between COVID-19 pneumonia, influenza
+virus pneumonia, and normal biomarkers. The chest radiograph appearance of
+COVID-19 pneumonia is thought to be nonspecific, having presented a challenge
+to identify an optimal architecture of a convolutional neural network (CNN)
+that would classify with a high sensitivity among the pulmonary inflammation
+features of COVID-19 and non-COVID-19 types of pneumonia. Rahman (2021) states
+that COVID-19 radiography images observe unavailability and quality issues
+impacting the diagnostic process and affecting the accuracy of the deep
+learning detection models. A significant scarcity of COVID-19 radiography
+images introduced an imbalance in data motivating us to use over-sampling
+techniques. In the study, we include an extensive set of X-ray imaging of human
+lungs (CXR) with COVID-19 pneumonia, influenza virus pneumonia, and normal
+biomarkers to achieve an extensible and accurate CNN model. In the
+experimentation phase of the research, we evaluated a variety of convolutional
+network architectures, selecting a sequential convolutional network with two
+traditional convolutional layers and two pooling layers with maximum function.
+In its classification performance, the best performing model demonstrated a
+validation accuracy of 93% and an F1 score of 0.95. We chose the Azure Machine
+Learning service to perform network experimentation and solution deployment.
+The auto-scaling compute clusters offered a significant time reduction in
+network training. We would like to see scientists across fields of artificial
+intelligence and human biology collaborating and expanding on the proposed
+solution to provide rapid and comprehensive diagnostics, effectively mitigating
+the spread of the virus
+",a
+"Using Self-Supervised Feature Extractors with Attention for Automatic
+  COVID-19 Detection from Speech","  The ComParE 2021 COVID-19 Speech Sub-challenge provides a test-bed for the
+evaluation of automatic detectors of COVID-19 from speech. Such models can be
+of value by providing test triaging capabilities to health authorities, working
+alongside traditional testing methods. Herein, we leverage the usage of
+pre-trained, problem agnostic, speech representations and evaluate their use
+for this task. We compare the obtained results against a CNN architecture
+trained from scratch and traditional frequency-domain representations. We also
+evaluate the usage of Self-Attention Pooling as an utterance-level information
+aggregation method. Experimental results demonstrate that models trained on
+features extracted from self-supervised models perform similarly or outperform
+fully-supervised models and models based on handcrafted features. Our best
+model improves the Unweighted Average Recall (UAR) from 69.0\% to 72.3\% on a
+development set comprised of only full-band examples and achieves 64.4\% on the
+test set. Furthermore, we study where the network is attending, attempting to
+draw some conclusions regarding its explainability. In this relatively small
+dataset, we find the network attends especially to vowels and aspirates.
+",a
+A tipping point for open citation data,"  Open citation data can improve the transparency and robustness of scientific
+portfolio analysis, improve science policy decision-making, stimulate
+downstream commercial activity, and increase the discoverability of scientific
+articles. Once sparsely populated, public-domain citation databases crossed a
+threshold of one billion citations in February 2021, during the COVID-19
+pandemic. Shortly thereafter, the threshold of one billion public-domain
+citations from the Crossref database alone. Since the relative advantage of
+withholding data in closed databases has diminished with the flood of
+public-domain data, this likely constitutes an irreversible change in the
+citation data ecosystem. The successes of this movement can guide future open
+data efforts.
+",a
+LaDiff ULMFiT: A Layer Differentiated training approach for ULMFiT,"  In our paper, we present Deep Learning models with a layer differentiated
+training method which were used for the SHARED TASK@ CONSTRAINT 2021 sub-tasks
+COVID19 Fake News Detection in English and Hostile Post Detection in Hindi. We
+propose a Layer Differentiated training procedure for training a pre-trained
+ULMFiT arXiv:1801.06146 model. We used special tokens to annotate specific
+parts of the tweets to improve language understanding and gain insights on the
+model making the tweets more interpretable. The other two submissions included
+a modified RoBERTa model and a simple Random Forest Classifier. The proposed
+approach scored a precision and f1 score of 0.96728972 and 0.967324832
+respectively for sub-task ""COVID19 Fake News Detection in English"". Also,
+Coarse-Grained Hostility f1 Score and Weighted FineGrained f1 score of 0.908648
+and 0.533907 respectively for sub-task Hostile Post Detection in Hindi. The
+proposed approach ranked 61st out of 164 in the sub-task ""COVID19 Fake News
+Detection in English and 18th out of 45 in the sub-task Hostile Post Detection
+in Hindi"".
+",a
+"Nuclear History, Politics, and Futures from (A)toms-to(Z)oom: Design and
+  Deployment of a Remote-Learning Special-Topics Course For Nuclear Engineering
+  Education","  To address the lack of familiarity with nuclear history common among nuclear
+engineers and physicists, we outline the design and deployment of a
+special-topics course entitled ""NE290: Nuclear History, Politics, and Futures""
+across which we contextualize the importance of the field at its inception, in
+current affairs, and in future endeavors. We begin by outlining the gaps in
+secondary educational offerings for nuclear history and their importance in
+consideration with nontechnical engineering guidelines. We then outline a
+number ABET specifications as pedagogical goals for NE290 from which we derive
+a list of target student learning objectives. Next, we outline the NE290
+syllabus in terms of assignments and an overview of course content in the form
+of a class timeline. We provide an extensive description of the materials and
+teaching methodologies for the four units of NE290: 20th-Century Physics,
+Physics in WWII, the Early Cold War, and the Late Cold War and Modern Era. We
+detail the sequence of lectures across the course and historical timelines --
+leading up to a showcasing of NE290 final projects which mirror in creativity
+the novelty of course offering. Because NE290 was first offered during Spring
+2021 during the COVID-19 pandemic, additional measures in the form of new tools
+were used to augment the mandate of remote learning such as videoconferencing
+technology to recruit geographically diverse guest lecturers, and used the MIRO
+tool for virtual whiteboarding. Lastly, we provide an accounting of course
+outcomes drawn from student feedback which -- in tandem with the complete
+distribution of course material -- facilitates the integration of nuclear
+history into the curriculum for the wider nuclear engineering and physics
+communities.
+",a
+Detecting Multilingual COVID-19 Misinformation on Social Media via Contextualized Embeddings,"We present machine learning classifiers to automatically identify COVID-19 misinformation on social media in three languages: English, Bulgarian, and Arabic. We compared 4 multitask learning models for this task and found that a model trained with English BERT achieves the best results for English, and multilingual BERT achieves the best results for Bulgarian and Arabic. We experimented with zero shot, few shot, and target-only conditions to evaluate the impact of target-language training data on classifier performance, and to understand the capabilities of different models to generalize across languages in detecting misinformation online. This work was performed as a submission to the shared task, NLP4IF 2021: Fighting the COVID-19 Infodemic. Our best models achieved the second best evaluation test results for Bulgarian and Arabic among all the participating teams and obtained competitive scores for English.",p
+COVID-19 Heterogeneity in Islands Chain Environment,"  As 2021 dawns, the COVID-19 pandemic is still raging strongly as vaccines
+finally appear and hopes for a return to normalcy start to materialize. There
+is much to be learned from the pandemic's first year data that will likely
+remain applicable to future epidemics and possible pandemics. With only minor
+variants in virus strain, countries across the globe have suffered roughly the
+same pandemic by first glance, yet few locations exhibit the same patterns of
+viral spread, growth, and control as the state of Hawai'i. In this paper, we
+examine the data and compare the COVID-19 spread statistics between the
+counties of Hawai'i as well as examine several locations with similar
+properties to Hawai'i.
+",a
+"Combat COVID-19 Infodemic Using Explainable Natural Language Processing
+  Models","  Misinformation of COVID-19 is prevalent on social media as the pandemic
+unfolds, and the associated risks are extremely high. Thus, it is critical to
+detect and combat such misinformation. Recently, deep learning models using
+natural language processing techniques, such as BERT (Bidirectional Encoder
+Representations from Transformers), have achieved great successes in detecting
+misinformation. In this paper, we proposed an explainable natural language
+processing model based on DistilBERT and SHAP (Shapley Additive exPlanations)
+to combat misinformation about COVID-19 due to their efficiency and
+effectiveness. First, we collected a dataset of 984 claims about COVID-19 with
+fact checking. By augmenting the data using back-translation, we doubled the
+sample size of the dataset and the DistilBERT model was able to obtain good
+performance (accuracy: 0.972; areas under the curve: 0.993) in detecting
+misinformation about COVID-19. Our model was also tested on a larger dataset
+for AAAI2021 - COVID-19 Fake News Detection Shared Task and obtained good
+performance (accuracy: 0.938; areas under the curve: 0.985). The performance on
+both datasets was better than traditional machine learning models. Second, in
+order to boost public trust in model prediction, we employed SHAP to improve
+model explainability, which was further evaluated using a between-subjects
+experiment with three conditions, i.e., text (T), text+SHAP explanation (TSE),
+and text+SHAP explanation+source and evidence (TSESE). The participants were
+significantly more likely to trust and share information related to COVID-19 in
+the TSE and TSESE conditions than in the T condition. Our results provided good
+implications in detecting misinformation about COVID-19 and improving public
+trust.
+",a
+"The effect of COVID-19 vaccinations on self-reported depression and
+  anxiety during February 2021","  Using the COVID-19 Trends and Impacts Survey (CTIS), we examine the effect of
+COVID-19 vaccinations on (self-reported) feelings of depression and anxiety
+(""depression""), isolation, and worries about health, among vaccine-accepting
+survey respondents during February 2021. Assuming no unmeasured confounding, we
+estimate that vaccinations caused a -4.3 (-4.7, -3.8), -3.4 (-3.9, -2.9), and
+-4.8 (-5.4, -4.1) percentage point change in these outcomes, respectively. We
+further argue that these effects provide a lower bound on the mental health
+burden of the pandemic, implying that the COVID-19 pandemic was responsible for
+at least a 28.6 (25.3, 31.9) percent increase in feelings of depression and a
+20.5 (17.3, 23.6) percent increase in feelings of isolation during February
+2021 among vaccine-accepting CTIS survey respondents. We also posit a model
+where vaccinations affect depression through worries about health and feelings
+of isolation, and estimate the proportion mediated by each pathway. We find
+that feelings of social isolation is the stronger mediator, accounting for 41.0
+(37.3, 44.7) percent of the total effect, while worries about health accounts
+for 9.4 (7.6, 11.1) percent of the total effect. We caution that the causal
+interpretation of these findings rests on strong assumptions. Nevertheless, as
+the pandemic continues, policymakers should also target interventions aimed at
+managing the substantial mental health burden associated with the COVID-19
+pandemic.
+",a
+Estimation of COVID-19 under-reporting in Brazilian States through SARI,"  Due to its impact, COVID-19 has been stressing the academy to search for
+curing, mitigating, or controlling it. However, when it comes to controlling,
+there are still few studies focused on under-reporting estimates. It is
+believed that under-reporting is a relevant factor in determining the actual
+mortality rate and, if not considered, can cause significant misinformation.
+Therefore, the objective of this work is to estimate the under-reporting of
+cases and deaths of COVID-19 in Brazilian states using data from the Infogripe
+on notification of Severe Acute Respiratory Infection (SARI). The methodology
+is based on the concepts of inertia and the use of event detection techniques
+to study the time series of hospitalized SARI cases. The estimate of real cases
+of the disease, called novelty, is calculated by comparing the difference in
+SARI cases in 2020 (after COVID-19) with the total expected cases in recent
+years (2016 to 2019) derived from a seasonal exponential moving average. The
+results show that under-reporting rates vary significantly between states and
+that there are no general patterns for states in the same region in Brazil.
+  The published version of this paper is made available at
+https://doi.org/10.1007/s00354-021-00125-3.
+  Please cite as: B. Paix\~ao, L. Baroni, M. Pedroso, R. Salles, L. Escobar, C.
+de Sousa, R. de Freitas Saldanha, J. Soares, R. Coutinho, et al., 2021,
+Estimation of COVID-19 Under-Reporting in the Brazilian States Through SARI,
+New Generation Computing
+",a
+"Modelling the COVID-19 epidemic and the vaccination campaign in Italy by
+  the SUIHTER model","  Several epidemiological models have been proposed to study the evolution of
+COVID-19 pandemic. In this paper, we propose an extension of the SUIHTER model,
+first introduced in [Parolini et al, Proc R. Soc. A., 2021] to analyse the
+COVID-19 spreading in Italy, which accounts for the vaccination campaign and
+the presence of new variants when they become dominant. In particular, the
+specific features of the variants (e.g. their increased transmission rate) and
+vaccines (e.g. their efficacy to prevent transmission, hospitalization and
+death) are modeled, based on clinical evidence. The new model is validated
+comparing its near-future forecast capabilities with other epidemiological
+models and exploring different scenario analyses.
+",a
+"Constraint 2021: Machine Learning Models for COVID-19 Fake News
+  Detection Shared Task","  In this system paper we present our contribution to the Constraint 2021
+COVID-19 Fake News Detection Shared Task, which poses the challenge of
+classifying COVID-19 related social media posts as either fake or real. In our
+system, we address this challenge by applying classical machine learning
+algorithms together with several linguistic features, such as n-grams,
+readability, emotional tone and punctuation. In terms of pre-processing, we
+experiment with various steps like stop word removal, stemming/lemmatization,
+link removal and more. We find our best performing system to be based on a
+linear SVM, which obtains a weighted average F1 score of 95.19% on test data,
+which lands a place in the middle of the leaderboard (place 80 of 167).
+",a
+"KalAO the swift adaptive optics imager on 1.2m Euler Swiss telescope in
+  La Silla, Chile","  KalAO is a natural guide star adaptive optics (AO) imager to be installed on
+the second Nasmyth focus of the 1.2m Euler Swiss telescope in La Silla, Chile.
+The initial design of the system is inspired on RoboAO with modifications in
+order to operate in natural guide star (NGS) mode. KalAO was built to search
+for binarity in planet hosting stars by following-up candidates primarily from
+the TESS satellite survey. The optical design is optimised for the 450-900 nm
+wavelength range and is fitted with SDSS \emph{g,r,i,z} filters. The system is
+designed for wavefront control down to $I$-magnitude 11 stars in order to probe
+the same parameter space as radial velocity instruments such as HARPS and
+NIRPS. The principal components of the system are an 11x11 10.9 cm
+sub-apertures Electron Multiplying CCD (EMCCD) Shack-Hartmann wavefront sensor,
+a 140 actuators Microelectromechanical systems (MEMS) deformable mirror, a fast
+tip/tilt mirror, and a graphics processing unit (GPU) powered glycol cooled
+real-time computer. It is designed to run at up to 1.8kHz in order to detect
+companions as close as the 150mas visible-light diffraction limit. The
+real-time adaptive optics control is using the CACAO software running on GPUs.
+The instrument is planned for commissioning early 2021 in Chile if the covid
+restrictions are lifted.
+",a
+iCompass at NLP4IF-2021–Fighting the COVID-19 Infodemic,"This paper provides a detailed overview of the system and its outcomes, which were produced as part of the NLP4IF Shared Task on Fighting the COVID-19 Infodemic at NAACL 2021. This task is accomplished using a variety of techniques. We used state-of-the-art contextualized text representation models that were fine-tuned for the downstream task in hand. ARBERT, MARBERT,AraBERT, Arabic ALBERT and BERT-base-arabic were used. According to the results, BERT-base-arabic had the highest 0.784 F1 score on the test set.",p
+Evaluating Deep Learning Approaches for Covid19 Fake News Detection,"  Social media platforms like Facebook, Twitter, and Instagram have enabled
+connection and communication on a large scale. It has revolutionized the rate
+at which information is shared and enhanced its reach. However, another side of
+the coin dictates an alarming story. These platforms have led to an increase in
+the creation and spread of fake news. The fake news has not only influenced
+people in the wrong direction but also claimed human lives. During these
+critical times of the Covid19 pandemic, it is easy to mislead people and make
+them believe in fatal information. Therefore it is important to curb fake news
+at source and prevent it from spreading to a larger audience. We look at
+automated techniques for fake news detection from a data mining perspective. We
+evaluate different supervised text classification algorithms on Contraint@AAAI
+2021 Covid-19 Fake news detection dataset. The classification algorithms are
+based on Convolutional Neural Networks (CNN), Long Short Term Memory (LSTM),
+and Bidirectional Encoder Representations from Transformers (BERT). We also
+evaluate the importance of unsupervised learning in the form of language model
+pre-training and distributed word representations using unlabelled covid tweets
+corpus. We report the best accuracy of 98.41\% on the Covid-19 Fake news
+detection dataset.
+",a
+"Evaluating the COVID-19 Identification ResNet (CIdeR) on the INTERSPEECH
+  COVID-19 from Audio Challenges","  We report on cross-running the recent COVID-19 Identification ResNet (CIdeR)
+on the two Interspeech 2021 COVID-19 diagnosis from cough and speech audio
+challenges: ComParE and DiCOVA. CIdeR is an end-to-end deep learning neural
+network originally designed to classify whether an individual is COVID-positive
+or COVID-negative based on coughing and breathing audio recordings from a
+published crowdsourced dataset. In the current study, we demonstrate the
+potential of CIdeR at binary COVID-19 diagnosis from both the COVID-19 Cough
+and Speech Sub-Challenges of INTERSPEECH 2021, ComParE and DiCOVA. CIdeR
+achieves significant improvements over several baselines.
+",a
+"COVID-19 Digital Contact Tracing Applications and Techniques: A Review
+  Post Initial Deployments","  The coronavirus disease 2019 (COVID-19) is a severe global pandemic that has
+claimed millions of lives and continues to overwhelm public health systems in
+many countries. The spread of COVID-19 pandemic has negatively impacted the
+human mobility patterns such as daily transportation-related behavior of the
+public. There is a requirement to understand the disease spread patterns and
+its routes among neighboring individuals for the timely implementation of
+corrective measures at the required placement. To increase the effectiveness of
+contact tracing, countries across the globe are leveraging advancements in
+mobile technology and Internet of Things (IoT) to aid traditional manual
+contact tracing to track individuals who have come in close contact with
+identified COVID-19 patients. Even as the first administration of vaccines
+begins in 2021, the COVID-19 management strategy will continue to be
+multi-pronged for the foreseeable future with digital contact tracing being a
+vital component of the response along with the use of preventive measures such
+as social distancing and the use of face masks. After some months of deployment
+of digital contact tracing technology, deeper insights into the merits of
+various approaches and the usability, privacy, and ethical trade-offs involved
+are emerging. In this paper, we provide a comprehensive analysis of digital
+contact tracing solutions in terms of their methodologies and technologies in
+the light of the new data emerging about international experiences of
+deployments of digital contact tracing technology. We also provide a discussion
+on open challenges such as scalability, privacy, adaptability and highlight
+promising directions for future work.
+",a
+"Social Companion Robots to Reduce Isolation: A Perception Change Due to
+  COVID-19","  Social isolation is one of the negative consequences of a pandemic like
+COVID-19. Social isolation and loneliness are not only experienced by older
+adults, but also by younger people who live alone and cannot communicate with
+others or get involved in social situations as they used to. In such
+situations, social companion robots might have the potential to reduce social
+isolation and increase well-being. However, society's perception of social
+robots has not always been positive. In this paper, we conducted two online
+experiments with 102 and 132 participants during the self isolation periods of
+COVID-19 (May-June 2020 and January 2021), to study how COVID-19 has affected
+people's perception of the benefits of a social robot. Our results showed that
+a change caused by COVID-19, as well as having an older relative who lived
+alone or at a care center during the pandemic significantly and positively
+affected people's perception of social robots, as companions, and that the
+feeling of loneliness can drive the purchase of a social robot. The second
+study replicated the results of the first study. We also discuss the effects of
+Big 5 personality traits on the likelihood to purchase a social robot, as well
+as on participants' general attitude towards COVID-19 and adapting to the
+pandemic.
+",a
+"Stock Price Forecasting in Presence of Covid-19 Pandemic and Evaluating
+  Performances of Machine Learning Models for Time-Series Forecasting","  With the heightened volatility in stock prices during the Covid-19 pandemic,
+the need for price forecasting has become more critical. We investigated the
+forecast performance of four models including Long-Short Term Memory, XGBoost,
+Autoregression, and Last Value on stock prices of Facebook, Amazon, Tesla,
+Google, and Apple in COVID-19 pandemic time to understand the accuracy and
+predictability of the models in this highly volatile time region. To train the
+models, the data of all stocks are split into train and test datasets. The test
+dataset starts from January 2020 to April 2021 which covers the COVID-19
+pandemic period. The results show that the Autoregression and Last value models
+have higher accuracy in predicting the stock prices because of the strong
+correlation between the previous day and the next day's price value.
+Additionally, the results suggest that the machine learning models (Long-Short
+Term Memory and XGBoost) are not performing as well as Autoregression models
+when the market experiences high volatility.
+",a
