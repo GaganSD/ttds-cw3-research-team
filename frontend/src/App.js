@@ -15,6 +15,7 @@ import research_logo from './logos/Re-Search-logos_transparent.png';
 import Switch from '@mui/material/Switch';
 import SwipeableTemporaryDrawer from './components/advancedOptions';
 
+// TODO: npm audit fix --force (takes some time tho)
 
 function App() {
 
