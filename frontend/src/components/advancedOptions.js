@@ -9,6 +9,15 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
+import FormGroup from '@mui/material/FormGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox'
+import TextField from '@mui/material/TextField';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import Stack from '@mui/material/Stack';
+import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
+
 
 export default function SwipeableTemporaryDrawer() {
   const [state, setState] = React.useState({
@@ -17,6 +26,21 @@ export default function SwipeableTemporaryDrawer() {
     bottom: false,
     right: false,
   });
+
+  const [values,setValues] = React.useState({
+    oldest: false,
+    latest: false,
+    featured: true,
+    authors: true,
+    range: false,
+    author_text:'',
+    range_from:new Date(),
+    range_to: new Date()
+  })
+
+  const handleChange = (newValue) => {
+    setValues(newValue);
+  };
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (
@@ -34,33 +58,9 @@ export default function SwipeableTemporaryDrawer() {
     <Box
       sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
       role="presentation"
-      onClick={toggleDrawer(anchor, false)}
+      // onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
-      <List>
-
-        <ListItem button key={"Custom Search: "}>
-        <ListItemIcon>
-        <InboxIcon />
-        </ListItemIcon>
-        <ListItemText primary={"Custom Search: "} />
-        </ListItem>
-
-        <ListItem button key={"Papers"}>
-        <ListItemIcon>
-        <MailIcon />
-        </ListItemIcon>
-        <ListItemText primary={"Papers"} />
-      </ListItem>
-
-      <ListItem button key={"Datasets"}>
-        <ListItemIcon>
-        <MailIcon />
-        </ListItemIcon>
-        <ListItemText primary={"Datasets"} />
-      </ListItem>
-
-      </List>
 
       <Divider />
 
@@ -73,26 +73,14 @@ export default function SwipeableTemporaryDrawer() {
         <ListItemText primary={"Sort By: "} />
         </ListItem>
 
-        <ListItem button key={"Latest"}>
-        <ListItemIcon>
-        <MailIcon />
-        </ListItemIcon>
-        <ListItemText primary={"Latest"} />
-        </ListItem>
+        <FormGroup>
+            <FormControlLabel control={<Checkbox  />} label="Oldest" />
+            <FormControlLabel control={<Checkbox  />} label="Latest" />
+            <FormControlLabel control={<Checkbox defaultChecked />} label="Featured" />
+        </FormGroup>
 
-        <ListItem button key={"Oldest"}>
-        <ListItemIcon>
-        <MailIcon />
-        </ListItemIcon>
-        <ListItemText primary={"Oldest"} />
-      </ListItem>
 
-      <ListItem button key={"Featured"}>
-        <ListItemIcon>
-        <MailIcon />
-        </ListItemIcon>
-        <ListItemText primary={"Featured"} />
-      </ListItem>
+
 
       </List>
 
@@ -100,12 +88,14 @@ export default function SwipeableTemporaryDrawer() {
 
       <List>
 
-        <ListItem button key={"Publication"}>
+        <ListItem button key={"Authors"}>
         <ListItemIcon>
         <InboxIcon />
         </ListItemIcon>
-        <ListItemText primary={"Publication"} />
+        <ListItemText primary={"Authors"} />
         </ListItem>
+
+        <TextField id="outlined-basic" label="Authors" variant="outlined"/>
 
         <ListItem button key={"Range:"}>
         <ListItemIcon>
@@ -114,12 +104,25 @@ export default function SwipeableTemporaryDrawer() {
         <ListItemText primary={"Range:"} />
         </ListItem>
 
-        <ListItem button key={"From & to"}>
-        <ListItemIcon>
-        <InboxIcon />
-        </ListItemIcon>
-        <ListItemText primary={"From & to"} />
-      </ListItem>
+
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <Stack spacing={3}>
+            <DesktopDatePicker
+              label="From"
+              inputFormat="MM/dd/yyyy"
+              value={values.range_from}
+              onChange={handleChange}
+              renderInput={(params) => <TextField {...params} />}
+            />
+            <DesktopDatePicker
+              label="To"
+              inputFormat="MM/dd/yyyy"
+              value={values.range_to}
+              onChange={handleChange}
+              renderInput={(params) => <TextField {...params} />}
+            />
+          </Stack>
+        </LocalizationProvider>
 
       </List>
 

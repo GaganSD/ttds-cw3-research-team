@@ -63,39 +63,38 @@ function App() {
     <img src={research_logo} width="300em" height="150em"/>
     <UseSwitchesCustom  float="right" parentCallback={BasicSwitches} />
       <div className='SearchOptions' style={{
+        width : '50%'
       }}>
         <SearchField
           style={{ maxWidth: '80%' }}
           parentCallback={TextEntered}
         />
-        <div className='Options'>
-          <Options />
-        </div>
-      </div>
-      <SearchButton parentCallback={Search} />
-      <div>
-        {json.Results.map((each_element) => {
-          
-          return <Box bgcolor="#E8E8E8"
-          //  display="flex" //probably dont need this anymore but keeping it here just in case...
-          //  sx={{ overflow: 'auto' }}
-          //  sx={{ width: '50%' }}
-          //  style={{justifyContent: "center"}}
-          //  style={{alignItems: "center"}}
-          //  style={{position: "relative"}}
-            marginTop={1}
-            padding={2}
-          >
-            <p>
-              <p><font COLOR="grey" SIZE="2" face="Arial">{each_element.url}</font></p>
-              <a href={each_element.url}><font COLOR="green" SIZE="5" face="Arial">{each_element.title}</font></a>
-              <p><font COLOR="grey" face="Arial">{each_element.date}</font></p>
-              <p><font face="Arial">{each_element.description}</font></p>
-              <p><font face="Arial">Author(s): {each_element.authors}</font></p>
-            </p></Box>;
-        })}
+
       </div>
       <SwipeableTemporaryDrawer/>
+      <SearchButton parentCallback={Search} />
+      <div>
+        {json.Results.map((name, key) => {
+            return <Box bgcolor="#E8E8E8"
+            //  display="flex" //probably dont need this anymore but keeping it here just in case...
+            //  sx={{ overflow: 'auto' }}
+            //  sx={{ width: '50%' }}
+            //  style={{justifyContent: "center"}}
+            //  style={{alignItems: "center"}}
+            //  style={{position: "relative"}}
+              marginTop={1}
+              padding={2}
+            >
+              <p key={key}>
+                <p><font COLOR="grey" SIZE="2" face="Arial">{name.url}</font></p>
+                <a href={name.url}><font COLOR="green" SIZE="5" face="Arial">{name.title}</font></a>
+                <p><font COLOR="grey" face="Arial">{name.date}</font></p>
+                <p><font face="Arial">{name.description}</font></p>
+                <p><font face="Arial">Author(s): {name.authors}</font></p>
+              </p></Box>;
+          
+        })}
+      </div>
     </div>
   )
 
