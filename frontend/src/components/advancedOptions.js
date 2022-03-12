@@ -17,9 +17,10 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import Stack from '@mui/material/Stack';
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
+import { SliderValueLabelUnstyled } from '@mui/base';
 
 
-export default function SwipeableTemporaryDrawer() {
+export default function SwipeableTemporaryDrawer(props) {
   const [state, setState] = React.useState({
     top: false,
     left: false,
@@ -27,19 +28,66 @@ export default function SwipeableTemporaryDrawer() {
     right: false,
   });
 
-  const [values,setValues] = React.useState({
+  let valcopy = {
     oldest: false,
     latest: false,
     featured: true,
     authors: true,
-    range: false,
     author_text:'',
-    range_from:new Date(),
-    range_to: new Date()
-  })
+    range_from:null,
+    range_to: null
+  };
 
-  const handleChange = (newValue) => {
-    setValues(newValue);
+  const [fromDate, setFromDate] = React.useState(null);
+  const [toDate, setToDate] = React.useState(null);
+
+
+
+
+  const handleChange = (e) => {
+    let eventtype;
+    try{
+      eventtype = e.target.type;
+    }
+    catch{
+      eventtype = "date";
+    }
+    // console.log(e.target.checked)
+    if(eventtype === "checkbox"){
+      if(e.target.value === "Oldest"){
+        valcopy.oldest = e.target.checked;
+      }
+      else if(e.target.value === "Latest"){
+        valcopy.latest = e.target.checked;
+      }
+      else{
+        valcopy.featured = e.target.checked;
+      }
+
+    }
+    else if(eventtype === "text"){
+      if(e.target.value !== ''){
+        valcopy.authors = true;
+        valcopy.author_text = e.target.value
+      }
+
+    }
+    else if(eventtype === "date"){
+      //some logic to make sureincompatible date ranges are not entered
+      //not too important can look into it later
+      // if (valcopy.range_from >= valcopy.range_to){
+      //   alert("from date has to be lesser than the to date!");
+      //   valcopy.range_from =null;
+      //   setFromDate(null);
+      // }
+
+    }
+
+
+
+    props.parentCallback(valcopy)
+    // console.log(valcopy);
+    // setValues(newValue);
   };
 
   const toggleDrawer = (anchor, open) => (event) => {
@@ -59,7 +107,7 @@ export default function SwipeableTemporaryDrawer() {
       sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
       role="presentation"
       // onClick={toggleDrawer(anchor, false)}
-      onKeyDown={toggleDrawer(anchor, false)}
+      // onKeyDown={toggleDrawer(anchor, false)}
     >
 
       <Divider />
@@ -74,9 +122,9 @@ export default function SwipeableTemporaryDrawer() {
         </ListItem>
 
         <FormGroup>
-            <FormControlLabel control={<Checkbox  />} label="Oldest" />
-            <FormControlLabel control={<Checkbox  />} label="Latest" />
-            <FormControlLabel control={<Checkbox defaultChecked />} label="Featured" />
+            <FormControlLabel control={<Checkbox  />} onChange={handleChange} label="Oldest" value="Oldest" />
+            <FormControlLabel control={<Checkbox />} onChange={handleChange} label="Latest" value="Latest"/>
+            <FormControlLabel control={<Checkbox defaultChecked />} onChange={handleChange} label="Featured" value="Featured"/>
         </FormGroup>
 
 
@@ -95,7 +143,7 @@ export default function SwipeableTemporaryDrawer() {
         <ListItemText primary={"Authors"} />
         </ListItem>
 
-        <TextField id="outlined-basic" label="Authors" variant="outlined"/>
+        <TextField onChange = {handleChange} id="outlined-basic" label="Authors" variant="outlined"/>
 
         <ListItem button key={"Range:"}>
         <ListItemIcon>
@@ -108,19 +156,29 @@ export default function SwipeableTemporaryDrawer() {
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <Stack spacing={3}>
             <DesktopDatePicker
-              label="From"
-              inputFormat="MM/dd/yyyy"
-              value={values.range_from}
-              onChange={handleChange}
-              renderInput={(params) => <TextField {...params} />}
+            label="From"
+            inputFormat="MM/dd/yyyy"
+            value={fromDate}
+            onChange={(newfromvalue) => {
+              setFromDate(newfromvalue);
+              valcopy.range_from = fromDate;
+              handleChange();
+              // console.log(fromDate);
+            }}
+            renderInput={(params) => <TextField {...params} />}
             />
             <DesktopDatePicker
-              label="To"
-              inputFormat="MM/dd/yyyy"
-              value={values.range_to}
-              onChange={handleChange}
-              renderInput={(params) => <TextField {...params} />}
-            />
+            label="To"
+            inputFormat="MM/dd/yyyy"
+            value={toDate}
+            onChange={(newtovalue) => {
+              setToDate(newtovalue);
+              valcopy.range_to = toDate;
+              handleChange();
+              // console.log(toDate);
+            }}
+            renderInput={(params) => <TextField {...params} />}
+            /> 
           </Stack>
         </LocalizationProvider>
 

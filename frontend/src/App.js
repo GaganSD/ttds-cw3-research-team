@@ -22,6 +22,21 @@ function App() {
   const [search, setSearch] = React.useState('');
   const [json, setJson] = React.useState({Results:[]});
   const label = { inputProps: { 'aria-label': 'Switch demo' } };
+  const [values,setValues] = React.useState({
+    oldest: false,
+    latest: false,
+    featured: true,
+    authors: true,
+    author_text:'',
+    range_from:null,
+    range_to: null
+  })
+
+  function getOptions(optval){
+    setValues(optval);
+    console.log(values);
+
+  }
 
   function Search() {
     return fetch('http://127.0.0.1:5000/' + search).then(response => response.json()).then(data => {
@@ -134,7 +149,7 @@ function App() {
         />
 
       </div>
-      <SwipeableTemporaryDrawer/>
+      <SwipeableTemporaryDrawer parentCallback={getOptions}/>
       <ButtonGroup variant="contained" aria-label="outlined primary button group">
       <SearchButton parentCallback={Search} />
       <QEButton parentCallback={QueryExpansion} />
