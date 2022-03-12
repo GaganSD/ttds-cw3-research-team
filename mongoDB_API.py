@@ -124,7 +124,9 @@ class MongoDBClient():
     def get_data(self, data_type: str, filter: dict, fields: list, skip: int = 0, 
                     limit:int = 0):
         """
-        The method to get a pymongo data cursor.
+        The method to get a pymongo data cursor. 
+        Note: If you are only getting one piece of data, use method get_one, which should be 
+        faster.
 
         Parameters:
             data_type - The type of data. Should either be "paper" or "dataset".
@@ -266,7 +268,10 @@ class MongoDBClient():
 
     def get_doc_from_index(self, term: str):
         """
-        The method to get the docs with an index
+        The method to get the docs with an index. 
+        Warning: This method could be really slow (worst can take minutes)
+        If you have a limit on the number of docs you are retrieving, 
+        use get_topk_doc_from_index instead.
 
         Parameters:
             term - The index to be searched.
@@ -275,13 +280,57 @@ class MongoDBClient():
             ans : the list of docs
         """
         cur_table = self.client[db_name]["index"]
-        hq = cur_table.find_one({"_id": term})
+        hq = cur_table.find_one({"_id": term}, {"chain": 1, "docs": 1})
+
         if hq == None:
             return []
-        else:
-            ans = hq["docs"]
-            for chain in hq["chain"][1:]:
-                ans.extend(cur_table.find_one({"_id": chain}, {'docs': 1})['docs'] )
+
+        ans = []
+        cursor = cur_table.find({"_id": {"$in": hq["chain"]}}, {'docs': 1})
+
+        for doc in cursor:
+            ans.extend(doc["docs"])
+
+        return ans
+    
+    def get_topk_doc_from_index(self, term: str, k = 10):
+        """
+        The method to get the topk docs with an index. "Top" here means having most 
+         appearances of the term.
+
+        Parameters:
+            term - The index to be searched.
+            k - The number of documents tobe retrieved
+
+        Return:
+            ans : the list of docs
+        """
+        cur_table = self.client[db_name]["index"]
+        hq = cur_table.find_one({"_id": term}, { "chain": 1 })
+
+        if hq == None:
+            return []
+
+        ptr_list = []
+        doc_lists =[]
+        cursor = cur_table.find({"_id": {"$in": hq["chain"]}}, {'docs': {"$slice": k }})
+        for doc in cursor:
+            doc_lists.append(doc["docs"])
+            ptr_list.append(0)
+
+        ans = []
+        pqueue = queue.PriorityQueue()
+
+        for i in range(len(hq["chain"])):
+            # print((doc_lists[i][0]["len"]))
+            pqueue.put((-doc_lists[i][0]["len"], i))
+
+        for i in range(k):
+            _, list_id = pqueue.get()
+            doc = doc_lists[list_id][ptr_list[list_id]]
+            ans.append(doc)
+            ptr_list[list_id] += 1
+            pqueue.put((-doc_lists[list_id][ptr_list[list_id]]["len"], list_id))
 
         return ans
 
