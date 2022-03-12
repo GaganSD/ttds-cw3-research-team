@@ -1,21 +1,29 @@
 title,abstract,id
-"Using Self-Supervised Feature Extractors with Attention for Automatic
-  COVID-19 Detection from Speech","  The ComParE 2021 COVID-19 Speech Sub-challenge provides a test-bed for the
-evaluation of automatic detectors of COVID-19 from speech. Such models can be
-of value by providing test triaging capabilities to health authorities, working
-alongside traditional testing methods. Herein, we leverage the usage of
-pre-trained, problem agnostic, speech representations and evaluate their use
-for this task. We compare the obtained results against a CNN architecture
-trained from scratch and traditional frequency-domain representations. We also
-evaluate the usage of Self-Attention Pooling as an utterance-level information
-aggregation method. Experimental results demonstrate that models trained on
-features extracted from self-supervised models perform similarly or outperform
-fully-supervised models and models based on handcrafted features. Our best
-model improves the Unweighted Average Recall (UAR) from 69.0\% to 72.3\% on a
-development set comprised of only full-band examples and achieves 64.4\% on the
-test set. Furthermore, we study where the network is attending, attempting to
-draw some conclusions regarding its explainability. In this relatively small
-dataset, we find the network attends especially to vowels and aspirates.
+"Combat COVID-19 Infodemic Using Explainable Natural Language Processing
+  Models","  Misinformation of COVID-19 is prevalent on social media as the pandemic
+unfolds, and the associated risks are extremely high. Thus, it is critical to
+detect and combat such misinformation. Recently, deep learning models using
+natural language processing techniques, such as BERT (Bidirectional Encoder
+Representations from Transformers), have achieved great successes in detecting
+misinformation. In this paper, we proposed an explainable natural language
+processing model based on DistilBERT and SHAP (Shapley Additive exPlanations)
+to combat misinformation about COVID-19 due to their efficiency and
+effectiveness. First, we collected a dataset of 984 claims about COVID-19 with
+fact checking. By augmenting the data using back-translation, we doubled the
+sample size of the dataset and the DistilBERT model was able to obtain good
+performance (accuracy: 0.972; areas under the curve: 0.993) in detecting
+misinformation about COVID-19. Our model was also tested on a larger dataset
+for AAAI2021 - COVID-19 Fake News Detection Shared Task and obtained good
+performance (accuracy: 0.938; areas under the curve: 0.985). The performance on
+both datasets was better than traditional machine learning models. Second, in
+order to boost public trust in model prediction, we employed SHAP to improve
+model explainability, which was further evaluated using a between-subjects
+experiment with three conditions, i.e., text (T), text+SHAP explanation (TSE),
+and text+SHAP explanation+source and evidence (TSESE). The participants were
+significantly more likely to trust and share information related to COVID-19 in
+the TSE and TSESE conditions than in the T condition. Our results provided good
+implications in detecting misinformation about COVID-19 and improving public
+trust.
 ",a
 A tipping point for open citation data,"  Open citation data can improve the transparency and robustness of scientific
 portfolio analysis, improve science policy decision-making, stimulate
@@ -56,44 +64,6 @@ distribution of course material -- facilitates the integration of nuclear
 history into the curriculum for the wider nuclear engineering and physics
 communities.
 ",a
-"Combat COVID-19 Infodemic Using Explainable Natural Language Processing
-  Models","  Misinformation of COVID-19 is prevalent on social media as the pandemic
-unfolds, and the associated risks are extremely high. Thus, it is critical to
-detect and combat such misinformation. Recently, deep learning models using
-natural language processing techniques, such as BERT (Bidirectional Encoder
-Representations from Transformers), have achieved great successes in detecting
-misinformation. In this paper, we proposed an explainable natural language
-processing model based on DistilBERT and SHAP (Shapley Additive exPlanations)
-to combat misinformation about COVID-19 due to their efficiency and
-effectiveness. First, we collected a dataset of 984 claims about COVID-19 with
-fact checking. By augmenting the data using back-translation, we doubled the
-sample size of the dataset and the DistilBERT model was able to obtain good
-performance (accuracy: 0.972; areas under the curve: 0.993) in detecting
-misinformation about COVID-19. Our model was also tested on a larger dataset
-for AAAI2021 - COVID-19 Fake News Detection Shared Task and obtained good
-performance (accuracy: 0.938; areas under the curve: 0.985). The performance on
-both datasets was better than traditional machine learning models. Second, in
-order to boost public trust in model prediction, we employed SHAP to improve
-model explainability, which was further evaluated using a between-subjects
-experiment with three conditions, i.e., text (T), text+SHAP explanation (TSE),
-and text+SHAP explanation+source and evidence (TSESE). The participants were
-significantly more likely to trust and share information related to COVID-19 in
-the TSE and TSESE conditions than in the T condition. Our results provided good
-implications in detecting misinformation about COVID-19 and improving public
-trust.
-",a
-"Constraint 2021: Machine Learning Models for COVID-19 Fake News
-  Detection Shared Task","  In this system paper we present our contribution to the Constraint 2021
-COVID-19 Fake News Detection Shared Task, which poses the challenge of
-classifying COVID-19 related social media posts as either fake or real. In our
-system, we address this challenge by applying classical machine learning
-algorithms together with several linguistic features, such as n-grams,
-readability, emotional tone and punctuation. In terms of pre-processing, we
-experiment with various steps like stop word removal, stemming/lemmatization,
-link removal and more. We find our best performing system to be based on a
-linear SVM, which obtains a weighted average F1 score of 95.19% on test data,
-which lands a place in the middle of the leaderboard (place 80 of 167).
-",a
 Evaluating Deep Learning Approaches for Covid19 Fake News Detection,"  Social media platforms like Facebook, Twitter, and Instagram have enabled
 connection and communication on a large scale. It has revolutionized the rate
 at which information is shared and enhanced its reach. However, another side of
@@ -113,16 +83,35 @@ pre-training and distributed word representations using unlabelled covid tweets
 corpus. We report the best accuracy of 98.41\% on the Covid-19 Fake news
 detection dataset.
 ",a
-"Evaluating the COVID-19 Identification ResNet (CIdeR) on the INTERSPEECH
-  COVID-19 from Audio Challenges","  We report on cross-running the recent COVID-19 Identification ResNet (CIdeR)
-on the two Interspeech 2021 COVID-19 diagnosis from cough and speech audio
-challenges: ComParE and DiCOVA. CIdeR is an end-to-end deep learning neural
-network originally designed to classify whether an individual is COVID-positive
-or COVID-negative based on coughing and breathing audio recordings from a
-published crowdsourced dataset. In the current study, we demonstrate the
-potential of CIdeR at binary COVID-19 diagnosis from both the COVID-19 Cough
-and Speech Sub-Challenges of INTERSPEECH 2021, ComParE and DiCOVA. CIdeR
-achieves significant improvements over several baselines.
+"Using Self-Supervised Feature Extractors with Attention for Automatic
+  COVID-19 Detection from Speech","  The ComParE 2021 COVID-19 Speech Sub-challenge provides a test-bed for the
+evaluation of automatic detectors of COVID-19 from speech. Such models can be
+of value by providing test triaging capabilities to health authorities, working
+alongside traditional testing methods. Herein, we leverage the usage of
+pre-trained, problem agnostic, speech representations and evaluate their use
+for this task. We compare the obtained results against a CNN architecture
+trained from scratch and traditional frequency-domain representations. We also
+evaluate the usage of Self-Attention Pooling as an utterance-level information
+aggregation method. Experimental results demonstrate that models trained on
+features extracted from self-supervised models perform similarly or outperform
+fully-supervised models and models based on handcrafted features. Our best
+model improves the Unweighted Average Recall (UAR) from 69.0\% to 72.3\% on a
+development set comprised of only full-band examples and achieves 64.4\% on the
+test set. Furthermore, we study where the network is attending, attempting to
+draw some conclusions regarding its explainability. In this relatively small
+dataset, we find the network attends especially to vowels and aspirates.
+",a
+"Constraint 2021: Machine Learning Models for COVID-19 Fake News
+  Detection Shared Task","  In this system paper we present our contribution to the Constraint 2021
+COVID-19 Fake News Detection Shared Task, which poses the challenge of
+classifying COVID-19 related social media posts as either fake or real. In our
+system, we address this challenge by applying classical machine learning
+algorithms together with several linguistic features, such as n-grams,
+readability, emotional tone and punctuation. In terms of pre-processing, we
+experiment with various steps like stop word removal, stemming/lemmatization,
+link removal and more. We find our best performing system to be based on a
+linear SVM, which obtains a weighted average F1 score of 95.19% on test data,
+which lands a place in the middle of the leaderboard (place 80 of 167).
 ",a
 "COVID-19 Digital Contact Tracing Applications and Techniques: A Review
   Post Initial Deployments","  The coronavirus disease 2019 (COVID-19) is a severe global pandemic that has
@@ -148,4 +137,15 @@ the light of the new data emerging about international experiences of
 deployments of digital contact tracing technology. We also provide a discussion
 on open challenges such as scalability, privacy, adaptability and highlight
 promising directions for future work.
+",a
+"Evaluating the COVID-19 Identification ResNet (CIdeR) on the INTERSPEECH
+  COVID-19 from Audio Challenges","  We report on cross-running the recent COVID-19 Identification ResNet (CIdeR)
+on the two Interspeech 2021 COVID-19 diagnosis from cough and speech audio
+challenges: ComParE and DiCOVA. CIdeR is an end-to-end deep learning neural
+network originally designed to classify whether an individual is COVID-positive
+or COVID-negative based on coughing and breathing audio recordings from a
+published crowdsourced dataset. In the current study, we demonstrate the
+potential of CIdeR at binary COVID-19 diagnosis from both the COVID-19 Cough
+and Speech Sub-Challenges of INTERSPEECH 2021, ComParE and DiCOVA. CIdeR
+achieves significant improvements over several baselines.
 ",a

@@ -14,6 +14,7 @@ from collections import defaultdict
 from mongoDB_API import MongoDBClient
 import itertools
 import tqdm
+from ir_eval.preprocessing import preprocess
 
 
 class TimeLimitTerm(Exception): pass
@@ -58,6 +59,8 @@ def ranking_query_BM25(query_params, client = None):
     for term in terms:
         term_start_time = time.time()
         list_of_papers = client.get_doc_from_index(term)
+        term_end_time = time.time()
+        print(term, ':', term_end_time-term_start_time)
         doc_nums_term = len(list_of_papers)
         # process_start = time.time()
         for relevant_paper in list_of_papers:
@@ -176,7 +179,9 @@ def phrase_search(query_params, client = None):
         term1 = terms[i]
         term2 = terms[i+1]
         if i == 0:
+            term_start_time = time.time()
             list_of_papers1 = client.get_doc_from_index(term1)
+            print(term1, time.time()-term_start_time)
             term1_dict = dict()
             for paper in list_of_papers1:
                 term1_dict[paper['id']] = paper['pos']
@@ -184,7 +189,9 @@ def phrase_search(query_params, client = None):
             list_of_papers1 = list_of_papers2
             term1_dict = output_dict
         term2_dict = dict()
+        term_start_time = time.time()
         list_of_papers2 = client.get_doc_from_index(term2)
+        print(term2, time.time()-term_start_time)
         for paper in list_of_papers2:
             term2_dict[paper['id']] = paper['pos']
         shared_papers = list(set(term1_dict.keys()).intersection(set(term2_dict.keys())))
@@ -195,135 +202,100 @@ def phrase_search(query_params, client = None):
 if __name__ == '__main__':
     print('Paper search')
     client = MongoDBClient("34.142.18.57")
+    query_params1 = {'query': ["vision","transformer"]}
+    query_params2 = {'query': ["statistics","health"]}
+    query_params3 = {'query': ["stock","prediction"]}
+    query_params_list_old = [query_params1, query_params2, query_params3]
+    query_params_list = list()
+    for query_params in query_params_list_old:
+        output_terms = preprocess(' '.join(query_params['query']),True, True)
+        query_params_list.append({'query':output_terms})
+    print(query_params_list)
     #---------------------------------------------------
     print('1.Phrase search')
-    # 1. covid, 2021
-    query_params = {'query': ["2021","covid"]}
-    phrase_result_df = pd.DataFrame(columns=['title','abstract'])
-    start = time.time()
-    outputs = phrase_search(query_params, client)
-    end = time.time()
-    for result in outputs:
-        cursor = client.get_one(data_type='paper', filter={'_id':result}, fields=['title', 'abstract'])
-        try:
-            tmp_df = pd.DataFrame.from_dict(cursor, orient='index').T
-            tmp_df['id'] = result[0]
-            phrase_result_df = phrase_result_df.append(tmp_df[['id','title','abstract']])
-        except:
-            print('No such paper in database')
-    print(end - start)
-    phrase_result_df.to_csv('ir_eval/result/phrase_result_df_' + '_'.join(query_params['query']) + '.csv', index=False)
-    # 2. food, review
-    query_params = {'query': ["cnn", "resnet"]}
-    phrase_result_df = pd.DataFrame(columns=['title','abstract'])
-    start = time.time()
-    outputs = phrase_search(query_params, client)
-    end = time.time()
-    for result in outputs:
-        cursor = client.get_one(data_type='paper', filter={'_id':result}, fields=['title', 'abstract'])
-        try:
-            tmp_df = pd.DataFrame.from_dict(cursor, orient='index').T
-            tmp_df['id'] = result[0]
-            phrase_result_df = phrase_result_df.append(tmp_df[['id','title','abstract']])
-        except:
-            print('No such paper in database')
-    print(end - start)
-    phrase_result_df.to_csv('ir_eval/result/phrase_result_df_' + '_'.join(query_params['query']) + '.csv', index=False)
+    for query_params in query_params_list:
+        print(query_params['query'])
+        phrase_result_df = pd.DataFrame(columns=['title','abstract'])
+        start = time.time()
+        outputs = phrase_search(query_params, client)
+        end = time.time()
+        print('result nums:', len(outputs))
+        for idx, result in enumerate(outputs):
+            if idx > 20:
+                break
+            cursor = client.get_one(data_type='paper', filter={'_id':result}, fields=['title', 'abstract'])
+            try:
+                tmp_df = pd.DataFrame.from_dict(cursor, orient='index').T
+                tmp_df['id'] = result[0]
+                phrase_result_df = phrase_result_df.append(tmp_df[['id','title','abstract']])
+            except:
+                print('No such paper in database')
+        print(end - start)
+        phrase_result_df.to_csv('ir_eval/result/phrase_result_df_' + '_'.join(query_params['query']) + '.csv', index=False)
+    print()
     #---------------------------------------------------
     print('2.Proximity search')
     # 1. covid, 2021
-    query_params = {'query': ["covid", "2021"]}
-    proximity_result_df = pd.DataFrame(columns=['title','abstract'])
-    start = time.time()
-    outputs = proximity_search(query_params, client, 2)
-    end = time.time()
-    for result in outputs:
-        # cursor = client.get_data('paper',{'_id':result}, fields=['title', 'abstract'],skip=0,limit=1)
-        cursor = client.get_one(data_type='paper', filter={'_id':result}, fields=['title', 'abstract'])
-        try:
-            tmp_df = pd.DataFrame.from_dict(cursor, orient='index').T
-            tmp_df['id'] = result[0]
-            proximity_result_df = proximity_result_df.append(tmp_df[['id','title','abstract']])
-        except:
-            print('No such paper in database')
-    print(end - start)
-    proximity_result_df.to_csv('ir_eval/result/proximity_df_' + '_'.join(query_params['query']) + '.csv', index=False)
-    # 2. food, review
-    query_params = {'query': ["food", "review"]}
-    proximity_result_df = pd.DataFrame(columns=['title','abstract'])
-    start = time.time()
-    outputs = proximity_search(query_params, client, 2)
-    end = time.time()
-    for result in outputs:
-        # cursor = client.get_data('paper',{'_id':result}, fields=['title', 'abstract'],skip=0,limit=1)
-        cursor = client.get_one(data_type='paper', filter={'_id':result}, fields=['title', 'abstract'])
-        try:
-            tmp_df = pd.DataFrame.from_dict(cursor, orient='index').T
-            tmp_df['id'] = result[0]
-            proximity_result_df = proximity_result_df.append(tmp_df[['id','title','abstract']])
-        except:
-            print('No such paper in database')
-    print(end - start)
-    proximity_result_df.to_csv('ir_eval/result/proximity_df_' + '_'.join(query_params['query']) + '.csv')
+    for query_params in query_params_list:
+        print(query_params['query'])
+        proximity_result_df = pd.DataFrame(columns=['title','abstract'])
+        start = time.time()
+        outputs = proximity_search(query_params, client, 3)
+        end = time.time()
+        print('result nums:', len(outputs))
+        for idx, result in enumerate(outputs):
+            if idx > 20:
+                break
+            cursor = client.get_one(data_type='paper', filter={'_id':result}, fields=['title', 'abstract'])
+            try:
+                tmp_df = pd.DataFrame.from_dict(cursor, orient='index').T
+                tmp_df['id'] = result[0]
+                proximity_result_df = proximity_result_df.append(tmp_df[['id','title','abstract']])
+            except:
+                print('No such paper in database')
+        print(end - start)
+        proximity_result_df.to_csv('ir_eval/result/proximity_df_' + '_'.join(query_params['query']) + '.csv', index=False)
+    print()
     #---------------------------------------------------
     print('3.Ranking algorithm')
-    bm25_result_df = pd.DataFrame(columns=['title','abstract'])
-    tfidf_result_df = pd.DataFrame(columns=['title','abstract'])
-    query_params = {'query': ["covid", "2021"]}
-    start = time.time()
-    bm25_scores = ranking_query_BM25(query_params, client = client)
-    for result in bm25_scores[:10]:
-        cursor = client.get_one(data_type='paper', filter={'_id':result}, fields=['title', 'abstract'])
-        try:
-            tmp_df = pd.DataFrame.from_dict(cursor, orient='index').T
-            tmp_df['id'] = result[0]
-            bm25_result_df = bm25_result_df.append(tmp_df[['id','title','abstract']])
-            print(tmp_df['title'])
-        except:
-            print('No such paper in database')
-    end = time.time()
-    print(end-start)
-    bm25_result_df.to_csv(f'ir_eval/result/paper_bm_25_result_df_' + '_'.join(query_params['query']) + '.csv')
-    start = time.time()
-    tfidf_scores = ranking_query_tfidf(query_params, client = client)
-    for result in tfidf_scores[:10]:
-        cursor = client.get_one(data_type='paper', filter={'_id':result}, fields=['title', 'abstract'])
-        try:
-            tmp_df = pd.DataFrame.from_dict(cursor, orient='index').T
-            tmp_df['id'] = result[0]
-            tfidf_result_df = tfidf_result_df.append(tmp_df[['id','title','abstract']])
-            print(tmp_df['title'])
-        except:
-            print('No such paper in db')
-    end = time.time()
-    print(end-start)
-    tfidf_result_df.to_csv(f'ir_eval/result/paper_tfidf_result_df_' + '_'.join(query_params['query']) + '.csv')
-    print("---------------------------------------------------")
-    query_params = {'query': ["review", "food"]}
-    start = time.time()
-    bm25_result_df = pd.DataFrame(columns=['title','abstract'])
-    tfidf_result_df = pd.DataFrame(columns=['title','abstract'])
-    start = time.time()
-    bm25_scores = ranking_query_BM25(query_params, client = client)
-    for result in bm25_scores[:10]:
-        cursor = client.get_one(data_type='paper', filter={'_id':result}, fields=['title', 'abstract'])
-        tmp_df = pd.DataFrame.from_dict(cursor, orient='index').T
-        tmp_df['id'] = result[0]
-        bm25_result_df = bm25_result_df.append(tmp_df[['id','title','abstract']])
-        print(tmp_df['title'])
-        print(tmp_df['abstract'])
-    end = time.time()
-    print(end-start)
-    bm25_result_df.to_csv(f'ir_eval/result/paper_bm_25_result_df_' + '_'.join(query_params['query']) + '.csv')  
-    start = time.time()  
-    tfidf_scores = ranking_query_tfidf(query_params, client = client)
-    for result in tfidf_scores[:10]:
-        cursor = client.get_one(data_type='paper', filter={'_id':result}, fields=['title', 'abstract'])
-        tmp_df = pd.DataFrame.from_dict(cursor, orient='index').T
-        tmp_df['id'] = result[0]
-        tfidf_result_df = tfidf_result_df.append(tmp_df[['id','title','abstract']])
-        print(tmp_df['title'])
-        print(tmp_df['abstract'])
-    end = time.time()
-    print(end-start)
-    tfidf_result_df.to_csv(f'ir_eval/result/paper_tfidf_result_df_' + '_'.join(query_params['query']) + '.csv')   
+    print('1. BM25')
+    for idx, query_params in enumerate(query_params_list):
+        print(query_params['query'])
+        bm25_result_df = pd.DataFrame(columns=['title','abstract'])
+        start = time.time()
+        bm25_scores = ranking_query_BM25(query_params, client = client)
+        end = time.time()
+        print(bm25_scores[:10])
+        for result in bm25_scores[:10]:
+            cursor = client.get_one(data_type='paper', filter={'_id':result[0]}, fields=['title', 'abstract'])
+            try:
+                tmp_df = pd.DataFrame.from_dict(cursor, orient='index').T
+                tmp_df['id'] = result[0]
+                bm25_result_df = bm25_result_df.append(tmp_df[['id','title','abstract']])
+                print(tmp_df['title'].values)
+            except:
+                print('No such paper in database')
+        print(end-start)
+        bm25_result_df.to_csv(f'ir_eval/result/paper_bm_25_result_df_' + '_'.join(query_params['query']) + '.csv',index=False)
+    print()
+    
+    print('2. Tfidf')
+    for idx, query_params in enumerate(query_params_list):
+        print(query_params['query'])
+        tfidf_result_df = pd.DataFrame(columns=['title','abstract'])
+        start = time.time()
+        tfidf_scores = ranking_query_tfidf(query_params, client = client)
+        end = time.time()
+        print(tfidf_scores[:10])
+        for result in tfidf_scores[:10]:
+            cursor = client.get_one(data_type='paper', filter={'_id':result[0]}, fields=['title', 'abstract'])
+            try:
+                tmp_df = pd.DataFrame.from_dict(cursor, orient='index').T
+                tmp_df['id'] = result[0]
+                tfidf_result_df = tfidf_result_df.append(tmp_df[['id','title','abstract']])
+                print(tmp_df['title'].values)
+            except:
+                print('No such paper in db')
+        print(end-start)
+        tfidf_result_df.to_csv(f'ir_eval/result/paper_tfidf_result_df_' + '_'.join(query_params['query']) + '.csv',index=False)
+    
