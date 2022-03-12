@@ -2,8 +2,13 @@ import time
 from flask import Flask, request
 import json
 from flask_cors import CORS
+<<<<<<< HEAD:api/app.py
  
 example_json = open('../example.json', 'r')
+=======
+
+example_json = open('example.json', 'r')
+>>>>>>> 2f1d167801bc4baeabffddb02cc7b190b958737b:app.py
 example_data = json.load(example_json)
 
 app= Flask(__name__)
