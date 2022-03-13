@@ -11,10 +11,10 @@ import pandas as pd
 import numpy as np
 
 from collections import defaultdict
-from mongoDB_API import MongoDBClient
+from core_algorithms.mongoDB_API import MongoDBClient
 import itertools
 import tqdm
-from ir_eval.preprocessing import preprocess
+from core_algorithms.ir_eval.preprocessing import preprocess
 
 
 class TimeLimitTerm(Exception): pass
@@ -58,7 +58,7 @@ def ranking_query_BM25(query_params, client = None):
     total_start_time = time.time()
     for term in terms:
         term_start_time = time.time()
-        list_of_papers = client.get_doc_from_index(term)
+        list_of_papers = client.get_topk_doc_from_index(term)
         term_end_time = time.time()
         print(term, ':', term_end_time-term_start_time)
         doc_nums_term = len(list_of_papers)
@@ -79,7 +79,7 @@ def ranking_query_tfidf(query_params, client = None):
     total_start_time = time.time()
     for term in terms:
         term_start_time = time.time()
-        list_of_papers = client.get_doc_from_index(term)
+        list_of_papers = client.get_topk_doc_from_index(term)
         term_end_time = time.time()
         print(term, ':', term_end_time-term_start_time)
         doc_nums_term = len(list_of_papers)
@@ -115,7 +115,7 @@ def proximity_search(query_params, client = None, proximity=2):
     for i in range(len(terms)-1):
         term = terms[i]
         term_start_time = time.time()
-        list_of_papers = client.get_doc_from_index(term)
+        list_of_papers = client.get_topk_doc_from_index(term)
         print(term, time.time()-term_start_time)
         list_of_docs = [doc['id'] for doc in list_of_papers]
         term1_dict = dict()
@@ -124,7 +124,7 @@ def proximity_search(query_params, client = None, proximity=2):
         for j in range(i+1, len(terms)):
             tmp_term = terms[j]
             term_start_time = time.time()
-            tmp_list_of_papers = client.get_doc_from_index(tmp_term)
+            tmp_list_of_papers = client.get_topk_doc_from_index(tmp_term)
             print(tmp_term, time.time()-term_start_time)
             tmp_list_of_docs = [doc['id'] for doc in tmp_list_of_papers]
             term2_dict = dict()
@@ -180,7 +180,7 @@ def phrase_search(query_params, client = None):
         term2 = terms[i+1]
         if i == 0:
             term_start_time = time.time()
-            list_of_papers1 = client.get_doc_from_index(term1)
+            list_of_papers1 = client.get_topk_doc_from_index(term1)
             print(term1, time.time()-term_start_time)
             term1_dict = dict()
             for paper in list_of_papers1:
@@ -190,7 +190,7 @@ def phrase_search(query_params, client = None):
             term1_dict = output_dict
         term2_dict = dict()
         term_start_time = time.time()
-        list_of_papers2 = client.get_doc_from_index(term2)
+        list_of_papers2 = client.get_topk_doc_from_index(term2)
         print(term2, time.time()-term_start_time)
         for paper in list_of_papers2:
             term2_dict[paper['id']] = paper['pos']
