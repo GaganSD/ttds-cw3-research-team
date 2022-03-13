@@ -1,0 +1,397 @@
+title,subtitle,description,Source
+💉 Opioid Overdose Deaths,"800 collected samples, technical information","
+### About this dataset
+&gt; <p>Opioid addiction and death rates in the U.S. and abroad have reached ""epidemic"" levels. The CDC's data reflects the incredible spike in overdoses caused by drugs containing opioids.</p>
+<blockquote>
+<p>The United States is experiencing an epidemic of drug overdose (poisoning) deaths. Since 2000, the rate of deaths from drug overdoses has increased 137%, including a 200% increase in the rate of overdose deaths involving opioids (opioid pain relievers and heroin). <em>Source: <a href=""http://www.cdc.gov/mmwr/preview/mmwrhtml/mm6450a3.htm"" target=""_blank"" rel=""nofollow"">CDC</a></em></p>
+</blockquote>
+<p><code>In-the-News</code>:</p>
+<ul>
+<li><em>STAT</em>: <a href=""https://www.statnews.com/2016/08/22/heroin-huntington-west-virginia-overdoses"" target=""_blank"" rel=""nofollow"">26 overdoses in just hours: Inside a community on the front lines of the opioid epidemic</a></li>
+<li><em>NPR</em>: <a href=""http://www.npr.org/sections/health-shots/2016/10/14/497799446/organ-donations-spike-in-the-wake-of-the-opioid-epidemic"" target=""_blank"" rel=""nofollow"">Organ Donations Spike In The Wake Of The Opioid Epidemic</a>, <a href=""http://www.npr.org/sections/health-shots/2016/09/25/495052633/deadly-opioid-overwhelms-first-responders-and-crime-labs-in-ohio"" target=""_blank"" rel=""nofollow"">Deadly Opioid Overwhelms First Responders And Crime Labs in Ohio</a></li>
+<li><em>Scientific American</em>: <a href=""https://www.scientificamerican.com/article/wave-of-overdoses-with-little-known-drug-raises-alarm-amid-opioid-crisis/"" target=""_blank"" rel=""nofollow"">Wave of Overdoses with Little-Known Drug Raises Alarm Amid Opioid Crisis</a></li>
+<li><em>Washington Post</em>: <a href=""https://www.washingtonpost.com/news/to-your-health/wp/2016/10/05/a-7-year-old-told-her-bus-driver-she-couldnt-wake-her-parents-police-found-them-dead-at-home/"" target=""_blank"" rel=""nofollow"">A 7-year-old told her bus driver she couldn’t wake her parents. Police found them dead at home.</a></li>
+<li><em>Wall Street Journal</em>: <a href=""http://www.wsj.com/articles/for-small-town-cops-opioid-scourge-hits-close-to-home-1475074699"" target=""_blank"" rel=""nofollow"">For Small-Town Cops, Opioid Scourge Hits Close to Home</a></li>
+<li><em>Food &amp; Drug Administration</em>: <a href=""http://www.fda.gov/NewsEvents/Newsroom/PressAnnouncements/ucm520945.htm"" target=""_blank"" rel=""nofollow"">FDA launches competition to spur innovative technologies to help reduce opioid overdose deaths</a></li>
+</ul>
+<p>This data was compiled using the CDC's WONDER database. Opioid overdose deaths are defined as: deaths in which the underlying cause was drug overdose, and the ICD-10 code used was any of the following: T40.0 (Opium), T40.1 (Heroin), T40.2 (Other opioids), T40.3 (Methadone), T40.4 (Other synthetic narcotics), T40.6 (Other and unspecified narcotics).</p>
+<p><strong>Age-adjusted rate of drug overdose deaths and drug overdose deaths involving opioids</strong><br>
+<img src=""http://i.imgur.com/ObpzUKq.gif"" alt=""Opioid Death Rate"" style=""""><br>
+<em>Source: <a href=""http://www.cdc.gov/mmwr/preview/mmwrhtml/mm6450a3.htm"" target=""_blank"" rel=""nofollow"">CDC</a></em></p>
+<p><strong>What are opioids?</strong><br>
+Opioids are substances that act on opioid receptors to produce morphine-like effects. Opioids are most often used medically to relieve pain. Opioids include opiates, an older term that refers to such drugs derived from opium, including morphine itself. Other opioids are semi-synthetic and synthetic drugs such as hydrocodone, oxycodone and fentanyl; antagonist drugs such as naloxone and endogenous peptides such as the endorphins.[4] The terms opiate and narcotic are sometimes encountered as synonyms for opioid. <em>Source: <a href=""https://en.wikipedia.org/wiki/Opioid"" target=""_blank"" rel=""nofollow"">Wikipedia</a></em></p>
+<p><code>contributors-wanted</code> See <a href=""https://data.world/health/opioid-overdose-deaths/discuss/4008"">comment</a> in Discussion</p>
+<h1>Footnotes</h1>
+<ul>
+<li>The crude rate is per 100,000.</li>
+<li>Certain totals are hidden due to suppression constraints. More Information: <a href=""http://wonder.cdc.gov/wonder/help/faq.html#Privacy"" target=""_blank"" rel=""nofollow"">http://wonder.cdc.gov/wonder/help/faq.html#Privacy</a>.</li>
+<li>The population figures are briged-race estimates. The exceptions being years 2000 and 2010, in which Census counts are used.</li>
+<li>v1.1: Added Opioid Prescriptions Dispensed by US Retailers in that year (millions).</li>
+</ul>
+<p><em><strong>Citation:</strong> Centers for Disease Control and Prevention, National Center for Health Statistics. Multiple Cause of Death 1999-2014 on CDC WONDER Online Database, released 2015. Data are from the Multiple Cause of Death Files, 1999-2014, as compiled from data provided by the 57 vital statistics jurisdictions through the Vital Statistics Cooperative Program. Accessed at <a href=""http://wonder.cdc.gov/mcd-icd10.html"" target=""_blank"" rel=""nofollow"">http://wonder.cdc.gov/mcd-icd10.html</a> on Oct 19, 2016 2:06:38 PM.</em></p>
+<p><em><strong>Citation for Opioid Prescription Data:</strong> IMS Health, Vector One: National, years 1991-1996, Data Extracted 2011. IMS Health, National Prescription Audit, years 1997-2013, Data Extracted 2014. Accessed at <a href=""https://www.drugabuse.gov/about-nida/legislative-activities/testimony-to-congress/2016/americas-addiction-to-opioids-heroin-prescription-drug-abuse"" target=""_blank"" rel=""nofollow"">NIDA article linked (Figure 1)</a> on Oct 23, 2016.</em></p>
+<p><em><strong>Data Use Restrictions:</strong></em><br>
+<em>The Public Health Service Act (42 U.S.C. 242m(d)) provides that the data collected by the National Center for Health Statistics (NCHS) may be used only for the purpose for which they were obtained; any effort to determine the identity of any reported cases, or to use the information for any purpose other than for health statistical reporting and analysis, is against the law. Therefore users will:</em><br>
+<em>Use these data for health statistical reporting and analysis only.<br>
+For sub-national geography, do not present or publish death counts of 9 or fewer or death rates based on counts of nine or fewer (in figures, graphs, maps, tables, etc.).<br>
+Make no attempt to learn the identity of any person or establishment included in these data.<br>
+Make no disclosure or other use of the identity of any person or establishment discovered inadvertently and advise the NCHS Confidentiality Officer of any such discovery.</em><br>
+<em>Eve Powell-Griner, Confidentiality Officer<br>
+National Center for Health Statistics<br>
+3311 Toledo Road, Rm 7116<br>
+Hyattsville, MD 20782<br>
+Telephone 301-458-4257 Fax 301-458-4021</em></p>
+ This dataset was created by [Health](https://data.world/health) and contains around 800 samples along with Crude Rate, Crude Rate Lower 95% Confidence Interval, technical information and other features such as:
+- Year
+- Deaths
+- and more.
+
+### How to use this dataset
+&gt; - Analyze Crude Rate Upper 95% Confidence Interval in relation to Prescriptions Dispensed By Us Retailers In That Year (millions)
+- Study the influence of State on Crude Rate
+- [More datasets](https://www.kaggle.com/yamqwe/datasets)
+
+### Acknowledgements
+If you use this dataset in your research, please credit [Health](https://data.world/health) 
+
+
+# [Start A New Notebook!](https://www.kaggle.com/yamqwe/opioid-overdose-deathse/kernels?modal=true)
+
+
+",Kaggle
+✈ Global Health Nutrition Data,"Stats about the health, nutrition and population in the world","
+### About this dataset
+&gt; <p>HealthStats provides key health, nutrition and population statistics gathered from a variety of international sources. Themes include population dynamics, nutrition, reproductive health, health financing, medical resources and usage, immunization, infectious diseases, HIV/AIDS, DALY, population projections and lending. HealthStats also includes health, nutrition and population statistics by wealth quintiles.</p>
+<p>This dataset includes 345 indicators, such as immunization rates, malnutrition prevalence, and vitamin A supplementation rates across 263 countries around the world. Data was collected on a yearly basis from 1960-2016.</p>
+<p>Source: Kaggle</p>
+<p><a href=""https://www.kaggle.com/theworldbank/health-nutrition-and-population-statistics"" target=""_blank"">https://www.kaggle.com/theworldbank/health-nutrition-and-population-statistics</a></p>
+ This dataset was created by [Data Society](https://data.world/data-society) and contains around 90000 samples along with 2000, 1973, technical information and other features such as:
+- 1971
+- 2011
+- and more.
+
+### How to use this dataset
+&gt; - Analyze Country Name in relation to 2002
+- Study the influence of 1975 on 2012
+- [More datasets](https://www.kaggle.com/yamqwe/datasets)
+
+### Acknowledgements
+If you use this dataset in your research, please credit [Data Society](https://data.world/data-society) 
+
+
+# [Start A New Notebook!](https://www.kaggle.com/yamqwe/global-health-nutrition-datae/kernels?modal=true)
+
+
+",Kaggle
+UNICEF_State_of_World_Children_2021,State of World Children in 2021- Data of UNICEF,"# DESCRIPTION OF EACH TABLE 🐱 🐭 🐹
+
+==============================================
+##  TABLE 1. DEMOGRAPHICS 🦀
+
+The demographics table contains selected indicators on some of the most important demographic information of each population, including the total population and broken down by age, as well as annual population growth rates. The annual number of births is a function of both population size and current fertility. The total fertility rate allows for comparison of fertility levels internationally. A total fertility level of 2.1 is called ‘replacement level’ and represents a level at which, in the long term, the population would remain the same size. Life expectancy at birth is a measure of the health status and the development of a population and continues to increase in almost all countries in the world. The dependency ratio is the ratio of the not-working-age population (i.e., the economically ‘dependent’ population) to the working-age population (15–64 years). This can be divided into a child dependency ratio (ratio of children under 15 to working age population) and an old-age dependency ratio (ratio of population 65 and older to working-age population). The total dependency ratio is usually U-shaped over time reflecting a changing age structure as a result of the demographic transition. This can be understood as the combination of opposing trends in child and old-age dependency ratios. For example, decreasing fertility leads to a decreasing share of children in the population and therefore to a decrease in the child dependency ratio. Increasing life expectancy (as consequence of decreasing mortality) will lead to a larger share of older people and therefore to an increase in the old-age dependency ratio. The proportion of the urban population and the annual urban population growth rate describe the status and dynamics of the urbanization process. The net migration rate refers to the difference between the number of immigrants and the number of emigrants; a country/ area with more immigrants than emigrants shows a positive value, while a country with less immigrants than emigrants shows a negative value. 
+
+================================================
+##  TABLE 2. CHILD MORTALITY 🦎
+
+Each year, in The State of the World’s Children report, UNICEF presents a series of mortality estimates for children. These figures represent the best estimates available at the time of printing and are based on the work of the United Nations Inter-Agency Group for Child Mortality Estimation (UN IGME), which includes UNICEF, the World Health Organization (WHO), the World Bank group and the United Nations Population Division. UN IGME mortality estimates are updated annually through a detailed review of all newly available data, which can result in adjustments to previously reported estimates. As a result, consecutive editions of The State of the World’s Children should not be used for analysing mortality trends over time. Comparable global and regional under five mortality estimates for the period 1990–2019 are presented below. 
+
+===============================================
+## TABLE 3. MATERNAL AND NEWBORN HEALTH 🐯
+
+The maternal and newborn health table includes a combination of demographic and intervention coverage indicators. The demographic indicators consist of life expectancy for females, adolescent birth rate, and maternal mortality estimates including the number of maternal deaths, maternal mortality ratio, and lifetime risk of maternal death.
+
+=============================================
+## TABLE 4. CHILD HEALTH  🐦
+
+The child health table includes a set of indicators that capture information on the coverage of effective interventions delivered to children under the age of five years and at the household level. These include a range of immunization indicators (described below) and indicators on interventions for the prevention or treatment of pneumonia, diarrhoea and malaria (the three leading killers of young children). The main data sources for the indicators on prevention and treatment of childhood illnesses are nationally representative household surveys such as the DHS and MICS. Regional and global estimates are calculated by using a weighted average method. Variables used for weighting are indicator-specific and applied to each country. They accord with the appropriate target population for each indicator (the denominator) and are derived from the latest edition of the World Population Prospects. Only the most recent data points from 2015– 2020 for each country were used to calculate regional and global estimates. For indicators that capture information about households, total population was used.
+
+===============================================
+## TABLE 5. ADOLESCENT HEALTH 🐋
+
+This table contains a set of key indicators related to adolescent health, well-being and mortality. Mortality indicators include adolescent mortality rate for ages 10–19, the number for adolescent deaths as well as the annual rate of reduction in the adolescent mortality rate for the period 2000–2019. Reproductive health indicators presented in this table include adolescent birth rate, early childbearing (which refers to women aged 20–24 years who gave birth before age 18) and demand for family planning satisfied with modern methods among adolescents aged 15–19. The following maternal health indicators are presented for adolescents aged 15–19: Antenatal care with at least four visits and skilled birth attendant. The following risk factors for noncommunicable diseases (NCDs) are presented: Alcohol use among adolescents ages 15–19, tobacco use among adolescents ages 13–15 and insufficient physical activity among school going adolescents ages 11–17. Vaccination against human papillomavirus (HPV) is presented for girls who received the last dose of the HPV vaccine per national schedule. WHO/UNICEF produce two main coverage indicators for HPV vaccination. One is the HPV vaccination programme performance coverage that describes vaccination coverage according to a national schedule and the programme’s eligibility criteria for each calendar year (programme’s target population up to 14 years of age). The second describes HPV vaccination coverage by age 15, representing the proportion of the population turning 15 in the reporting year who have been vaccinated against HPV at any time between the ages of 9–14, at any time up to the calendar year in question.
+
+==============================================
+
+## TABLES 6,7: HIV/AIDS 🦂
+
+In 2021, the Joint United Nations Programme on HIV/AIDS (UNAIDS) released new global, regional and country-level HIV and AIDS estimates for 2020 that reflect the most up-to-date epidemiological estimates. The estimates also reflect coverage data for antiretroviral therapy (ART), prevention of mother-to-child transmission (PMTCT) and early infant diagnosis for HIV. The estimates are based on the most current available science and WHO programme guidelines. These guidelines have resulted in improvements in assumptions of the probability of HIV transmission from mother-to-child, fertility among women by age and HIV serostatus, net survival rates for children living with HIV and more. Based on this refined methodology, UNAIDS has retrospectively generated new estimates of HIV prevalence, the number of people living with HIV and those needing treatment, AIDS-related deaths, new HIV infections, and other important trends in the HIV epidemic. Key indicators on the HIV response for children are divided into two tables: Table 6. HIV/AIDS: epidemiology and Table 7. HIV/AIDS: interventions.
+
+================================================
+## TABLES 8, 9: NUTRITION 🐴
+
+Table 8 encompasses estimates of malnutrition at birth among pre-school-aged children, school-aged children and women of reproductive age as well as coverage of birth weighing and key micronutrient programmes. Table 9 encompasses feeding practices for infants and young children. Estimates for low birthweight, stunting and overweight among pre-school children, thinness and overweight among school-aged children, and maternal underweight and anaemia are from country models. For this reason, these may be different from survey-reported estimates. For all other indicators, when raw data were available, the country-level estimates were re-analysed to conform to standard analysis methods and may therefore differ from survey-reported values.
+
+=========================================================
+## TABLE 11: EDUCATION 🐙
+
+This table contains a set of indicators on the aspects of children’s education: equitable access, school completion and learning outcomes. This table first provides information about equitable access, as measured by the out-of-school children rate (SDG4.1.4). Estimates shown in this table were calculated using the UNESCO Institute for Statistics (UIS) database. The out-of-school children rate identifies the population part in the official age range for a given level of education not attending school, in order to formulate targeted policies that can be put in place to ensure equitable access to education.
+
+===============================================
+## TABLE 12. CHILD PROTECTION 🐞
+
+Child protection refers to the prevention of and response to violence, exploitation and abuse of children in all contexts. There are many violations that children can be subjected to, but the lack of comparable data limits reporting on the full spectrum. In view of this, the child protection table presents data on a few issues for which comparable and nationally representative data are available. This includes two manifestations of harmful traditional practices, some forms of violence and exploitation as well as the official recording of births.
+
+===============================================
+## TABLE 14. WASH 💐
+
+This table contains a set of indicators on access to basic drinking water, sanitation and hygiene (WASH) services in households, schools and healthcare facilities. The WASH estimates in this report come from the WHO/ UNICEF Joint Monitoring Programme for Water Supply, Sanitation and Hygiene (JMP). Full details of the JMP indicator definitions, data sources and methods used to produce sub-national, national, regional and global estimates can be found at ",Kaggle
+💊 Drug Induced Deaths,"Deaths, Population, Crude Rate, Unintentional Death Rates","
+### About this dataset
+&gt; <p>This data was compiled using the CDC's <a href=""https://wonder.cdc.gov/"" target=""_blank"" rel=""nofollow"">WONDER database</a> using these parameters:</p>
+<ul>
+<li>Group By: State, Year</li>
+<li>Measures: Deaths, Population, Crude Rate (95% Confidence Interval and Standard Error)</li>
+<li>Underlying Cause of Death: UCD - Drug/Alcohol Induced Causes - Drug Induced Causes</li>
+<li>Show Totals</li>
+<li>Show Zero Values</li>
+<li>Show Suppressed Values</li>
+</ul>
+<h2>Citation</h2>
+<p>Centers for Disease Control and Prevention, National Center for Health Statistics. Multiple Cause of Death<br>
+1999-2015 on CDC WONDER Online Database, released December, 2016. Data are from the Multiple Cause of Death Files, 1999-2015, as<br>
+compiled from data provided by the 57 vital statistics jurisdictions through the Vital Statistics Cooperative Program. Accessed<br>
+at <a href=""http://wonder.cdc.gov/mcd-icd10.html"" target=""_blank"" rel=""nofollow"">http://wonder.cdc.gov/mcd-icd10.html</a> on November 3, 2017.</p>
+<h2>Caveats</h2>
+<ol>
+<li>As of April 3, 2017, the underlying cause of death has been revised for 125 deaths in 2014. More information:<br>
+<a href=""http://wonder.cdc.gov/wonder/help/mcd.html#2014-Revision"" target=""_blank"" rel=""nofollow"">http://wonder.cdc.gov/wonder/help/mcd.html#2014-Revision</a>.</li>
+<li>Circumstances in Georgia for the years 2008 and 2009 have resulted in unusually high death counts for the ICD-10 cause of<br>
+death code R99, ""Other ill-defined and unspecified causes of mortality."" Caution should be used in interpreting these data.<br>
+More information: <a href=""http://wonder.cdc.gov/wonder/help/mcd.html#Georgia-Reporting-Anomalies"" target=""_blank"" rel=""nofollow"">http://wonder.cdc.gov/wonder/help/mcd.html#Georgia-Reporting-Anomalies</a>.</li>
+<li>Circumstances in New Jersey for the year 2009 have resulted in unusually high death counts for the ICD-10 cause of death code<br>
+R99, ""Other ill-defined and unspecified causes of mortality"" and therefore unusually low death counts in other ICD-10 codes,<br>
+most notably R95, ""Sudden Infant Death Syndrome"" and X40-X49, ""Unintentional poisoning."" Caution should be used in<br>
+interpreting these data. More information: <a href=""http://wonder.cdc.gov/wonder/help/mcd.html#New-Jersey-Reporting-Anomalies"" target=""_blank"" rel=""nofollow"">http://wonder.cdc.gov/wonder/help/mcd.html#New-Jersey-Reporting-Anomalies</a>.</li>
+<li>Circumstances in California resulted in unusually high death counts for the ICD-10 cause of death code R99, ""Other<br>
+ill-defined and unspecified causes of mortality"" for deaths occurring in years 2000 and 2001. Caution should be used in<br>
+interpreting these data. More information: <a href=""http://wonder.cdc.gov/wonder/help/mcd.html#California-Reporting-Anomalies"" target=""_blank"" rel=""nofollow"">http://wonder.cdc.gov/wonder/help/mcd.html#California-Reporting-Anomalies</a>.</li>
+<li>Death rates are flagged as Unreliable when the rate is calculated with a numerator of 20 or less. More information:<br>
+<a href=""http://wonder.cdc.gov/wonder/help/mcd.html#Unreliable"" target=""_blank"" rel=""nofollow"">http://wonder.cdc.gov/wonder/help/mcd.html#Unreliable</a>.</li>
+<li>The method used to calculate 95% confidence intervals is documented here: More information:<br>
+<a href=""http://wonder.cdc.gov/wonder/help/mcd.html#Confidence-Intervals"" target=""_blank"" rel=""nofollow"">http://wonder.cdc.gov/wonder/help/mcd.html#Confidence-Intervals</a>.</li>
+<li>The method used to calculate standard errors is documented here: More information:<br>
+<a href=""http://wonder.cdc.gov/wonder/help/mcd.html#Standard-Errors"" target=""_blank"" rel=""nofollow"">http://wonder.cdc.gov/wonder/help/mcd.html#Standard-Errors</a>.</li>
+<li>The population figures for year 2015 are bridged-race estimates of the July 1 resident population, from the Vintage 2015<br>
+postcensal series released by NCHS on June 28, 2016. The population figures for year 2014 are bridged-race estimates of the July<br>
+1 resident population, from the Vintage 2014 postcensal series released by NCHS on June 30, 2015. The population figures for<br>
+year 2013 are bridged-race estimates of the July 1 resident population, from the Vintage 2013 postcensal series released by NCHS<br>
+on June 26, 2014. The population figures for year 2012 are bridged-race estimates of the July 1 resident population, from the<br>
+Vintage 2012 postcensal series released by NCHS on June 13, 2013. Population figures for 2011 are bridged-race estimates of the<br>
+July 1 resident population, from the county-level postcensal Vintage 2011 series released by NCHS on July 18, 2012. Population<br>
+figures for 2010 are April 1 Census counts. The population figures for years 2001 - 2009, are bridged-race estimates of the July<br>
+1 resident population, from the revised intercensal county-level 2000 - 2009 series released by NCHS on October 26, 2012.<br>
+Population figures for 2000 are April 1 Census counts. Population figures for 1999 are from the 1990-1999 intercensal series of<br>
+July 1 estimates. Population figures for Infant Age Groups are the number of live births. <strong>Note:</strong> Rates and population<br>
+figures for years 2001 - 2009 differ slightly from previously published reports, due to use of the population estimates which<br>
+were available at the time of release.</li>
+<li>The population figures used in the calculation of death rates for the age group 'under 1 year' are the estimates of the<br>
+resident population that is under one year of age. More information: <a href=""http://wonder.cdc.gov/wonder/help/mcd.html#Age"" target=""_blank"" rel=""nofollow"">http://wonder.cdc.gov/wonder/help/mcd.html#Age</a> Group.</li>
+</ol>
+<p><strong><em>Source:</em></strong> <a href=""http://wonder.cdc.gov/mcd-icd10.html"" target=""_blank"" rel=""nofollow"">http://wonder.cdc.gov/mcd-icd10.html</a></p>
+ This dataset was created by [Health](https://data.world/health) and contains around 900 samples along with Crude Rate Lower 95% Confidence Interval, Crude Rate Standard Error, technical information and other features such as:
+- Year
+- Crude Rate
+- and more.
+
+### How to use this dataset
+&gt; - Analyze Deaths in relation to Crude Rate Upper 95% Confidence Interval
+- Study the influence of State on Crude Rate Lower 95% Confidence Interval
+- [More datasets](https://www.kaggle.com/yamqwe/datasets)
+
+### Acknowledgements
+If you use this dataset in your research, please credit [Health](https://data.world/health) 
+
+
+# [Start A New Notebook!](https://www.kaggle.com/yamqwe/drug-induced-deathse/kernels?modal=true)
+
+
+",Kaggle
+🎗️ Cancer Rates by U.S. State,"100 collected samples, technical information","
+### About this dataset
+&gt; <p>In the following maps, the U.S. states are divided into groups based on the rates at which people developed or died from cancer in 2013, the most recent year for which incidence data are available.</p>
+<p>The rates are the numbers out of 100,000 people who developed or died from cancer each year.</p>
+<p><strong>Incidence Rates by State</strong><br>
+<em>The number of people who get cancer is called cancer incidence. In the United States, the rate of getting cancer varies from state to state.</em></p>
+<ul>
+<li>
+<p>*Rates are per 100,000 and are age-adjusted to the 2000 U.S. standard population.</p>
+</li>
+<li>
+<p>‡Rates are not shown if the state did not meet USCS publication criteria or if the state did not submit data to CDC.</p>
+</li>
+<li>
+<p>†Source: U.S. Cancer Statistics Working Group. United States Cancer Statistics: 1999–2013 Incidence and Mortality Web-based Report. Atlanta (GA): Department of Health and Human Services, Centers for Disease Control and Prevention, and National Cancer Institute; 2016. Available at: <a href=""http://www.cdc.gov/uscs"" target=""_blank"" rel=""nofollow"">http://www.cdc.gov/uscs</a>.</p>
+</li>
+</ul>
+<p><strong>Death Rates by State</strong><br>
+<em>Rates of dying from cancer also vary from state to state.</em></p>
+<ul>
+<li>
+<p>*Rates are per 100,000 and are age-adjusted to the 2000 U.S. standard population.</p>
+</li>
+<li>
+<p>†Source: U.S. Cancer Statistics Working Group. United States Cancer Statistics: 1999–2013 Incidence and Mortality Web-based Report. Atlanta (GA): Department of Health and Human Services, Centers for Disease Control and Prevention, and National Cancer Institute; 2016. Available at: <a href=""http://www.cdc.gov/uscs"" target=""_blank"" rel=""nofollow"">http://www.cdc.gov/uscs</a>.</p>
+</li>
+</ul>
+<p>Source: <a href=""https://www.cdc.gov/cancer/dcpc/data/state.htm"" target=""_blank"" rel=""nofollow"">https://www.cdc.gov/cancer/dcpc/data/state.htm</a></p>
+ This dataset was created by [Adam Helsinger](https://data.world/adamhelsinger) and contains around 100 samples along with Range, Rate, technical information and other features such as:
+- Range
+- Rate
+- and more.
+
+### How to use this dataset
+&gt; - Analyze Range in relation to Rate
+- Study the influence of Range on Rate
+- [More datasets](https://www.kaggle.com/yamqwe/datasets)
+
+### Acknowledgements
+If you use this dataset in your research, please credit [Adam Helsinger](https://data.world/adamhelsinger) 
+
+
+# [Start A New Notebook!](https://www.kaggle.com/yamqwe/cancer-rates-by-u-s-statee/kernels?modal=true)
+
+
+",Kaggle
+CalWORKs Welfare Program Dataset,Calwork datasets from the California Health and Human Services Agency,"
+### About this dataset
+&gt; <p>This dataset includes data on the number of <a href=""http://www.cdss.ca.gov/calworks/"" target=""_blank"" rel=""nofollow"">CalWORKs</a> cases on hand during the month, by recipient and case type. The dataset is a selected subset of the entire report, available on the <a href=""http://www.dss.cahwnet.gov/cdssweb/default.htm"" target=""_blank"" rel=""nofollow"">California Department of Social Services</a>, <a href=""http://www.cdss.ca.gov/research"" target=""_blank"" rel=""nofollow"">Research and Data Reports (RADR) website</a>.</p>
+<p>CalWORKs is a welfare program that gives cash aid and services to eligible needy California families. The program serves all 58 counties in the state and is operated locally by county welfare departments. If a family has little or no cash and needs housing, food, utilities, clothing or medical care, they may be eligible to receive immediate short-term help. Families that apply and qualify for ongoing assistance receive benefits each month to help pay for housing, food and other necessary expenses. Monthly CalWORKs data is collected from the counties through submission of the <a href=""http://www.cdss.ca.gov/research/PG281.htm"" target=""_blank"" rel=""nofollow"">CA 237CW CalWORKs Cash Grant Movement Report</a>, which is used to report statistical information on CalWORKs caseload movement for Two Parent Families, Zero Parent Families, All Other Families, Temporary Assistance for Needy Families (TANF) Timed-Out Cases and Safety Net/Fleeing Felon/Long-Term Sanction Cases (SN/FF/LTS).</p>
+<h3>About CHHS Open Data</h3>
+<p>The role of the <a href=""http://www.chhs.ca.gov/Pages/Home.aspx"" target=""_blank"" rel=""nofollow"">California Health and Human Services</a> (CHHS) Agency is to provide policy leadership and direction to the departments and programs it oversees, to reduce duplication and fragmentation and improve coordination among the departments, to ensure programmatic integrity, and to advance the Governor's priorities on health and human services issues. The California Health and Human Services Agency (CHHS) has launched its <a href=""https://chhs.data.ca.gov/"" target=""_blank"" rel=""nofollow"">Open Data Portal</a> initiative in order to increase public access to one of the State’s most valuable assets – non-confidential health and human services data. Its goals are to spark innovation, promote research and economic opportunities, engage public participation in government, increase transparency, and inform decision-making. ""Open Data"" describes data that are freely available, machine-readable, and formatted according to national technical standards to facilitate visibility and reuse of published data.</p>
+<p>Citation: <em>Research Services Branch, California Department of Social Services. 2015.</em></p>
+<p><a href=""https://chhs.data.ca.gov/Facilities-and-Services/Monthly-counts-of-California-Work-Opportunity-and-/d27w-f7d6"" target=""_blank"" rel=""nofollow"">DATASET</a></p>
+ This dataset was created by [California Health and Human Services](https://data.world/chhs) and contains around 40000 samples along with Month, Year, technical information and other features such as:
+- Number Of Cases/ Persons
+- Case Type
+- and more.
+
+### How to use this dataset
+&gt; - Analyze County in relation to Case/ Person Status
+- Study the influence of Month on Year
+- [More datasets](https://www.kaggle.com/yamqwe/datasets)
+
+### Acknowledgements
+If you use this dataset in your research, please credit [California Health and Human Services](https://data.world/chhs) 
+
+
+# [Start A New Notebook!](https://www.kaggle.com/yamqwe/ca-calworks-caseloade/kernels?modal=true)
+
+
+",Kaggle
+COVID-19 Coronavirus data - weekly,COVID-19 Coronavirus data - weekly (from 17 December 2020),"### Content
+
+The dataset contains a weekly situation update on COVID-19, the epidemiological curve and the global geographical distribution (EU/EEA and the UK, worldwide).
+
+Since the beginning of the coronavirus pandemic, ECDC’s Epidemic Intelligence team has collected the number of COVID-19 cases and deaths, based on reports from health authorities worldwide. This comprehensive and systematic process was carried out on a daily basis until 14/12/2020. See the discontinued daily dataset: COVID-19 Coronavirus data - daily. ECDC’s decision to discontinue daily data collection is based on the fact that the daily number of cases reported or published by countries is frequently subject to retrospective corrections, delays in reporting and/or clustered reporting of data for several days. Therefore, the daily number of cases may not reflect the true number of cases at EU/EEA level at a given day of reporting. Consequently, day to day variations in the number of cases does not constitute a valid basis for policy decisions.
+
+ECDC continues to monitor the situation. Every week between Monday and Wednesday, a team of epidemiologists screen up to 500 relevant sources to collect the latest figures for publication on Thursday. The data screening is followed by ECDC’s standard epidemic intelligence process for which every single data entry is validated and documented in an ECDC database. An extract of this database, complete with up-to-date figures and data visualisations, is then shared on the ECDC website, ensuring a maximum level of transparency.
+
+ECDC receives regular updates from EU/EEA countries through the Early Warning and Response System (EWRS), The European Surveillance System (TESSy), the World Health Organization (WHO) and email exchanges with other international stakeholders. This information is complemented by screening up to 500 sources every day to collect COVID-19 figures from 196 countries. This includes websites of ministries of health (43% of the total number of sources), websites of public health institutes (9%), websites from other national authorities (ministries of social services and welfare, governments, prime minister cabinets, cabinets of ministries, websites on health statistics and official response teams) (6%), WHO websites and WHO situation reports (2%), and official dashboards and interactive maps from national and international institutions (10%). In addition, ECDC screens social media accounts maintained by national authorities on for example Twitter, Facebook, YouTube or Telegram accounts run by ministries of health (28%) and other official sources (e.g. official media outlets) (2%). Several media and social media sources are screened to gather additional information which can be validated with the official sources previously mentioned. Only cases and deaths reported by the national and regional competent authorities from the countries and territories listed are aggregated in our database.
+
+Disclaimer: National updates are published at different times and in different time zones. This, and the time ECDC needs to process these data, might lead to discrepancies between the national numbers and the numbers published by ECDC. Users are advised to use all data with caution and awareness of their limitations. Data are subject to retrospective corrections; corrected datasets are released as soon as processing of updated national data has been completed. 
+
+### Source 
+- https://data.europa.eu/euodp/en/data/dataset/covid-19-coronavirus-data-weekly-from-17-december-2020",Kaggle
+Alcohol & Drugs In Elem and Secondary Schools ,Prediction of alcohol in high school students across the U.S,"
+### About this dataset
+&gt; <p>The National Center for Education Statistics (NCES) is the primary federal entity for collecting and analyzing data related to education in the U.S. and other nations. NCES is located within the U.S. Department of Education and the Institute of Education Sciences. NCES fulfills a Congressional mandate to collect, collate, analyze, and report complete statistics on the condition of American education; conduct and publish reports; and review and report on education activities internationally.</p>
+<ul>
+<li>Table 232.10. Percentage of students in grades 12-Sep who reported using alcohol at least 1 day during the previous 30 days, by location and selected student characteristics: Selected years, 1993 through 2015</li>
+<li>Table 232.20. Percentage distribution of students in grades 9-12, by number of days they reported using alcohol anywhere or on school property during the previous 30 days and selected student characteristics: Selected years, 2009 through 2015</li>
+<li>Table 232.30. Percentage of public school students in grades 12-Sep who reported using alcohol at least 1 day during the previous 30 days, by location and state: Selected years, 2005 through 2015</li>
+<li>Table 232.40. Percentage of students in grades 12-Sep who reported using marijuana at least one time during the previous 30 days, by location and selected student characteristics: Selected years, 1993 through 2015</li>
+<li>Table 232.50. Percentage distribution of students in grades 9-12, by number of times they reported using marijuana anywhere or on school property during the previous 30 days and selected student characteristics: Selected years, 2009 through 2015</li>
+<li>Table 232.60. Percentage of public school students in grades 12-Sep who reported using marijuana at least one time during the previous 30 days, by location and state: Selected years, 2005 through 2015</li>
+<li>Table 232.70. Percentage of students in grades 12-Sep who reported that illegal drugs were made available to them on school property during the previous 12 months, by selected student characteristics: Selected years, 1993 through 2015</li>
+<li>Table 232.80. Percentage of public school students in grades 12-Sep who reported that illegal drugs were made available to them on school property during the previous 12 months, by state: Selected years, 2003 through 2015</li>
+<li>Table 232.90. Percentage of high school seniors reporting use of alcohol and illicit drugs, by frequency of use and substance used: Selected years, 1975 through 2015</li>
+<li>Table 232.95. Percentage of 12- to 17-year-olds reporting use of illicit drugs, alcohol, and cigarettes during the past 30 days and the past year, by substance used, sex, and race/ethnicity: Selected years, 1985 through 2014</li>
+</ul>
+<p>\1\The term ""anywhere"" is not used in the Youth Risk Behavior Survey (YRBS) questionnaire; students were simply asked how many days during the previous 30 days they had at least one drink of alcohol.</p>
+<p>\2\Race categories exclude persons of Hispanic ethnicity.</p>
+<p>\3\Before 1999, Asian students and Pacific Islander students were not categorized separately, and students could not be classified as Two or more races. Because the response categories changed in 1999, caution should be used in comparing data on race from 1993, 1995, and 1997 with data from later years.</p>
+<p>\4\Refers to the Standard Metropolitan Statistical Area (MSA) status of the respondent's household as defined by the U.S. Census Bureau. Categories include ""central city of an MSA (Urban),"" ""in MSA but not in central city (Suburban),"" and ""not MSA (Rural).""</p>
+<p>\5\In the question about drinking alcohol at school, ""on school property"" was not defined for survey respondents. Data on alcohol use at school were not collected in 2013 and 2015.</p>
+<p>SOURCE: Centers for Disease Control and Prevention, Division of Adolescent and School Health, Youth Risk Behavior Surveillance System (YRBSS), 1993 through 2015. (This table was prepared July 2016.)</p>
+<p><strong><em>Source:</em></strong> <a href=""https://nces.ed.gov/programs/digest/current_tables.asp"" target=""_blank"">https://nces.ed.gov/programs/digest/current_tables.asp</a></p>
+ This dataset was created by [National Center for Education Statistics](https://data.world/nces) and contains around 100 samples along with Unnamed: 13, Unnamed: 23, technical information and other features such as:
+- Unnamed: 15
+- Unnamed: 17
+- and more.
+
+### How to use this dataset
+&gt; - Analyze Unnamed: 12 in relation to Unnamed: 9
+- Study the influence of Unnamed: 34 on Unnamed: 3
+- [More datasets](https://www.kaggle.com/yamqwe/datasets)
+
+### Acknowledgements
+If you use this dataset in your research, please credit [National Center for Education Statistics](https://data.world/nces) 
+
+
+# [Start A New Notebook!](https://www.kaggle.com/yamqwe/elem-and-secondary-stimulantse/kernels?modal=true)
+
+
+",Kaggle
+Health ,Injury statistics – work-related claims: 2018,"# Health
+## Injury statistics – work-related claims: 2018
+
+## This data is for education and training in data science and analysis
+
+## About the columns ,
+
+Year
+Sex	
+Age 
+group 
+(years) at date of injury
+Geographic
+ region
+ where 
+injury
+ occurred
+Employment status
+Occupation
+Injury/illness/disease group
+Type of injury/illness/disease
+Industry	Industry subgroup
+Value
+Measure
+Status
+
+
+
+
+## About tasks:
+- Data processing and analysis with an explanation of the results.",Kaggle
+Ghana COVID-19 Dataset,Records of COVID-19 cases confirmed in Ghana,"### Context
+
+This repository contains dataset of the Novel Corona Virus Disease (COVID-19) cases recorded in Ghana. The data available in the dataset comes from updates given by the Ghana Health Service, the Ministry of Information and the Ghana Statistical Service. 
+
+
+### Content
+
+#### Ghana_Covid19_DailyActive.csv
+
+Number of columns = 8
+
+    confirmed - total number of confirmed positve cases in a given day
+    recovered - total number of people who recovered from the virus in a given day
+    death     - total number of people who died from the virus in a given day
+    date      - day on which confirmed, recovered and death were reported
+    cumulative_confirmed  - cumulative count of confirmed positive cases 
+    cumulative_recovered  - cumulative count of people who have recovered from the virus
+    cumulative_death      - cumulative count of people who have died from the virus
+    active_cases          - total number of existing positive cases on a given day
+                            (active_cases = cumulative_confirmed - cumulative_recovered - cumulative_death)
+
+
+
+### Acknowledgements
+
+- Ghana Health Service
+- Ghana Statistical Service
+- Ministry of Information, Ghana
+
+
+
+",Kaggle

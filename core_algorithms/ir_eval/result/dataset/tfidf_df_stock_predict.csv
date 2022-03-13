@@ -1,0 +1,341 @@
+title,subtitle,description,Source
+🎰 Predicting the lottery with machine learning,Predicting the future of the lottery from lottery data,"
+### About this dataset
+&gt; <h2>Context</h2>
+<p>Winning the lottery has always been a dream for a lot of people. Because of that, a lot of work have been done in the past to try and tackle the challenge.<br>
+We saw the rise of different approaches, from computer softwares that optimize your lottery picks to numerical and statistical analysis, as well as esoteric approaches.</p>
+<p>More recently, with the rise of <em>machine learning</em> (<em>hereafter: <strong>ML</strong></em>), people have tried to tackle the problem by trying to have a ML model predict the next combination.<br>
+However, most of those who undertook to try this approach had poor understanding of ML-related basics such as data preprocessing and signal processing.</p>
+<blockquote>
+<p>As an example of bad things that were done, there were projects that built a ML model that took raw draw results and outputted N numbers, hoping that those N numbers would be the correct combination of the next draw.<br>
+To give you an analogy with a  real world example, it would be like taking in the raw data (bytes) of an audio file as the (sole) input of a model and hope that it outputs a concept like <em>bpm</em>, <em>music genre</em>, ...<br>
+Of course, this resulted in extremely bad results and <strong>ML models that didn't learn a single thing</strong>.<br>
+Similarly, it would be the same as trying to predict stock prices using only the price as the sole input variable. It would be bound to fail without creating higher-level features. Models that do not do that would never succeed.</p>
+</blockquote>
+<p>Because Machine-Learning-based approaches <em>were bound</em> to fail before even beginning <em>unless something was done</em> regarding data and signal processing, I decided to make my contribution by crafting higher-level features (/ abstract concepts) from historic lottery data.</p>
+<p>I leave under mouth discussions about the mathematical theory of probability (which I explained more in <a href=""https://github.com/JeffMv/Lofea"" target=""_blank"" rel=""nofollow"">the repository of Lofea</a>, a project I created to generate this dataset) or why mathematicians say it would be theoretically impossible to predict. Those specifics and other questions can be discussed in the comments section.<br>
+To let people still dream enough to try and tackle the problem, I'd like to point out that stock market prices (which are also numerical time series data) are said to be unpredictable due to the <a href=""https://en.wikipedia.org/wiki/Efficient-market_hypothesis"" target=""_blank"" rel=""nofollow"">Efficient Market Hypothesis</a>. Regardless, firms and individuals have been trying their best to try and predict the evolution of stock prices. Although theories tell us something is impossible in theory, there might be a practical implementation flaw that might get exploited if studied carefully enough. Who knows unless they try ?</p>
+<h2>Content</h2>
+<p>Preprocessed historical results.</p>
+<p><strong>Tackling a big and complex task</strong> often requires problem solving methodologies, such as <em>divide and conquer</em>. This is why instead of tackling a regular pick 6 among 49 or so lottery, this dataset focuses on simple 1/10 lottery data (i.e. pick 1 among 10). But it also includes a version for the Euromillions (a 5/50 lottery).</p>
+<p>You will find in the archive <code>features.04-2021</code> files containing computed features, as well as the whole draw histories used to compute them.<br>
+One lottery is the <a href=""https://www.fdj.fr/jeux-de-tirage/euromillions-my-million/resultats"" target=""_blank"" rel=""nofollow"">Euromillions</a>, and the other is  <a href=""https://jeux.loro.ch/games/magic3"" target=""_blank"" rel=""nofollow"">TrioMagic</a>, though similar datasets can be crafted for lotteries that share their respective formats.<br>
+Regarding <em>1/10</em> lottery, since most of <em>1/10</em> lotteries have several <em>pools</em> (/columns) from which one has to pick, this kind of dataset with higher-level features can be created for each column individually and compared among different lotteries.</p>
+<h3>Preprocessing</h3>
+<p>The big idea here is to preprocess historic draws as if it was a <em>signal</em> or a <em>time serie</em> and create higher-level features based on it.<br>
+Inspired by the approach of working with numerical time series signals such as stock market prices.</p>
+<h3>Labels (referred to as ""<em>Targets</em>"" in the dataset)</h3>
+<p>There are several high-level concepts we may want to predict, such as the parity of the next draw. This would be a <em>classification problem</em>. You may also choose to tackle a <em>regression</em> problem, such as trying to predict the repartition of rate of even numbers in the next N draws (for instance N=2, 3 or 5).<br>
+There are also other possible targets besides the parity, such as the <em>Universe length</em>, which will be described below.</p>
+<p>The target you choose to predict may influence what kind of features you will try to include or craft.</p>
+<h3>Features</h3>
+<p>Several of the features included in this dataset are based on a concept I came up with I called « <em><strong>Universe Length</strong></em> ».<br>
+Basically, <em>Universe Length</em> (referred to as <code>ULen</code> in the dataset) is the number of different numbers in a given time frame.<br>
+For instance in a 1/10 lottery, <em>Universe Length</em> over a <em><strong>time frame</strong> of 10 draws</em> with the following draw history <code>[3,4,1,4,9,5,5,9,8,1]</code> would be <code>6</code> since there are 6 different numbers drawn in this running window frame.</p>
+<p>Similarly, there are other features that are based on a <strong>running window <code>frame</code></strong>.<br>
+For the lotteries 5/50 and 1/10, setting the running window to 10 was a reasonable choice. (For the stars of Euromillions, which is a 2/12, the runnig window <code>frame</code> was set to 6).</p>
+<h4><strong>Approach - Features of draws</strong></h4>
+<p>There are different kind of approaches. Among them, one approach is to make statistics and features related to each ball. And another approach is to study the characteristics of draws (instead of individual balls).<br>
+In this dataset (or at least the early version of it) the chosen approach was the latter: studying draws.</p>
+<p>The names of features and targets of this dataset have been chosen for the clarity and unicity (in spite of shortness). Thus they are quite verbose, so feel free to rename them when you get used to them.<br>
+Their verbosity allows distinguishing between variations around a same concept, or variations of running window or such...</p>
+<p><strong>Explanation of features:</strong></p>
+<ul>
+<li>
+<p><code>universe-length</code> : Number of <em>different</em> numbers in the current running window. (Always see the file's description to know the applied running window <code>frame</code>).</p>
+</li>
+<li>
+<p><code>universe-length-offset-from-center</code> : based on <code>universe-length</code>. It just shows the distance to the center of all possible universe length values. Note that just because a universe length is possible does not mean it will ever occur. For instance, the lowest possible universe length would mean that only the same ball/set of drawn number is drawn over and over again within the running window. Although this could theoretically happen, its low probability makes it impossible.</p>
+</li>
+<li>
+<p><code>parity</code> : Number of even numbers in the <em>current</em> draw</p>
+</li>
+<li>
+<p><code>parity-over-frame</code> : Number of even numbers in the draws of the <em>running window</em></p>
+</li>
+<li>
+<p><code>last-moving-direction-of-universe-length</code> : Las moving direction of the <code>universe-length</code> feature. -1 means decreasing, +1 means increasing.</p>
+</li>
+<li>
+<p><code>move-balance-of-universe-length_latest-minus-mean</code> : formula: The mean of universe lengths over the running window, minus the current value of the <code>universe length</code></p>
+</li>
+<li>
+<p><code>move-balance-of-universe-length_mean-minus-earliest</code> : formula: Current value of the <code>universe length</code> minus the mean of universe lengths over the running window</p>
+</li>
+<li>
+<p><code>move-balance-of-universe-length_latest-minus-mean_runningWindowX2</code>: same as the other one, but the mean is applied on a frame twice bigger.</p>
+</li>
+<li>
+<p><code>move-balance-of-universe-length_mean-minus-earliest_runningWindowX2</code>: same concept as the above feature</p>
+</li>
+<li>
+<p><code>universe-length-drop</code> : How much the universe length can at most drop in the next draw's result</p>
+</li>
+<li>
+<p><code>universe-length-increase</code> : How much the universe length can at most increase in the next draw's result</p>
+</li>
+<li>
+<p><code>universe-length-repetition-same</code> : the number of times the current <code>universe length</code> has been repeated successively</p>
+</li>
+<li>
+<p><code>greater-universe-length-than-repetition</code> : the number successive times we find a higher <code>universe length</code> than the current one over the running window</p>
+</li>
+<li>
+<p><code>universe-length-didfollowincrease</code> : how much did the universe length increase <em>from the previous</em> draw. 0 means no increase or decrease.</p>
+</li>
+<li>
+<p><code>mean-frequency-of-drawn-numbers</code> : the mean frequency of appearance of the currently drawn numbers. Appearance frequency is computed over the running window only.</p>
+</li>
+<li>
+<p><code>median-frequency-of-drawn-numbers</code> : the median frequency of appearance of the currently drawn numbers. Appearance frequency is computed over the running window only.</p>
+</li>
+<li>
+<p><code>mean-frequency-of-drawn-numbers-over-X-draws</code> : same as <code>mean-frequency-of-drawn-numbers</code> but over a running window of <code>X</code> draws.</p>
+</li>
+<li>
+<p><code>median-frequency-of-drawn-numbers-over-X-draws</code> : same as <code>median-frequency-of-drawn-numbers</code> but over a running window of <code>X</code> draws.</p>
+</li>
+<li>
+<p><code>mean-gap-of-drawn-numbers</code> : the mean appearance gap of each the drawn balls. Takes the individual gaps of each of the balls in the current result draw (i.e. the number of draws between the last time a given ball was drawn), sums them up, and then divides by the number of balls in the draw.</p>
+</li>
+<li>
+<p><code>median-gap-of-drawn-numbers</code> : like <code>mean-gap-of-drawn-numbers</code> but using the median instead of the mean. Note that in 1/N lottery pools (one ball pulled out of N), the two features are always equal, which is logic.</p>
+</li>
+<li>
+<p><code>mean-gap-of-drawn-numbers-bounded-at-X-draws</code> : where <code>X</code> is a number. Same as its counterpart <code>mean-gap-of-drawn-numbers</code> but over a running window of <code>X</code> draws.</p>
+</li>
+<li>
+<p><code>median-gap-of-drawn-numbers-bounded-at-X-draws</code> : similar to the previous one, but using the median.</p>
+</li>
+<li>
+<p><code>mean-of-4-gaps-of-each-drawn-numbers</code> : formula : systematically take the last 4 gaps of each of the balls in the current draw. Sum all these gaps together and take the overall mean. (i.e. average of all those gaps)</p>
+</li>
+<li>
+<p><code>median-of-4-gaps-of-each-drawn-numbers</code> : same formula as its paronym, but takes the median of all. For 1/N lotteries, both are equal.</p>
+</li>
+<li>
+<p><code>median-of-means-of-X-gaps-of-each-drawn-numbers</code> : where <code>X</code> is a number. Formula : systematically take the last X gaps of each of the balls of the current draw. Take the mean for each ball. Then sum up all the means together and take the median of them. In short, it is a median( of average( of [X-latest-gaps-of-symbol-Y] )). A median of averages may not make much sense statistically speaking. This feature is provided as is.</p>
+</li>
+</ul>
+<p><strong>TARGET columns</strong> (i.e. supervised learning)<br>
+(i.e. ideas of what you might want to predict)</p>
+<ul>
+<li><code>target_universe-length-willFollowIncrease</code> : TARGET feature (supervised learning). Same as the <code>universe-length-didfollowincrease</code> feature but for the draw that comes in the future. (DO NOT mistake them). One goal can be to predict this value given only the other features. Was named <code>universe-length-willfollowincrease</code> in an earlier version of the dataset.</li>
+<li><code>target_coming-universe-length-change-in-next-draw</code> : same as <code>target_universe-length-willFollowIncrease</code> but indicates decreases as well as increases and stagnations. Might be better suited for a regression, but you do as you see fit.</li>
+<li><code>target_coming-mean-universe-length-change-in-next-2-draws</code> : takes the mean change of universe length in the next 2 draws instead of only one. See <code>target_coming-universe-length-change-in-next-draw</code>.</li>
+<li><code>target_future-1rst-value-of-universe-length-center-offset-from-center</code> : the next value of the feature <code>universe-length-offset-from-center</code>. You may want to try to predict that.</li>
+<li><code>target_coming-universe-length-center-offset-change-in-next-draw</code> : the relative change of the feature <code>universe-length-offset-from-center</code> that will occur in the next draw.</li>
+<li><code>target_coming-mean-universe-length-center-offset-change-in-next-2-draws</code> : same as the previous feature, but we take the mean change in the next 2 draws.</li>
+</ul>
+<p><strong>Special columns:</strong></p>
+<ul>
+<li><code>date</code> : date of the lottery draw</li>
+<li><code>draw</code> / <code>draw-result</code> : most recent draw of the specified date. displayed for convenience</li>
+<li><code>running-window-frame-length</code> : convenience a CONSTANT column. it is there to remind you of the base <em>running window</em> size (also called <em>frame length</em>) used to compute most features. When some features use a given multiple of the <em>frame length</em>, this is the value that gets multiplied.</li>
+<li><code>draw-id</code> : the draw identifier. It can be the date or in another form (such as reversed date <code>yyyymmdd</code>). Only displayed for convenience</li>
+</ul>
+<h2>Inspiration / Ideas of approaches</h2>
+<ul>
+<li>Transforming the problem into another that outputs binary values.<br>
+This would allow you/us to tap into the enormity of works and theorems done for <em><strong>binomial problems</strong></em> both in statistics and probability.<br>
+It would allow you to compare the distribution of the randomness to much more scholarly examples (such as heads or tails) and deduce the law of probability / probability distribution / random variable behind a particular lottery.</li>
+</ul>
+<blockquote>
+<p>If I remember correctly a maths course, there should be a <strong>theorem / lemme</strong> in probability that say how likely a binomial distribution is to take exaggerated values (big outliers). Regardless, there are a lot of results already, such as <strong>Bernoulli trial</strong> to study and compare theoretical and practical results.</p>
+</blockquote>
+<ul>
+<li>Treating the problem as a numerical time series problem</li>
+<li>Treating the problem as a signal processing problem</li>
+<li>Asking different high-level questions and formulating the problem differently. For instance
+<ul>
+<li>Trying to predict the repartition of a feature (like parity) in the next 5 draws (instead of only predicting the parity of the next draw)</li>
+</ul>
+</li>
+<li>Trying to identify critical points in time where several features converge towards predicting the same thing.<br>
+For instance, there could be a time where the parity of the last 10 drawn numbers was even. If on top of that several even numbers have had a particularly high appearance rate in a preceding big frame of time, then these two features would lean towards thinking that there is a higher chance of seeing an odd number drawn next. (Though probability independence would say that such convergence are meaningless, here we are to suppose the opposite until we face the hard truth, as in a proof by contradiction).<br>
+See the note about <strong>Bernoulli trials</strong>-related <em>theorem / lemme</em> as mentioned above.</li>
+</ul>
+<h2>Acknowledgements</h2>
+<h2>License</h2>
+<p>Dataset licensed under <a href=""https://creativecommons.org/licenses/by/4.0/"" target=""_blank"" rel=""nofollow"">CC-BY</a></p>
+<p>Personal project for generating the dataset: <a href=""https://github.com/JeffMv/Lofea"" target=""_blank"" rel=""nofollow"">Lofea</a> under <a href=""https://creativecommons.org/licenses/by-nc-sa/4.0/"" target=""_blank"" rel=""nofollow"">CC-BY-NC-SA</a></p>
+ This dataset was created by [Jeffrey Mvutu Mabilama](https://data.world/jfreex) and contains around 600 samples along with Ft U Len Over10 Short Moving Direction Balance, Pred Will Follow Increase Capacity, technical information and other features such as:
+- Ft U Len Over10 Lower Than Serie
+- Pred2nd Next
+- and more.
+
+### How to use this dataset
+&gt; - Analyze Ft U Len Over10 Last Moving Direction in relation to Ft U Len Over10 Can Decrease Of
+- Study the influence of Ft U Len Over10 Same Value Serie on Target Trend
+- [More datasets](https://www.kaggle.com/yamqwe/datasets)
+
+### Acknowledgements
+If you use this dataset in your research, please credit [Jeffrey Mvutu Mabilama](https://data.world/jfreex) 
+
+
+# [Start A New Notebook!](https://www.kaggle.com/yamqwe/lottery-features-time-series-machine-learninge/kernels?modal=true)
+
+
+",Kaggle
+Netflix Stock Price Prediction,Netflix Stock PricePrediction using Time Series,"The Dataset contains data for 5 years ie. from 5th Feb 2018 to 5th Feb 2022
+
+The art of forecasting stock prices has been a difficult task for many of the researchers and analysts. In fact, investors are highly interested in the research area of stock price prediction. For a good and successful investment, many investors are keen on knowing the future situation of the stock market. Good and effective prediction systems for the stock market help traders, investors, and analyst by providing supportive information like the future direction of the stock market.",Kaggle
+NSE 200 scripts OHLC daily (2000-2022),"22 years of daily prices of 200 stocks.(NIFTY50, NIFTYNEXT50 ,NIFTYMIDCAP100)","### Context
+
+I struggled to find adjusted historical prices of NSE top shares. I spend lot of time to find and download this information. This data is clean, with adjusted prices and complete. 
+
+
+### Content
+
+National Stock Exchange of India Limited (NSE) is the leading stock exchange of India, located in Mumbai, Maharashtra. It is world’s largest derivatives exchange in 2021 by number of contracts traded based on the statistics maintained by Futures Industry Association (FIA), a derivatives trade body.
+
+This data contains 20 years of OHLCV daily prices of stocks from following indices:
+1) **NIFTY 50 :** The NIFTY 50 is a benchmark Indian stock market index that represents the weighted average of 50 of the largest Indian companies listed on the National Stock Exchange.
+2) **NIFTY NEXT 50 :** The Nifty Next 50 is an index that represents the performance of the next 50 stocks that come after the top 50 stock in the order of the float market capitalization, and they can even be potential candidates for inclusion in Nifty 50 in the future.
+3) **NIFTY MIDCAP 100:** The objective of the NIFTY Midcap 100 Index is to capture the movement and be a benchmark of the midcap segment of the market. The NIFTY Midcap 100 Index represents about 9.9% of the market capitalization of the stocks listed on NSE as on March 29, 2019.
+
+
+### Acknowledgements
+
+I used many online python packages. and finally investpy is the only package which can gives such rich information. ""investpy"" is a Python package to retrieve data from Investing.com
+
+
+### Inspiration
+
+I would like to ask:
+1) Can you predict long entry points with high Alpha and low Beta? e.g. trade which can give me 10% profit with 2.5% - 3% stoploss in next few trading sessions(between 5-22)? 
+2) Can you predict outcome of tomorrow's file which can beat benchmark of present price.",Kaggle
+HDFC Stock Price (2000-2021),Here is HDFC Bank stock Price from year 2000 to 2021,"### Context
+
+This is a dataset of HDFC Bank stock price from 2000 to 2021, its has more than 5000 rows. So we can perform EDA and various Regression Techniques to predict future price and how well the Bank stock are performing.
+
+### About Dataset:
+
+- **Date:** A date is a particular day of the month.
+- **Open:** It is the price at which the financial security opens in the market when trading begins. It may or may not be different from the previous day's closing price. Thus, the price in the beginning of trading sessions is called open price or simply open.
+- **High:** Today's high refers to a security's intraday highest trading price. It is represented by the highest point on a day's stock chart. This can be contrasted with today's low, which is the trading day's intraday low price.
+- **Low:** The low is the minimum price of a stock in a period, while high is the maximum value reached by the stock in the same period.
+- **Close:** The close is a reference to the end of a trading session in the financial markets when the markets close for the day. The close can also refer to the process of exiting a trade or the final procedure in a financial transaction in which contract documents are signed and recorded.
+- **Adj Close:**  The adjusted closing price amends a stock's closing price to reflect that stock's value after accounting for any corporate actions. The closing price is the raw price, which is just the cash value of the last transacted price before the market closes.
+- **Volume:** In capital markets, volume, or trading volume, is the amount of a security that was traded during a given period of time. In the context of a single stock trading on a stock exchange, the volume is commonly reported as the number of shares that changed hands during a given day.",Kaggle
+India Stock Market (daily updated),Daily Updated Data on ALL Stocks Listed in the NSE,"# About this dataset
+&gt; India's National Stock Exchange (NSE) has a total market capitalization of more than US$3.4 trillion, making it the world's 10th-largest stock exchange as of August 2021, with a trading volume of ₹8,998,811 crore (US$1.2 trillion) and more 2000 total listings.
+
+&gt; NSE's flagship index, the NIFTY 50, is a 50 stock index is used extensively by investors in India and around the world as a barometer of the Indian capital market.
+
+&gt; This dataset contains data of **all company stocks listed** in the NSE, allowing anyone to analyze and make educated choices about their investments, while also contributing to their countries economy.
+
+# How to use this dataset
+&gt; - Create a time series regression model to predict NIFTY-50 value and/or stock prices.
+- Explore the most the returns, components and volatility of the stocks.
+- Identify high and low performance stocks among the list.
+
+
+# Highlighted Notebooks
+&gt; - Your kernel can be featured here!
+- [Related Dataset: S&P 500 Stocks - daily updated](https://www.kaggle.com/andrewmvd/sp-500-stocks)
+- [More datasets](https://www.kaggle.com/andrewmvd/datasets)
+
+
+
+# Acknowledgements
+
+&gt; ### License
+CC0: Public Domain
+
+
+&gt; ### Splash banner
+Stonks by unknown memer.",Kaggle
+EDT,,"The EDT dataset is designed for corporate event detection and text-based stock prediction (trading strategy) benchmark.
+
+1. Corporate Event Detection
+It includes 9721​ news articles with token-level event labels. Including 11 event types:
+Acquisitions, Clinical Trials, Guidance Changes, New Contracts, Stock Repurchases, Stock Split, Reverse Stock Split/ADS Ratio Change, Regular Dividend, Special Dividend, Dividend Cut, Dividend Increase
+
+2. Text-Based Stock Prediction Benchmark
+It includes 303893​ first-hand news articles from high-quality sources. Each news article is assigned a minute-level timestamp and comprehensive stock price labels.
+
+Please see this [Github Link](https://github.com/Zhihan1996/TradeTheEvent/tree/main/data) and [paper](https://aclanthology.org/2021.findings-acl.186.pdf) for more details.",Paper_with_code
+All Stocks Data of Indian Stock Market(1 Year),"Stock Market, NSE, 1 Year, 2435 Stocks","After some rigorous SQL queries and coding on python. I made this dataset. In this dataset, all stocks of the Indian Stock Market are present a total of 2435 stocks. The data is of 1-year rows represent stock name and column represent date and I have filled the table with closing price.
+Enjoy and do some stock price predictions.",Kaggle
+S&P 500 Stocks (daily updated),Stock and company data on all members of the popular financial index.,"# About this dataset
+&gt; The Standard and Poor's 500 or **S&P 500 is the most famous financial benchmark in the world**. 
+
+&gt; This stock market index tracks the performance of 500 large companies listed on stock exchanges in the United States. As of December 31, 2020, more than **$5.4 trillion** was invested in assets tied to the performance of this index.
+
+&gt; Because the index includes multiple classes of stock of some constituent companies—for example, Alphabet's Class A (GOOGL) and Class C (GOOG)—there are actually 505 stocks in the gauge.
+
+
+# How to use this dataset
+&gt; - Create a time series regression model to predict S&P value and/or stock prices.
+- Explore the most the returns, components and volatility of the S&P 500 index.
+- Identify high and low performance stocks among the list.
+
+
+# Highlighted Notebooks
+&gt; - Your kernel can be featured here!
+- [More datasets](https://www.kaggle.com/andrewmvd/datasets)
+
+
+
+# Acknowledgements
+
+&gt; ### License
+CC0: Public Domain
+
+
+&gt; ### Splash banner
+Stonks by unknown memer.
+
+",Kaggle
+Historical Stock Price of  (FAANG + 5) companies,"""I will tell you how to become rich""","**Context**
+
+The subject matter of this dataset contains the stock prices of the 10 popular companies ( Apple, Amazon, Netflix, Microsoft, Google, Facebook, Tesla, Walmart, Uber and Zoom)
+
+**Content**
+
+Within the dataset one will encounter the following:
+The date - ""Date""
+The opening price of the stock - ""Open""
+The high price of that day - ""High""
+The low price of that day - ""Low""
+The closed price of that day - ""Close""
+The amount of stocks traded during that day - ""Volume""
+The stock's closing price that has been amended to include any distributions/corporate actions that occurs before next days open - ""Adj[usted] Close""
+Time period - 2015 to 2021 (day level)
+
+**Tasks**
+- Exploratory Data Analysis
+- Tell a visualization story
+- Compare stock price growth between companies
+- Stock price prediction
+- Time series analysis
+
+",Kaggle
+"NIFTY ALL STOCK dataset, daily update","NIFTY 50, NIFTY BANK, NIFTY 500, RELIANCE, ZOMATO all equity dataset","
+### Content
+
+This dataset is a playground for  technical analysis. It is said that 30% of traffic on stocks is already generated by machines, can trading be fully automated? If not, there is still a lot to learn from historical data. .
+
+### Context
+https://www.kaggle.com/akshaypawar7/nifty-50-interactive-dashboard
+Dataset consists of following files:
+
+- 500 files of equity stock historical candle data
+
+-  `1_bhavcopy.csv =&gt;`
+ Daily prices of all NSE equity stocks . Most of data spans from 2020 to the end today, for companies new on stock market date range is shorter.
+
+
+- `1_meta.csv =&gt;`
+    General description of each company with division on index and industry,
+  as  shown in  below chart.
+
+![](https://www.googleapis.com/download/storage/v1/b/kaggle-user-content/o/inbox%2F9519023%2Ff490f40bae246b3daa177f01b38b1426%2Fimages%20(2).png?generation=1644317670212063&alt=media)
+
+
+
+### Inspiration
+    Regardless of your investment strategy, fluctuations are expected in the financial market. Despite this variance, professional investors try to estimate their overall returns. Risks and returns differ based on investment types and other factors, which impact stability and volatility. To attempt to predict returns, there are many computer-based algorithms and models for financial market trading. Yet, with new techniques and approaches, data science could improve quantitative researchers' ability to forecast an investment's return.
+
+![](https://www.googleapis.com/download/storage/v1/b/kaggle-user-content/o/inbox%2F9519023%2F73346a85da2788285f38be10f611c16d%2Fimages%20(1).jpeg?generation=1644317788241357&alt=media)",Kaggle
