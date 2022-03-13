@@ -1,0 +1,138 @@
+title,abstract,id
+A Rational Finance Explanation of the Stock Predictability Puzzle,"  In this paper, we address one of the main puzzles in finance observed in the
+stock market by proponents of behavioral finance: the stock predictability
+puzzle. We offer a statistical model within the context of rational finance
+which can be used without relying on behavioral finance assumptions to model
+the predictability of stock returns. We incorporate the predictability of stock
+returns into the well-known Black-Scholes option pricing formula. Empirically,
+we analyze the option and spot trader's market predictability of stock prices
+by defining a forward-looking measure which we call ""implied excess
+predictability"". The empirical results indicate the effect of option trader's
+predictability of stock returns on the price of stock options is an increasing
+function of moneyness, while this effect is decreasing for spot traders. These
+empirical results indicate potential asymmetric predictability of stock prices
+by spot and option traders. We show in pricing options with the strike price
+significantly higher or lower than the stock price, the predictability of the
+underlying stock's return should be incorporated into the option pricing
+formula. In pricing options that have moneyness close to one, stock return
+predictability is not incorporated into the option pricing model because stock
+return predictability is the same for both types of traders. In other words,
+spot traders and option traders are equally informed about the future value of
+the stock market in this case. Comparing different volatility measures, we find
+that the difference between implied and realized variances or variance risk
+premium can potentially be used as a stock return predictor.
+",a
+"Predicting Future Shanghai Stock Market Price using ANN in the Period
+  21-Sep-2016 to 11-Oct-2016","  Predicting the prices of stocks at any stock market remains a quest for many
+investors and researchers. Those who trade at the stock market tend to use
+technical, fundamental or time series analysis in their predictions. These
+methods usually guide on trends and not the exact likely prices. It is for this
+reason that Artificial Intelligence systems, such as Artificial Neural Network,
+that is feedforward multi-layer perceptron with error backpropagation, can be
+used for such predictions. A difficulty in neural network application is the
+determination of suitable network parameters. A previous research by the author
+already determined the network parameters as 5:21:21:1 with 80% training data
+or 4-year of training data as a good enough model for stock prediction. This
+model has been put to the test in predicting selected Shanghai Stock Exchange
+stocks in the future period of 21-Sep-2016 to 11-Oct-2016, about one week after
+the publication of these predictions. The research aims at confirming that
+simple neural network systems can be quite powerful in typical stock market
+predictions.
+",a
+"HATS: A Hierarchical Graph Attention Network for Stock Movement
+  Prediction","  Many researchers both in academia and industry have long been interested in
+the stock market. Numerous approaches were developed to accurately predict
+future trends in stock prices. Recently, there has been a growing interest in
+utilizing graph-structured data in computer science research communities.
+Methods that use relational data for stock market prediction have been recently
+proposed, but they are still in their infancy. First, the quality of collected
+information from different types of relations can vary considerably. No
+existing work has focused on the effect of using different types of relations
+on stock market prediction or finding an effective way to selectively aggregate
+information on different relation types. Furthermore, existing works have
+focused on only individual stock prediction which is similar to the node
+classification task. To address this, we propose a hierarchical attention
+network for stock prediction (HATS) which uses relational data for stock market
+prediction. Our HATS method selectively aggregates information on different
+relation types and adds the information to the representations of each company.
+Specifically, node representations are initialized with features extracted from
+a feature extraction module. HATS is used as a relational modeling module with
+initialized node representations. Then, node representations with the added
+information are fed into a task-specific layer. Our method is used for
+predicting not only individual stock prices but also market index movements,
+which is similar to the graph classification task. The experimental results
+show that performance can change depending on the relational data used. HATS
+which can automatically select information outperformed all the existing
+methods.
+",a
+Temporal Relational Ranking for Stock Prediction,"  Stock prediction aims to predict the future trends of a stock in order to
+help investors to make good investment decisions. Traditional solutions for
+stock prediction are based on time-series models. With the recent success of
+deep neural networks in modeling sequential data, deep learning has become a
+promising choice for stock prediction. However, most existing deep learning
+solutions are not optimized towards the target of investment, i.e., selecting
+the best stock with the highest expected revenue. Specifically, they typically
+formulate stock prediction as a classification (to predict stock trend) or a
+regression problem (to predict stock price). More importantly, they largely
+treat the stocks as independent of each other. The valuable signal in the rich
+relations between stocks (or companies), such as two stocks are in the same
+sector and two companies have a supplier-customer relation, is not considered.
+In this work, we contribute a new deep learning solution, named Relational
+Stock Ranking (RSR), for stock prediction. Our RSR method advances existing
+solutions in two major aspects: 1) tailoring the deep learning models for stock
+ranking, and 2) capturing the stock relations in a time-sensitive manner. The
+key novelty of our work is the proposal of a new component in neural network
+modeling, named Temporal Graph Convolution, which jointly models the temporal
+evolution and relation network of stocks. To validate our method, we perform
+back-testing on the historical data of two stock markets, NYSE and NASDAQ.
+Extensive experiments demonstrate the superiority of our RSR method. It
+outperforms state-of-the-art stock prediction solutions achieving an average
+return ratio of 98% and 71% on NYSE and NASDAQ, respectively.
+",a
+"Evaluating the Performance of ANN Prediction System at Shanghai Stock
+  Market in the Period 21-Sep-2016 to 11-Oct-2016","  This research evaluates the performance of an Artificial Neural Network based
+prediction system that was employed on the Shanghai Stock Exchange for the
+period 21-Sep-2016 to 11-Oct-2016. It is a follow-up to a previous paper in
+which the prices were predicted and published before September 21. Stock market
+price prediction remains an important quest for investors and researchers. This
+research used an Artificial Intelligence system, being an Artificial Neural
+Network that is feedforward multi-layer perceptron with error backpropagation
+for prediction, unlike other methods such as technical, fundamental or time
+series analysis. While these alternative methods tend to guide on trends and
+not the exact likely prices, neural networks on the other hand have the ability
+to predict the real value prices, as was done on this research. Nonetheless,
+determination of suitable network parameters remains a challenge in neural
+network design, with this research settling on a configuration of 5:21:21:1
+with 80% training data or 4-year of training data as a good enough model for
+stock prediction, as already determined in a previous research by the author.
+The comparative results indicate that neural network can predict typical stock
+market prices with mean absolute percentage errors that are as low as 1.95%
+over the ten prediction instances that was studied in this research.
+",a
+"Share Price Prediction of Aerospace Relevant Companies with Recurrent
+  Neural Networks based on PCA","  The capital market plays a vital role in marketing operations for aerospace
+industry. However, due to the uncertainty and complexity of the stock market
+and many cyclical factors, the stock prices of listed aerospace companies
+fluctuate significantly. This makes the share price prediction challengeable.
+To improve the prediction of share price for aerospace industry sector and well
+understand the impact of various indicators on stock prices, we provided a
+hybrid prediction model by the combination of Principal Component Analysis
+(PCA) and Recurrent Neural Networks. We investigated two types of aerospace
+industries (manufacturer and operator). The experimental results show that PCA
+could improve both accuracy and efficiency of prediction. Various factors could
+influence the performance of prediction models, such as finance data, extracted
+features, optimisation algorithms, and parameters of the prediction model. The
+selection of features may depend on the stability of historical data: technical
+features could be the first option when the share price is stable, whereas
+fundamental features could be better when the share price has high fluctuation.
+The delays of RNN also depend on the stability of historical data for different
+types of companies. It would be more accurate through using short-term
+historical data for aerospace manufacturers, whereas using long-term historical
+data for aerospace operating airlines. The developed model could be an
+intelligent agent in an automatic stock prediction system, with which, the
+financial industry could make a prompt decision for their economic strategies
+and business activities in terms of predicted future share price, thus
+improving the return on investment. Currently, COVID-19 severely influences
+aerospace industries. The developed approach can be used to predict the share
+price of aerospace industries at post COVID-19 time.
+",a
