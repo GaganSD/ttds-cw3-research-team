@@ -1,0 +1,197 @@
+title,abstract,id
+Vision Transformers with Patch Diversification,"  Vision transformer has demonstrated promising performance on challenging
+computer vision tasks. However, directly training the vision transformers may
+yield unstable and sub-optimal results. Recent works propose to improve the
+performance of the vision transformers by modifying the transformer structures,
+e.g., incorporating convolution layers. In contrast, we investigate an
+orthogonal approach to stabilize the vision transformer training without
+modifying the networks. We observe the instability of the training can be
+attributed to the significant similarity across the extracted patch
+representations. More specifically, for deep vision transformers, the
+self-attention blocks tend to map different patches into similar latent
+representations, yielding information loss and performance degradation. To
+alleviate this problem, in this work, we introduce novel loss functions in
+vision transformer training to explicitly encourage diversity across patch
+representations for more discriminative feature extraction. We empirically show
+that our proposed techniques stabilize the training and allow us to train wider
+and deeper vision transformers. We further show the diversified features
+significantly benefit the downstream tasks in transfer learning. For semantic
+segmentation, we enhance the state-of-the-art (SOTA) results on Cityscapes and
+ADE20k. Our code is available at
+https://github.com/ChengyueGongR/PatchVisionTransformer.
+",a
+Focal Attention for Long-Range Interactions in Vision Transformers,"Recently, Vision Transformer and its variants have shown great promise on various computer vision tasks. The ability to capture local and global visual dependencies through self-attention is the key to its success. But it also brings challenges due to quadratic computational overhead, especially for the high-resolution vision tasks(e.g., object detection). Many recent works have attempted to reduce the cost and improve model performance by applying either coarse-grained global attention or fine-grained local attention. However, both approaches cripple the modeling power of the original self-attention mechanism of multi-layer Transformers, leading to sub-optimal solutions.  In this paper, we present focal attention, a new attention mechanism that incorporates both fine-grained local and coarse-grained global interactions.  In this new mechanism, each token attends its closest surrounding tokens at the fine granularity and the tokens far away at a coarse granularity and thus can capture both short- and long-range visual dependencies efficiently and effectively. With focal attention, we propose a new variant of Vision Transformer models, called Focal Transformers, which achieve superior performance over the state-of-the-art (SoTA) Vision Transformers on a range of public image classification and object detection benchmarks.  In particular, our Focal Transformer models with a moderate size of 51.1M and a large size of 89.8M achieve 83.6% and 84.0%Top-1 accuracy, respectively, on ImageNet classification at 224×224.  When employed as the backbones, Focal Transformers achieve consistent and substantial improvements over the current SoTA Swin Transformers [44] across 6 different object detection methods.  Our largest Focal Transformer yields58.7/59.0boxmAPs and50.9/51.3mask mAPs on COCO mini-val/test-dev, and55.4mIoU onADE20K for semantic segmentation, creating new SoTA on three of the most challenging computer vision tasks. ",p
+"Focal Self-attention for Local-Global Interactions in Vision
+  Transformers","  Recently, Vision Transformer and its variants have shown great promise on
+various computer vision tasks. The ability of capturing short- and long-range
+visual dependencies through self-attention is arguably the main source for the
+success. But it also brings challenges due to quadratic computational overhead,
+especially for the high-resolution vision tasks (e.g., object detection). In
+this paper, we present focal self-attention, a new mechanism that incorporates
+both fine-grained local and coarse-grained global interactions. Using this new
+mechanism, each token attends the closest surrounding tokens at fine
+granularity but the tokens far away at coarse granularity, and thus can capture
+both short- and long-range visual dependencies efficiently and effectively.
+With focal self-attention, we propose a new variant of Vision Transformer
+models, called Focal Transformer, which achieves superior performance over the
+state-of-the-art vision Transformers on a range of public image classification
+and object detection benchmarks. In particular, our Focal Transformer models
+with a moderate size of 51.1M and a larger size of 89.8M achieve 83.5 and 83.8
+Top-1 accuracy, respectively, on ImageNet classification at 224x224 resolution.
+Using Focal Transformers as the backbones, we obtain consistent and substantial
+improvements over the current state-of-the-art Swin Transformers for 6
+different object detection methods trained with standard 1x and 3x schedules.
+Our largest Focal Transformer yields 58.7/58.9 box mAPs and 50.9/51.3 mask mAPs
+on COCO mini-val/test-dev, and 55.4 mIoU on ADE20K for semantic segmentation,
+creating new SoTA on three of the most challenging computer vision tasks.
+",a
+CvT: Introducing Convolutions to Vision Transformers,"  We present in this paper a new architecture, named Convolutional vision
+Transformer (CvT), that improves Vision Transformer (ViT) in performance and
+efficiency by introducing convolutions into ViT to yield the best of both
+designs. This is accomplished through two primary modifications: a hierarchy of
+Transformers containing a new convolutional token embedding, and a
+convolutional Transformer block leveraging a convolutional projection. These
+changes introduce desirable properties of convolutional neural networks (CNNs)
+to the ViT architecture (\ie shift, scale, and distortion invariance) while
+maintaining the merits of Transformers (\ie dynamic attention, global context,
+and better generalization). We validate CvT by conducting extensive
+experiments, showing that this approach achieves state-of-the-art performance
+over other Vision Transformers and ResNets on ImageNet-1k, with fewer
+parameters and lower FLOPs. In addition, performance gains are maintained when
+pretrained on larger datasets (\eg ImageNet-22k) and fine-tuned to downstream
+tasks. Pre-trained on ImageNet-22k, our CvT-W24 obtains a top-1 accuracy of
+87.7\% on the ImageNet-1k val set. Finally, our results show that the
+positional encoding, a crucial component in existing Vision Transformers, can
+be safely removed in our model, simplifying the design for higher resolution
+vision tasks. Code will be released at \url{https://github.com/leoxiaobin/CvT}.
+",a
+On the Robustness of Vision Transformers to Adversarial Examples,"  Recent advances in attention-based networks have shown that Vision
+Transformers can achieve state-of-the-art or near state-of-the-art results on
+many image classification tasks. This puts transformers in the unique position
+of being a promising alternative to traditional convolutional neural networks
+(CNNs). While CNNs have been carefully studied with respect to adversarial
+attacks, the same cannot be said of Vision Transformers. In this paper, we
+study the robustness of Vision Transformers to adversarial examples. Our
+analyses of transformer security is divided into three parts. First, we test
+the transformer under standard white-box and black-box attacks. Second, we
+study the transferability of adversarial examples between CNNs and
+transformers. We show that adversarial examples do not readily transfer between
+CNNs and transformers. Based on this finding, we analyze the security of a
+simple ensemble defense of CNNs and transformers. By creating a new attack, the
+self-attention blended gradient attack, we show that such an ensemble is not
+secure under a white-box adversary. However, under a black-box adversary, we
+show that an ensemble can achieve unprecedented robustness without sacrificing
+clean accuracy. Our analysis for this work is done using six types of white-box
+attacks and two types of black-box attacks. Our study encompasses multiple
+Vision Transformers, Big Transfer Models and CNN architectures trained on
+CIFAR-10, CIFAR-100 and ImageNet.
+",a
+SiT: Self-supervised vIsion Transformer,"  Self-supervised learning methods are gaining increasing traction in computer
+vision due to their recent success in reducing the gap with supervised
+learning. In natural language processing (NLP) self-supervised learning and
+transformers are already the methods of choice. The recent literature suggests
+that the transformers are becoming increasingly popular also in computer
+vision. So far, the vision transformers have been shown to work well when
+pretrained either using a large scale supervised data or with some kind of
+co-supervision, e.g. in terms of teacher network. These supervised pretrained
+vision transformers achieve very good results in downstream tasks with minimal
+changes. In this work we investigate the merits of self-supervised learning for
+pretraining image/vision transformers and then using them for downstream
+classification tasks. We propose Self-supervised vIsion Transformers (SiT) and
+discuss several self-supervised training mechanisms to obtain a pretext model.
+The architectural flexibility of SiT allows us to use it as an autoencoder and
+work with multiple self-supervised tasks seamlessly. We show that a pretrained
+SiT can be finetuned for a downstream classification task on small scale
+datasets, consisting of a few thousand images rather than several millions. The
+proposed approach is evaluated on standard datasets using common protocols. The
+results demonstrate the strength of the transformers and their suitability for
+self-supervised learning. We outperformed existing self-supervised learning
+methods by large margin. We also observed that SiT is good for few shot
+learning and also showed that it is learning useful representation by simply
+training a linear classifier on top of the learned features from SiT.
+Pretraining, finetuning, and evaluation codes will be available under:
+https://github.com/Sara-Ahmed/SiT.
+",a
+"Pale Transformer: A General Vision Transformer Backbone with Pale-Shaped
+  Attention","  Recently, Transformers have shown promising performance in various vision
+tasks. To reduce the quadratic computation complexity caused by the global
+self-attention, various methods constrain the range of attention within a local
+region to improve its efficiency. Consequently, their receptive fields in a
+single attention layer are not large enough, resulting in insufficient context
+modeling. To address this issue, we propose a Pale-Shaped self-Attention
+(PS-Attention), which performs self-attention within a pale-shaped region.
+Compared to the global self-attention, PS-Attention can reduce the computation
+and memory costs significantly. Meanwhile, it can capture richer contextual
+information under the similar computation complexity with previous local
+self-attention mechanisms. Based on the PS-Attention, we develop a general
+Vision Transformer backbone with a hierarchical architecture, named Pale
+Transformer, which achieves 83.4%, 84.3%, and 84.9% Top-1 accuracy with the
+model size of 22M, 48M, and 85M respectively for 224 ImageNet-1K
+classification, outperforming the previous Vision Transformer backbones. For
+downstream tasks, our Pale Transformer backbone performs better than the recent
+state-of-the-art CSWin Transformer by a large margin on ADE20K semantic
+segmentation and COCO object detection & instance segmentation. The code will
+be released on https://github.com/BR-IDL/PaddleViT.
+",a
+ATS: Adaptive Token Sampling For Efficient Vision Transformers,"  While state-of-the-art vision transformer models achieve promising results
+for image classification, they are computationally very expensive and require
+many GFLOPs. Although the GFLOPs of a vision transformer can be decreased by
+reducing the number of tokens in the network, there is no setting that is
+optimal for all input images. In this work, we, therefore, introduce a
+differentiable parameter-free Adaptive Token Sampling (ATS) module, which can
+be plugged into any existing vision transformer architecture. ATS empowers
+vision transformers by scoring and adaptively sampling significant tokens. As a
+result, the number of tokens is not anymore static but it varies for each input
+image. By integrating ATS as an additional layer within current transformer
+blocks, we can convert them into much more efficient vision transformers with
+an adaptive number of tokens. Since ATS is a parameter-free module, it can be
+added to off-the-shelf pretrained vision transformers as a plug-and-play
+module, thus reducing their GFLOPs without any additional training. However,
+due to its differentiable design, one can also train a vision transformer
+equipped with ATS. We evaluate our module on the ImageNet dataset by adding it
+to multiple state-of-the-art vision transformers. Our evaluations show that the
+proposed module improves the state-of-the-art by reducing the computational
+cost (GFLOPs) by 37% while preserving the accuracy.
+",a
+A Survey on Vision Transformer,"  Transformer, first applied to the field of natural language processing, is a
+type of deep neural network mainly based on the self-attention mechanism.
+Thanks to its strong representation capabilities, researchers are looking at
+ways to apply transformer to computer vision tasks. In a variety of visual
+benchmarks, transformer-based models perform similar to or better than other
+types of networks such as convolutional and recurrent networks. Given its high
+performance and less need for vision-specific inductive bias, transformer is
+receiving more and more attention from the computer vision community. In this
+paper, we review these vision transformer models by categorizing them in
+different tasks and analyzing their advantages and disadvantages. The main
+categories we explore include the backbone network, high/mid-level vision,
+low-level vision, and video processing. We also include efficient transformer
+methods for pushing transformer into real device-based applications.
+Furthermore, we also take a brief look at the self-attention mechanism in
+computer vision, as it is the base component in transformer. Toward the end of
+this paper, we discuss the challenges and provide several further research
+directions for vision transformers.
+",a
+Glance-and-Gaze Vision Transformer,"  Recently, there emerges a series of vision Transformers, which show superior
+performance with a more compact model size than conventional convolutional
+neural networks, thanks to the strong ability of Transformers to model
+long-range dependencies. However, the advantages of vision Transformers also
+come with a price: Self-attention, the core part of Transformer, has a
+quadratic complexity to the input sequence length. This leads to a dramatic
+increase of computation and memory cost with the increase of sequence length,
+thus introducing difficulties when applying Transformers to the vision tasks
+that require dense predictions based on high-resolution feature maps. In this
+paper, we propose a new vision Transformer, named Glance-and-Gaze Transformer
+(GG-Transformer), to address the aforementioned issues. It is motivated by the
+Glance and Gaze behavior of human beings when recognizing objects in natural
+scenes, with the ability to efficiently model both long-range dependencies and
+local context. In GG-Transformer, the Glance and Gaze behavior is realized by
+two parallel branches: The Glance branch is achieved by performing
+self-attention on the adaptively-dilated partitions of the input, which leads
+to a linear complexity while still enjoying a global receptive field; The Gaze
+branch is implemented by a simple depth-wise convolutional layer, which
+compensates local image context to the features obtained by the Glance
+mechanism. We empirically demonstrate our method achieves consistently superior
+performance over previous state-of-the-art Transformers on various vision tasks
+and benchmarks. The codes and models will be made available at
+https://github.com/yucornetto/GG-Transformer.
+",a

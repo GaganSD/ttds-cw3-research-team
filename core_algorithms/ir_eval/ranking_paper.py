@@ -202,6 +202,7 @@ def phrase_search(query_params, client = None):
 if __name__ == '__main__':
     print('Paper search')
     client = MongoDBClient("34.142.18.57")
+    output_file = 'core_algorithms/ir_eval/result/paper/'
     query_params1 = {'query': ["vision","transformer"]}
     query_params2 = {'query': ["statistics","health"]}
     query_params3 = {'query': ["stock","prediction"]}
@@ -231,7 +232,7 @@ if __name__ == '__main__':
             except:
                 print('No such paper in database')
         print(end - start)
-        phrase_result_df.to_csv('ir_eval/result/phrase_result_df_' + '_'.join(query_params['query']) + '.csv', index=False)
+        phrase_result_df.to_csv(output_file + '/phrase_result_df_' + '_'.join(query_params['query']) + '.csv', index=False)
     print()
     #---------------------------------------------------
     print('2.Proximity search')
@@ -254,7 +255,7 @@ if __name__ == '__main__':
             except:
                 print('No such paper in database')
         print(end - start)
-        proximity_result_df.to_csv('ir_eval/result/proximity_df_' + '_'.join(query_params['query']) + '.csv', index=False)
+        proximity_result_df.to_csv(output_file + 'proximity_df_' + '_'.join(query_params['query']) + '.csv', index=False)
     print()
     #---------------------------------------------------
     print('3.Ranking algorithm')
@@ -276,7 +277,7 @@ if __name__ == '__main__':
             except:
                 print('No such paper in database')
         print(end-start)
-        bm25_result_df.to_csv(f'ir_eval/result/paper_bm_25_result_df_' + '_'.join(query_params['query']) + '.csv',index=False)
+        bm25_result_df.to_csv(output_file + 'paper_bm_25_result_df_' + '_'.join(query_params['query']) + '.csv',index=False)
     print()
     
     print('2. Tfidf')
@@ -297,5 +298,5 @@ if __name__ == '__main__':
             except:
                 print('No such paper in db')
         print(end-start)
-        tfidf_result_df.to_csv(f'ir_eval/result/paper_tfidf_result_df_' + '_'.join(query_params['query']) + '.csv',index=False)
+        tfidf_result_df.to_csv(output_file + 'paper_tfidf_result_df_' + '_'.join(query_params['query']) + '.csv',index=False)
     
