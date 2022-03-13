@@ -1,4 +1,3 @@
-import time
 from flask import Flask, request
 import json
 from flask_cors import CORS
@@ -13,14 +12,9 @@ CORS(app)
 
 ## Create DB instance
 
-@app.route("/time")
-def get_current_time():
-    return {'time': time.time()}
-
 @app.route("/QE/<query>", methods=['GET', 'POST'])
 def query_expansion(query):
     return {"QEResults":list(get_query_extension(query))}
-
 
 @app.route("/<query>", methods = ['POST', 'GET'])
 def get_query_results(query: str):
@@ -40,17 +34,9 @@ def get_query_results(query: str):
 
 #     return ranking_query_tfidf(query)
 
-@app.route("/hello")
-def ayo():
-    print("hello")
-    # if request.method == "GET":
-    #     print("yeee")
-    return {"boiiiiiiiiiiiiiiiiiiii": "yeeee"}
-
-
 @app.route("/")
 def hello_world():
-    return "Hello, World!"
+    return "Change PORT to 3000 to access the React frontend!"
 
 @app.route("/test")
 def get_test_json():
