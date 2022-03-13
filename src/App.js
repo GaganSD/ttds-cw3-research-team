@@ -21,6 +21,21 @@ function App() {
   const [json_results, setJsonResults] = React.useState({Results:[]});
   const [json_query_expansion, setJsonQE] = React.useState({QEResults:[]});
   const label = { inputProps: { 'aria-label': 'Switch demo' } };
+  const [values,setValues] = React.useState({
+    oldest: false,
+    latest: false,
+    featured: true,
+    authors: true,
+    author_text:'',
+    range_from:null,
+    range_to: null
+  })
+
+  function getOptions(optval){
+    setValues(optval);
+    // console.log(values);
+
+  }
 
   function SearchFunc() {
 
@@ -131,7 +146,7 @@ function App() {
           parentCallback={TextEntered}
         />
       </div>
-      <SwipeableTemporaryDrawer/>
+      <SwipeableTemporaryDrawer parentCallback={getOptions}/>
 
       <div>
         {json_query_expansion.QEResults.map(curr_elem => {
