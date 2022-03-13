@@ -147,11 +147,11 @@ function App() {
         />
       </div>
       <SwipeableTemporaryDrawer parentCallback={getOptions}/>
-
       <div>
         {json_query_expansion.QEResults.map(curr_elem => {
           return <Box>
-            <p> {curr_elem} </p>
+            {/* TODO: make this display pretty */}
+            {curr_elem}
           </Box>;
         })}
       </div>
