@@ -20,7 +20,8 @@ import SwipeableTemporaryDrawer from './components/advancedOptions';
 function App() {
 
   const [search, setSearch] = React.useState('');
-  const [json, setJson] = React.useState({Results:[]});
+  const [json_results, setJsonResults] = React.useState({Results:[]});
+  const [json_query_expansion, setJsonQE] = React.useState({QEResults:[]});
   const label = { inputProps: { 'aria-label': 'Switch demo' } };
   const [values,setValues] = React.useState({
     oldest: false,
@@ -38,12 +39,21 @@ function App() {
 
   }
 
-  function Search() {
+  function SearchFunc() {
     return fetch('http://127.0.0.1:5000/' + search).then(response => response.json()).then(data => {
-      console.log(data);
+      console.log("noooooooooooooooooooo");
 
-      setJson(data);
-      console.log(json);
+      setJsonResults(data);
+      console.log("noooooooooooooooooooo");
+    });
+  }
+
+
+  function QueryExpansion() {
+    console.log("am i in?");
+    return fetch('http://127.0.0.1:5000/QE/' + search).then(response => response.json()).then(data => {
+      console.log("yesssssssssssssssssss");
+      setJsonQE(data);
     });
   }
 
@@ -100,15 +110,6 @@ function App() {
   }
 
 
-  function QueryExpansion() {
-    return fetch('http://127.0.0.1:5000/' + search).then(response => response.json()).then(data => {
-      console.log(data);
-
-      setJson(data);
-      console.log(json);
-    });
-  }
-
   function BasicSwitches() {
     return (
       <div>
@@ -147,34 +148,42 @@ function App() {
           style={{ maxWidth: '80%' }}
           parentCallback={TextEntered}
         />
-
       </div>
       <SwipeableTemporaryDrawer parentCallback={getOptions}/>
+
+      <div>
+        {json_query_expansion.QEResults.map(curr_elem => {
+
+          return <Box>
+            <p> {curr_elem} </p>
+
+            </Box>;
+        })}
+      </div>
       <ButtonGroup variant="contained" aria-label="outlined primary button group">
-      <SearchButton parentCallback={Search} />
+      <SearchButton parentCallback={SearchFunc} />
       <QEButton parentCallback={QueryExpansion} />
       </ButtonGroup>
-      <div>
-        {json.Results.map(curr_element => {
-          let std_date = standardize_dates(curr_element.date);
+    <div>
+    {json_results.Results.map(curr_elem => {
 
-            return <Box
-            padding={1}
-           // if statements: one for modile devices, one for all desktops. 
-           >
-             <p>
-               <p><font COLOR="grey" SIZE="2" face="Arial">{curr_element.url}</font></p>
-               <a href={curr_element.url}><font COLOR="green" SIZE="5" face="Arial">{curr_element.title}</font></a>
-               <p><font COLOR="grey" face="Arial">{std_date}</font></p>
-               <p><font face="Arial">{abstractgenerator(curr_element.description)}</font></p>
-               <p><font face="Arial">{authorlist(curr_element.authors)}</font></p>
-             </p></Box>;
-         })} 
-      </div>
+      let std_date = standardize_dates(curr_elem.date);
+
+      return <Box
+      padding={1}
+      // if statements: one for modile devices, one for all desktops. 
+      >
+        <p>
+          <p><font COLOR="grey" SIZE="2" face="Arial">{curr_elem.url}</font></p>
+          <a href={curr_elem.url}><font COLOR="green" SIZE="5" face="Arial">{curr_elem.title}</font></a>
+          <p><font COLOR="grey" face="Arial">{std_date}</font></p>
+          <p><font face="Arial">{abstractgenerator(curr_elem.description)}</font></p>
+          <p><font face="Arial">{authorlist(curr_elem.authors)}</font></p>
+        </p></Box>;
+    })}
     </div>
-  )
-
-}
+    </div>
+  )}
 
 
 export default App;
