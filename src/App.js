@@ -34,7 +34,7 @@ function App() {
 
   function getOptions(optval){
     setValues(optval);
-    console.log(values);
+    // console.log(values);
 
   }
 

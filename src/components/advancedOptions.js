@@ -81,12 +81,14 @@ export default function SwipeableTemporaryDrawer(props) {
       //   setFromDate(null);
       // }
 
+    
+
     }
 
 
 
     props.parentCallback(valcopy)
-    // console.log(valcopy);
+    console.log(valcopy);
     // setValues(newValue);
   };
 
