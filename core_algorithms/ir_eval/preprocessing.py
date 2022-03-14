@@ -41,9 +41,8 @@ def preprocess(string, stemming=True, stop=True):
     removes the stop words, then calls the "stem" function to stem the filtered text
     it returns a list of all the preprocessed tokens '''
     string = html.unescape(string)
-    string = re.sub("[\<].*?[\>]", "", string).replace("\n", " ").replace("\t", " ")
-    tokenized = tokenize(string)
+    tokenized = tokenize(re.sub("[\<].*?[\>]", "", string).replace("\n", " ").replace("\t", " "))
     filtered = [term.lower() for term in tokenized if term not in stop_words or not stop]
-    if (stemming):
+    if stemming:
         filtered = stem(filtered)
     return list(filter(lambda x: x.isalnum(), filtered))

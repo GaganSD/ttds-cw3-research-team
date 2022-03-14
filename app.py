@@ -1,26 +1,26 @@
-from flask import Flask, request
 import json
+import pandas as pd
+from collections import defaultdict
+from flask import Flask, request
 from flask_cors import CORS
 
+
+from infra.LRUCache import LRUCache
 
 from core_algorithms.query_expansion import get_query_extension
 from core_algorithms.ir_eval.ranking import ranking_query_tfidf as ranking_query_tfidf_dataset
 from core_algorithms.ir_eval.ranking_paper import ranking_query_tfidf as ranking_query_tfidf_paper
 from core_algorithms.mongoDB_API import MongoDBClient
-from collections import defaultdict
 from core_algorithms.ir_eval.preprocessing import preprocess
 
-import pandas as pd
 
 #### Add stuff here that should run one time the server starts . 
 #### this can include stuff like connecting to client or loading the index into memory.
 #### basically, stuff that shouldn't be repeated.
 
 client = MongoDBClient("34.142.18.57") # (this is an example)
+processed_cache = LRUCache(1000)
 
-
-example_json = open('example.json', 'r')
-example_data = json.load(example_json)
 
 app= Flask(__name__)
 CORS(app)
@@ -34,12 +34,9 @@ def query_expansion(query):
 @app.route("/<query>", methods = ['POST', 'GET'])
 def get_papers_results(query: str) -> dict:
     """
-    This is used when the user provides the query & wants to query different papers.
     Input: query (type: string)
-    Example: "covid" or "covid vaccine"
-
     Output: Dictionary (HashMap)
-    Format:
+    Output Format:
     {
         title: string,
         abstract/description: string,
@@ -49,35 +46,50 @@ def get_papers_results(query: str) -> dict:
         any other information
     } 
     """
-    query = preprocess(query,True, True) # stemming, removing stopwords
-    query_params = {'query': query}
+    cached_data = processed_cache(query)
+
+    if cached_data != -1:
+        query_params = cached_data
+    else:
+        query_params = preprocess(query,True, True) # stemming, removing stopwords
+        query_params = {'query': query}
+        processed_cache.put(query, query_params)
+
     # Don't worry about input parsing. Use query_params for now.
+    print("msg 1")
     scores = ranking_query_tfidf_paper(query_params, client)
+    print("msg 2")
     output_dict = {"Results":[]}
-    print("yeee")
     for result in scores[:10]:
         output = client.get_one(data_type='paper', filter={'_id':result[0]}, fields=['title', 'abstract','authors', 'url', 'date'])
         output_dict["Results"].append(output)
-    
+
     return output_dict
 
-# @app.route('/<name>')
-# def get_results_datasets(query: str):
-    
-#     return ranking_query_tfidf(query)
+@app.route("/dataset/<query>", methods = ['POST', 'GET'])
+def get_dataset_results(query: str) -> dict:
+    cached_data = processed_cache(query)
 
+    if cached_data != -1:
+        query_params = cached_data
+    else:
+        query_params = preprocess(query,True, True) # remove stemming & stopwords.
+        query_params = {'query': query}
+        processed_cache.put(query, query_params)
 
-# @app.route('/<name>')
-# def get_results_papers(query: str):
+    print(1)
+    scores = ranking_query_tfidf_dataset(query_params, client)
+    print(2)
+    output_dict = {"Results":[]}
 
-#     return ranking_query_tfidf(query)
+    for result in scores[:10]:
+        output = client.get_one(data_type='dataset', filter={'_id':result[0]}, fields=['title', 'abstract','authors', 'url', 'date'])
+        output_dict["Results"].append(output)
+
+    return output_dict
 
 @app.route("/")
 def hello_world():
     return "Change PORT to 3000 to access the React frontend!"
-
-@app.route("/test")
-def get_test_json():
-    return example_data
 
 
