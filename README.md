@@ -1,14 +1,14 @@
 # ttds-cw3
 Things To Do:
 
+Installation instructions:
 
-1: Get the Layout figured out for the front page
+- Install [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) and [Python 3.5+](https://www.python.org/downloads/)
+- Clone the GitHub Repo.
+- Move into the directory: ``cd ttds-cw3``
+- Install React dependenices with ``npm install```
+- Install Python dependencies with ``pip install requirements.txt``
+- Run the backend with ``flask run``
+- Run the frontend with ``npm start``
+- Get working!
 
-
-2: Get functionality working
-
-
-    2.1: Search Option Buttons need to have props and ways to show they are selected
-
-
-    2.2: When the search button is pressed we need to send the json request
