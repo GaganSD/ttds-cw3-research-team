@@ -78,10 +78,12 @@ def get_papers_results(query: str) -> dict:
     query_params = {'query': query}
     # Don't worry about input parsing. Use query_params for now.
     scores = ranking_query_tfidf_paper(query_params, client)
-    output_dict = dict()
+    output_dict = {"Results":[]}
+    print("yeee")
     for result in scores[:10]:
-        output = client.get_one(data_type='paper', filter={'_id':result[0]}, fields=['title', 'abstract','author'])
-        output_dict[result[0]] = output
+        output = client.get_one(data_type='paper', filter={'_id':result[0]}, fields=['title', 'abstract','authors', 'url', 'date'])
+        output_dict["Results"].append(output)
+    
     return output_dict
 
 
@@ -92,8 +94,11 @@ def get_papers_results(query: str) -> dict:
 #### If the functions are working as expected, these functions should work.
 
 # query1 = {'query': "covid pandemic".split()}
-query1 = "covid pandemic"
+query1 = "covid"
 
-print(get_papers_results(query1)) # these both should return Dictionary objects in the format given above
-print(get_database_results(query1)) 
+ # these both should return Dictionary objects in the format given above
+# print(get_database_results(query1)) 
 
+
+for i in get_papers_results(query1)['Results']:
+    print(i['url'])
