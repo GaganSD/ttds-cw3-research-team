@@ -152,7 +152,7 @@ def get_phrase_datasets_results(query: str) -> dict:
     output_dict = {"Results":[]}
     for result in outputs[:10]:
         output = df.iloc[result][['title','subtitle','description']].to_dict()
-        output_dict[result[0]] = output
+        output_dict['Results'].append(output)
     return output_dict
 
 def get_proximity_papers_results(query: str, proximity=10) -> dict:
@@ -219,14 +219,14 @@ def get_proximity_datasets_results(query: str, proximity=10) -> dict:
     output_dict = {"Results":[]}
     for result in outputs[:10]:
         output = df.iloc[result][['title','subtitle','description']].to_dict()
-        output_dict[result[0]] = output
+        output_dict['Results'].append(output)
     return output_dict
 
 
 #### If the functions are working as expected, these functions should work.
 
 # query1 = {'query': "covid pandemic".split()}
-query1 = "haskel"
+query1 = "stock prediction"
 print(query1)
 
 print('Phrase search for dataset')
@@ -245,11 +245,11 @@ print('Proximity search for paper')
 for i in get_proximity_papers_results(query1)['Results']:
     print(i['url'])
 
- # these both should return Dictionary objects in the format given above
+print('Ranking for dataset')
 for i in get_database_results(query1)['Results']:
     print(i['title'])
 
-
+print('Ranking for paper')
 for i in get_papers_results(query1)['Results']:
     print(i['url'])
     

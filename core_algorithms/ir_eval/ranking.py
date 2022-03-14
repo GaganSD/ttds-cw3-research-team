@@ -138,8 +138,8 @@ def proximity_search(query_params, proximity=2, index_path = 'core_algorithms/ir
             print(tmp_term, time.time()-term_start_time)
             shared_papers = list(set(list_of_datasets).intersection(set(tmp_list_of_datasets)))
             for shared_dataset in tqdm.tqdm(shared_papers, total=len(shared_papers)):
-                list_of_pos = inverted_index[term]['dataset'][shared_dataset]['pos']
-                tmp_list_of_pos = inverted_index[tmp_term]['dataset'][shared_dataset]['pos']
+                list_of_pos = inverted_index[term_list.index(term)]['dataset'][shared_dataset]['pos']
+                tmp_list_of_pos = inverted_index[term_list.index(tmp_term)]['dataset'][shared_dataset]['pos']
                 if list_of_pos[0] - tmp_list_of_pos[-1] > proximity:
                     continue
                 elif tmp_list_of_pos[0] - list_of_pos[-1] > proximity:
