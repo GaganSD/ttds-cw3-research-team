@@ -1,0 +1,38 @@
+.App {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+}
+/* 
+html, body, #app, #app>div {
+  height: 100%
+} */
+
+/* .logo {
+  margin: auto;
+  width: 10%;
+  border: 3px solid green;
+  padding: 10%;
+  text-align: center;
+} */​
+
+.toggle_switch {
+  float:right;
+  justify-content:'flex-end';
+  display: 'flex';
+  justifyContent:'flex-end';
+
+}
+
+.SearchOptions {
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: column;
+
+}
+
+.Options {
+  margin-top: 50px;
+  margin-bottom: 30px;
+}
