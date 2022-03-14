@@ -294,7 +294,7 @@ class MongoDBClient():
 
         return ans
     
-    def get_topk_doc_from_index(self, term: str, k = 100):
+    def get_topk_doc_from_index(self, term: str, k = 2000):
         """
         The method to get the topk docs with an index. "Top" here means having most 
          appearances of the term.
@@ -308,7 +308,6 @@ class MongoDBClient():
         """
         cur_table = self.client[db_name]["index"]
         hq = cur_table.find_one({"_id": term}, { "chain": 1 })
-
         if hq == None:
             return []
 
@@ -318,22 +317,20 @@ class MongoDBClient():
         for doc in cursor:
             doc_lists.append(doc["docs"])
             ptr_list.append(0)
-
         ans = []
         pqueue = queue.PriorityQueue()
-
         for i in range(len(hq["chain"])):
             # print((doc_lists[i][0]["len"]))
             pqueue.put((-doc_lists[i][0]["len"], i))
-
-        for i in range(k):
+        for i in range(k): #min(k, len(doc_lists))
+            if pqueue.empty() :
+                break
             _, list_id = pqueue.get()
             doc = doc_lists[list_id][ptr_list[list_id]]
             ans.append(doc)
             ptr_list[list_id] += 1
             if(ptr_list[list_id] < len(doc_lists[list_id])):
                 pqueue.put((-doc_lists[list_id][ptr_list[list_id]]["len"], list_id))
-
         return ans
 
 

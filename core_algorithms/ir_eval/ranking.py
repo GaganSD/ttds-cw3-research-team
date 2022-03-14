@@ -198,7 +198,7 @@ def phrase_search(query_params, index_path = 'core_algorithms/ir_eval/last'):
         term2_dict = inverted_index[term_list.index(term2)]['dataset']
         shared_datasets = list(set(list_of_dataset1).intersection(set(list_of_dataset2)))
         output_dict = check_adjacent_words(shared_datasets, term1_dict, term2_dict)
-    return output_dict.keys()
+    return list(output_dict.keys())
 
 
 if __name__ == '__main__':
@@ -258,7 +258,6 @@ if __name__ == '__main__':
         print(query_params['query'])
         phrase_result_df = pd.DataFrame(columns=['title','subtitle','description'])
         phrase_outputs = phrase_search(query_params)
-        phrase_outputs = list(phrase_outputs)
         end = time.time()
         print(end-start)
         for result in phrase_outputs[:30]:
