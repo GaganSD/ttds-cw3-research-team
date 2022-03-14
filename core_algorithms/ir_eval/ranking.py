@@ -117,19 +117,24 @@ def proximity_search(query_params, proximity=2, index_path = 'core_algorithms/ir
     output_ids = list()
     start = time.time()
     term_list = [inverted_index[i]['term'] for i in range(len(inverted_index))]
+    if len(terms) == 1:
+        if terms[0] not in term_list:
+            return list()
+        else:
+            return inverted_index[term_list.index(terms[0])]['dataset'].keys()
     for i in range(len(terms)-1):
         term = terms[i]
         term_start_time = time.time()
         if term not in term_list:
             continue
-        list_of_datasets = inverted_index[term]['dataset'].keys() # list of dataset ids
+        list_of_datasets = inverted_index[term_list.index(term)]['dataset'].keys() # list of dataset ids
         print(term, time.time()-term_start_time)
         for j in range(i+1, len(terms)):
             tmp_term = terms[j]
             if tmp_term not in term_list:
                 continue
             term_start_time = time.time()
-            tmp_list_of_datasets = inverted_index[tmp_term]['dataset'].keys() # list of dataset ids
+            tmp_list_of_datasets = inverted_index[term_list.index(tmp_term)]['dataset'].keys() # list of dataset ids
             print(tmp_term, time.time()-term_start_time)
             shared_papers = list(set(list_of_datasets).intersection(set(tmp_list_of_datasets)))
             for shared_dataset in tqdm.tqdm(shared_papers, total=len(shared_papers)):
