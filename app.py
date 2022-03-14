@@ -46,7 +46,7 @@ def get_papers_results(query: str) -> dict:
         any other information
     }
     """
-    cached_results = _results_cache.put(query)
+    cached_results = _results_cache.get(query)
 
     if cached_results != -1:
         return cached_results
@@ -72,7 +72,7 @@ def get_dataset_results(query: str) -> dict:
     Input: query (str)
     Output: dict
     """
-    cached_results = _results_cache.put(query)
+    cached_results = _results_cache.get(query)
 
     if cached_results != -1:
         return cached_results
@@ -95,7 +95,7 @@ def _preprocess_query(query: str) -> dict:
     Output: dict
     Helper function to preprocess queries efficiently with local cache.
     """
-    cached_data = _preprocessing_cache(query)
+    cached_data = _preprocessing_cache.get(query)
     query_params = None
     if cached_data != -1:
         query_params = cached_data
