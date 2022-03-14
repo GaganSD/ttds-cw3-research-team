@@ -19,8 +19,8 @@ from core_algorithms.ir_eval.preprocessing import preprocess
 #### basically, stuff that shouldn't be repeated.
 
 client = MongoDBClient("34.142.18.57") # (this is an example)
-processed_cache = LRUCache(1000)
-
+_preprocessing_cache = LRUCache(1000)
+_results_cache = LRUCache(200)
 
 app= Flask(__name__)
 CORS(app)
@@ -44,52 +44,68 @@ def get_papers_results(query: str) -> dict:
         url: string
         ...
         any other information
-    } 
+    }
     """
-    cached_data = processed_cache(query)
+    cached_results = _results_cache.put(query)
 
-    if cached_data != -1:
-        query_params = cached_data
-    else:
-        query_params = preprocess(query,True, True) # stemming, removing stopwords
-        query_params = {'query': query}
-        processed_cache.put(query, query_params)
+    if cached_results != -1:
+        return cached_results
 
-    # Don't worry about input parsing. Use query_params for now.
+    query_params = _preprocess_query(query)
+
     print("msg 1")
     scores = ranking_query_tfidf_paper(query_params, client)
     print("msg 2")
+
     output_dict = {"Results":[]}
     for result in scores[:10]:
         output = client.get_one(data_type='paper', filter={'_id':result[0]}, fields=['title', 'abstract','authors', 'url', 'date'])
         output_dict["Results"].append(output)
 
+    _results_cache.put(query, _results_cache)
+
     return output_dict
 
 @app.route("/dataset/<query>", methods = ['POST', 'GET'])
 def get_dataset_results(query: str) -> dict:
-    cached_data = processed_cache(query)
+    """
+    Input: query (str)
+    Output: dict
+    """
+    cached_results = _results_cache.put(query)
 
-    if cached_data != -1:
-        query_params = cached_data
-    else:
-        query_params = preprocess(query,True, True) # remove stemming & stopwords.
-        query_params = {'query': query}
-        processed_cache.put(query, query_params)
+    if cached_results != -1:
+        return cached_results
 
-    print(1)
-    scores = ranking_query_tfidf_dataset(query_params, client)
-    print(2)
+    processed_query = _preprocess_query(query)
+
+    scores = ranking_query_tfidf_dataset(processed_query, client)
     output_dict = {"Results":[]}
 
     for result in scores[:10]:
         output = client.get_one(data_type='dataset', filter={'_id':result[0]}, fields=['title', 'abstract','authors', 'url', 'date'])
         output_dict["Results"].append(output)
 
+    _results_cache.put(query, _results_cache)
     return output_dict
+
+def _preprocess_query(query: str) -> dict:
+    """
+    Input: query (str)
+    Output: dict
+    Helper function to preprocess queries efficiently with local cache.
+    """
+    cached_data = _preprocessing_cache(query)
+    query_params = None
+    if cached_data != -1:
+        query_params = cached_data
+    else:
+        query_params = preprocess(query,True, True) # stemming, removing stopwords
+        query_params = {'query': query}
+        _preprocessing_cache.put(query, query_params)
+
+    return query_params
 
 @app.route("/")
 def hello_world():
     return "Change PORT to 3000 to access the React frontend!"
-
-
