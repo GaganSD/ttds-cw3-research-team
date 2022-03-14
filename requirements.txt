@@ -5,5 +5,11 @@ kaggle
 pymongo
 jupyter
 logging
+json
 flask
 flask_cors
+textblob
+spellchecker
+nltk
+distutils
+tqdm
