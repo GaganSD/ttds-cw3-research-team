@@ -1,494 +1,493 @@
 title,abstract,id
-"Does the time horizon of the return predictive effect of investor
-  sentiment vary with stock characteristics? A Granger causality analysis in
-  the frequency domain","  Behavioral theories posit that investor sentiment exhibits predictive power
-for stock returns, whereas there is little study have investigated the
-relationship between the time horizon of the predictive effect of investor
-sentiment and the firm characteristics. To this end, by using a Granger
-causality analysis in the frequency domain proposed by Lemmens et al. (2008),
-this paper examine whether the time horizon of the predictive effect of
-investor sentiment on the U.S. returns of stocks vary with different firm
-characteristics (e.g., firm size (Size), book-to-market equity (B/M) rate,
-operating profitability (OP) and investment (Inv)). The empirical results
-indicate that investor sentiment has a long-term (more than 12 months) or
-short-term (less than 12 months) predictive effect on stock returns with
-different firm characteristics. Specifically, the investor sentiment has strong
-predictability in the stock returns for smaller Size stocks, lower B/M stocks
-and lower OP stocks, both in the short term and long term, but only has a
-short-term predictability for higher quantile ones. The investor sentiment
-merely has predictability for the returns of smaller Inv stocks in the short
-term, but has a strong short-term and long-term predictability for larger Inv
-stocks. These results have important implications for the investors for the
-planning of the short and the long run stock investment strategy.
+Temporal Relational Ranking for Stock Prediction,"  Stock prediction aims to predict the future trends of a stock in order to
+help investors to make good investment decisions. Traditional solutions for
+stock prediction are based on time-series models. With the recent success of
+deep neural networks in modeling sequential data, deep learning has become a
+promising choice for stock prediction. However, most existing deep learning
+solutions are not optimized towards the target of investment, i.e., selecting
+the best stock with the highest expected revenue. Specifically, they typically
+formulate stock prediction as a classification (to predict stock trend) or a
+regression problem (to predict stock price). More importantly, they largely
+treat the stocks as independent of each other. The valuable signal in the rich
+relations between stocks (or companies), such as two stocks are in the same
+sector and two companies have a supplier-customer relation, is not considered.
+In this work, we contribute a new deep learning solution, named Relational
+Stock Ranking (RSR), for stock prediction. Our RSR method advances existing
+solutions in two major aspects: 1) tailoring the deep learning models for stock
+ranking, and 2) capturing the stock relations in a time-sensitive manner. The
+key novelty of our work is the proposal of a new component in neural network
+modeling, named Temporal Graph Convolution, which jointly models the temporal
+evolution and relation network of stocks. To validate our method, we perform
+back-testing on the historical data of two stock markets, NYSE and NASDAQ.
+Extensive experiments demonstrate the superiority of our RSR method. It
+outperforms state-of-the-art stock prediction solutions achieving an average
+return ratio of 98% and 71% on NYSE and NASDAQ, respectively.
 ",a
-"Does the time horizon of the return predictive effect of investor
-  sentiment vary with stock characteristics? A Granger causality analysis in
-  the frequency domain","  Behavioral theories posit that investor sentiment exhibits predictive power
-for stock returns, whereas there is little study have investigated the
-relationship between the time horizon of the predictive effect of investor
-sentiment and the firm characteristics. To this end, by using a Granger
-causality analysis in the frequency domain proposed by Lemmens et al. (2008),
-this paper examine whether the time horizon of the predictive effect of
-investor sentiment on the U.S. returns of stocks vary with different firm
-characteristics (e.g., firm size (Size), book-to-market equity (B/M) rate,
-operating profitability (OP) and investment (Inv)). The empirical results
-indicate that investor sentiment has a long-term (more than 12 months) or
-short-term (less than 12 months) predictive effect on stock returns with
-different firm characteristics. Specifically, the investor sentiment has strong
-predictability in the stock returns for smaller Size stocks, lower B/M stocks
-and lower OP stocks, both in the short term and long term, but only has a
-short-term predictability for higher quantile ones. The investor sentiment
-merely has predictability for the returns of smaller Inv stocks in the short
-term, but has a strong short-term and long-term predictability for larger Inv
-stocks. These results have important implications for the investors for the
-planning of the short and the long run stock investment strategy.
+Temporal Relational Ranking for Stock Prediction,"  Stock prediction aims to predict the future trends of a stock in order to
+help investors to make good investment decisions. Traditional solutions for
+stock prediction are based on time-series models. With the recent success of
+deep neural networks in modeling sequential data, deep learning has become a
+promising choice for stock prediction. However, most existing deep learning
+solutions are not optimized towards the target of investment, i.e., selecting
+the best stock with the highest expected revenue. Specifically, they typically
+formulate stock prediction as a classification (to predict stock trend) or a
+regression problem (to predict stock price). More importantly, they largely
+treat the stocks as independent of each other. The valuable signal in the rich
+relations between stocks (or companies), such as two stocks are in the same
+sector and two companies have a supplier-customer relation, is not considered.
+In this work, we contribute a new deep learning solution, named Relational
+Stock Ranking (RSR), for stock prediction. Our RSR method advances existing
+solutions in two major aspects: 1) tailoring the deep learning models for stock
+ranking, and 2) capturing the stock relations in a time-sensitive manner. The
+key novelty of our work is the proposal of a new component in neural network
+modeling, named Temporal Graph Convolution, which jointly models the temporal
+evolution and relation network of stocks. To validate our method, we perform
+back-testing on the historical data of two stock markets, NYSE and NASDAQ.
+Extensive experiments demonstrate the superiority of our RSR method. It
+outperforms state-of-the-art stock prediction solutions achieving an average
+return ratio of 98% and 71% on NYSE and NASDAQ, respectively.
 ",a
-"Does the time horizon of the return predictive effect of investor
-  sentiment vary with stock characteristics? A Granger causality analysis in
-  the frequency domain","  Behavioral theories posit that investor sentiment exhibits predictive power
-for stock returns, whereas there is little study have investigated the
-relationship between the time horizon of the predictive effect of investor
-sentiment and the firm characteristics. To this end, by using a Granger
-causality analysis in the frequency domain proposed by Lemmens et al. (2008),
-this paper examine whether the time horizon of the predictive effect of
-investor sentiment on the U.S. returns of stocks vary with different firm
-characteristics (e.g., firm size (Size), book-to-market equity (B/M) rate,
-operating profitability (OP) and investment (Inv)). The empirical results
-indicate that investor sentiment has a long-term (more than 12 months) or
-short-term (less than 12 months) predictive effect on stock returns with
-different firm characteristics. Specifically, the investor sentiment has strong
-predictability in the stock returns for smaller Size stocks, lower B/M stocks
-and lower OP stocks, both in the short term and long term, but only has a
-short-term predictability for higher quantile ones. The investor sentiment
-merely has predictability for the returns of smaller Inv stocks in the short
-term, but has a strong short-term and long-term predictability for larger Inv
-stocks. These results have important implications for the investors for the
-planning of the short and the long run stock investment strategy.
+Temporal Relational Ranking for Stock Prediction,"  Stock prediction aims to predict the future trends of a stock in order to
+help investors to make good investment decisions. Traditional solutions for
+stock prediction are based on time-series models. With the recent success of
+deep neural networks in modeling sequential data, deep learning has become a
+promising choice for stock prediction. However, most existing deep learning
+solutions are not optimized towards the target of investment, i.e., selecting
+the best stock with the highest expected revenue. Specifically, they typically
+formulate stock prediction as a classification (to predict stock trend) or a
+regression problem (to predict stock price). More importantly, they largely
+treat the stocks as independent of each other. The valuable signal in the rich
+relations between stocks (or companies), such as two stocks are in the same
+sector and two companies have a supplier-customer relation, is not considered.
+In this work, we contribute a new deep learning solution, named Relational
+Stock Ranking (RSR), for stock prediction. Our RSR method advances existing
+solutions in two major aspects: 1) tailoring the deep learning models for stock
+ranking, and 2) capturing the stock relations in a time-sensitive manner. The
+key novelty of our work is the proposal of a new component in neural network
+modeling, named Temporal Graph Convolution, which jointly models the temporal
+evolution and relation network of stocks. To validate our method, we perform
+back-testing on the historical data of two stock markets, NYSE and NASDAQ.
+Extensive experiments demonstrate the superiority of our RSR method. It
+outperforms state-of-the-art stock prediction solutions achieving an average
+return ratio of 98% and 71% on NYSE and NASDAQ, respectively.
 ",a
-"Does the time horizon of the return predictive effect of investor
-  sentiment vary with stock characteristics? A Granger causality analysis in
-  the frequency domain","  Behavioral theories posit that investor sentiment exhibits predictive power
-for stock returns, whereas there is little study have investigated the
-relationship between the time horizon of the predictive effect of investor
-sentiment and the firm characteristics. To this end, by using a Granger
-causality analysis in the frequency domain proposed by Lemmens et al. (2008),
-this paper examine whether the time horizon of the predictive effect of
-investor sentiment on the U.S. returns of stocks vary with different firm
-characteristics (e.g., firm size (Size), book-to-market equity (B/M) rate,
-operating profitability (OP) and investment (Inv)). The empirical results
-indicate that investor sentiment has a long-term (more than 12 months) or
-short-term (less than 12 months) predictive effect on stock returns with
-different firm characteristics. Specifically, the investor sentiment has strong
-predictability in the stock returns for smaller Size stocks, lower B/M stocks
-and lower OP stocks, both in the short term and long term, but only has a
-short-term predictability for higher quantile ones. The investor sentiment
-merely has predictability for the returns of smaller Inv stocks in the short
-term, but has a strong short-term and long-term predictability for larger Inv
-stocks. These results have important implications for the investors for the
-planning of the short and the long run stock investment strategy.
+Temporal Relational Ranking for Stock Prediction,"  Stock prediction aims to predict the future trends of a stock in order to
+help investors to make good investment decisions. Traditional solutions for
+stock prediction are based on time-series models. With the recent success of
+deep neural networks in modeling sequential data, deep learning has become a
+promising choice for stock prediction. However, most existing deep learning
+solutions are not optimized towards the target of investment, i.e., selecting
+the best stock with the highest expected revenue. Specifically, they typically
+formulate stock prediction as a classification (to predict stock trend) or a
+regression problem (to predict stock price). More importantly, they largely
+treat the stocks as independent of each other. The valuable signal in the rich
+relations between stocks (or companies), such as two stocks are in the same
+sector and two companies have a supplier-customer relation, is not considered.
+In this work, we contribute a new deep learning solution, named Relational
+Stock Ranking (RSR), for stock prediction. Our RSR method advances existing
+solutions in two major aspects: 1) tailoring the deep learning models for stock
+ranking, and 2) capturing the stock relations in a time-sensitive manner. The
+key novelty of our work is the proposal of a new component in neural network
+modeling, named Temporal Graph Convolution, which jointly models the temporal
+evolution and relation network of stocks. To validate our method, we perform
+back-testing on the historical data of two stock markets, NYSE and NASDAQ.
+Extensive experiments demonstrate the superiority of our RSR method. It
+outperforms state-of-the-art stock prediction solutions achieving an average
+return ratio of 98% and 71% on NYSE and NASDAQ, respectively.
 ",a
-"Predicting intraday jumps in stock prices using liquidity measures and
-  technical indicators","  Predicting the intraday stock jumps is a significant but challenging problem
-in finance. Due to the instantaneity and imperceptibility characteristics of
-intraday stock jumps, relevant studies on their predictability remain limited.
-This paper proposes a data-driven approach to predict intraday stock jumps
-using the information embedded in liquidity measures and technical indicators.
-Specifically, a trading day is divided into a series of 5-minute intervals, and
-at the end of each interval, the candidate attributes defined by liquidity
-measures and technical indicators are input into machine learning algorithms to
-predict the arrival of a stock jump as well as its direction in the following
-5-minute interval. Empirical study is conducted on the level-2 high-frequency
-data of 1271 stocks in the Shenzhen Stock Exchange of China to validate our
-approach. The result provides initial evidence of the predictability of jump
-arrivals and jump directions using level-2 stock data as well as the
-effectiveness of using a combination of liquidity measures and technical
-indicators in this prediction. We also reveal the superiority of using random
-forest compared to other machine learning algorithms in building prediction
-models. Importantly, our study provides a portable data-driven approach that
-exploits liquidity and technical information from level-2 stock data to predict
-intraday price jumps of individual stocks.
+Temporal Relational Ranking for Stock Prediction,"  Stock prediction aims to predict the future trends of a stock in order to
+help investors to make good investment decisions. Traditional solutions for
+stock prediction are based on time-series models. With the recent success of
+deep neural networks in modeling sequential data, deep learning has become a
+promising choice for stock prediction. However, most existing deep learning
+solutions are not optimized towards the target of investment, i.e., selecting
+the best stock with the highest expected revenue. Specifically, they typically
+formulate stock prediction as a classification (to predict stock trend) or a
+regression problem (to predict stock price). More importantly, they largely
+treat the stocks as independent of each other. The valuable signal in the rich
+relations between stocks (or companies), such as two stocks are in the same
+sector and two companies have a supplier-customer relation, is not considered.
+In this work, we contribute a new deep learning solution, named Relational
+Stock Ranking (RSR), for stock prediction. Our RSR method advances existing
+solutions in two major aspects: 1) tailoring the deep learning models for stock
+ranking, and 2) capturing the stock relations in a time-sensitive manner. The
+key novelty of our work is the proposal of a new component in neural network
+modeling, named Temporal Graph Convolution, which jointly models the temporal
+evolution and relation network of stocks. To validate our method, we perform
+back-testing on the historical data of two stock markets, NYSE and NASDAQ.
+Extensive experiments demonstrate the superiority of our RSR method. It
+outperforms state-of-the-art stock prediction solutions achieving an average
+return ratio of 98% and 71% on NYSE and NASDAQ, respectively.
 ",a
-"Predicting intraday jumps in stock prices using liquidity measures and
-  technical indicators","  Predicting the intraday stock jumps is a significant but challenging problem
-in finance. Due to the instantaneity and imperceptibility characteristics of
-intraday stock jumps, relevant studies on their predictability remain limited.
-This paper proposes a data-driven approach to predict intraday stock jumps
-using the information embedded in liquidity measures and technical indicators.
-Specifically, a trading day is divided into a series of 5-minute intervals, and
-at the end of each interval, the candidate attributes defined by liquidity
-measures and technical indicators are input into machine learning algorithms to
-predict the arrival of a stock jump as well as its direction in the following
-5-minute interval. Empirical study is conducted on the level-2 high-frequency
-data of 1271 stocks in the Shenzhen Stock Exchange of China to validate our
-approach. The result provides initial evidence of the predictability of jump
-arrivals and jump directions using level-2 stock data as well as the
-effectiveness of using a combination of liquidity measures and technical
-indicators in this prediction. We also reveal the superiority of using random
-forest compared to other machine learning algorithms in building prediction
-models. Importantly, our study provides a portable data-driven approach that
-exploits liquidity and technical information from level-2 stock data to predict
-intraday price jumps of individual stocks.
+Temporal Relational Ranking for Stock Prediction,"  Stock prediction aims to predict the future trends of a stock in order to
+help investors to make good investment decisions. Traditional solutions for
+stock prediction are based on time-series models. With the recent success of
+deep neural networks in modeling sequential data, deep learning has become a
+promising choice for stock prediction. However, most existing deep learning
+solutions are not optimized towards the target of investment, i.e., selecting
+the best stock with the highest expected revenue. Specifically, they typically
+formulate stock prediction as a classification (to predict stock trend) or a
+regression problem (to predict stock price). More importantly, they largely
+treat the stocks as independent of each other. The valuable signal in the rich
+relations between stocks (or companies), such as two stocks are in the same
+sector and two companies have a supplier-customer relation, is not considered.
+In this work, we contribute a new deep learning solution, named Relational
+Stock Ranking (RSR), for stock prediction. Our RSR method advances existing
+solutions in two major aspects: 1) tailoring the deep learning models for stock
+ranking, and 2) capturing the stock relations in a time-sensitive manner. The
+key novelty of our work is the proposal of a new component in neural network
+modeling, named Temporal Graph Convolution, which jointly models the temporal
+evolution and relation network of stocks. To validate our method, we perform
+back-testing on the historical data of two stock markets, NYSE and NASDAQ.
+Extensive experiments demonstrate the superiority of our RSR method. It
+outperforms state-of-the-art stock prediction solutions achieving an average
+return ratio of 98% and 71% on NYSE and NASDAQ, respectively.
 ",a
-"Predicting intraday jumps in stock prices using liquidity measures and
-  technical indicators","  Predicting the intraday stock jumps is a significant but challenging problem
-in finance. Due to the instantaneity and imperceptibility characteristics of
-intraday stock jumps, relevant studies on their predictability remain limited.
-This paper proposes a data-driven approach to predict intraday stock jumps
-using the information embedded in liquidity measures and technical indicators.
-Specifically, a trading day is divided into a series of 5-minute intervals, and
-at the end of each interval, the candidate attributes defined by liquidity
-measures and technical indicators are input into machine learning algorithms to
-predict the arrival of a stock jump as well as its direction in the following
-5-minute interval. Empirical study is conducted on the level-2 high-frequency
-data of 1271 stocks in the Shenzhen Stock Exchange of China to validate our
-approach. The result provides initial evidence of the predictability of jump
-arrivals and jump directions using level-2 stock data as well as the
-effectiveness of using a combination of liquidity measures and technical
-indicators in this prediction. We also reveal the superiority of using random
-forest compared to other machine learning algorithms in building prediction
-models. Importantly, our study provides a portable data-driven approach that
-exploits liquidity and technical information from level-2 stock data to predict
-intraday price jumps of individual stocks.
+Temporal Relational Ranking for Stock Prediction,"  Stock prediction aims to predict the future trends of a stock in order to
+help investors to make good investment decisions. Traditional solutions for
+stock prediction are based on time-series models. With the recent success of
+deep neural networks in modeling sequential data, deep learning has become a
+promising choice for stock prediction. However, most existing deep learning
+solutions are not optimized towards the target of investment, i.e., selecting
+the best stock with the highest expected revenue. Specifically, they typically
+formulate stock prediction as a classification (to predict stock trend) or a
+regression problem (to predict stock price). More importantly, they largely
+treat the stocks as independent of each other. The valuable signal in the rich
+relations between stocks (or companies), such as two stocks are in the same
+sector and two companies have a supplier-customer relation, is not considered.
+In this work, we contribute a new deep learning solution, named Relational
+Stock Ranking (RSR), for stock prediction. Our RSR method advances existing
+solutions in two major aspects: 1) tailoring the deep learning models for stock
+ranking, and 2) capturing the stock relations in a time-sensitive manner. The
+key novelty of our work is the proposal of a new component in neural network
+modeling, named Temporal Graph Convolution, which jointly models the temporal
+evolution and relation network of stocks. To validate our method, we perform
+back-testing on the historical data of two stock markets, NYSE and NASDAQ.
+Extensive experiments demonstrate the superiority of our RSR method. It
+outperforms state-of-the-art stock prediction solutions achieving an average
+return ratio of 98% and 71% on NYSE and NASDAQ, respectively.
 ",a
-"Predicting intraday jumps in stock prices using liquidity measures and
-  technical indicators","  Predicting the intraday stock jumps is a significant but challenging problem
-in finance. Due to the instantaneity and imperceptibility characteristics of
-intraday stock jumps, relevant studies on their predictability remain limited.
-This paper proposes a data-driven approach to predict intraday stock jumps
-using the information embedded in liquidity measures and technical indicators.
-Specifically, a trading day is divided into a series of 5-minute intervals, and
-at the end of each interval, the candidate attributes defined by liquidity
-measures and technical indicators are input into machine learning algorithms to
-predict the arrival of a stock jump as well as its direction in the following
-5-minute interval. Empirical study is conducted on the level-2 high-frequency
-data of 1271 stocks in the Shenzhen Stock Exchange of China to validate our
-approach. The result provides initial evidence of the predictability of jump
-arrivals and jump directions using level-2 stock data as well as the
-effectiveness of using a combination of liquidity measures and technical
-indicators in this prediction. We also reveal the superiority of using random
-forest compared to other machine learning algorithms in building prediction
-models. Importantly, our study provides a portable data-driven approach that
-exploits liquidity and technical information from level-2 stock data to predict
-intraday price jumps of individual stocks.
+Temporal Relational Ranking for Stock Prediction,"  Stock prediction aims to predict the future trends of a stock in order to
+help investors to make good investment decisions. Traditional solutions for
+stock prediction are based on time-series models. With the recent success of
+deep neural networks in modeling sequential data, deep learning has become a
+promising choice for stock prediction. However, most existing deep learning
+solutions are not optimized towards the target of investment, i.e., selecting
+the best stock with the highest expected revenue. Specifically, they typically
+formulate stock prediction as a classification (to predict stock trend) or a
+regression problem (to predict stock price). More importantly, they largely
+treat the stocks as independent of each other. The valuable signal in the rich
+relations between stocks (or companies), such as two stocks are in the same
+sector and two companies have a supplier-customer relation, is not considered.
+In this work, we contribute a new deep learning solution, named Relational
+Stock Ranking (RSR), for stock prediction. Our RSR method advances existing
+solutions in two major aspects: 1) tailoring the deep learning models for stock
+ranking, and 2) capturing the stock relations in a time-sensitive manner. The
+key novelty of our work is the proposal of a new component in neural network
+modeling, named Temporal Graph Convolution, which jointly models the temporal
+evolution and relation network of stocks. To validate our method, we perform
+back-testing on the historical data of two stock markets, NYSE and NASDAQ.
+Extensive experiments demonstrate the superiority of our RSR method. It
+outperforms state-of-the-art stock prediction solutions achieving an average
+return ratio of 98% and 71% on NYSE and NASDAQ, respectively.
 ",a
-"Predicting intraday jumps in stock prices using liquidity measures and
-  technical indicators","  Predicting the intraday stock jumps is a significant but challenging problem
-in finance. Due to the instantaneity and imperceptibility characteristics of
-intraday stock jumps, relevant studies on their predictability remain limited.
-This paper proposes a data-driven approach to predict intraday stock jumps
-using the information embedded in liquidity measures and technical indicators.
-Specifically, a trading day is divided into a series of 5-minute intervals, and
-at the end of each interval, the candidate attributes defined by liquidity
-measures and technical indicators are input into machine learning algorithms to
-predict the arrival of a stock jump as well as its direction in the following
-5-minute interval. Empirical study is conducted on the level-2 high-frequency
-data of 1271 stocks in the Shenzhen Stock Exchange of China to validate our
-approach. The result provides initial evidence of the predictability of jump
-arrivals and jump directions using level-2 stock data as well as the
-effectiveness of using a combination of liquidity measures and technical
-indicators in this prediction. We also reveal the superiority of using random
-forest compared to other machine learning algorithms in building prediction
-models. Importantly, our study provides a portable data-driven approach that
-exploits liquidity and technical information from level-2 stock data to predict
-intraday price jumps of individual stocks.
+Temporal Relational Ranking for Stock Prediction,"  Stock prediction aims to predict the future trends of a stock in order to
+help investors to make good investment decisions. Traditional solutions for
+stock prediction are based on time-series models. With the recent success of
+deep neural networks in modeling sequential data, deep learning has become a
+promising choice for stock prediction. However, most existing deep learning
+solutions are not optimized towards the target of investment, i.e., selecting
+the best stock with the highest expected revenue. Specifically, they typically
+formulate stock prediction as a classification (to predict stock trend) or a
+regression problem (to predict stock price). More importantly, they largely
+treat the stocks as independent of each other. The valuable signal in the rich
+relations between stocks (or companies), such as two stocks are in the same
+sector and two companies have a supplier-customer relation, is not considered.
+In this work, we contribute a new deep learning solution, named Relational
+Stock Ranking (RSR), for stock prediction. Our RSR method advances existing
+solutions in two major aspects: 1) tailoring the deep learning models for stock
+ranking, and 2) capturing the stock relations in a time-sensitive manner. The
+key novelty of our work is the proposal of a new component in neural network
+modeling, named Temporal Graph Convolution, which jointly models the temporal
+evolution and relation network of stocks. To validate our method, we perform
+back-testing on the historical data of two stock markets, NYSE and NASDAQ.
+Extensive experiments demonstrate the superiority of our RSR method. It
+outperforms state-of-the-art stock prediction solutions achieving an average
+return ratio of 98% and 71% on NYSE and NASDAQ, respectively.
 ",a
-Stock Price Prediction Using CNN and LSTM-Based Deep Learning Models,"  Designing robust and accurate predictive models for stock price prediction
-has been an active area of research for a long time. While on one side, the
-supporters of the efficient market hypothesis claim that it is impossible to
-forecast stock prices accurately, many researchers believe otherwise. There
-exist propositions in the literature that have demonstrated that if properly
-designed and optimized, predictive models can very accurately and reliably
-predict future values of stock prices. This paper presents a suite of deep
-learning based models for stock price prediction. We use the historical records
-of the NIFTY 50 index listed in the National Stock Exchange of India, during
-the period from December 29, 2008 to July 31, 2020, for training and testing
-the models. Our proposition includes two regression models built on
-convolutional neural networks and three long and short term memory network
-based predictive models. To forecast the open values of the NIFTY 50 index
-records, we adopted a multi step prediction technique with walk forward
-validation. In this approach, the open values of the NIFTY 50 index are
-predicted on a time horizon of one week, and once a week is over, the actual
-index values are included in the training set before the model is trained
-again, and the forecasts for the next week are made. We present detailed
-results on the forecasting accuracies for all our proposed models. The results
-show that while all the models are very accurate in forecasting the NIFTY 50
-open values, the univariate encoder decoder convolutional LSTM with the
-previous two weeks data as the input is the most accurate model. On the other
-hand, a univariate CNN model with previous one week data as the input is found
-to be the fastest model in terms of its execution speed.
+Temporal Relational Ranking for Stock Prediction,"  Stock prediction aims to predict the future trends of a stock in order to
+help investors to make good investment decisions. Traditional solutions for
+stock prediction are based on time-series models. With the recent success of
+deep neural networks in modeling sequential data, deep learning has become a
+promising choice for stock prediction. However, most existing deep learning
+solutions are not optimized towards the target of investment, i.e., selecting
+the best stock with the highest expected revenue. Specifically, they typically
+formulate stock prediction as a classification (to predict stock trend) or a
+regression problem (to predict stock price). More importantly, they largely
+treat the stocks as independent of each other. The valuable signal in the rich
+relations between stocks (or companies), such as two stocks are in the same
+sector and two companies have a supplier-customer relation, is not considered.
+In this work, we contribute a new deep learning solution, named Relational
+Stock Ranking (RSR), for stock prediction. Our RSR method advances existing
+solutions in two major aspects: 1) tailoring the deep learning models for stock
+ranking, and 2) capturing the stock relations in a time-sensitive manner. The
+key novelty of our work is the proposal of a new component in neural network
+modeling, named Temporal Graph Convolution, which jointly models the temporal
+evolution and relation network of stocks. To validate our method, we perform
+back-testing on the historical data of two stock markets, NYSE and NASDAQ.
+Extensive experiments demonstrate the superiority of our RSR method. It
+outperforms state-of-the-art stock prediction solutions achieving an average
+return ratio of 98% and 71% on NYSE and NASDAQ, respectively.
 ",a
-Stock Price Prediction Using CNN and LSTM-Based Deep Learning Models,"  Designing robust and accurate predictive models for stock price prediction
-has been an active area of research for a long time. While on one side, the
-supporters of the efficient market hypothesis claim that it is impossible to
-forecast stock prices accurately, many researchers believe otherwise. There
-exist propositions in the literature that have demonstrated that if properly
-designed and optimized, predictive models can very accurately and reliably
-predict future values of stock prices. This paper presents a suite of deep
-learning based models for stock price prediction. We use the historical records
-of the NIFTY 50 index listed in the National Stock Exchange of India, during
-the period from December 29, 2008 to July 31, 2020, for training and testing
-the models. Our proposition includes two regression models built on
-convolutional neural networks and three long and short term memory network
-based predictive models. To forecast the open values of the NIFTY 50 index
-records, we adopted a multi step prediction technique with walk forward
-validation. In this approach, the open values of the NIFTY 50 index are
-predicted on a time horizon of one week, and once a week is over, the actual
-index values are included in the training set before the model is trained
-again, and the forecasts for the next week are made. We present detailed
-results on the forecasting accuracies for all our proposed models. The results
-show that while all the models are very accurate in forecasting the NIFTY 50
-open values, the univariate encoder decoder convolutional LSTM with the
-previous two weeks data as the input is the most accurate model. On the other
-hand, a univariate CNN model with previous one week data as the input is found
-to be the fastest model in terms of its execution speed.
+Temporal Relational Ranking for Stock Prediction,"  Stock prediction aims to predict the future trends of a stock in order to
+help investors to make good investment decisions. Traditional solutions for
+stock prediction are based on time-series models. With the recent success of
+deep neural networks in modeling sequential data, deep learning has become a
+promising choice for stock prediction. However, most existing deep learning
+solutions are not optimized towards the target of investment, i.e., selecting
+the best stock with the highest expected revenue. Specifically, they typically
+formulate stock prediction as a classification (to predict stock trend) or a
+regression problem (to predict stock price). More importantly, they largely
+treat the stocks as independent of each other. The valuable signal in the rich
+relations between stocks (or companies), such as two stocks are in the same
+sector and two companies have a supplier-customer relation, is not considered.
+In this work, we contribute a new deep learning solution, named Relational
+Stock Ranking (RSR), for stock prediction. Our RSR method advances existing
+solutions in two major aspects: 1) tailoring the deep learning models for stock
+ranking, and 2) capturing the stock relations in a time-sensitive manner. The
+key novelty of our work is the proposal of a new component in neural network
+modeling, named Temporal Graph Convolution, which jointly models the temporal
+evolution and relation network of stocks. To validate our method, we perform
+back-testing on the historical data of two stock markets, NYSE and NASDAQ.
+Extensive experiments demonstrate the superiority of our RSR method. It
+outperforms state-of-the-art stock prediction solutions achieving an average
+return ratio of 98% and 71% on NYSE and NASDAQ, respectively.
 ",a
-Stock Price Prediction Using CNN and LSTM-Based Deep Learning Models,"  Designing robust and accurate predictive models for stock price prediction
-has been an active area of research for a long time. While on one side, the
-supporters of the efficient market hypothesis claim that it is impossible to
-forecast stock prices accurately, many researchers believe otherwise. There
-exist propositions in the literature that have demonstrated that if properly
-designed and optimized, predictive models can very accurately and reliably
-predict future values of stock prices. This paper presents a suite of deep
-learning based models for stock price prediction. We use the historical records
-of the NIFTY 50 index listed in the National Stock Exchange of India, during
-the period from December 29, 2008 to July 31, 2020, for training and testing
-the models. Our proposition includes two regression models built on
-convolutional neural networks and three long and short term memory network
-based predictive models. To forecast the open values of the NIFTY 50 index
-records, we adopted a multi step prediction technique with walk forward
-validation. In this approach, the open values of the NIFTY 50 index are
-predicted on a time horizon of one week, and once a week is over, the actual
-index values are included in the training set before the model is trained
-again, and the forecasts for the next week are made. We present detailed
-results on the forecasting accuracies for all our proposed models. The results
-show that while all the models are very accurate in forecasting the NIFTY 50
-open values, the univariate encoder decoder convolutional LSTM with the
-previous two weeks data as the input is the most accurate model. On the other
-hand, a univariate CNN model with previous one week data as the input is found
-to be the fastest model in terms of its execution speed.
+Temporal Relational Ranking for Stock Prediction,"  Stock prediction aims to predict the future trends of a stock in order to
+help investors to make good investment decisions. Traditional solutions for
+stock prediction are based on time-series models. With the recent success of
+deep neural networks in modeling sequential data, deep learning has become a
+promising choice for stock prediction. However, most existing deep learning
+solutions are not optimized towards the target of investment, i.e., selecting
+the best stock with the highest expected revenue. Specifically, they typically
+formulate stock prediction as a classification (to predict stock trend) or a
+regression problem (to predict stock price). More importantly, they largely
+treat the stocks as independent of each other. The valuable signal in the rich
+relations between stocks (or companies), such as two stocks are in the same
+sector and two companies have a supplier-customer relation, is not considered.
+In this work, we contribute a new deep learning solution, named Relational
+Stock Ranking (RSR), for stock prediction. Our RSR method advances existing
+solutions in two major aspects: 1) tailoring the deep learning models for stock
+ranking, and 2) capturing the stock relations in a time-sensitive manner. The
+key novelty of our work is the proposal of a new component in neural network
+modeling, named Temporal Graph Convolution, which jointly models the temporal
+evolution and relation network of stocks. To validate our method, we perform
+back-testing on the historical data of two stock markets, NYSE and NASDAQ.
+Extensive experiments demonstrate the superiority of our RSR method. It
+outperforms state-of-the-art stock prediction solutions achieving an average
+return ratio of 98% and 71% on NYSE and NASDAQ, respectively.
 ",a
-Stock Price Prediction Using CNN and LSTM-Based Deep Learning Models,"  Designing robust and accurate predictive models for stock price prediction
-has been an active area of research for a long time. While on one side, the
-supporters of the efficient market hypothesis claim that it is impossible to
-forecast stock prices accurately, many researchers believe otherwise. There
-exist propositions in the literature that have demonstrated that if properly
-designed and optimized, predictive models can very accurately and reliably
-predict future values of stock prices. This paper presents a suite of deep
-learning based models for stock price prediction. We use the historical records
-of the NIFTY 50 index listed in the National Stock Exchange of India, during
-the period from December 29, 2008 to July 31, 2020, for training and testing
-the models. Our proposition includes two regression models built on
-convolutional neural networks and three long and short term memory network
-based predictive models. To forecast the open values of the NIFTY 50 index
-records, we adopted a multi step prediction technique with walk forward
-validation. In this approach, the open values of the NIFTY 50 index are
-predicted on a time horizon of one week, and once a week is over, the actual
-index values are included in the training set before the model is trained
-again, and the forecasts for the next week are made. We present detailed
-results on the forecasting accuracies for all our proposed models. The results
-show that while all the models are very accurate in forecasting the NIFTY 50
-open values, the univariate encoder decoder convolutional LSTM with the
-previous two weeks data as the input is the most accurate model. On the other
-hand, a univariate CNN model with previous one week data as the input is found
-to be the fastest model in terms of its execution speed.
+Temporal Relational Ranking for Stock Prediction,"  Stock prediction aims to predict the future trends of a stock in order to
+help investors to make good investment decisions. Traditional solutions for
+stock prediction are based on time-series models. With the recent success of
+deep neural networks in modeling sequential data, deep learning has become a
+promising choice for stock prediction. However, most existing deep learning
+solutions are not optimized towards the target of investment, i.e., selecting
+the best stock with the highest expected revenue. Specifically, they typically
+formulate stock prediction as a classification (to predict stock trend) or a
+regression problem (to predict stock price). More importantly, they largely
+treat the stocks as independent of each other. The valuable signal in the rich
+relations between stocks (or companies), such as two stocks are in the same
+sector and two companies have a supplier-customer relation, is not considered.
+In this work, we contribute a new deep learning solution, named Relational
+Stock Ranking (RSR), for stock prediction. Our RSR method advances existing
+solutions in two major aspects: 1) tailoring the deep learning models for stock
+ranking, and 2) capturing the stock relations in a time-sensitive manner. The
+key novelty of our work is the proposal of a new component in neural network
+modeling, named Temporal Graph Convolution, which jointly models the temporal
+evolution and relation network of stocks. To validate our method, we perform
+back-testing on the historical data of two stock markets, NYSE and NASDAQ.
+Extensive experiments demonstrate the superiority of our RSR method. It
+outperforms state-of-the-art stock prediction solutions achieving an average
+return ratio of 98% and 71% on NYSE and NASDAQ, respectively.
 ",a
-Stock Price Prediction Using CNN and LSTM-Based Deep Learning Models,"  Designing robust and accurate predictive models for stock price prediction
-has been an active area of research for a long time. While on one side, the
-supporters of the efficient market hypothesis claim that it is impossible to
-forecast stock prices accurately, many researchers believe otherwise. There
-exist propositions in the literature that have demonstrated that if properly
-designed and optimized, predictive models can very accurately and reliably
-predict future values of stock prices. This paper presents a suite of deep
-learning based models for stock price prediction. We use the historical records
-of the NIFTY 50 index listed in the National Stock Exchange of India, during
-the period from December 29, 2008 to July 31, 2020, for training and testing
-the models. Our proposition includes two regression models built on
-convolutional neural networks and three long and short term memory network
-based predictive models. To forecast the open values of the NIFTY 50 index
-records, we adopted a multi step prediction technique with walk forward
-validation. In this approach, the open values of the NIFTY 50 index are
-predicted on a time horizon of one week, and once a week is over, the actual
-index values are included in the training set before the model is trained
-again, and the forecasts for the next week are made. We present detailed
-results on the forecasting accuracies for all our proposed models. The results
-show that while all the models are very accurate in forecasting the NIFTY 50
-open values, the univariate encoder decoder convolutional LSTM with the
-previous two weeks data as the input is the most accurate model. On the other
-hand, a univariate CNN model with previous one week data as the input is found
-to be the fastest model in terms of its execution speed.
+Temporal Relational Ranking for Stock Prediction,"  Stock prediction aims to predict the future trends of a stock in order to
+help investors to make good investment decisions. Traditional solutions for
+stock prediction are based on time-series models. With the recent success of
+deep neural networks in modeling sequential data, deep learning has become a
+promising choice for stock prediction. However, most existing deep learning
+solutions are not optimized towards the target of investment, i.e., selecting
+the best stock with the highest expected revenue. Specifically, they typically
+formulate stock prediction as a classification (to predict stock trend) or a
+regression problem (to predict stock price). More importantly, they largely
+treat the stocks as independent of each other. The valuable signal in the rich
+relations between stocks (or companies), such as two stocks are in the same
+sector and two companies have a supplier-customer relation, is not considered.
+In this work, we contribute a new deep learning solution, named Relational
+Stock Ranking (RSR), for stock prediction. Our RSR method advances existing
+solutions in two major aspects: 1) tailoring the deep learning models for stock
+ranking, and 2) capturing the stock relations in a time-sensitive manner. The
+key novelty of our work is the proposal of a new component in neural network
+modeling, named Temporal Graph Convolution, which jointly models the temporal
+evolution and relation network of stocks. To validate our method, we perform
+back-testing on the historical data of two stock markets, NYSE and NASDAQ.
+Extensive experiments demonstrate the superiority of our RSR method. It
+outperforms state-of-the-art stock prediction solutions achieving an average
+return ratio of 98% and 71% on NYSE and NASDAQ, respectively.
 ",a
-"Stock Price Prediction Using Machine Learning and LSTM-Based Deep
-  Learning Models","  Prediction of stock prices has been an important area of research for a long
-time. While supporters of the efficient market hypothesis believe that it is
-impossible to predict stock prices accurately, there are formal propositions
-demonstrating that accurate modeling and designing of appropriate variables may
-lead to models using which stock prices and stock price movement patterns can
-be very accurately predicted. In this work, we propose an approach of hybrid
-modeling for stock price prediction building different machine learning and
-deep learning-based models. For the purpose of our study, we have used NIFTY 50
-index values of the National Stock Exchange (NSE) of India, during the period
-December 29, 2014 till July 31, 2020. We have built eight regression models
-using the training data that consisted of NIFTY 50 index records during
-December 29, 2014 till December 28, 2018. Using these regression models, we
-predicted the open values of NIFTY 50 for the period December 31, 2018 till
-July 31, 2020. We, then, augment the predictive power of our forecasting
-framework by building four deep learning-based regression models using long-and
-short-term memory (LSTM) networks with a novel approach of walk-forward
-validation. We exploit the power of LSTM regression models in forecasting the
-future NIFTY 50 open values using four different models that differ in their
-architecture and in the structure of their input data. Extensive results are
-presented on various metrics for the all the regression models. The results
-clearly indicate that the LSTM-based univariate model that uses one-week prior
-data as input for predicting the next week open value of the NIFTY 50 time
-series is the most accurate model.
+Temporal Relational Ranking for Stock Prediction,"  Stock prediction aims to predict the future trends of a stock in order to
+help investors to make good investment decisions. Traditional solutions for
+stock prediction are based on time-series models. With the recent success of
+deep neural networks in modeling sequential data, deep learning has become a
+promising choice for stock prediction. However, most existing deep learning
+solutions are not optimized towards the target of investment, i.e., selecting
+the best stock with the highest expected revenue. Specifically, they typically
+formulate stock prediction as a classification (to predict stock trend) or a
+regression problem (to predict stock price). More importantly, they largely
+treat the stocks as independent of each other. The valuable signal in the rich
+relations between stocks (or companies), such as two stocks are in the same
+sector and two companies have a supplier-customer relation, is not considered.
+In this work, we contribute a new deep learning solution, named Relational
+Stock Ranking (RSR), for stock prediction. Our RSR method advances existing
+solutions in two major aspects: 1) tailoring the deep learning models for stock
+ranking, and 2) capturing the stock relations in a time-sensitive manner. The
+key novelty of our work is the proposal of a new component in neural network
+modeling, named Temporal Graph Convolution, which jointly models the temporal
+evolution and relation network of stocks. To validate our method, we perform
+back-testing on the historical data of two stock markets, NYSE and NASDAQ.
+Extensive experiments demonstrate the superiority of our RSR method. It
+outperforms state-of-the-art stock prediction solutions achieving an average
+return ratio of 98% and 71% on NYSE and NASDAQ, respectively.
 ",a
-"Stock Price Prediction Using Machine Learning and LSTM-Based Deep
-  Learning Models","  Prediction of stock prices has been an important area of research for a long
-time. While supporters of the efficient market hypothesis believe that it is
-impossible to predict stock prices accurately, there are formal propositions
-demonstrating that accurate modeling and designing of appropriate variables may
-lead to models using which stock prices and stock price movement patterns can
-be very accurately predicted. In this work, we propose an approach of hybrid
-modeling for stock price prediction building different machine learning and
-deep learning-based models. For the purpose of our study, we have used NIFTY 50
-index values of the National Stock Exchange (NSE) of India, during the period
-December 29, 2014 till July 31, 2020. We have built eight regression models
-using the training data that consisted of NIFTY 50 index records during
-December 29, 2014 till December 28, 2018. Using these regression models, we
-predicted the open values of NIFTY 50 for the period December 31, 2018 till
-July 31, 2020. We, then, augment the predictive power of our forecasting
-framework by building four deep learning-based regression models using long-and
-short-term memory (LSTM) networks with a novel approach of walk-forward
-validation. We exploit the power of LSTM regression models in forecasting the
-future NIFTY 50 open values using four different models that differ in their
-architecture and in the structure of their input data. Extensive results are
-presented on various metrics for the all the regression models. The results
-clearly indicate that the LSTM-based univariate model that uses one-week prior
-data as input for predicting the next week open value of the NIFTY 50 time
-series is the most accurate model.
+"Absolute Value Constraint: The Reason for Invalid Performance Evaluation
+  Results of Neural Network Models for Stock Price Prediction","  Neural networks for stock price prediction(NNSPP) have been popular for
+decades. However, most of its study results remain in the research paper and
+cannot truly play a role in the securities market. One of the main reasons
+leading to this situation is that the prediction error(PE) based evaluation
+results have statistical flaws. Its prediction results cannot represent the
+most critical financial direction attributes. So it cannot provide investors
+with convincing, interpretable, and consistent model performance evaluation
+results for practical applications in the securities market. To illustrate, we
+have used data selected from 20 stock datasets over six years from the Shanghai
+and Shenzhen stock market in China, and 20 stock datasets from NASDAQ and NYSE
+in the USA. We implement six shallow and deep neural networks to predict stock
+prices and use four prediction error measures for evaluation. The results show
+that the prediction error value only partially reflects the model accuracy of
+the stock price prediction, and cannot reflect the change in the direction of
+the model predicted stock price. This characteristic determines that PE is not
+suitable as an evaluation indicator of NNSPP. Otherwise, it will bring huge
+potential risks to investors. Therefore, this paper establishes an experiment
+platform to confirm that the PE method is not suitable for the NNSPP
+evaluation, and provides a theoretical basis for the necessity of creating a
+new NNSPP evaluation method in the future.
 ",a
-"Stock Price Prediction Using Machine Learning and LSTM-Based Deep
-  Learning Models","  Prediction of stock prices has been an important area of research for a long
-time. While supporters of the efficient market hypothesis believe that it is
-impossible to predict stock prices accurately, there are formal propositions
-demonstrating that accurate modeling and designing of appropriate variables may
-lead to models using which stock prices and stock price movement patterns can
-be very accurately predicted. In this work, we propose an approach of hybrid
-modeling for stock price prediction building different machine learning and
-deep learning-based models. For the purpose of our study, we have used NIFTY 50
-index values of the National Stock Exchange (NSE) of India, during the period
-December 29, 2014 till July 31, 2020. We have built eight regression models
-using the training data that consisted of NIFTY 50 index records during
-December 29, 2014 till December 28, 2018. Using these regression models, we
-predicted the open values of NIFTY 50 for the period December 31, 2018 till
-July 31, 2020. We, then, augment the predictive power of our forecasting
-framework by building four deep learning-based regression models using long-and
-short-term memory (LSTM) networks with a novel approach of walk-forward
-validation. We exploit the power of LSTM regression models in forecasting the
-future NIFTY 50 open values using four different models that differ in their
-architecture and in the structure of their input data. Extensive results are
-presented on various metrics for the all the regression models. The results
-clearly indicate that the LSTM-based univariate model that uses one-week prior
-data as input for predicting the next week open value of the NIFTY 50 time
-series is the most accurate model.
+"Absolute Value Constraint: The Reason for Invalid Performance Evaluation
+  Results of Neural Network Models for Stock Price Prediction","  Neural networks for stock price prediction(NNSPP) have been popular for
+decades. However, most of its study results remain in the research paper and
+cannot truly play a role in the securities market. One of the main reasons
+leading to this situation is that the prediction error(PE) based evaluation
+results have statistical flaws. Its prediction results cannot represent the
+most critical financial direction attributes. So it cannot provide investors
+with convincing, interpretable, and consistent model performance evaluation
+results for practical applications in the securities market. To illustrate, we
+have used data selected from 20 stock datasets over six years from the Shanghai
+and Shenzhen stock market in China, and 20 stock datasets from NASDAQ and NYSE
+in the USA. We implement six shallow and deep neural networks to predict stock
+prices and use four prediction error measures for evaluation. The results show
+that the prediction error value only partially reflects the model accuracy of
+the stock price prediction, and cannot reflect the change in the direction of
+the model predicted stock price. This characteristic determines that PE is not
+suitable as an evaluation indicator of NNSPP. Otherwise, it will bring huge
+potential risks to investors. Therefore, this paper establishes an experiment
+platform to confirm that the PE method is not suitable for the NNSPP
+evaluation, and provides a theoretical basis for the necessity of creating a
+new NNSPP evaluation method in the future.
 ",a
-"Stock Price Prediction Using Machine Learning and LSTM-Based Deep
-  Learning Models","  Prediction of stock prices has been an important area of research for a long
-time. While supporters of the efficient market hypothesis believe that it is
-impossible to predict stock prices accurately, there are formal propositions
-demonstrating that accurate modeling and designing of appropriate variables may
-lead to models using which stock prices and stock price movement patterns can
-be very accurately predicted. In this work, we propose an approach of hybrid
-modeling for stock price prediction building different machine learning and
-deep learning-based models. For the purpose of our study, we have used NIFTY 50
-index values of the National Stock Exchange (NSE) of India, during the period
-December 29, 2014 till July 31, 2020. We have built eight regression models
-using the training data that consisted of NIFTY 50 index records during
-December 29, 2014 till December 28, 2018. Using these regression models, we
-predicted the open values of NIFTY 50 for the period December 31, 2018 till
-July 31, 2020. We, then, augment the predictive power of our forecasting
-framework by building four deep learning-based regression models using long-and
-short-term memory (LSTM) networks with a novel approach of walk-forward
-validation. We exploit the power of LSTM regression models in forecasting the
-future NIFTY 50 open values using four different models that differ in their
-architecture and in the structure of their input data. Extensive results are
-presented on various metrics for the all the regression models. The results
-clearly indicate that the LSTM-based univariate model that uses one-week prior
-data as input for predicting the next week open value of the NIFTY 50 time
-series is the most accurate model.
+"Absolute Value Constraint: The Reason for Invalid Performance Evaluation
+  Results of Neural Network Models for Stock Price Prediction","  Neural networks for stock price prediction(NNSPP) have been popular for
+decades. However, most of its study results remain in the research paper and
+cannot truly play a role in the securities market. One of the main reasons
+leading to this situation is that the prediction error(PE) based evaluation
+results have statistical flaws. Its prediction results cannot represent the
+most critical financial direction attributes. So it cannot provide investors
+with convincing, interpretable, and consistent model performance evaluation
+results for practical applications in the securities market. To illustrate, we
+have used data selected from 20 stock datasets over six years from the Shanghai
+and Shenzhen stock market in China, and 20 stock datasets from NASDAQ and NYSE
+in the USA. We implement six shallow and deep neural networks to predict stock
+prices and use four prediction error measures for evaluation. The results show
+that the prediction error value only partially reflects the model accuracy of
+the stock price prediction, and cannot reflect the change in the direction of
+the model predicted stock price. This characteristic determines that PE is not
+suitable as an evaluation indicator of NNSPP. Otherwise, it will bring huge
+potential risks to investors. Therefore, this paper establishes an experiment
+platform to confirm that the PE method is not suitable for the NNSPP
+evaluation, and provides a theoretical basis for the necessity of creating a
+new NNSPP evaluation method in the future.
 ",a
-"A Robust Predictive Model for Stock Price Prediction Using Deep Learning
-  and Natural Language Processing","  Prediction of future movement of stock prices has been a subject matter of
-many research work. There is a gamut of literature of technical analysis of
-stock prices where the objective is to identify patterns in stock price
-movements and derive profit from it. Improving the prediction accuracy remains
-the single most challenge in this area of research. We propose a hybrid
-approach for stock price movement prediction using machine learning, deep
-learning, and natural language processing. We select the NIFTY 50 index values
-of the National Stock Exchange of India, and collect its daily price movement
-over a period of three years (2015 to 2017). Based on the data of 2015 to 2017,
-we build various predictive models using machine learning, and then use those
-models to predict the closing value of NIFTY 50 for the period January 2018
-till June 2019 with a prediction horizon of one week. For predicting the price
-movement patterns, we use a number of classification techniques, while for
-predicting the actual closing price of the stock, various regression models
-have been used. We also build a Long and Short-Term Memory - based deep
-learning network for predicting the closing price of the stocks and compare the
-prediction accuracies of the machine learning models with the LSTM model. We
-further augment the predictive model by integrating a sentiment analysis module
-on twitter data to correlate the public sentiment of stock prices with the
-market sentiment. This has been done using twitter sentiment and previous week
-closing values to predict stock price movement for the next week. We tested our
-proposed scheme using a cross validation method based on Self Organizing Fuzzy
-Neural Networks and found extremely interesting results.
+"Absolute Value Constraint: The Reason for Invalid Performance Evaluation
+  Results of Neural Network Models for Stock Price Prediction","  Neural networks for stock price prediction(NNSPP) have been popular for
+decades. However, most of its study results remain in the research paper and
+cannot truly play a role in the securities market. One of the main reasons
+leading to this situation is that the prediction error(PE) based evaluation
+results have statistical flaws. Its prediction results cannot represent the
+most critical financial direction attributes. So it cannot provide investors
+with convincing, interpretable, and consistent model performance evaluation
+results for practical applications in the securities market. To illustrate, we
+have used data selected from 20 stock datasets over six years from the Shanghai
+and Shenzhen stock market in China, and 20 stock datasets from NASDAQ and NYSE
+in the USA. We implement six shallow and deep neural networks to predict stock
+prices and use four prediction error measures for evaluation. The results show
+that the prediction error value only partially reflects the model accuracy of
+the stock price prediction, and cannot reflect the change in the direction of
+the model predicted stock price. This characteristic determines that PE is not
+suitable as an evaluation indicator of NNSPP. Otherwise, it will bring huge
+potential risks to investors. Therefore, this paper establishes an experiment
+platform to confirm that the PE method is not suitable for the NNSPP
+evaluation, and provides a theoretical basis for the necessity of creating a
+new NNSPP evaluation method in the future.
 ",a
-"A Robust Predictive Model for Stock Price Prediction Using Deep Learning
-  and Natural Language Processing","  Prediction of future movement of stock prices has been a subject matter of
-many research work. There is a gamut of literature of technical analysis of
-stock prices where the objective is to identify patterns in stock price
-movements and derive profit from it. Improving the prediction accuracy remains
-the single most challenge in this area of research. We propose a hybrid
-approach for stock price movement prediction using machine learning, deep
-learning, and natural language processing. We select the NIFTY 50 index values
-of the National Stock Exchange of India, and collect its daily price movement
-over a period of three years (2015 to 2017). Based on the data of 2015 to 2017,
-we build various predictive models using machine learning, and then use those
-models to predict the closing value of NIFTY 50 for the period January 2018
-till June 2019 with a prediction horizon of one week. For predicting the price
-movement patterns, we use a number of classification techniques, while for
-predicting the actual closing price of the stock, various regression models
-have been used. We also build a Long and Short-Term Memory - based deep
-learning network for predicting the closing price of the stocks and compare the
-prediction accuracies of the machine learning models with the LSTM model. We
-further augment the predictive model by integrating a sentiment analysis module
-on twitter data to correlate the public sentiment of stock prices with the
-market sentiment. This has been done using twitter sentiment and previous week
-closing values to predict stock price movement for the next week. We tested our
-proposed scheme using a cross validation method based on Self Organizing Fuzzy
-Neural Networks and found extremely interesting results.
+"Absolute Value Constraint: The Reason for Invalid Performance Evaluation
+  Results of Neural Network Models for Stock Price Prediction","  Neural networks for stock price prediction(NNSPP) have been popular for
+decades. However, most of its study results remain in the research paper and
+cannot truly play a role in the securities market. One of the main reasons
+leading to this situation is that the prediction error(PE) based evaluation
+results have statistical flaws. Its prediction results cannot represent the
+most critical financial direction attributes. So it cannot provide investors
+with convincing, interpretable, and consistent model performance evaluation
+results for practical applications in the securities market. To illustrate, we
+have used data selected from 20 stock datasets over six years from the Shanghai
+and Shenzhen stock market in China, and 20 stock datasets from NASDAQ and NYSE
+in the USA. We implement six shallow and deep neural networks to predict stock
+prices and use four prediction error measures for evaluation. The results show
+that the prediction error value only partially reflects the model accuracy of
+the stock price prediction, and cannot reflect the change in the direction of
+the model predicted stock price. This characteristic determines that PE is not
+suitable as an evaluation indicator of NNSPP. Otherwise, it will bring huge
+potential risks to investors. Therefore, this paper establishes an experiment
+platform to confirm that the PE method is not suitable for the NNSPP
+evaluation, and provides a theoretical basis for the necessity of creating a
+new NNSPP evaluation method in the future.
 ",a
-"A Robust Predictive Model for Stock Price Prediction Using Deep Learning
-  and Natural Language Processing","  Prediction of future movement of stock prices has been a subject matter of
-many research work. There is a gamut of literature of technical analysis of
-stock prices where the objective is to identify patterns in stock price
-movements and derive profit from it. Improving the prediction accuracy remains
-the single most challenge in this area of research. We propose a hybrid
-approach for stock price movement prediction using machine learning, deep
-learning, and natural language processing. We select the NIFTY 50 index values
-of the National Stock Exchange of India, and collect its daily price movement
-over a period of three years (2015 to 2017). Based on the data of 2015 to 2017,
-we build various predictive models using machine learning, and then use those
-models to predict the closing value of NIFTY 50 for the period January 2018
-till June 2019 with a prediction horizon of one week. For predicting the price
-movement patterns, we use a number of classification techniques, while for
-predicting the actual closing price of the stock, various regression models
-have been used. We also build a Long and Short-Term Memory - based deep
-learning network for predicting the closing price of the stocks and compare the
-prediction accuracies of the machine learning models with the LSTM model. We
-further augment the predictive model by integrating a sentiment analysis module
-on twitter data to correlate the public sentiment of stock prices with the
-market sentiment. This has been done using twitter sentiment and previous week
-closing values to predict stock price movement for the next week. We tested our
-proposed scheme using a cross validation method based on Self Organizing Fuzzy
-Neural Networks and found extremely interesting results.
+"Absolute Value Constraint: The Reason for Invalid Performance Evaluation
+  Results of Neural Network Models for Stock Price Prediction","  Neural networks for stock price prediction(NNSPP) have been popular for
+decades. However, most of its study results remain in the research paper and
+cannot truly play a role in the securities market. One of the main reasons
+leading to this situation is that the prediction error(PE) based evaluation
+results have statistical flaws. Its prediction results cannot represent the
+most critical financial direction attributes. So it cannot provide investors
+with convincing, interpretable, and consistent model performance evaluation
+results for practical applications in the securities market. To illustrate, we
+have used data selected from 20 stock datasets over six years from the Shanghai
+and Shenzhen stock market in China, and 20 stock datasets from NASDAQ and NYSE
+in the USA. We implement six shallow and deep neural networks to predict stock
+prices and use four prediction error measures for evaluation. The results show
+that the prediction error value only partially reflects the model accuracy of
+the stock price prediction, and cannot reflect the change in the direction of
+the model predicted stock price. This characteristic determines that PE is not
+suitable as an evaluation indicator of NNSPP. Otherwise, it will bring huge
+potential risks to investors. Therefore, this paper establishes an experiment
+platform to confirm that the PE method is not suitable for the NNSPP
+evaluation, and provides a theoretical basis for the necessity of creating a
+new NNSPP evaluation method in the future.
 ",a
