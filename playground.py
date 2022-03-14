@@ -38,6 +38,7 @@ def get_database_results(query: str) -> dict:
     """
     query = preprocess(query,True, True) # stemming, removing stopwords
     query_params = {'query': query}
+    print(query_params)
     # Don't worry about input parsing. Use query_params for now.
     scores = ranking_query_tfidf_dataset(query_params)
     output_dict = dict()
@@ -94,10 +95,11 @@ def get_papers_results(query: str) -> dict:
 #### If the functions are working as expected, these functions should work.
 
 # query1 = {'query': "covid pandemic".split()}
-query1 = "covid"
+query1 = "haskel haskel"
+print(query1)
 
  # these both should return Dictionary objects in the format given above
-# print(get_database_results(query1)) 
+print(get_database_results(query1)) 
 
 
 for i in get_papers_results(query1)['Results']:

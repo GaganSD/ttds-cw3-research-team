@@ -294,7 +294,7 @@ class MongoDBClient():
 
         return ans
     
-    def get_topk_doc_from_index(self, term: str, k = 2000):
+    def get_topk_doc_from_index(self, term: str, k = 100):
         """
         The method to get the topk docs with an index. "Top" here means having most 
          appearances of the term.
