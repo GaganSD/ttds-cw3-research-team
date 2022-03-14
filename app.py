@@ -52,7 +52,7 @@ def get_papers_results(query: str) -> dict:
         return cached_results
 
     query_params = _preprocess_query(query)
-
+    print(query_params)
     print("msg 1")
     scores = ranking_query_tfidf_paper(query_params, client)
     print("msg 2")
@@ -62,7 +62,7 @@ def get_papers_results(query: str) -> dict:
         output = client.get_one(data_type='paper', filter={'_id':result[0]}, fields=['title', 'abstract','authors', 'url', 'date'])
         output_dict["Results"].append(output)
 
-    _results_cache.put(query, _results_cache)
+    _results_cache.put(query, output_dict)
 
     return output_dict
 
@@ -86,7 +86,7 @@ def get_dataset_results(query: str) -> dict:
         output = client.get_one(data_type='dataset', filter={'_id':result[0]}, fields=['title', 'abstract','authors', 'url', 'date'])
         output_dict["Results"].append(output)
 
-    _results_cache.put(query, _results_cache)
+    _results_cache.put(query, output_dict)
     return output_dict
 
 def _preprocess_query(query: str) -> dict:
@@ -101,7 +101,7 @@ def _preprocess_query(query: str) -> dict:
         query_params = cached_data
     else:
         query_params = preprocess(query,True, True) # stemming, removing stopwords
-        query_params = {'query': query}
+        query_params = {'query': query_params}
         _preprocessing_cache.put(query, query_params)
 
     return query_params
