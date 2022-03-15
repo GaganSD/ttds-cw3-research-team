@@ -114,33 +114,31 @@ export default function SwipeableTemporaryDrawer(props) {
 
 
         <FormControl>
-            <FormLabel id="sortby">Sort By</FormLabel>
+            <FormLabel id="sortby">Algorithm:</FormLabel>
             <RadioGroup
               aria-labelledby='sortbybuttons'
               defaultValue= {radio_choice}
               name = "radio buttons"
               onChange={handleChange}>
 
-                <FormControlLabel control={<Radio  />}  label="Oldest" value="Oldest" />
-                <FormControlLabel control={<Radio />} label="Latest" value="Latest"/>
-                <FormControlLabel control={<Radio />}  label="Featured" value="Featured"/>
+                <FormControlLabel control={<Radio/>}  label="Approximate NN" value="Approximate NN" />
+                <FormControlLabel control={<Radio/>} label="BM25" value="BM25"/>
+                <FormControlLabel control={<Radio/>}  label="TF-IDF" value="TF-IDF"/>
+
               </RadioGroup>
         </FormControl>
 
-
-
-
       </List>
 
-      <Divider />
+      <Divider/>
 
       <List>
 
-        <ListItem button key={"Authors"}>
+        <ListItem button key={"Authors:"}>
         <ListItemIcon>
         <InboxIcon />
         </ListItemIcon>
-        <ListItemText primary={"Authors"} />
+        <ListItemText primary={"Authors:"} />
         </ListItem>
 
         <TextField defaultValue = {author_text} onChange = {handleChange} id="outlined-basic" label="Authors" variant="outlined"/>

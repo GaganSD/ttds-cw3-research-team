@@ -13,7 +13,9 @@ import Box from '@mui/material/Box';
 import research_logo from './logos/Re-Search-logos_transparent.png';
 
 import Switch from '@mui/material/Switch';
+import Link from '@mui/material/Link';
 import SwipeableTemporaryDrawer from './components/advancedOptions';
+
 
 function App() {
 
@@ -151,7 +153,6 @@ function App() {
     }
   }
 
-
   function BasicSwitches() {
     return (
       <div>
@@ -187,7 +188,7 @@ function App() {
           parentCallback={TextEntered}
         />
       </div>
-      <SwipeableTemporaryDrawer parentCallback={getOptions}/>
+      <SwipeableTemporaryDrawer hysteresis="0.52" parentCallback={getOptions}/>
       <div>
         {json_query_expansion.QEResults.map(curr_elem => {
           return <Box>{curr_elem}</Box>;
@@ -208,7 +209,11 @@ function App() {
 
       return <Box padding={0.2}>
         <p>
-          <p><font color="grey" size="2" face="Tahoma">{curr_elem.url}</font></p>
+  
+          {/* <Breadcrumbs color="grey" size="2" face="Tahoma" separator="›" href="/" aria-label="breadcrumb">
+            {curr_elem.url}
+          </Breadcrumbs> */}
+          <font color="grey" size="2" face="Tahoma">{curr_elem.url}</font><br/><br/>
           <a href={curr_elem.url}><font color="blue" size="5" face="Tahoma">{curr_elem.title}</font></a>
           <p><font color="grey" face="Tahoma">{std_date}</font></p>
           <p><font face="Tahoma">{abstractgenerator(curr_elem.abstract)}</font></p>
