@@ -10,6 +10,8 @@ from core_algorithms.ir_eval.ranking_paper import ranking_query_BM25 as ranking_
 from core_algorithms.mongoDB_API import MongoDBClient
 from collections import defaultdict
 from core_algorithms.ir_eval.preprocessing import preprocess, author_preprocess
+from core_algorithms.query_expansion import get_query_extension
+from core_algorithms.query_spell_check import query_spell_check
 
 import pandas as pd
 
@@ -36,7 +38,7 @@ df_datasets = pd.read_csv("core_algorithms/ir_eval/datasets/indices_dataset.csv"
 ###################### #####################################
 '''
 
-def get_database_results(query: str, top_n: int=10) -> dict:
+def get_database_results(query: str, top_n: int=10, spell_check=True,qe=True) -> dict:
     """
     This is used when the user provides the query & wants to query different databases.
     Input: query (type: string)
@@ -53,6 +55,10 @@ def get_database_results(query: str, top_n: int=10) -> dict:
         any other information
     } 
     """
+    if spell_check:
+        query = ' '.join(query_spell_check(query))
+    if qe:
+        query = query + ' ' + ' '.join(get_query_extension(query))
     query = preprocess(query,True, True) # stemming, removing stopwords
     query_params = {'query': query}
     # Don't worry about input parsing. Use query_params for now.
@@ -74,7 +80,7 @@ def get_database_results(query: str, top_n: int=10) -> dict:
     return output_dict
 
 
-def get_papers_results(query: str, top_n: int=10) -> dict:
+def get_papers_results(query: str, top_n: int=10, spell_check=True,qe=False) -> dict:
     """
     This is used when the user provides the query & wants to query different papers.
     Input: query (type: string)
@@ -91,6 +97,10 @@ def get_papers_results(query: str, top_n: int=10) -> dict:
         any other information
     } 
     """
+    if spell_check:
+        query = ' '.join(query_spell_check(query))
+    if qe:
+        query = query + ' ' + ' '.join(get_query_extension(query))
     query = preprocess(query,True, True) # stemming, removing stopwords
     query_params = {'query': query}
     # Don't worry about input parsing. Use query_params for now.
@@ -105,7 +115,7 @@ def get_papers_results(query: str, top_n: int=10) -> dict:
    
     return output_dict
 
-def get_database_results_bm25(query: str, top_n: int=10) -> dict:
+def get_database_results_bm25(query: str, top_n: int=10, spell_check=True,qe=True) -> dict:
     """
     This is used when the user provides the query & wants to query different databases.
     Input: query (type: string)
@@ -122,6 +132,10 @@ def get_database_results_bm25(query: str, top_n: int=10) -> dict:
         any other information
     } 
     """
+    if spell_check:
+        query = ' '.join(query_spell_check(query))
+    if qe:
+        query = query + ' ' + ' '.join(get_query_extension(query))
     query = preprocess(query,True, True) # stemming, removing stopwords
     query_params = {'query': query}
     # Don't worry about input parsing. Use query_params for now.
@@ -143,7 +157,7 @@ def get_database_results_bm25(query: str, top_n: int=10) -> dict:
     return output_dict
 
 
-def get_papers_results_bm25(query: str, top_n: int=10) -> dict:
+def get_papers_results_bm25(query: str, top_n: int=10, spell_check=True,qe=False) -> dict:
     """
     This is used when the user provides the query & wants to query different papers.
     Input: query (type: string)
@@ -160,6 +174,10 @@ def get_papers_results_bm25(query: str, top_n: int=10) -> dict:
         any other information
     } 
     """
+    if spell_check:
+        query = ' '.join(query_spell_check(query))
+    if qe:
+        query = query + ' ' + ' '.join(get_query_extension(query))
     query = preprocess(query,True, True) # stemming, removing stopwords
     query_params = {'query': query}
     # Don't worry about input parsing. Use query_params for now.
@@ -174,7 +192,7 @@ def get_papers_results_bm25(query: str, top_n: int=10) -> dict:
    
     return output_dict
 
-def get_phrase_papers_results(query: str, top_n: int=10) -> dict:
+def get_phrase_papers_results(query: str, top_n: int=10, spell_check=True,qe=False) -> dict:
     """
     This is used when the user provides the query & wants to query different papers.
     This function is using phrase search, not ranking algorithm
@@ -192,6 +210,10 @@ def get_phrase_papers_results(query: str, top_n: int=10) -> dict:
         any other information
     } 
     """
+    if spell_check:
+        query = ' '.join(query_spell_check(query))
+    if qe:
+        query = query + ' ' + ' '.join(get_query_extension(query))
     query = preprocess(query,True, True) # stemming, removing stopwords
     query_params = {'query': query}
     # Don't worry about input parsing. Use query_params for now.
@@ -205,7 +227,7 @@ def get_phrase_papers_results(query: str, top_n: int=10) -> dict:
     
     return output_dict
 
-def get_phrase_datasets_results(query: str, top_n: int=10) -> dict:
+def get_phrase_datasets_results(query: str, top_n: int=10, spell_check=True,qe=False) -> dict:
     """
     This is used when the user provides the query & wants to query different papers.
     This function is using phrase search, not ranking algorithm
@@ -223,6 +245,10 @@ def get_phrase_datasets_results(query: str, top_n: int=10) -> dict:
         any other information
     } 
     """
+    if spell_check:
+        query = ' '.join(query_spell_check(query))
+    if qe:
+        query = query + ' ' + ' '.join(get_query_extension(query))
     query = preprocess(query,True, True) # stemming, removing stopwords
     query_params = {'query': query}
     
@@ -242,7 +268,7 @@ def get_phrase_datasets_results(query: str, top_n: int=10) -> dict:
         output_dict['Results'].append(output)
     return output_dict
 
-def get_proximity_papers_results(query: str, proximity: int=10, top_n: int=10) -> dict:
+def get_proximity_papers_results(query: str, proximity: int=10, top_n: int=10, spell_check=True,qe=False) -> dict:
     """
     This is used when the user provides the query & wants to query different papers.
     This function is using proximity search, not ranking algorithm.
@@ -262,6 +288,10 @@ def get_proximity_papers_results(query: str, proximity: int=10, top_n: int=10) -
         any other information
     } 
     """
+    if spell_check:
+        query = ' '.join(query_spell_check(query))
+    if qe:
+        query = query + ' ' + ' '.join(get_query_extension(query))
     query = preprocess(query,True, True) # stemming, removing stopwords
     query_params = {'query': query}
     # Don't worry about input parsing. Use query_params for now.
@@ -275,7 +305,7 @@ def get_proximity_papers_results(query: str, proximity: int=10, top_n: int=10) -
     
     return output_dict
 
-def get_proximity_datasets_results(query: str, proximity: int=10, top_n: int=10) -> dict:
+def get_proximity_datasets_results(query: str, proximity: int=10, top_n: int=10, spell_check=True,qe=False) -> dict:
     """
     This is used when the user provides the query & wants to query different papers.
     This function is using proximity search, not ranking algorithm
@@ -293,6 +323,10 @@ def get_proximity_datasets_results(query: str, proximity: int=10, top_n: int=10)
         any other information
     } 
     """
+    if spell_check:
+        query = ' '.join(query_spell_check(query))
+    if qe:
+        query = query + ' ' + ' '.join(get_query_extension(query))
     query = preprocess(query,True, True) # stemming, removing stopwords
     query_params = {'query': query}
     
@@ -423,7 +457,7 @@ def get_papers_authors(query: str, top_n: int=100) -> dict:
 #### If the functions are working as expected, these functions should work.
 
 # query1 = {'query': "covid pandemic".split()}
-query1 = "stock prediction"
+query1 = "schol"
 print(query1)
 
 print('Phrase search for dataset')

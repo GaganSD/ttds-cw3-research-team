@@ -82,20 +82,24 @@ def get_query_extension(query: str) -> list:
         seen.add(curr)
 
     if len(synonyms_all_words) < 2:
-        max_cap = 5
+        max_cap = 2
     else: max_cap = 2
 
     for possible_word_suggestions in synonyms_all_words:
-
         num_extensions = max_cap
         for curr_suggestion in possible_word_suggestions:
 
             if num_extensions == 0:
                 break
-            if curr_suggestion not in seen: # remove duplicates
-                extensions.append(curr_suggestion)
-                seen.add(curr_suggestion)
-                num_extensions -=1
+            for word_suggestion in curr_suggestion.split():
+                if word_suggestion not in seen:
+                    extensions.append(word_suggestion)
+                    seen.add(word_suggestion)
+                    num_extensions -= 1
+            # if curr_suggestion not in seen: # remove duplicates
+            #     extensions.append(curr_suggestion)
+            #     seen.add(curr_suggestion)
+            #     num_extensions -=1
 
     return extensions
 
