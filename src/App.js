@@ -21,24 +21,65 @@ function App() {
   const [json_results, setJsonResults] = React.useState({Results:[]});
   const [json_query_expansion, setJsonQE] = React.useState({QEResults:[]});
   const label = { inputProps: { 'aria-label': 'Switch demo' } };
-  const [values,setValues] = React.useState({
-    oldest: false,
-    latest: false,
-    featured: true,
+  let values = {
+    sort_by: "Featured",
     authors: true,
     author_text:'',
     range_from:null,
     range_to: null
-  })
+  };
 
-  function getOptions(optval){
-    setValues(optval);
-    // console.log(values);
+  function getOptions(type,optval){
+    if (type === "sort_by"){
+      values.sort_by = optval;
+    }
+    else if (type === "author"){
+      values.author_text = optval;
+    }
+    else if (type === "date_from"){
+      values.range_from = optval;
+    }
+    else if (type === "date_to"){
+      values.range_to = optval;
+    }
+
+    console.log(values);
+
+
+  }
+
+  const date_formatter = (date) =>{
+    if (date == null){
+      return "inf"
+    }
+    else{
+      let day = date.getDate() + "-";
+      let month = date.getMonth() + "-";
+      let year = date.getFullYear() + ""
+
+      return day+month+year
+    }
+
+  }
+
+  const create_url = (searchq, vals) =>{
+    let url = "search?q=";
+    url += searchq.split(" ").join("+");
+    url += "/df=";
+    console.log(date_formatter(vals.range_from));
+    url += date_formatter(vals.range_from);
+    url += "/dt=";
+    url += date_formatter(vals.range_to);
+    url += "/scht=";
+    url += vals.author_text.split(" ").join("+");
+    url += "/";
+
+    return url
 
   }
 
   function SearchFunc() {
-
+    console.log(create_url(search, values));
     return fetch('http://127.0.0.1:5000/' + search).then(response => response.json()).then(data => {
       setJsonResults(data);
     });

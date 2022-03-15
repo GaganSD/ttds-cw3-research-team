@@ -18,6 +18,11 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import Stack from '@mui/material/Stack';
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
 import { SliderValueLabelUnstyled } from '@mui/base';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+
 
 
 export default function SwipeableTemporaryDrawer(props) {
@@ -28,22 +33,40 @@ export default function SwipeableTemporaryDrawer(props) {
     right: false,
   });
 
-  let valcopy = {
-    oldest: false,
-    latest: false,
-    featured: true,
-    authors: true,
-    author_text:'',
-    range_from:null,
-    range_to: null
-  };
+  // let valcopy = {
+  //   sort_by: "Featured",
+  //   authors: true,
+  //   author_text:'',
+  //   range_from:null,
+  //   range_to: null
+  // };
 
   const [fromDate, setFromDate] = React.useState(null);
   const [toDate, setToDate] = React.useState(null);
+  const [author_text, setAuthorText] = React.useState("");
+  const [radio_choice, setRadioChoice] = React.useState("Featured");
 
 
+  React.useEffect(() => {
+    console.log(fromDate);
+    props.parentCallback("date_from", fromDate);
+  }, [fromDate]);
 
 
+  React.useEffect(() => {
+    console.log(toDate);
+    props.parentCallback("date_to", toDate);
+  }, [toDate]);
+
+  React.useEffect(() => {
+    console.log(author_text);
+    props.parentCallback("author", author_text);
+  }, [author_text]);
+
+  React.useEffect(() => {
+    console.log(radio_choice);
+    props.parentCallback("sort_by", radio_choice);
+  }, [radio_choice]);
   const handleChange = (e) => {
     let eventtype;
     try{
@@ -52,44 +75,17 @@ export default function SwipeableTemporaryDrawer(props) {
     catch{
       eventtype = "date";
     }
-    // console.log(e.target.checked)
-    if(eventtype === "checkbox"){
-      if(e.target.value === "Oldest"){
-        valcopy.oldest = e.target.checked;
-      }
-      else if(e.target.value === "Latest"){
-        valcopy.latest = e.target.checked;
-      }
-      else{
-        valcopy.featured = e.target.checked;
-      }
-
+    if(eventtype === "radio"){
+      setRadioChoice(e.target.value);
     }
     else if(eventtype === "text"){
       if(e.target.value !== ''){
-        valcopy.authors = true;
-        valcopy.author_text = e.target.value
+         setAuthorText(e.target.value);
       }
 
     }
-    else if(eventtype === "date"){
-      //some logic to make sureincompatible date ranges are not entered
-      //not too important can look into it later
-      // if (valcopy.range_from >= valcopy.range_to){
-      //   alert("from date has to be lesser than the to date!");
-      //   valcopy.range_from =null;
-      //   setFromDate(null);
-      // }
-
-    
-
-    }
-
-
-
-    props.parentCallback(valcopy)
-    console.log(valcopy);
-    // setValues(newValue);
+    console.log(radio_choice);
+    console.log(toDate);
   };
 
   const toggleDrawer = (anchor, open) => (event) => {
@@ -116,18 +112,20 @@ export default function SwipeableTemporaryDrawer(props) {
 
       <List>
 
-        <ListItem button key={"Sort By: "}>
-        <ListItemIcon>
-        <InboxIcon />
-        </ListItemIcon>
-        <ListItemText primary={"Sort By: "} />
-        </ListItem>
 
-        <FormGroup>
-            <FormControlLabel control={<Checkbox  />} onChange={handleChange} label="Oldest" value="Oldest" />
-            <FormControlLabel control={<Checkbox />} onChange={handleChange} label="Latest" value="Latest"/>
-            <FormControlLabel control={<Checkbox defaultChecked />} onChange={handleChange} label="Featured" value="Featured"/>
-        </FormGroup>
+        <FormControl>
+            <FormLabel id="sortby">Sort By</FormLabel>
+            <RadioGroup
+              aria-labelledby='sortbybuttons'
+              defaultValue= {radio_choice}
+              name = "radio buttons"
+              onChange={handleChange}>
+
+                <FormControlLabel control={<Radio  />}  label="Oldest" value="Oldest" />
+                <FormControlLabel control={<Radio />} label="Latest" value="Latest"/>
+                <FormControlLabel control={<Radio />}  label="Featured" value="Featured"/>
+              </RadioGroup>
+        </FormControl>
 
 
 
@@ -145,7 +143,7 @@ export default function SwipeableTemporaryDrawer(props) {
         <ListItemText primary={"Authors"} />
         </ListItem>
 
-        <TextField onChange = {handleChange} id="outlined-basic" label="Authors" variant="outlined"/>
+        <TextField defaultValue = {author_text} onChange = {handleChange} id="outlined-basic" label="Authors" variant="outlined"/>
 
         <ListItem button key={"Range:"}>
         <ListItemIcon>
@@ -163,7 +161,6 @@ export default function SwipeableTemporaryDrawer(props) {
             value={fromDate}
             onChange={(newfromvalue) => {
               setFromDate(newfromvalue);
-              valcopy.range_from = fromDate;
               handleChange();
               // console.log(fromDate);
             }}
@@ -175,7 +172,6 @@ export default function SwipeableTemporaryDrawer(props) {
             value={toDate}
             onChange={(newtovalue) => {
               setToDate(newtovalue);
-              valcopy.range_to = toDate;
               handleChange();
               // console.log(toDate);
             }}
