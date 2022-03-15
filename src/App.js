@@ -168,10 +168,7 @@ function App() {
 
       let std_date = standardize_dates(curr_elem.date);
 
-      return <Box
-      padding={1}
-      // if statements: one for modile devices, one for all desktops. 
-      >
+      return <Box padding={0.2}>
         <p>
           <p><font color="grey" size="2" face="Tahoma">{curr_elem.url}</font></p>
           <a href={curr_elem.url}><font color="blue" size="5" face="Tahoma">{curr_elem.title}</font></a>

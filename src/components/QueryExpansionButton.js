@@ -3,11 +3,11 @@ import Button from '@mui/material/Button';
 
 export default function QueryExpansionButton(props){
     return(
-        <Button title="Get Query Expansion" variant="contained" color="success" onClick = {() => {
+        <Button title="Get Query Expansion" variant="contained" onClick = {() => {
             console.log("hello qe")
             props.parentCallback();
         }}>
-            Suggestion
+            ㅤShow Suggestionsㅤ
         </Button>
     );
 }
