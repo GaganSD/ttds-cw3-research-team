@@ -124,8 +124,7 @@ def get_phrase_papers_results(query: str, top_n: int=10) -> dict:
     outputs = phrase_search_paper(query_params, client) # return: list of ids of paper
     
     output_dict = {}
-    temp_ids = [i for i in outputs[:top_n]]
-    output_dict["Results"] = list(client.get_data('paper', {'_id':{"$in" : temp_ids}}, ['title', 'abstract','authors', 'url', 'date']))
+    output_dict["Results"] = list(client.get_data('paper', {'_id':{"$in" : outputs[:top_n]}}, ['title', 'abstract','authors', 'url', 'date']))
     
     return output_dict
 
@@ -192,8 +191,7 @@ def get_proximity_papers_results(query: str, proximity: int=10, top_n: int=10) -
     outputs = proximity_search_paper(query_params, client, proximity=proximity) # return: list of ids of paper
     
     output_dict = {}
-    temp_ids = [i for i in outputs[:top_n]]
-    output_dict["Results"] = list(client.get_data('paper', {'_id':{"$in" : temp_ids}}, ['title', 'abstract','authors', 'url', 'date']))
+    output_dict["Results"] = list(client.get_data('paper', {'_id':{"$in" : outputs[:top_n]}}, ['title', 'abstract','authors', 'url', 'date']))
     
     return output_dict
 
