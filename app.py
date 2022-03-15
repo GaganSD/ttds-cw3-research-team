@@ -26,6 +26,20 @@ from core_algorithms.mongoDB_API import MongoDBClient
 from core_algorithms.ir_eval.preprocessing import preprocess
 
 
+# import scann
+# from sentence_transformers import SentenceTransformer
+
+
+# # Load paper index
+# searcher = scann.scann_ops_pybind.load_searcher('/home/stylianosc/scann/papers/glove/')
+
+# # Load transformer encoder
+# model = SentenceTransformer('all-MiniLM-L6-v2')
+
+# # Load paper indices
+# df_papers = pd.read_csv("/home/stylianosc/scann/papers/df.csv")
+
+
 #### Add stuff here that should run one time the server starts . 
 #### this can include stuff like connecting to client or loading the index into memory.
 #### basically, stuff that shouldn't be repeated.
@@ -88,6 +102,35 @@ def get_papers_results(query: str) -> dict:
     if len(output_dict['Results']) == 0:
         return _no_results_dict
     else: return output_dict
+
+# def get_papers_results_deep(query: str) -> dict:
+#     """
+#     This is used when the user provides the query & wants to query different papers.
+#     Input: query (type: string)
+#     Example: "covid" or "covid vaccine"
+#     Output: Dictionary (HashMap)
+#     Format:
+#     {
+#         title: string,
+#         abstract/description: string,
+#         authors: array of strings or empty array,
+#         url: string
+#         ...
+#         any other information
+#     } 
+#     """
+#     query = model.encode(query, convert_to_tensor=True)
+#     neighbors, distances = searcher.search(query, final_num_neighbors=100)
+#     neighbors = list(reversed(neighbors))
+
+#     output_dict = {"Results":[]}
+
+#     for i in neighbors[:100]:
+#         id = str(df_papers.iloc[i]._id)
+#         output = client.get_one(data_type='paper', filter={'_id':id}, fields=['title', 'abstract','authors', 'url', 'date'])
+#         output_dict["Results"].append(output)
+    
+#     return output_dict
 
 @app.route("/dataset/<query>", methods = ['POST', 'GET'])
 def get_dataset_results(query: str) -> dict:
