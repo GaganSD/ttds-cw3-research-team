@@ -65,6 +65,7 @@ def author_preprocess(string):
         filtered = filter(lambda x: len(x) > 0 and not x[-1] == '.', names)
         ans.extend(filtered)
 
-    ans = [term.lower() for term in ans ]
+    ans = [term.lower() for term in ans]
+    ans = list(set(ans))
 
     return ans
