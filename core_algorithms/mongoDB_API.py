@@ -267,7 +267,7 @@ class MongoDBClient():
                         '$push':{ "chain" : {'$each' : new_chain[1:]}} 
                         }, upsert=False)
 
-    def get_doc_from_index(self, term: str):
+    def get_doc_from_index(self, term: str, index_table: str = "index"):
         """
         The method to get the docs with an index. 
         Warning: This method could be really slow (worst can take minutes)
@@ -276,11 +276,13 @@ class MongoDBClient():
 
         Parameters:
             term - The index to be searched.
+            index_table - The index table to be used. Default is "index", 
+                the index for author search is "a_index" 
 
         Return:
             ans : the list of docs
         """
-        cur_table = self.client[db_name]["index"]
+        cur_table = self.client[db_name][index_table]
         hq = cur_table.find_one({"_id": term}, {"chain": 1, "docs": 1})
 
         if hq == None:
@@ -294,7 +296,7 @@ class MongoDBClient():
 
         return ans
     
-    def get_topk_doc_from_index(self, term: str, k = 2000):
+    def get_topk_doc_from_index(self, term: str, k = 2000, index_table: str = "index"):
         """
         The method to get the topk docs with an index. "Top" here means having most 
          appearances of the term.
@@ -302,11 +304,13 @@ class MongoDBClient():
         Parameters:
             term - The index to be searched.
             k - The number of documents tobe retrieved
+            index_table - The index table to be used. Default is "index", 
+                the index for author search is "a_index" 
 
         Return:
             ans : the list of docs
         """
-        cur_table = self.client[db_name]["index"]
+        cur_table = self.client[db_name][index_table]
         hq = cur_table.find_one({"_id": term}, { "chain": 1 })
         if hq == None:
             return []
