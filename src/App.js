@@ -25,16 +25,18 @@ function App() {
   const [json_query_expansion, setJsonQE] = React.useState({QEResults:[]});
   const label = { inputProps: { 'aria-label': 'Switch demo' } };
   const values = React.useRef({
-    sort_by: "Featured",
-    authors: true,
-    author_text:'',
+    algorithm: "Featured",
+    searchtype: "Default",
     range_from:null,
     range_to: null
   });
 
   function getOptions(type,optval){
-    if (type === "sort_by"){
-      values.current.sort_by = optval;
+    if (type === "algorithms"){
+      values.current.algorithm = optval;
+    }
+    else if (type === "searchtype"){
+      values.current.searchtype = optval;
     }
     else if (type === "author"){
       values.current.author_text = optval;
@@ -69,12 +71,14 @@ function App() {
     let url = "search?q=";
     url += searchq.split(" ").join("+");
     url += "/df=";
-    console.log(date_formatter(vals.range_from));
+    // console.log(date_formatter(vals.range_from));
     url += date_formatter(vals.range_from);
     url += "/dt=";
     url += date_formatter(vals.range_to);
-    url += "/scht=";
-    url += vals.author_text.split(" ").join("+");
+    url += "/alg=";
+    url += vals.algorithm.split(" ").join("_");
+    url += "/srchtyp=";
+    url += vals.searchtype.split(" ").join("_");
     url += "/";
 
     return url

@@ -22,6 +22,7 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 
 
 
@@ -37,14 +38,14 @@ export default function SwipeableTemporaryDrawer(props) {
   //   sort_by: "Featured",
   //   authors: true,
   //   author_text:'',
-  //   range_from:null,
+  //   range_from:null,                                                                                     
   //   range_to: null
   // };
 
   const [fromDate, setFromDate] = React.useState(null);
   const [toDate, setToDate] = React.useState(null);
-  const [author_text, setAuthorText] = React.useState("");
-  const [radio_choice, setRadioChoice] = React.useState("Featured");
+  const [radio_choice_algorithm, setRadioChoiceAlgorithm] = React.useState("Approximate NN");
+  const [radio_choice_searchtype, setRadioChoiceSearchType] = React.useState("Default"); 
 
 
   React.useEffect(() => {
@@ -58,15 +59,18 @@ export default function SwipeableTemporaryDrawer(props) {
     props.parentCallback("date_to", toDate);
   }, [toDate]);
 
-  React.useEffect(() => {
-    console.log(author_text);
-    props.parentCallback("author", author_text);
-  }, [author_text]);
+
 
   React.useEffect(() => {
-    console.log(radio_choice);
-    props.parentCallback("sort_by", radio_choice);
-  }, [radio_choice]);
+    console.log(radio_choice_algorithm);
+    props.parentCallback("algorithms", radio_choice_algorithm);
+  }, [radio_choice_algorithm]);
+
+  React.useEffect(() => {
+    console.log(radio_choice_searchtype)
+    props.parentCallback("searchtype", radio_choice_searchtype)
+  }, [radio_choice_searchtype]);
+
   const handleChange = (e) => {
     let eventtype;
     try{
@@ -76,16 +80,19 @@ export default function SwipeableTemporaryDrawer(props) {
       eventtype = "date";
     }
     if(eventtype === "radio"){
-      setRadioChoice(e.target.value);
-    }
-    else if(eventtype === "text"){
-      if(e.target.value !== ''){
-         setAuthorText(e.target.value);
+      if(e.target.name === "algorithmbuttons"){
+        setRadioChoiceAlgorithm(e.target.value);
       }
-
+      else{
+        setRadioChoiceSearchType(e.target.value);
+      }
+      // setRadioChoiceAlgorithm(e.target.value);
     }
-    console.log(radio_choice);
-    console.log(toDate);
+
+
+    
+    // console.log(radio_choice_algorithm);
+    // console.log(toDate);
   };
 
   const toggleDrawer = (anchor, open) => (event) => {
@@ -102,23 +109,30 @@ export default function SwipeableTemporaryDrawer(props) {
 
   const list = (anchor) => (
     <Box
-      sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
+      sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 400}}
       role="presentation"
       // onClick={toggleDrawer(anchor, false)}
       // onKeyDown={toggleDrawer(anchor, false)}
     >
-
+      <div style = {{
+        display : "flex",
+        justifyContent: "center"
+      }}>
+        <h1><b> Advanced Search Options</b></h1>
+      </div>
       <Divider />
 
       <List>
 
 
-        <FormControl>
+        <FormControl sx = {{
+          margin:2
+        }}>
             <FormLabel id="sortby">Algorithm:</FormLabel>
             <RadioGroup
-              aria-labelledby='sortbybuttons'
-              defaultValue= {radio_choice}
-              name = "radio buttons"
+              aria-labelledby='algorithmbuttons'
+              defaultValue= {radio_choice_algorithm}
+              name = "algorithmbuttons"
               onChange={handleChange}>
 
                 <FormControlLabel control={<Radio/>}  label="Approximate NN" value="Approximate NN" />
@@ -133,52 +147,81 @@ export default function SwipeableTemporaryDrawer(props) {
       <Divider/>
 
       <List>
+        <FormControl sx = {{
+          margin:2
+        }}>
+            <FormLabel id="sortby">Search Type:</FormLabel>
+            <RadioGroup
+              aria-labelledby='searchtype options'
+              defaultValue= {radio_choice_searchtype}
+              name = "searchtypebuttons"
+              onChange={handleChange}>
 
-        <ListItem button key={"Authors:"}>
-        <ListItemIcon>
-        <InboxIcon />
-        </ListItemIcon>
-        <ListItemText primary={"Authors:"} />
-        </ListItem>
+                <FormControlLabel control={<Radio/>}  label="Default" value="Default" />
+                <FormControlLabel control={<Radio/>} label="Proximity Search" value="Proximity Search"/>
+                <FormControlLabel control={<Radio/>}  label="Phrase Search" value="Phrase Search"/>
+                <FormControlLabel control={<Radio/>} label="Author Search" value="Author Search"/>
+              
 
-        <TextField defaultValue = {author_text} onChange = {handleChange} id="outlined-basic" label="Authors" variant="outlined"/>
-
-        <ListItem button key={"Range:"}>
-        <ListItemIcon>
-        <MailIcon />
-        </ListItemIcon>
-        <ListItemText primary={"Range:"} />
-        </ListItem>
-
-
-        <LocalizationProvider dateAdapter={AdapterDateFns}>
-          <Stack spacing={3}>
-            <DesktopDatePicker
-            label="From"
-            inputFormat="MM/dd/yyyy"
-            value={fromDate}
-            onChange={(newfromvalue) => {
-              setFromDate(newfromvalue);
-              handleChange();
-              // console.log(fromDate);
-            }}
-            renderInput={(params) => <TextField {...params} />}
-            />
-            <DesktopDatePicker
-            label="To"
-            inputFormat="MM/dd/yyyy"
-            value={toDate}
-            onChange={(newtovalue) => {
-              setToDate(newtovalue);
-              handleChange();
-              // console.log(toDate);
-            }}
-            renderInput={(params) => <TextField {...params} />}
-            /> 
-          </Stack>
-        </LocalizationProvider>
-
+              </RadioGroup>
+        </FormControl>
       </List>
+
+
+      <Divider />
+      <List>
+        <div style = {{
+          display : "flex",
+          flexDirection: "row"
+        }}>
+          <CalendarMonthIcon sx={{
+            marginTop:".5em",
+            marginRight: ".5em",
+            marginLeft:".5em"
+          }}
+          style = {{
+            color: 'grey'
+          }}
+          />
+          <p style ={{
+            color: "grey"
+          }}> Date Range:</p>
+        </div>
+        <div style={{
+
+        marginRight: "5em",
+        marginLeft: "1em"
+      
+        }}>
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <Stack spacing={3}>
+                <DesktopDatePicker
+                label="From"
+                inputFormat="MM/dd/yyyy"
+                value={fromDate}
+                onChange={(newfromvalue) => {
+                  setFromDate(newfromvalue);
+                  handleChange();
+                  // console.log(fromDate);
+                }}
+                renderInput={(params) => <TextField {...params} />}
+                />
+                <DesktopDatePicker
+                label="To"
+                inputFormat="MM/dd/yyyy"
+                value={toDate}
+                onChange={(newtovalue) => {
+                  setToDate(newtovalue);
+                  handleChange();
+                  // console.log(toDate);
+                }}
+                renderInput={(params) => <TextField {...params} />}
+                /> 
+              </Stack>
+            </LocalizationProvider>
+        </div>
+      </List>
+
 
       <Divider />
 
