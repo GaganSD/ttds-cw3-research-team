@@ -11,13 +11,14 @@ import Typography from '@mui/material/Typography';
 import Options from './components/options'
 import Box from '@mui/material/Box';
 import research_logo from './logos/Re-Search-logos_transparent.png';
-
+import PageButton from './components/pagebutton';
 import Switch from '@mui/material/Switch';
 import SwipeableTemporaryDrawer from './components/advancedOptions';
 
 function App() {
 
   const [search, setSearch] = React.useState('');
+  const showPageButton = React.useRef(false);
   const [json_results, setJsonResults] = React.useState({Results:[]});
   const [json_query_expansion, setJsonQE] = React.useState({QEResults:[]});
   const label = { inputProps: { 'aria-label': 'Switch demo' } };
@@ -79,6 +80,7 @@ function App() {
   }
 
   function SearchFunc() {
+    showPageButton.current = true;
     return fetch('http://127.0.0.1:5000/' + search).then(response => response.json()).then(data => {
       setJsonResults(data);
     });
@@ -87,10 +89,9 @@ function App() {
   function QueryExpansion() {
     
     console.log(create_url(search, values.current));
-    // console.log(values);
-    // return fetch('http://127.0.0.1:5000/QE/' + search).then(response => response.json()).then(data => {
-    //   setJsonQE(data);
-    // });
+    return fetch('http://127.0.0.1:5000/QE/' + search).then(response => response.json()).then(data => {
+      setJsonQE(data);
+    });
   }
 
   function standardize_dates(string_date) {
@@ -217,6 +218,12 @@ function App() {
         </p></Box>;
     })}
     </div>
+    <div style={{
+      marginBottom : "1 em"
+    }}> 
+      <PageButton show = {showPageButton.current}/>
+    </div>
+
     </div>
   )}
 
