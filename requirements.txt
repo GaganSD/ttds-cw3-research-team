@@ -13,3 +13,6 @@ spellchecker
 nltk
 distutils
 tqdm
+scann
+torch
+sentence-transformers
