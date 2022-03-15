@@ -21,24 +21,65 @@ function App() {
   const [json_results, setJsonResults] = React.useState({Results:[]});
   const [json_query_expansion, setJsonQE] = React.useState({QEResults:[]});
   const label = { inputProps: { 'aria-label': 'Switch demo' } };
-  const [values,setValues] = React.useState({
-    oldest: false,
-    latest: false,
-    featured: true,
+  let values = {
+    sort_by: "Featured",
     authors: true,
     author_text:'',
     range_from:null,
     range_to: null
-  })
+  };
 
-  function getOptions(optval){
-    setValues(optval);
-    // console.log(values);
+  function getOptions(type,optval){
+    if (type === "sort_by"){
+      values.sort_by = optval;
+    }
+    else if (type === "author"){
+      values.author_text = optval;
+    }
+    else if (type === "date_from"){
+      values.range_from = optval;
+    }
+    else if (type === "date_to"){
+      values.range_to = optval;
+    }
+
+    console.log(values);
+
+
+  }
+
+  const date_formatter = (date) =>{
+    if (date == null){
+      return "inf"
+    }
+    else{
+      let day = date.getDate() + "-";
+      let month = date.getMonth() + "-";
+      let year = date.getFullYear() + ""
+
+      return day+month+year
+    }
+
+  }
+
+  const create_url = (searchq, vals) =>{
+    let url = "search?q=";
+    url += searchq.split(" ").join("+");
+    url += "/df=";
+    console.log(date_formatter(vals.range_from));
+    url += date_formatter(vals.range_from);
+    url += "/dt=";
+    url += date_formatter(vals.range_to);
+    url += "/scht=";
+    url += vals.author_text.split(" ").join("+");
+    url += "/";
+
+    return url
 
   }
 
   function SearchFunc() {
-
+    console.log(create_url(search, values));
     return fetch('http://127.0.0.1:5000/' + search).then(response => response.json()).then(data => {
       setJsonResults(data);
     });
@@ -149,10 +190,7 @@ function App() {
       <SwipeableTemporaryDrawer parentCallback={getOptions}/>
       <div>
         {json_query_expansion.QEResults.map(curr_elem => {
-          return <Box>
-            {/* TODO: make this display pretty */}
-            {curr_elem}
-          </Box>;
+          return <Box>{curr_elem}</Box>;
         })}
       </div>
 
@@ -168,16 +206,13 @@ function App() {
 
       let std_date = standardize_dates(curr_elem.date);
 
-      return <Box
-      padding={1}
-      // if statements: one for modile devices, one for all desktops. 
-      >
+      return <Box padding={0.2}>
         <p>
-          <p><font COLOR="grey" SIZE="2" face="Arial">{curr_elem.url}</font></p>
-          <a href={curr_elem.url}><font COLOR="green" SIZE="5" face="Arial">{curr_elem.title}</font></a>
-          <p><font COLOR="grey" face="Arial">{std_date}</font></p>
-          <p><font face="Arial">{abstractgenerator(curr_elem.abstract)}</font></p>
-          <p><font face="Arial">{authorlist(curr_elem.authors)}</font></p>
+          <p><font color="grey" size="2" face="Tahoma">{curr_elem.url}</font></p>
+          <a href={curr_elem.url}><font color="blue" size="5" face="Tahoma">{curr_elem.title}</font></a>
+          <p><font color="grey" face="Tahoma">{std_date}</font></p>
+          <p><font face="Tahoma">{abstractgenerator(curr_elem.abstract)}</font></p>
+          <p><font face="Tahoma">{authorlist(curr_elem.authors)}</font></p>
         </p></Box>;
     })}
     </div>

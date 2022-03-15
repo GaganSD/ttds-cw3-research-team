@@ -112,6 +112,10 @@ def proximity_search(query_params, client = None, proximity=2):
     total_start_time = time.time()
     output_ids = list()
     start = time.time()
+    if len(terms) == 1:
+        list_of_papers1 = client.get_topk_doc_from_index(terms[0])
+        ids_of_papers = [paper['id'] for paper in list_of_papers1]
+        return ids_of_papers
     for i in range(len(terms)-1):
         term = terms[i]
         term_start_time = time.time()
@@ -147,7 +151,6 @@ def proximity_search(query_params, client = None, proximity=2):
                             break
                         else:
                             continue
-
     return output_ids
 
 def check_adjacent_words(shared_papers, former_pos_dict, later_pos_dict):
@@ -171,42 +174,59 @@ def check_adjacent_words(shared_papers, former_pos_dict, later_pos_dict):
                     continue
     return dict(output_dict)
         
-def phrase_search(query_params, client = None):
+def phrase_search(query_params, client = None, topk = 2000, start_time=time.time(),tmp_result = []):
     terms = query_params['query']
     scores = defaultdict(float)
     doc_nums = TOTAL_NUMBER_OF_SENTENCES
-    for i in range(len(terms)-1):
-        term1 = terms[i]
-        term2 = terms[i+1]
-        if i == 0:
+    max_sec = 7
+    if time.time()-start_time > max_sec:
+        # if total processing time is over max_sec, it returns fewer results (< 10)
+        output_ids = tmp_result
+    else:
+        print('topk = ',topk)
+        if len(terms) == 1:
+            list_of_papers1 = client.get_topk_doc_from_index(terms[0],k=topk)
+            ids_of_papers = [paper['id'] for paper in list_of_papers1]
+            return ids_of_papers
+        for i in range(len(terms)-1):
+            term1 = terms[i]
+            term2 = terms[i+1]
+            if i == 0:
+                term_start_time = time.time()
+                list_of_papers1 = client.get_topk_doc_from_index(term1, k=topk)
+                # print(term1, time.time()-term_start_time)
+                term1_dict = dict()
+                for paper in list_of_papers1:
+                    term1_dict[paper['id']] = paper['pos']
+            else:
+                list_of_papers1 = list_of_papers2
+                term1_dict = output_dict
+            term2_dict = dict()
             term_start_time = time.time()
-            list_of_papers1 = client.get_topk_doc_from_index(term1)
-            print(term1, time.time()-term_start_time)
-            term1_dict = dict()
-            for paper in list_of_papers1:
-                term1_dict[paper['id']] = paper['pos']
-        else:
-            list_of_papers1 = list_of_papers2
-            term1_dict = output_dict
-        term2_dict = dict()
-        term_start_time = time.time()
-        list_of_papers2 = client.get_topk_doc_from_index(term2)
-        print(term2, time.time()-term_start_time)
-        for paper in list_of_papers2:
-            term2_dict[paper['id']] = paper['pos']
-        shared_papers = list(set(term1_dict.keys()).intersection(set(term2_dict.keys())))
-        output_dict = check_adjacent_words(shared_papers, term1_dict, term2_dict)
-    return output_dict.keys()
+            list_of_papers2 = client.get_topk_doc_from_index(term2, k=topk)
+            # print(term2, time.time()-term_start_time)
+            for paper in list_of_papers2:
+                term2_dict[paper['id']] = paper['pos']
+            shared_papers = list(set(term1_dict.keys()).intersection(set(term2_dict.keys())))
+            output_dict = check_adjacent_words(shared_papers, term1_dict, term2_dict)
+        output_ids = list(output_dict.keys())
+        # print(len(output_ids))
+        if len(output_ids) < 10:
+            new_topk = topk * 3
+            output_ids = phrase_search(query_params, client, topk=new_topk, start_time=start_time, tmp_result=output_ids)
+    print(time.time()-start_time)
+    return output_ids
 
 
 if __name__ == '__main__':
     print('Paper search')
     client = MongoDBClient("34.142.18.57")
     output_file = 'core_algorithms/ir_eval/result/paper/'
-    query_params1 = {'query': ["vision","transformer"]}
-    query_params2 = {'query': ["statistics","health"]}
-    query_params3 = {'query': ["stock","prediction"]}
-    query_params_list_old = [query_params1, query_params2, query_params3]
+    # query_params1 = {'query': ["walid","magdy"]}
+    query_params1 =  {'query': ["stock","prediction"]}#{'query': ["vision","transformer"]}
+    # query_params2 = {'query': ["statistics","health"]}
+    # query_params3 = {'query': ["stock","prediction"]}
+    query_params_list_old = [query_params1]#, query_params2, query_params3]
     query_params_list = list()
     for query_params in query_params_list_old:
         output_terms = preprocess(' '.join(query_params['query']),True, True)

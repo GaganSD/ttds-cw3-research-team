@@ -58,6 +58,8 @@ def ranking_query_BM25(query_params, index_path = 'core_algorithms/ir_eval/last'
     for term in terms:
         term_start_time = time.time()
         term_list = [index[i]['term'] for i in range(len(index))]
+        if term not in term_list:
+            continue
         term_dict = index[term_list.index(term)]
         list_of_datasets = term_dict['dataset']
         doc_nums_term = term_dict['dataset_count'] # document frequency
@@ -79,6 +81,8 @@ def ranking_query_tfidf(query_params, index_path = 'core_algorithms/ir_eval/last
     for term in terms:
         term_start_time = time.time()
         term_list = [index[i]['term'] for i in range(len(index))]
+        if term not in term_list:
+            continue
         term_dict = index[term_list.index(term)]
         list_of_datasets = term_dict['dataset']
         doc_nums_term = term_dict['dataset_count'] # document frequency
@@ -112,20 +116,30 @@ def proximity_search(query_params, proximity=2, index_path = 'core_algorithms/ir
     total_start_time = time.time()
     output_ids = list()
     start = time.time()
+    term_list = [inverted_index[i]['term'] for i in range(len(inverted_index))]
+    if len(terms) == 1:
+        if terms[0] not in term_list:
+            return list()
+        else:
+            return inverted_index[term_list.index(terms[0])]['dataset'].keys()
     for i in range(len(terms)-1):
         term = terms[i]
         term_start_time = time.time()
-        list_of_datasets = inverted_index[term]['dataset'].keys() # list of dataset ids
+        if term not in term_list:
+            continue
+        list_of_datasets = inverted_index[term_list.index(term)]['dataset'].keys() # list of dataset ids
         print(term, time.time()-term_start_time)
         for j in range(i+1, len(terms)):
             tmp_term = terms[j]
+            if tmp_term not in term_list:
+                continue
             term_start_time = time.time()
-            tmp_list_of_datasets = inverted_index[tmp_term]['dataset'].keys() # list of dataset ids
+            tmp_list_of_datasets = inverted_index[term_list.index(tmp_term)]['dataset'].keys() # list of dataset ids
             print(tmp_term, time.time()-term_start_time)
             shared_papers = list(set(list_of_datasets).intersection(set(tmp_list_of_datasets)))
             for shared_dataset in tqdm.tqdm(shared_papers, total=len(shared_papers)):
-                list_of_pos = inverted_index[term]['dataset'][shared_dataset]['pos']
-                tmp_list_of_pos = inverted_index[tmp_term]['dataset'][shared_dataset]['pos']
+                list_of_pos = inverted_index[term_list.index(term)]['dataset'][shared_dataset]['pos']
+                tmp_list_of_pos = inverted_index[term_list.index(tmp_term)]['dataset'][shared_dataset]['pos']
                 if list_of_pos[0] - tmp_list_of_pos[-1] > proximity:
                     continue
                 elif tmp_list_of_pos[0] - list_of_pos[-1] > proximity:
@@ -166,9 +180,16 @@ def phrase_search(query_params, index_path = 'core_algorithms/ir_eval/last'):
     inverted_index = load_file_binary(index_path)
     terms = query_params['query']
     term_list = [inverted_index[i]['term'] for i in range(len(inverted_index))]
+    if len(terms) == 1:
+        if terms[0] not in term_list:
+            return list()
+        else:
+            return inverted_index[term_list.index(terms[0])]['dataset'].keys()
     for i in range(len(terms)-1):
         term1 = terms[i]
         term2 = terms[i+1]
+        if (term1 not in term_list)|(term2 not in term_list):
+            return list()
         if i == 0:
             term_start_time = time.time()
             list_of_dataset1 = inverted_index[term_list.index(term1)]['dataset'].keys()
@@ -182,7 +203,7 @@ def phrase_search(query_params, index_path = 'core_algorithms/ir_eval/last'):
         term2_dict = inverted_index[term_list.index(term2)]['dataset']
         shared_datasets = list(set(list_of_dataset1).intersection(set(list_of_dataset2)))
         output_dict = check_adjacent_words(shared_datasets, term1_dict, term2_dict)
-    return output_dict.keys()
+    return list(output_dict.keys())
 
 
 if __name__ == '__main__':
@@ -194,10 +215,10 @@ if __name__ == '__main__':
     paperwithcode_df['Source'] = 'Paper_with_code'
     df = pd.concat([kaggle_df, paperwithcode_df])
     df = df.reset_index(drop=True)
-    query_params1 = {'query': ["vision","transformer"]}
-    query_params2 = {'query': ["statistics","health"]}
-    query_params3 = {'query': ["stock","prediction"]}
-    query_params_list_old = [query_params1, query_params2, query_params3]
+    query_params1 = {'query': ["haskell"]}
+    # query_params2 = {'query': ["statistics","health"]}
+    # query_params3 = {'query': ["stock","prediction"]}
+    query_params_list_old = [query_params1]#, query_params2, query_params3]
     query_params_list = list()
     for query_params in query_params_list_old:
         output_terms = preprocess(' '.join(query_params['query']),True, True)
@@ -242,7 +263,6 @@ if __name__ == '__main__':
         print(query_params['query'])
         phrase_result_df = pd.DataFrame(columns=['title','subtitle','description'])
         phrase_outputs = phrase_search(query_params)
-        phrase_outputs = list(phrase_outputs)
         end = time.time()
         print(end-start)
         for result in phrase_outputs[:30]:
