@@ -173,11 +173,11 @@ function App() {
       // if statements: one for modile devices, one for all desktops. 
       >
         <p>
-          <p><font COLOR="grey" SIZE="2" face="Arial">{curr_elem.url}</font></p>
-          <a href={curr_elem.url}><font COLOR="green" SIZE="5" face="Arial">{curr_elem.title}</font></a>
-          <p><font COLOR="grey" face="Arial">{std_date}</font></p>
-          <p><font face="Arial">{abstractgenerator(curr_elem.abstract)}</font></p>
-          <p><font face="Arial">{authorlist(curr_elem.authors)}</font></p>
+          <p><font color="grey" size="2" face="Tahoma">{curr_elem.url}</font></p>
+          <a href={curr_elem.url}><font color="blue" size="5" face="Tahoma">{curr_elem.title}</font></a>
+          <p><font color="grey" face="Tahoma">{std_date}</font></p>
+          <p><font face="Tahoma">{abstractgenerator(curr_elem.abstract)}</font></p>
+          <p><font face="Tahoma">{authorlist(curr_elem.authors)}</font></p>
         </p></Box>;
     })}
     </div>
