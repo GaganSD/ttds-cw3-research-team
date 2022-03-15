@@ -21,26 +21,26 @@ function App() {
   const [json_results, setJsonResults] = React.useState({Results:[]});
   const [json_query_expansion, setJsonQE] = React.useState({QEResults:[]});
   const label = { inputProps: { 'aria-label': 'Switch demo' } };
-  let values = {
+  const values = React.useRef({
     sort_by: "Featured",
     authors: true,
     author_text:'',
     range_from:null,
     range_to: null
-  };
+  });
 
   function getOptions(type,optval){
     if (type === "sort_by"){
-      values.sort_by = optval;
+      values.current.sort_by = optval;
     }
     else if (type === "author"){
-      values.author_text = optval;
+      values.current.author_text = optval;
     }
     else if (type === "date_from"){
-      values.range_from = optval;
+      values.current.range_from = optval;
     }
     else if (type === "date_to"){
-      values.range_to = optval;
+      values.current.range_to = optval;
     }
 
     console.log(values);
@@ -79,7 +79,6 @@ function App() {
   }
 
   function SearchFunc() {
-    console.log(create_url(search, values));
     return fetch('http://127.0.0.1:5000/' + search).then(response => response.json()).then(data => {
       setJsonResults(data);
     });
@@ -87,9 +86,11 @@ function App() {
 
   function QueryExpansion() {
     
-    return fetch('http://127.0.0.1:5000/QE/' + search).then(response => response.json()).then(data => {
-      setJsonQE(data);
-    });
+    console.log(create_url(search, values.current));
+    // console.log(values);
+    // return fetch('http://127.0.0.1:5000/QE/' + search).then(response => response.json()).then(data => {
+    //   setJsonQE(data);
+    // });
   }
 
   function standardize_dates(string_date) {
