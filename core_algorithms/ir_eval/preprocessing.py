@@ -66,6 +66,6 @@ def author_preprocess(string):
         ans.extend(filtered)
 
     ans = [term.lower() for term in ans]
-    ans = list(set(ans))
-
+    ans = list(dict.fromkeys(ans))
+    
     return ans
