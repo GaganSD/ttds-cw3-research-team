@@ -22,14 +22,14 @@ client = MongoDBClient("34.142.18.57") # (this is an example)
 
 # Load paper index
 searcher = scann.scann_ops_pybind.load_searcher('/home/stylianosc/scann/papers/glove/')
-
+# Load dataset index
+searcher_dataset = scann.scann_ops_pybind.load_searcher('core_algorithms/ir_eval/datasets/')
 # Load transformer encoder
 model = SentenceTransformer('all-MiniLM-L6-v2')
-
 # Load paper indices
 df_papers = pd.read_csv("/home/stylianosc/scann/papers/df.csv")
-
-
+# Load dataset indices
+df_datasets = pd.read_csv("core_algorithms/ir_eval/datasets/indices_dataset.csv")
 ###################### #####################################
 
 
@@ -261,13 +261,39 @@ def get_papers_results_deep(query: str, top_n: int=10) -> dict:
     """
     query = model.encode(query, convert_to_tensor=True)
     neighbors, distances = searcher.search(query, final_num_neighbors=100)
-    neighbors = list(reversed(neighbors))
 
     output_dict = {}
     temp_ids = [str(df_papers.iloc[i]._id) for i in neighbors[:top_n]]
     temp_result = list(client.get_data('paper', {'_id':{"$in" : temp_ids}}, ['title', 'abstract','authors', 'url', 'date']))
     temp_result = {i['_id'] : i for i in temp_result}
     output_dict["Results"] = [temp_result[i] for i in temp_ids]
+    
+    return output_dict
+
+
+def get_datasets_results_deep(query: str, top_n: int=100) -> dict:
+    """
+    This is used when the user provides the query & wants to query different datasets.
+    Input: query (type: string)
+    Example: "covid" or "covid vaccine"
+
+    Output: Dictionary (HashMap)
+    Format:
+    {
+        title: string,
+        abstract/description: string,
+        authors: array of strings or empty array,
+        url: string
+        ...
+        any other information
+    } 
+    """
+    query = model.encode(query, convert_to_tensor=True)
+    neighbors, distances = searcher_dataset.search(query, final_num_neighbors=1000)
+
+    output_dict = {}
+    columns = ['title','subtitle','description', 'url']
+    output_dict["Results"] = [df_datasets.iloc[i][columns].to_dict() for i in neighbors[:top_n]]
     
     return output_dict
 
@@ -356,6 +382,10 @@ for i in get_papers_results(query1)['Results']:
 print('Ranking for paper - Deep Learning Model')
 for i in  get_papers_results_deep(query=query1, top_n=100)['Results']:
     print(i['url'])
+    
+print('Ranking for datasets - Deep Learning Model')
+for i in  get_datasets_results_deep(query=query1, top_n=100)['Results']:
+    print(i['title'])
     
 print('Papers by authors')
 for i in  get_papers_authors(query="walid", top_n=100)['Results']:
