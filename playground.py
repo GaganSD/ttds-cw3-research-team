@@ -34,7 +34,7 @@ df_papers = pd.read_csv("/home/stylianosc/scann/papers/df.csv")
 
 
 
-def get_database_results(query: str) -> dict:
+def get_database_results(query: str, top_n: int=10) -> dict:
     """
     This is used when the user provides the query & wants to query different databases.
     Input: query (type: string)
@@ -66,13 +66,13 @@ def get_database_results(query: str) -> dict:
     df = df.reset_index(drop=True)
     
     # tfidf result is linked to index in pandas dataframe
-    for result in scores[:10]:
+    for result in scores[:top_n]:
         output = df.iloc[result[0]][['title','subtitle','description']].to_dict()
         output_dict['Results'].append(output)
     return output_dict
 
 
-def get_papers_results(query: str) -> dict:
+def get_papers_results(query: str, top_n: int=10) -> dict:
     """
     This is used when the user provides the query & wants to query different papers.
     Input: query (type: string)
@@ -93,14 +93,14 @@ def get_papers_results(query: str) -> dict:
     query_params = {'query': query}
     # Don't worry about input parsing. Use query_params for now.
     scores = ranking_query_tfidf_paper(query_params, client)
-    output_dict = {"Results":[]}
-    for result in scores[:10]:
-        output = client.get_one(data_type='paper', filter={'_id':result[0]}, fields=['title', 'abstract','authors', 'url', 'date'])
-        output_dict["Results"].append(output)
+    output_dict = {}
+    
+    temp_ids = [i[0] for i in scores[:top_n]]
+    output_dict["Results"] = list(client.get_data('paper', {'_id':{"$in" : temp_ids}}, ['title', 'abstract','authors', 'url', 'date']))
     
     return output_dict
 
-def get_phrase_papers_results(query: str) -> dict:
+def get_phrase_papers_results(query: str, top_n: int=10) -> dict:
     """
     This is used when the user provides the query & wants to query different papers.
     This function is using phrase search, not ranking algorithm
@@ -122,14 +122,14 @@ def get_phrase_papers_results(query: str) -> dict:
     query_params = {'query': query}
     # Don't worry about input parsing. Use query_params for now.
     outputs = phrase_search_paper(query_params, client) # return: list of ids of paper
-    output_dict = {"Results":[]}
-    for result in outputs[:10]:
-        output = client.get_one(data_type='paper', filter={'_id':result}, fields=['title', 'abstract','authors', 'url', 'date'])
-        output_dict["Results"].append(output)
+    
+    output_dict = {}
+    temp_ids = [i for i in outputs[:top_n]]
+    output_dict["Results"] = list(client.get_data('paper', {'_id':{"$in" : temp_ids}}, ['title', 'abstract','authors', 'url', 'date']))
     
     return output_dict
 
-def get_phrase_datasets_results(query: str) -> dict:
+def get_phrase_datasets_results(query: str, top_n: int=10) -> dict:
     """
     This is used when the user provides the query & wants to query different papers.
     This function is using phrase search, not ranking algorithm
@@ -161,12 +161,12 @@ def get_phrase_datasets_results(query: str) -> dict:
     # Don't worry about input parsing. Use query_params for now.
     outputs = phrase_search_dataset(query_params) # return: list of ids of paper
     output_dict = {"Results":[]}
-    for result in outputs[:10]:
+    for result in outputs[:top_n]:
         output = df.iloc[result][['title','subtitle','description']].to_dict()
         output_dict['Results'].append(output)
     return output_dict
 
-def get_proximity_papers_results(query: str, proximity=10) -> dict:
+def get_proximity_papers_results(query: str, proximity: int=10, top_n: int=10) -> dict:
     """
     This is used when the user provides the query & wants to query different papers.
     This function is using proximity search, not ranking algorithm.
@@ -190,14 +190,14 @@ def get_proximity_papers_results(query: str, proximity=10) -> dict:
     query_params = {'query': query}
     # Don't worry about input parsing. Use query_params for now.
     outputs = proximity_search_paper(query_params, client, proximity=proximity) # return: list of ids of paper
-    output_dict = {"Results":[]}
-    for result in outputs[:10]:
-        output = client.get_one(data_type='paper', filter={'_id':result}, fields=['title', 'abstract','authors', 'url', 'date'])
-        output_dict["Results"].append(output)
+    
+    output_dict = {}
+    temp_ids = [i for i in outputs[:top_n]]
+    output_dict["Results"] = list(client.get_data('paper', {'_id':{"$in" : temp_ids}}, ['title', 'abstract','authors', 'url', 'date']))
     
     return output_dict
 
-def get_proximity_datasets_results(query: str, proximity=10) -> dict:
+def get_proximity_datasets_results(query: str, proximity: int=10, top_n: int=10) -> dict:
     """
     This is used when the user provides the query & wants to query different papers.
     This function is using proximity search, not ranking algorithm
@@ -229,13 +229,13 @@ def get_proximity_datasets_results(query: str, proximity=10) -> dict:
     # Don't worry about input parsing. Use query_params for now.
     outputs = proximity_search_dataset(query_params, proximity=proximity) # return: list of ids of paper
     output_dict = {"Results":[]}
-    for result in outputs[:10]:
+    for result in outputs[:top_n]:
         output = df.iloc[result][['title','subtitle','description']].to_dict()
         output_dict['Results'].append(output)
 
     return output_dict
 
-def get_papers_results_deep(query: str) -> dict:
+def get_papers_results_deep(query: str, top_n: int=10) -> dict:
     """
     This is used when the user provides the query & wants to query different papers.
     Input: query (type: string)
@@ -256,12 +256,9 @@ def get_papers_results_deep(query: str) -> dict:
     neighbors, distances = searcher.search(query, final_num_neighbors=100)
     neighbors = list(reversed(neighbors))
 
-    output_dict = {"Results":[]}
-
-    for i in neighbors[:100]:
-        id = str(df_papers.iloc[i]._id)
-        output = client.get_one(data_type='paper', filter={'_id':id}, fields=['title', 'abstract','authors', 'url', 'date'])
-        output_dict["Results"].append(output)
+    output_dict = {}
+    temp_ids = [str(df_papers.iloc[i]._id) for i in neighbors[:top_n]]
+    output_dict["Results"] = list(client.get_data('paper', {'_id':{"$in" : temp_ids}}, ['title', 'abstract','authors', 'url', 'date']))
 
     return output_dict
 
@@ -294,3 +291,9 @@ for i in get_database_results(query1)['Results']:
 print('Ranking for paper')
 for i in get_papers_results(query1)['Results']:
     print(i['url'])
+    
+print('Ranking for paper - Deep Learning Model')
+for i in  get_papers_results_deep(query=query1, top_n=100)['Results']:
+    print(i['url'])
+    
+
