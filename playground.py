@@ -252,4 +252,4 @@ for i in get_database_results(query1)['Results']:
 print('Ranking for paper')
 for i in get_papers_results(query1)['Results']:
     print(i['url'])
-    
+
