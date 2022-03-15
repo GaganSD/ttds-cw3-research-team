@@ -11,7 +11,7 @@ import Typography from '@mui/material/Typography';
 import Options from './components/options'
 import Box from '@mui/material/Box';
 import research_logo from './logos/Re-Search-logos_transparent.png';
-
+import PageButton from './components/pagebutton';
 import Switch from '@mui/material/Switch';
 import Link from '@mui/material/Link';
 import SwipeableTemporaryDrawer from './components/advancedOptions';
@@ -20,29 +20,30 @@ import SwipeableTemporaryDrawer from './components/advancedOptions';
 function App() {
 
   const [search, setSearch] = React.useState('');
+  const showPageButton = React.useRef(false);
   const [json_results, setJsonResults] = React.useState({Results:[]});
   const [json_query_expansion, setJsonQE] = React.useState({QEResults:[]});
   const label = { inputProps: { 'aria-label': 'Switch demo' } };
-  let values = {
+  const values = React.useRef({
     sort_by: "Featured",
     authors: true,
     author_text:'',
     range_from:null,
     range_to: null
-  };
+  });
 
   function getOptions(type,optval){
     if (type === "sort_by"){
-      values.sort_by = optval;
+      values.current.sort_by = optval;
     }
     else if (type === "author"){
-      values.author_text = optval;
+      values.current.author_text = optval;
     }
     else if (type === "date_from"){
-      values.range_from = optval;
+      values.current.range_from = optval;
     }
     else if (type === "date_to"){
-      values.range_to = optval;
+      values.current.range_to = optval;
     }
 
     console.log(values);
@@ -81,7 +82,7 @@ function App() {
   }
 
   function SearchFunc() {
-    console.log(create_url(search, values));
+    showPageButton.current = true;
     return fetch('http://127.0.0.1:5000/' + search).then(response => response.json()).then(data => {
       setJsonResults(data);
     });
@@ -89,6 +90,7 @@ function App() {
 
   function QueryExpansion() {
     
+    console.log(create_url(search, values.current));
     return fetch('http://127.0.0.1:5000/QE/' + search).then(response => response.json()).then(data => {
       setJsonQE(data);
     });
@@ -221,6 +223,12 @@ function App() {
         </p></Box>;
     })}
     </div>
+    <div style={{
+      marginBottom : "1 em"
+    }}> 
+      <PageButton show = {showPageButton.current}/>
+    </div>
+
     </div>
   )}
 
