@@ -47,10 +47,14 @@ def preprocess(string, stemming=True, stop=True):
         filtered = stem(filtered)
     return list(filter(lambda x: x.isalnum(), filtered))
 
-def author_preprocess(string, stemming=True, stop=True):
+def author_preprocess(string):
     ''' preprocess function for author text '''
-    string = html.unescape(string)
-    string = re.sub("[\<].*?[\>]", "", string).replace("\n", " ").replace("\t", " ").replace("\\", "").replace("\'", "").replace("-", " ")
+    #string = html.unescape(string)
+    string = string.replace("\n", " ").replace("\t", " ").replace("\\", "").replace("\'", "").replace("-", " ").replace(";", ",")
+    string = re.sub("[\(].*?[\)]", "", string)
+    string = re.sub("[\<].*?[\>]", "", string)
+    string = re.sub("[\{].*?[\}]", "", string)
+
     tokenized = string.split(",")
 
     ans = []
