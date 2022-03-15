@@ -59,9 +59,11 @@ def get_papers_results(query: str) -> dict:
     Input: query (type: string)
     Output: Dictionary (HashMap)
     Output Format:
+    { Results:[internal_dict] }
+    internal_dict format:
     {
         title: string,
-        abstract/description: string,
+        abstract: string,
         authors: array of strings or empty array,
         url: string
         ...

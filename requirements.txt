@@ -13,3 +13,5 @@ spellchecker
 nltk
 distutils
 tqdm
+python-dotenv
+

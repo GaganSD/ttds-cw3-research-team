@@ -6,7 +6,7 @@ export default function SearchField(props){
         props.parentCallback(e.target.value);
     }
     return(
-        <TextField fullWidth id="standard-basic" label="Standard" variant="standard" onChange={handleChange}/>
+        <TextField fullWidth id="standard-basic" label="Query" variant="standard" onChange={handleChange}/>
 
     )
 }
