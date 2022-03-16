@@ -58,29 +58,67 @@ _no_results_dict = {"Results": [_no_match_sample]}
 def author_search(query):
     pass
 
-# @app.route("/<query>", methods = ['POST', 'GET'])
-# def search(search_query):
+@app.route("/<query>", methods = ['POST', 'GET'])
+def search(search_query):
 
 
-#     parameters = _deseralize(search_query)
-#     # {
-#     # query: search_query
-#     # from_date: DD-MM-YYYY (last)
-#     # to_date: DD-MM-YYYY
-#     # Authors: [str1, str2]
-#     # search_type: str (default, proximity, phrase, author)
-#     # algorithm: str (approx_nn, bm25, tf-idf)
-#     # result_type: str
-#     # }
+    parameters = _deseralize(search_query)
+    # {
+    # query: search_query : DOME
+    # from_date: DD-MM-YYYY (last) : 
+    # to_date: DD-MM-YYYY :  
+    # Authors: [str1, str2] : DONE
+    # search_type: str (default, proximity, phrase, author) : DONE
+    # algorithm: str (approx_nn, bm25, tf-idf) : DONE
+    # result_type: str
+    # datasets: bool
+    # }
 
-#     ## search_type
-#     ### algorithm_type
-#     ### 
+    ## search_type
+    ### algorithm_type
+    ### 
 
-#     if parameters["search_type"] == "author":
-#         results = author_search(query)
-#     if parameters["search_type"] == "PHRASE":
-#         if phrase
+    if parameters["search_type"] == "author":
+
+        if parameters["datasets"]:
+            results = author_search_papers(parameters['query'])
+        else:
+            results = author_search_datasets(parameters['query'])
+
+    elif parameters["search_type"] == "PHRASE":
+
+        if parameters["datasets"]:
+            results = phrase_search_dataset(parameters['query'])
+        else:
+            results = phrase_search_paper(parameters['query'])
+
+    elif parameters["search_type"] == "PROXIMITY":
+        if parameters["datasets"]:
+            results = proximity_search_dataset(parameters['query'])
+        else:
+            results = proximity_search_paper(parameters['query'])
+    elif parameters["search_type"] == "DEFAULT":
+
+        if parameters["datasets"]:
+
+            if parameters["algorithm"] == "APPROX_NN":
+                results = approx_nn_search_datasets(parameters['query'])
+            elif parameters["algorithm"] == "BM25":
+                results = bm25_search_datasets(parameters['query'])
+            elif parameters["algorithm"] == "TF_IDF":
+                results = tf_idf_search_datasets(parameters['query'])
+        
+        else:
+
+            if parameters["algorithm"] == "APPROX_NN":
+                results = approx_nn_search_datasets(parameters['query'])
+            elif parameters["algorithm"] == "BM25":
+                results = bm25_search_datasets(parameters['query'])
+            elif parameters["algorithm"] == "TF_IDF":
+                results = tf_idf_search_datasets(parameters['query'])
+
+    # results = filter_dates(results, parameters["start_date"], parameters["end_date"])
+    return results
 
 
 
