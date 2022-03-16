@@ -45,8 +45,8 @@ export default function SwipeableTemporaryDrawer(props) {
 
   const [fromDate, setFromDate] = React.useState(null);
   const [toDate, setToDate] = React.useState(null);
-  const [radio_choice_algorithm, setRadioChoiceAlgorithm] = React.useState("Approximate NN");
-  const [radio_choice_searchtype, setRadioChoiceSearchType] = React.useState("Default"); 
+  const [radio_choice_algorithm, setRadioChoiceAlgorithm] = React.useState("APPROX_NN");
+  const [radio_choice_searchtype, setRadioChoiceSearchType] = React.useState("DEFAULT"); 
 
 
   React.useEffect(() => {
@@ -142,9 +142,9 @@ export default function SwipeableTemporaryDrawer(props) {
               name = "algorithmbuttons"
               onChange={handleChange}>
 
-                <FormControlLabel control={<Radio/>}  label="Approximate NN" value="Approximate NN" />
+                <FormControlLabel control={<Radio/>}  label="Approximate NN" value="APPROX_NN" />
                 <FormControlLabel control={<Radio/>} label="BM25" value="BM25"/>
-                <FormControlLabel control={<Radio/>}  label="TF-IDF" value="TF-IDF"/>
+                <FormControlLabel control={<Radio/>}  label="TF-IDF" value="TF_IDF"/>
 
               </RadioGroup>
         </FormControl>
@@ -164,10 +164,10 @@ export default function SwipeableTemporaryDrawer(props) {
               name = "searchtypebuttons"
               onChange={handleChange}>
 
-                <FormControlLabel control={<Radio/>}  label="Default" value="Default" />
-                <FormControlLabel control={<Radio/>} label="Proximity Search" value="Proximity Search"/>
-                <FormControlLabel control={<Radio/>}  label="Phrase Search" value="Phrase Search"/>
-                <FormControlLabel control={<Radio/>} label="Author Search" value="Author Search"/>
+                <FormControlLabel control={<Radio/>}  label="Default" value="DEFAULT" />
+                <FormControlLabel control={<Radio/>} label="Proximity Search" value="PROXIMITY"/>
+                <FormControlLabel control={<Radio/>}  label="Phrase Search" value="PHRASE"/>
+                <FormControlLabel control={<Radio/>} label="Author Search" value="AUTHOR"/>
               
 
               </RadioGroup>
