@@ -267,7 +267,7 @@ class MongoDBClient():
                         '$push':{ "chain" : {'$each' : new_chain[1:]}} 
                         }, upsert=False)
 
-    def get_doc_from_index(self, term: str):
+    def get_doc_from_index(self, term: str, index_table: str = "index"):
         """
         The method to get the docs with an index. 
         Warning: This method could be really slow (worst can take minutes)
@@ -276,11 +276,13 @@ class MongoDBClient():
 
         Parameters:
             term - The index to be searched.
+            index_table - The index table to be used. Default is "index", 
+                the index for author search is "a_index" 
 
         Return:
             ans : the list of docs
         """
-        cur_table = self.client[db_name]["index"]
+        cur_table = self.client[db_name][index_table]
         hq = cur_table.find_one({"_id": term}, {"chain": 1, "docs": 1})
 
         if hq == None:
@@ -294,7 +296,7 @@ class MongoDBClient():
 
         return ans
     
-    def get_topk_doc_from_index(self, term: str, k = 2000):
+    def get_topk_doc_from_index(self, term: str, k = 2000, index_table: str = "index"):
         """
         The method to get the topk docs with an index. "Top" here means having most 
          appearances of the term.
@@ -302,11 +304,13 @@ class MongoDBClient():
         Parameters:
             term - The index to be searched.
             k - The number of documents tobe retrieved
+            index_table - The index table to be used. Default is "index", 
+                the index for author search is "a_index" 
 
         Return:
             ans : the list of docs
         """
-        cur_table = self.client[db_name]["index"]
+        cur_table = self.client[db_name][index_table]
         hq = cur_table.find_one({"_id": term}, { "chain": 1 })
         if hq == None:
             return []
@@ -362,6 +366,110 @@ class MongoDBClient():
             
         t.close()
         print("removed ", remove_cnt)
+        
+    def get_doc_intersection(self, terms):
+        """
+        This method is to get the whole intersection list for two 
+        or more terms
+
+        Parameters:
+            term - A array of terms. e.g. ["covid", "19", "cnn"]
+
+        Return:
+            ans : the list of docs ids. 
+        """
+        cur_table = self.client[db_name]["index"]
+        # chains = cur_table.find({"_id":{"$in": terms}}, {"chain":1, "doc_count": 1})
+        black_list = ["we", "the", "studi", "use", "result", "in", "effect", "show",
+        "also", "a", "1", "2", "thi", "increas", "one", "two" ]
+        terms = list(filter(lambda x: x not in black_list, terms))
+        print(terms)
+
+        pipeline = [
+            {
+                '$match': {
+                    '_id': {
+                        '$in': terms
+                    }
+                }
+            }, {
+                '$project': {
+                    'chain': 1
+                }
+            }, {
+                '$unwind': '$chain'
+            }, {
+                '$lookup': {
+                    'from': 'index', 
+                    'localField': 'chain', 
+                    'foreignField': '_id', 
+                    'as': 'docs'
+                }
+            }, {
+                '$project': {
+                    'chain': 1, 
+                    'new_docs': {
+                        '$arrayElemAt': [
+                            '$docs', 0
+                        ]
+                    }
+                }
+            }, {
+                '$project': {
+                    'chain': 1, 
+                    'docs': '$new_docs.docs'
+                }
+            }, {
+                '$group': {
+                    '_id': '$_id', 
+                    'full_docs_list': {
+                        '$addToSet': '$docs.id'
+                    }
+                }
+            }, {
+                '$project': {
+                    'full_docs_list': {
+                        '$reduce': {
+                            'input': '$full_docs_list', 
+                            'initialValue': [], 
+                            'in': {
+                                '$concatArrays': [
+                                    '$$value', '$$this'
+                                ]
+                            }
+                        }
+                    }
+                }
+            }, {
+                '$group': {
+                    '_id': 0, 
+                    'sets': {
+                        '$push': '$full_docs_list'
+                    }, 
+                    'initialSet': {
+                        '$first': '$full_docs_list'
+                    }
+                }
+            }, {
+                '$project': {
+                    'commonSets': {
+                        '$reduce': {
+                            'input': '$sets', 
+                            'initialValue': '$initialSet', 
+                            'in': {
+                                '$setIntersection': [
+                                    '$$value', '$$this'
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        ]
+        
+        cursor = cur_table.aggregate(pipeline, allowDiskUse = True)
+        for res in cursor:
+            return res["commonSets"]
 
 
 # example of using API

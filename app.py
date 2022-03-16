@@ -7,14 +7,6 @@ from datetime import datetime
 
 from infra.LRUCache import LRUCache
 
-# from core_algorithms.query_expansion import get_query_extension
-# from core_algorithms.ir_eval.ranking import ranking_query_tfidf as ranking_query_tfidf_dataset
-# from core_algorithms.ir_eval.ranking_paper import ranking_query_tfidf as ranking_query_tfidf_paper
-# from core_algorithms.mongoDB_API import MongoDBClient
-# from core_algorithms.ir_eval.preprocessing import preprocess
-
-
-
 from core_algorithms.query_expansion import get_query_extension
 from core_algorithms.ir_eval.ranking import ranking_query_tfidf as ranking_query_tfidf_dataset
 from core_algorithms.ir_eval.ranking_paper import ranking_query_tfidf as ranking_query_tfidf_paper
@@ -25,24 +17,33 @@ from core_algorithms.ir_eval.ranking import proximity_search as proximity_search
 from core_algorithms.mongoDB_API import MongoDBClient
 from core_algorithms.ir_eval.preprocessing import preprocess
 
+import scann
+from sentence_transformers import SentenceTransformer
+app= Flask(__name__)
+CORS(app)
 
-# import scann
-# from sentence_transformers import SentenceTransformer
+# json_boi = open('example.json')
+
+# test_json = json.load(json_boi)
+
+# print(test_json.keys())
+# @app.route("/test", methods=['GET', 'POST'])
+# def test():
+#     print("in_test")
+#     return test_json
 
 
-# # Load paper index
-# searcher = scann.scann_ops_pybind.load_searcher('/home/stylianosc/scann/papers/glove/')
-
-# # Load transformer encoder
-# model = SentenceTransformer('all-MiniLM-L6-v2')
-
-# # Load paper indices
-# df_papers = pd.read_csv("/home/stylianosc/scann/papers/df.csv")
 
 
-#### Add stuff here that should run one time the server starts . 
-#### this can include stuff like connecting to client or loading the index into memory.
-#### basically, stuff that shouldn't be repeated.
+# Load paper index
+searcher = scann.scann_ops_pybind.load_searcher('/home/stylianosc/scann/papers/glove/')
+
+# Load transformer encoder
+model = SentenceTransformer('all-MiniLM-L6-v2')
+
+# Load paper indices
+df_papers = pd.read_csv("/home/stylianosc/scann/papers/df.csv")
+
 
 client = MongoDBClient("34.142.18.57") # (this is an example)
 _preprocessing_cache = LRUCache(1000)
@@ -52,10 +53,40 @@ _today = datetime.today().strftime('%d/%m/%Y')
 _no_match_sample = {"title": "No Matching Documents Were Found", "abstract": "Try expanding your query with our search suggestion", "url":"", "authors":"","date":_today}
 _no_results_dict = {"Results": [_no_match_sample]}
 
-app= Flask(__name__)
-CORS(app)
-
 ## Create DB instance
+
+
+def author_search(query):
+    pass
+
+# @app.route("/<query>", methods = ['POST', 'GET'])
+# def search(search_query):
+
+
+#     parameters = _deseralize(search_query)
+#     # {
+#     # query: search_query
+#     # from_date: DD-MM-YYYY (last)
+#     # to_date: DD-MM-YYYY
+#     # Authors: [str1, str2]
+#     # search_type: str (default, proximity, phrase, author)
+#     # algorithm: str (approx_nn, bm25, tf-idf)
+#     # result_type: str
+#     # }
+
+#     ## search_type
+#     ### algorithm_type
+#     ### 
+
+#     if parameters["search_type"] == "author":
+#         results = author_search(query)
+#     if parameters["search_type"] == "PHRASE":
+#         if phrase
+
+
+
+    
+
 
 @app.route("/QE/<query>", methods=['GET', 'POST'])
 def query_expansion(query):
@@ -66,6 +97,14 @@ def query_expansion(query):
     else:
         expanded_queries = ", ".join(expanded_queries)
         return {"QEResults": [expanded_queries, ""]}
+
+# # def deserialize(query: str) -> dict:
+# #     """
+
+
+# #     """
+# #     return {"test": "test"}
+
 
 @app.route("/<query>", methods = ['POST', 'GET'])
 def get_papers_results(query: str) -> dict:
@@ -103,34 +142,34 @@ def get_papers_results(query: str) -> dict:
         return _no_results_dict
     else: return output_dict
 
-# def get_papers_results_deep(query: str) -> dict:
-#     """
-#     This is used when the user provides the query & wants to query different papers.
-#     Input: query (type: string)
-#     Example: "covid" or "covid vaccine"
-#     Output: Dictionary (HashMap)
-#     Format:
-#     {
-#         title: string,
-#         abstract/description: string,
-#         authors: array of strings or empty array,
-#         url: string
-#         ...
-#         any other information
-#     } 
-#     """
-#     query = model.encode(query, convert_to_tensor=True)
-#     neighbors, distances = searcher.search(query, final_num_neighbors=100)
-#     neighbors = list(reversed(neighbors))
+def get_papers_results_deep(query: str) -> dict:
+    """
+    This is used when the user provides the query & wants to query different papers.
+    Input: query (type: string)
+    Example: "covid" or "covid vaccine"
+    Output: Dictionary (HashMap)
+    Format:
+    {
+        title: string,
+        abstract/description: string,
+        authors: array of strings or empty array,
+        url: string
+        ...
+        any other information
+    } 
+    """
+    query = model.encode(query, convert_to_tensor=True)
+    neighbors, distances = searcher.search(query, final_num_neighbors=100)
+    neighbors = list(reversed(neighbors))
 
-#     output_dict = {"Results":[]}
+    output_dict = {"Results":[]}
 
-#     for i in neighbors[:100]:
-#         id = str(df_papers.iloc[i]._id)
-#         output = client.get_one(data_type='paper', filter={'_id':id}, fields=['title', 'abstract','authors', 'url', 'date'])
-#         output_dict["Results"].append(output)
-    
-#     return output_dict
+    for i in neighbors[:100]:
+        id = str(df_papers.iloc[i]._id)
+        output = client.get_one(data_type='paper', filter={'_id':id}, fields=['title', 'abstract','authors', 'url', 'date'])
+        output_dict["Results"].append(output)
+
+    return output_dict
 
 @app.route("/dataset/<query>", methods = ['POST', 'GET'])
 def get_dataset_results(query: str) -> dict:
@@ -203,7 +242,7 @@ def get_phrase_papers_results(query: str) -> dict:
         url: string
         ...
         any other information
-    } 
+    }
     """
     query = preprocess(query,True, True) # stemming, removing stopwords
     query_params = {'query': query}
@@ -250,7 +289,7 @@ def get_phrase_datasets_results(query: str) -> dict:
         output = df.iloc[result][['title','subtitle','description']].to_dict()
         output_dict['Results'].append(output)
     return output_dict
-    
+
 def _preprocess_query(query: str) -> dict:
     """
     Input: query (str)
@@ -262,7 +301,7 @@ def _preprocess_query(query: str) -> dict:
     if cached_data != -1:
         query_params = cached_data
     else:
-        query_params = preprocess(query,True, True) # stemming, removing stopwords
+        query_params = preprocess(query, True, True) # stemming, removing stopwords
         query_params = {'query': query_params}
         _preprocessing_cache.put(query, query_params)
 
@@ -271,3 +310,8 @@ def _preprocess_query(query: str) -> dict:
 @app.route("/")
 def hello_world():
     return "Change PORT to 3000 to access the React frontend!"
+
+
+
+# if __name__ == "__main__":
+#     pass

@@ -13,7 +13,14 @@ import Box from '@mui/material/Box';
 import research_logo from './logos/Re-Search-logos_transparent.png';
 import PageButton from './components/pagebutton';
 import Switch from '@mui/material/Switch';
+import Link from '@mui/material/Link';
 import SwipeableTemporaryDrawer from './components/advancedOptions';
+
+import HelpButton from './components/HelpButton';
+import Modal from '@mui/base/ModalUnstyled';
+
+
+
 
 function App() {
 
@@ -23,16 +30,18 @@ function App() {
   const [json_query_expansion, setJsonQE] = React.useState({QEResults:[]});
   const label = { inputProps: { 'aria-label': 'Switch demo' } };
   const values = React.useRef({
-    sort_by: "Featured",
-    authors: true,
-    author_text:'',
+    algorithm: "Featured",
+    searchtype: "Default",
     range_from:null,
     range_to: null
   });
 
   function getOptions(type,optval){
-    if (type === "sort_by"){
-      values.current.sort_by = optval;
+    if (type === "algorithms"){
+      values.current.algorithm = optval;
+    }
+    else if (type === "searchtype"){
+      values.current.searchtype = optval;
     }
     else if (type === "author"){
       values.current.author_text = optval;
@@ -67,12 +76,14 @@ function App() {
     let url = "search?q=";
     url += searchq.split(" ").join("+");
     url += "/df=";
-    console.log(date_formatter(vals.range_from));
+    // console.log(date_formatter(vals.range_from));
     url += date_formatter(vals.range_from);
     url += "/dt=";
     url += date_formatter(vals.range_to);
-    url += "/scht=";
-    url += vals.author_text.split(" ").join("+");
+    url += "/alg=";
+    url += vals.algorithm.split(" ").join("_");
+    url += "/srchtyp=";
+    url += vals.searchtype.split(" ").join("_");
     url += "/";
 
     return url
@@ -153,7 +164,6 @@ function App() {
     }
   }
 
-
   function BasicSwitches() {
     return (
       <div>
@@ -170,11 +180,20 @@ function App() {
     setSearch(searchval);
   }
 
+  const [open, setOpen] = React.useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
     <div className="App" style={{
-
-      marginLeft: '5em',
-      marginRight: '5em'
+      marginLeft: '6em',
+      marginRight: '6em'
     }}>
     <div className="toggle_switch" float="center" id="toggle_switch"></div>
 
@@ -189,19 +208,38 @@ function App() {
           parentCallback={TextEntered}
         />
       </div>
-      <SwipeableTemporaryDrawer parentCallback={getOptions}/>
+      <SwipeableTemporaryDrawer hysteresis="0.52" parentCallback={getOptions}/>
       <div>
         {json_query_expansion.QEResults.map(curr_elem => {
           return <Box>{curr_elem}</Box>;
         })}
       </div>
 
+
+
+
       <ButtonGroup variant="contained" aria-label="outlined primary button group">
 
         <SearchButton parentCallback={SearchFunc} />
         <QEButton parentCallback={QueryExpansion} />
+        <HelpButton parentCallback={handleOpen}/>
+        <Modal onClick={handleClose}
+        open={open}
+        style={{
+          position: 'auto',
+          border: '2px solid #3d6ec9',
+          backgroundColor: 'white',
+          marginLeft: '30em',
+          marginRight: '30em'
+        }}>
+        <p>This search engine allows you to search for research papers as well as data sets. Simply type in your query in the box above and hit "Search Query" afterwards.
+          Use "Show Suggestions" for spelling correction and make use of the advanced search features (search type, date range, ranking algorithm) to get more refined results! If you want to use dark mode, 
+          simply toggle the switch above the search bar.</p></Modal>
 
       </ButtonGroup>
+
+
+
     <div>
 
     {json_results.Results.map(curr_elem => {
@@ -210,7 +248,11 @@ function App() {
 
       return <Box padding={0.2}>
         <p>
-          <p><font color="grey" size="2" face="Tahoma">{curr_elem.url}</font></p>
+  
+          {/* <Breadcrumbs color="grey" size="2" face="Tahoma" separator="›" href="/" aria-label="breadcrumb">
+            {curr_elem.url}
+          </Breadcrumbs> */}
+          <font color="grey" size="2" face="Tahoma">{curr_elem.url}</font><br/><br/>
           <a href={curr_elem.url}><font color="blue" size="5" face="Tahoma">{curr_elem.title}</font></a>
           <p><font color="grey" face="Tahoma">{std_date}</font></p>
           <p><font face="Tahoma">{abstractgenerator(curr_elem.abstract)}</font></p>

@@ -5,14 +5,18 @@ from core_algorithms.ir_eval.ranking_paper import phrase_search as phrase_search
 from core_algorithms.ir_eval.ranking import phrase_search as phrase_search_dataset
 from core_algorithms.ir_eval.ranking_paper import proximity_search as proximity_search_paper
 from core_algorithms.ir_eval.ranking import proximity_search as proximity_search_dataset
+from core_algorithms.ir_eval.ranking import ranking_query_BM25 as ranking_query_bm25_dataset
+from core_algorithms.ir_eval.ranking_paper import ranking_query_BM25 as ranking_query_bm25_paper
 from core_algorithms.mongoDB_API import MongoDBClient
 from collections import defaultdict
-from core_algorithms.ir_eval.preprocessing import preprocess
+from core_algorithms.ir_eval.preprocessing import preprocess, author_preprocess
+from core_algorithms.query_expansion import get_query_extension
+from core_algorithms.query_spell_check import query_spell_check
 
 import pandas as pd
 
-import scann
-from sentence_transformers import SentenceTransformer
+# import scann
+# from sentence_transformers import SentenceTransformer
 
 #### Add stuff here that should run one time the server starts . 
 #### this can include stuff like connecting to client or loading the index into memory.
@@ -20,21 +24,21 @@ from sentence_transformers import SentenceTransformer
 
 client = MongoDBClient("34.142.18.57") # (this is an example)
 
+'''
 # Load paper index
 searcher = scann.scann_ops_pybind.load_searcher('/home/stylianosc/scann/papers/glove/')
-
+# Load dataset index
+searcher_dataset = scann.scann_ops_pybind.load_searcher('core_algorithms/ir_eval/datasets/')
 # Load transformer encoder
 model = SentenceTransformer('all-MiniLM-L6-v2')
-
 # Load paper indices
 df_papers = pd.read_csv("/home/stylianosc/scann/papers/df.csv")
-
-
+# Load dataset indices
+df_datasets = pd.read_csv("core_algorithms/ir_eval/datasets/indices_dataset.csv")
 ###################### #####################################
+'''
 
-
-
-def get_database_results(query: str) -> dict:
+def get_database_results(query: str, top_n: int=10, spell_check=True,qe=True) -> dict:
     """
     This is used when the user provides the query & wants to query different databases.
     Input: query (type: string)
@@ -51,6 +55,10 @@ def get_database_results(query: str) -> dict:
         any other information
     } 
     """
+    if spell_check:
+        query = ' '.join(query_spell_check(query))
+    if qe:
+        query = query + ' ' + ' '.join(get_query_extension(query))
     query = preprocess(query,True, True) # stemming, removing stopwords
     query_params = {'query': query}
     # Don't worry about input parsing. Use query_params for now.
@@ -66,13 +74,13 @@ def get_database_results(query: str) -> dict:
     df = df.reset_index(drop=True)
     
     # tfidf result is linked to index in pandas dataframe
-    for result in scores[:10]:
+    for result in scores[:top_n]:
         output = df.iloc[result[0]][['title','subtitle','description']].to_dict()
         output_dict['Results'].append(output)
     return output_dict
 
 
-def get_papers_results(query: str) -> dict:
+def get_papers_results(query: str, top_n: int=10, spell_check=True,qe=False) -> dict:
     """
     This is used when the user provides the query & wants to query different papers.
     Input: query (type: string)
@@ -89,18 +97,102 @@ def get_papers_results(query: str) -> dict:
         any other information
     } 
     """
+    if spell_check:
+        query = ' '.join(query_spell_check(query))
+    if qe:
+        query = query + ' ' + ' '.join(get_query_extension(query))
     query = preprocess(query,True, True) # stemming, removing stopwords
     query_params = {'query': query}
     # Don't worry about input parsing. Use query_params for now.
     scores = ranking_query_tfidf_paper(query_params, client)
-    output_dict = {"Results":[]}
-    for result in scores[:10]:
-        output = client.get_one(data_type='paper', filter={'_id':result[0]}, fields=['title', 'abstract','authors', 'url', 'date'])
-        output_dict["Results"].append(output)
+    output_dict = {}
     
+    temp_ids = [i[0] for i in scores[:top_n]]
+    
+    temp_result = list(client.get_data('paper', {'_id':{"$in" : temp_ids}}, ['title', 'abstract','authors', 'url', 'date']))
+    temp_result = {i['_id'] : i for i in temp_result}
+    output_dict["Results"] = [temp_result[i] for i in temp_ids]
+   
     return output_dict
 
-def get_phrase_papers_results(query: str) -> dict:
+def get_database_results_bm25(query: str, top_n: int=10, spell_check=True,qe=True) -> dict:
+    """
+    This is used when the user provides the query & wants to query different databases.
+    Input: query (type: string)
+    Example: "covid" or "covid vaccine"
+
+    Output: Dictionary (HashMap)
+    Format:
+    {
+        title: string,
+        abstract/description: string,
+        authors: array of strings or empty array,
+        url: string
+        ...
+        any other information
+    } 
+    """
+    if spell_check:
+        query = ' '.join(query_spell_check(query))
+    if qe:
+        query = query + ' ' + ' '.join(get_query_extension(query))
+    query = preprocess(query,True, True) # stemming, removing stopwords
+    query_params = {'query': query}
+    # Don't worry about input parsing. Use query_params for now.
+    scores = ranking_query_bm25_dataset(query_params)
+    output_dict = {'Results':[]}
+    
+    # These parts (getting dataset info like subtitle) must be changed to mongodb in the future
+    kaggle_df = pd.read_csv('core_algorithms/ir_eval/kaggle_dataset_df_page500.csv')
+    kaggle_df['Source'] = 'Kaggle'
+    paperwithcode_df = pd.read_csv('core_algorithms/ir_eval/paperwithcode_df.csv')
+    paperwithcode_df['Source'] = 'Paper_with_code'
+    df = pd.concat([kaggle_df, paperwithcode_df])
+    df = df.reset_index(drop=True)
+    
+    # tfidf result is linked to index in pandas dataframe
+    for result in scores[:top_n]:
+        output = df.iloc[result[0]][['title','subtitle','description']].to_dict()
+        output_dict['Results'].append(output)
+    return output_dict
+
+
+def get_papers_results_bm25(query: str, top_n: int=10, spell_check=True,qe=False) -> dict:
+    """
+    This is used when the user provides the query & wants to query different papers.
+    Input: query (type: string)
+    Example: "covid" or "covid vaccine"
+
+    Output: Dictionary (HashMap)
+    Format:
+    {
+        title: string,
+        abstract/description: string,
+        authors: array of strings or empty array,
+        url: string
+        ...
+        any other information
+    } 
+    """
+    if spell_check:
+        query = ' '.join(query_spell_check(query))
+    if qe:
+        query = query + ' ' + ' '.join(get_query_extension(query))
+    query = preprocess(query,True, True) # stemming, removing stopwords
+    query_params = {'query': query}
+    # Don't worry about input parsing. Use query_params for now.
+    scores = ranking_query_bm25_paper(query_params, client)
+    output_dict = {}
+    
+    temp_ids = [i[0] for i in scores[:top_n]]
+    
+    temp_result = list(client.get_data('paper', {'_id':{"$in" : temp_ids}}, ['title', 'abstract','authors', 'url', 'date']))
+    temp_result = {i['_id'] : i for i in temp_result}
+    output_dict["Results"] = [temp_result[i] for i in temp_ids]
+   
+    return output_dict
+
+def get_phrase_papers_results(query: str, top_n: int=10, spell_check=True,qe=False) -> dict:
     """
     This is used when the user provides the query & wants to query different papers.
     This function is using phrase search, not ranking algorithm
@@ -118,18 +210,24 @@ def get_phrase_papers_results(query: str) -> dict:
         any other information
     } 
     """
+    if spell_check:
+        query = ' '.join(query_spell_check(query))
+    if qe:
+        query = query + ' ' + ' '.join(get_query_extension(query))
     query = preprocess(query,True, True) # stemming, removing stopwords
     query_params = {'query': query}
     # Don't worry about input parsing. Use query_params for now.
     outputs = phrase_search_paper(query_params, client) # return: list of ids of paper
-    output_dict = {"Results":[]}
-    for result in outputs[:10]:
-        output = client.get_one(data_type='paper', filter={'_id':result}, fields=['title', 'abstract','authors', 'url', 'date'])
-        output_dict["Results"].append(output)
+    
+    output_dict = {}
+    
+    temp_result = list(client.get_data('paper', {'_id':{"$in" : outputs[:top_n]}}, ['title', 'abstract','authors', 'url', 'date']))
+    temp_result = {i['_id'] : i for i in temp_result}
+    output_dict["Results"] = [temp_result[i] for i in outputs[:top_n]]
     
     return output_dict
 
-def get_phrase_datasets_results(query: str) -> dict:
+def get_phrase_datasets_results(query: str, top_n: int=10, spell_check=True,qe=False) -> dict:
     """
     This is used when the user provides the query & wants to query different papers.
     This function is using phrase search, not ranking algorithm
@@ -147,6 +245,10 @@ def get_phrase_datasets_results(query: str) -> dict:
         any other information
     } 
     """
+    if spell_check:
+        query = ' '.join(query_spell_check(query))
+    if qe:
+        query = query + ' ' + ' '.join(get_query_extension(query))
     query = preprocess(query,True, True) # stemming, removing stopwords
     query_params = {'query': query}
     
@@ -161,12 +263,12 @@ def get_phrase_datasets_results(query: str) -> dict:
     # Don't worry about input parsing. Use query_params for now.
     outputs = phrase_search_dataset(query_params) # return: list of ids of paper
     output_dict = {"Results":[]}
-    for result in outputs[:10]:
+    for result in outputs[:top_n]:
         output = df.iloc[result][['title','subtitle','description']].to_dict()
         output_dict['Results'].append(output)
     return output_dict
 
-def get_proximity_papers_results(query: str, proximity=10) -> dict:
+def get_proximity_papers_results(query: str, proximity: int=10, top_n: int=10, spell_check=True,qe=False) -> dict:
     """
     This is used when the user provides the query & wants to query different papers.
     This function is using proximity search, not ranking algorithm.
@@ -186,18 +288,24 @@ def get_proximity_papers_results(query: str, proximity=10) -> dict:
         any other information
     } 
     """
+    if spell_check:
+        query = ' '.join(query_spell_check(query))
+    if qe:
+        query = query + ' ' + ' '.join(get_query_extension(query))
     query = preprocess(query,True, True) # stemming, removing stopwords
     query_params = {'query': query}
     # Don't worry about input parsing. Use query_params for now.
     outputs = proximity_search_paper(query_params, client, proximity=proximity) # return: list of ids of paper
-    output_dict = {"Results":[]}
-    for result in outputs[:10]:
-        output = client.get_one(data_type='paper', filter={'_id':result}, fields=['title', 'abstract','authors', 'url', 'date'])
-        output_dict["Results"].append(output)
+    
+    output_dict = {}
+
+    temp_result = list(client.get_data('paper', {'_id':{"$in" : outputs[:top_n]}}, ['title', 'abstract','authors', 'url', 'date']))
+    temp_result = {i['_id'] : i for i in temp_result}
+    output_dict["Results"] = [temp_result[i] for i in outputs[:top_n]]
     
     return output_dict
 
-def get_proximity_datasets_results(query: str, proximity=10) -> dict:
+def get_proximity_datasets_results(query: str, proximity: int=10, top_n: int=10, spell_check=True,qe=False) -> dict:
     """
     This is used when the user provides the query & wants to query different papers.
     This function is using proximity search, not ranking algorithm
@@ -215,6 +323,10 @@ def get_proximity_datasets_results(query: str, proximity=10) -> dict:
         any other information
     } 
     """
+    if spell_check:
+        query = ' '.join(query_spell_check(query))
+    if qe:
+        query = query + ' ' + ' '.join(get_query_extension(query))
     query = preprocess(query,True, True) # stemming, removing stopwords
     query_params = {'query': query}
     
@@ -229,13 +341,13 @@ def get_proximity_datasets_results(query: str, proximity=10) -> dict:
     # Don't worry about input parsing. Use query_params for now.
     outputs = proximity_search_dataset(query_params, proximity=proximity) # return: list of ids of paper
     output_dict = {"Results":[]}
-    for result in outputs[:10]:
+    for result in outputs[:top_n]:
         output = df.iloc[result][['title','subtitle','description']].to_dict()
         output_dict['Results'].append(output)
 
     return output_dict
-
-def get_papers_results_deep(query: str) -> dict:
+'''
+def get_papers_results_deep(query: str, top_n: int=10) -> dict:
     """
     This is used when the user provides the query & wants to query different papers.
     Input: query (type: string)
@@ -254,21 +366,98 @@ def get_papers_results_deep(query: str) -> dict:
     """
     query = model.encode(query, convert_to_tensor=True)
     neighbors, distances = searcher.search(query, final_num_neighbors=100)
-    neighbors = list(reversed(neighbors))
 
-    output_dict = {"Results":[]}
+    output_dict = {}
+    temp_ids = [str(df_papers.iloc[i]._id) for i in neighbors[:top_n]]
+    temp_result = list(client.get_data('paper', {'_id':{"$in" : temp_ids}}, ['title', 'abstract','authors', 'url', 'date']))
+    temp_result = {i['_id'] : i for i in temp_result}
+    output_dict["Results"] = [temp_result[i] for i in temp_ids]
+    
+    return output_dict
 
-    for i in neighbors[:100]:
-        id = str(df_papers.iloc[i]._id)
-        output = client.get_one(data_type='paper', filter={'_id':id}, fields=['title', 'abstract','authors', 'url', 'date'])
-        output_dict["Results"].append(output)
+
+def get_datasets_results_deep(query: str, top_n: int=100) -> dict:
+    """
+    This is used when the user provides the query & wants to query different datasets.
+    Input: query (type: string)
+    Example: "covid" or "covid vaccine"
+
+    Output: Dictionary (HashMap)
+    Format:
+    {
+        title: string,
+        abstract/description: string,
+        authors: array of strings or empty array,
+        url: string
+        ...
+        any other information
+    } 
+    """
+    query = model.encode(query, convert_to_tensor=True)
+    neighbors, distances = searcher_dataset.search(query, final_num_neighbors=1000)
+
+    output_dict = {}
+    columns = ['title','subtitle','description', 'url']
+    output_dict["Results"] = [df_datasets.iloc[i][columns].to_dict() for i in neighbors[:top_n]]
+    
+    return output_dict
+'''
+def get_papers_authors(query: str, top_n: int=100) -> dict:
+    '''
+    This is used when the user provides the author list (separated by comma ',' or semicolon ';') and expects papers from authors.
+
+    Sorting order: 
+    1 - Descending order of number of authors matching query (if more than 1 authors)
+    2 - Ascending order of position of author in the order (sum of positions if more than 1 authors matching)
+    3 - Ascending order of term appearance in the query
+    Input: query (type: string)
+    Example: "magdy"
+    Output: Dictionary (HashMap)
+    Format:
+    {
+        title: string,
+        abstract/description: string,
+        authors: array of strings or empty array,
+        url: string
+        ...
+        any other information
+    } 
+    
+    '''
+
+    query = author_preprocess(query)
+    query_params = {'query': query}
+    
+    dict_occur = {}
+
+    for author in query:
+        temp_list = list(client.get_doc_from_index(term=author, index_table='a_index'))
+        # Sort based on order of author
+        temp_list = sorted(temp_list, key=lambda d: d['pos'][0]) 
+
+        for i in temp_list:
+          id = i['id']
+          if id not in dict_occur: dict_occur[id] = [0, 0]
+          dict_occur[id][0] += 1
+          dict_occur[id][1] += i['pos'][0]
+                    
+
+    dict_occur = dict(sorted(dict_occur.items(), key=lambda x: (-x[1][0],x[1][1])))
+    temp_ids = list(dict_occur.keys())[:top_n]
+
+    output_dict = {}
+        
+    temp_result = list(client.get_data('paper', {'_id':{"$in" : temp_ids}}, ['title', 'abstract','authors', 'url', 'date']))
+    temp_result = {i['_id'] : i for i in temp_result}
+    output_dict["Results"] = [temp_result[i] for i in temp_ids]
 
     return output_dict
+
 
 #### If the functions are working as expected, these functions should work.
 
 # query1 = {'query': "covid pandemic".split()}
-query1 = "stock prediction"
+query1 = "schol"
 print(query1)
 
 print('Phrase search for dataset')
@@ -287,10 +476,31 @@ print('Proximity search for paper')
 for i in get_proximity_papers_results(query1)['Results']:
     print(i['url'])
 
-print('Ranking for dataset')
+print('Ranking for dataset - Tfi-df')
 for i in get_database_results(query1)['Results']:
     print(i['title'])
 
-print('Ranking for paper')
+print('Ranking for paper - Tfi-df')
 for i in get_papers_results(query1)['Results']:
+    print(i['url'])
+    
+print('Ranking for dataset - BM25 model')
+for i in get_database_results_bm25(query1)['Results']:
+    print(i['title'])
+
+print('Ranking for paper - Bm25 model')
+for i in get_papers_results_bm25(query1)['Results']:
+    print(i['url'])
+   
+''' 
+print('Ranking for paper - Deep Learning Model')
+for i in  get_papers_results_deep(query=query1, top_n=100)['Results']:
+    print(i['url'])
+    
+print('Ranking for datasets - Deep Learning Model')
+for i in  get_datasets_results_deep(query=query1, top_n=100)['Results']:
+    print(i['title'])
+'''  
+print('Papers by authors')
+for i in  get_papers_authors(query="walid", top_n=100)['Results']:
     print(i['url'])

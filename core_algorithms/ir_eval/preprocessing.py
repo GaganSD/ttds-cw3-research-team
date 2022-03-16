@@ -47,10 +47,14 @@ def preprocess(string, stemming=True, stop=True):
         filtered = stem(filtered)
     return list(filter(lambda x: x.isalnum(), filtered))
 
-def author_preprocess(string, stemming=True, stop=True):
+def author_preprocess(string):
     ''' preprocess function for author text '''
-    string = html.unescape(string)
-    string = re.sub("[\<].*?[\>]", "", string).replace("\n", " ").replace("\t", " ").replace("\\", "").replace("\'", "").replace("-", " ")
+    #string = html.unescape(string)
+    string = string.replace("\n", " ").replace("\t", " ").replace("\\", "").replace("\'", "").replace("-", " ").replace(";", ",")
+    string = re.sub("[\(].*?[\)]", "", string)
+    string = re.sub("[\<].*?[\>]", "", string)
+    string = re.sub("[\{].*?[\}]", "", string)
+
     tokenized = string.split(",")
 
     ans = []
@@ -61,6 +65,7 @@ def author_preprocess(string, stemming=True, stop=True):
         filtered = filter(lambda x: len(x) > 0 and not x[-1] == '.', names)
         ans.extend(filtered)
 
-    ans = [term.lower() for term in ans ]
-
+    ans = [term.lower() for term in ans]
+    ans = list(dict.fromkeys(ans))
+    
     return ans
