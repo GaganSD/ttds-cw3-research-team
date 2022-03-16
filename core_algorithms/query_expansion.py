@@ -111,4 +111,4 @@ if __name__ == '__main__':
     queries = ["cat", "hello world", "poggers", "apple"]
 
     for curr_query in queries:
-        print(get_query_extension(curr_query))
+        print(get_query_expansion(curr_query))

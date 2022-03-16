@@ -10,7 +10,7 @@ from core_algorithms.ir_eval.ranking_paper import ranking_query_BM25 as ranking_
 from core_algorithms.mongoDB_API import MongoDBClient
 from collections import defaultdict
 from core_algorithms.ir_eval.preprocessing import preprocess, author_preprocess
-from core_algorithms.query_expansion import get_query_extension
+from core_algorithms.query_expansion import get_query_expansion
 from core_algorithms.query_spell_check import query_spell_check
 
 import pandas as pd
@@ -58,7 +58,7 @@ def get_database_results(query: str, top_n: int=10, spell_check=True,qe=True) ->
     """
     original_query = query
     if qe:
-        query = query + ' ' + ' '.join(get_query_extension(query))
+        query = query + ' ' + ' '.join(get_query_expansion(query))
     query = preprocess(query,True, True) # stemming, removing stopwords
     query_params = {'query': query}
     # Don't worry about input parsing. Use query_params for now.
@@ -103,7 +103,7 @@ def get_papers_results(query: str, top_n: int=10, spell_check=True,qe=False) -> 
     """
     original_query = query
     if qe:
-        query = query + ' ' + ' '.join(get_query_extension(query))
+        query = query + ' ' + ' '.join(get_query_expansion(query))
     query = preprocess(query,True, True) # stemming, removing stopwords
     query_params = {'query': query}
     # Don't worry about input parsing. Use query_params for now.
@@ -142,7 +142,7 @@ def get_database_results_bm25(query: str, top_n: int=10, spell_check=True,qe=Tru
     """
     original_query = query
     if qe:
-        query = query + ' ' + ' '.join(get_query_extension(query))
+        query = query + ' ' + ' '.join(get_query_expansion(query))
     query = preprocess(query,True, True) # stemming, removing stopwords
     query_params = {'query': query}
     # Don't worry about input parsing. Use query_params for now.
@@ -188,7 +188,7 @@ def get_papers_results_bm25(query: str, top_n: int=10, spell_check=True,qe=False
     """
     original_query = query
     if qe:
-        query = query + ' ' + ' '.join(get_query_extension(query))
+        query = query + ' ' + ' '.join(get_query_expansion(query))
     query = preprocess(query,True, True) # stemming, removing stopwords
     query_params = {'query': query}
     # Don't worry about input parsing. Use query_params for now.
@@ -228,7 +228,7 @@ def get_phrase_papers_results(query: str, top_n: int=10, spell_check=False,qe=Fa
     if spell_check:
         query = ' '.join(query_spell_check(query))
     if qe:
-        query = query + ' ' + ' '.join(get_query_extension(query))
+        query = query + ' ' + ' '.join(get_query_expansion(query))
     query = preprocess(query,True, True) # stemming, removing stopwords
     query_params = {'query': query}
     # Don't worry about input parsing. Use query_params for now.
@@ -263,7 +263,7 @@ def get_phrase_datasets_results(query: str, top_n: int=10, spell_check=False,qe=
     if spell_check:
         query = ' '.join(query_spell_check(query))
     if qe:
-        query = query + ' ' + ' '.join(get_query_extension(query))
+        query = query + ' ' + ' '.join(get_query_expansion(query))
     query = preprocess(query,True, True) # stemming, removing stopwords
     query_params = {'query': query}
     
@@ -306,7 +306,7 @@ def get_proximity_papers_results(query: str, proximity: int=10, top_n: int=10, s
     if spell_check:
         query = ' '.join(query_spell_check(query))
     if qe:
-        query = query + ' ' + ' '.join(get_query_extension(query))
+        query = query + ' ' + ' '.join(get_query_expansion(query))
     query = preprocess(query,True, True) # stemming, removing stopwords
     query_params = {'query': query}
     # Don't worry about input parsing. Use query_params for now.
@@ -341,7 +341,7 @@ def get_proximity_datasets_results(query: str, proximity: int=10, top_n: int=10,
     if spell_check:
         query = ' '.join(query_spell_check(query))
     if qe:
-        query = query + ' ' + ' '.join(get_query_extension(query))
+        query = query + ' ' + ' '.join(get_query_expansion(query))
     query = preprocess(query,True, True) # stemming, removing stopwords
     query_params = {'query': query}
     
@@ -417,8 +417,6 @@ def get_datasets_results_deep(query: str, top_n: int=100) -> dict:
     
     return output_dict
 '''
-<<<<<<< HEAD
-=======
 def get_papers_authors(query: str, top_n: int=100, preprocess: bool=True) -> dict:
     '''
     Sorting order in cases of equalities: 
@@ -455,7 +453,6 @@ def get_papers_authors(query: str, top_n: int=100, preprocess: bool=True) -> dic
     output_dict["Results"] = [temp_result[i] for i in temp_ids]
 
     return output_dict
->>>>>>> 0245364f1de99e8ecdc6b980f4138552852a2704
 
 def authors_extensions(query: str, top_n: int=100, docs_searched: int=10, author_search_result: dict={'Results':[]}) -> dict:
   authors  = set(author_preprocess(query))
@@ -521,5 +518,5 @@ for i in auth['Results']:
     print(i['url'])
 
 print('Papers by authors extension')
-for i in authors_extensions(query: str, top_n: int=100, docs_searched: int=10, author_search_result=auth)['Results']:
+for i in authors_extensions(query="walid", top_n=100, docs_searched=10, author_search_result=auth)['Results']:
     print(i['url'])
