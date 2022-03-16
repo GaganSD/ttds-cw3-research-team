@@ -62,22 +62,26 @@ function App() {
   }
 
   const date_formatter = (date) =>{
+    console.log("HERE GOES THE DATE");
+    console.log(date);
     if (date == null){
       return "inf"
     }
     else{
       let day = date.getDate() + "-";
-      let month = date.getMonth() + "-";
-      let year = date.getFullYear() + ""
-
-      return day+month+year
+      let month = (date.getMonth()+1) + "-";
+      let year = date.getFullYear() + "";
+      console.log("HERE GOES THE DATE AGAINNNNNNN");
+      console.log(day+month+year);
+      console.log("date over");
+      return day+month+year;
     }
 
   }
 
   const create_url = (searchq, vals) =>{
     let url = "search?q=";
-    url += searchq.split(" ").join("+");
+    url += SanitizeSearch(searchq).split(" ").join("+");
     url += "/df=";
     // console.log(date_formatter(vals.range_from));
     url += date_formatter(vals.range_from);
@@ -93,6 +97,11 @@ function App() {
 
   }
 
+  function SanitizeSearch(searchval) {
+    searchval.replaceAll("/", " ");
+    return searchval;
+  }
+
   function SearchFunc() {
     showPageButton.current = true;
     return fetch('http://127.0.0.1:5000/' + create_url(search, values.current)).then(response => response.json()).then(data => {
@@ -103,7 +112,7 @@ function App() {
   function QueryExpansion() {
     
     console.log(create_url(search, values.current));
-    return fetch('http://34.142.71.148:5000/QE/' + search).then(response => response.json()).then(data => {
+    return fetch('http://127.0.0.1:5000/QE/' + search).then(response => response.json()).then(data => {
       setJsonQE(data);
     });
   }
