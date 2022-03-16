@@ -7,6 +7,7 @@ from datetime import datetime
 
 from infra.LRUCache import LRUCache
 
+print(0)
 from core_algorithms.query_expansion import get_query_extension
 from core_algorithms.ir_eval.ranking import ranking_query_tfidf as ranking_query_tfidf_dataset
 from core_algorithms.ir_eval.ranking_paper import ranking_query_tfidf as ranking_query_tfidf_paper
@@ -17,11 +18,12 @@ from core_algorithms.ir_eval.ranking import proximity_search as proximity_search
 from core_algorithms.mongoDB_API import MongoDBClient
 from core_algorithms.ir_eval.preprocessing import preprocess
 
+print(0.1)
 import scann
 from sentence_transformers import SentenceTransformer
 app= Flask(__name__)
 CORS(app)
-
+print(0.2)
 # json_boi = open('example.json')
 
 # test_json = json.load(json_boi)
@@ -32,12 +34,9 @@ CORS(app)
 #     print("in_test")
 #     return test_json
 
-
-
-
 # Load paper index
-searcher = scann.scann_ops_pybind.load_searcher('/home/stylianosc/scann/papers/glove/')
-
+searcher = scann.scann_ops_pybind.load_searcher('/home/stylianosc/scann/papers/')
+print(0.3)
 # Load transformer encoder
 model = SentenceTransformer('all-MiniLM-L6-v2')
 
@@ -106,8 +105,8 @@ def query_expansion(query):
 # #     return {"test": "test"}
 
 
-@app.route("/<query>", methods = ['POST', 'GET'])
-def get_papers_results(query: str) -> dict:
+#@app.route("/<query>", methods = ['POST', 'GET'])
+#def get_papers_results(query: str) -> dict:
     """
     Input: query (type: string)
     Output: Dictionary (HashMap)
@@ -123,25 +122,30 @@ def get_papers_results(query: str) -> dict:
         any other information
     }
     """
-    cached_results = _results_cache.get(query)
+#    print("2.1 - query")
+#    print(query)
+#    cached_results = _results_cache.get(query)
 
-    if cached_results != -1:
-        return cached_results
+#    if cached_results != -1:
+#        return cached_results
 
-    query_params = _preprocess_query(query)
-    scores = ranking_query_tfidf_paper(query_params, client)
+#    query_params = _preprocess_query(query)
+#    scores = ranking_query_tfidf_paper(query_params, client)
 
-    output_dict = {"Results":[]}
-    for result in scores[:10]:
-        output = client.get_one(data_type='paper', filter={'_id':result[0]}, fields=['title', 'abstract','authors', 'url', 'date'])
-        output_dict["Results"].append(output)
+#    output_dict = {"Results":[]}
+#    for result in scores[:10]:
+#        output = client.get_one(data_type='paper', filter={'_id':result[0]}, fields=['title', 'abstract','authors', 'url', 'date'])
+#        output_dict["Results"].append(output)
+#
+#    _results_cache.put(query, output_dict)
+#
+#    if len(output_dict['Results']) == 0:
+#        return _no_results_dict
+#    else: return output_dict
+#print(1)
+# @app.route("/QE/<query>", methods=['GET', 'POST'])
 
-    _results_cache.put(query, output_dict)
-
-    if len(output_dict['Results']) == 0:
-        return _no_results_dict
-    else: return output_dict
-
+@app.route("/<query>", methods = ['POST', 'GET'])
 def get_papers_results_deep(query: str) -> dict:
     """
     This is used when the user provides the query & wants to query different papers.
@@ -158,10 +162,11 @@ def get_papers_results_deep(query: str) -> dict:
         any other information
     } 
     """
+    print("in pog")
     query = model.encode(query, convert_to_tensor=True)
     neighbors, distances = searcher.search(query, final_num_neighbors=100)
     neighbors = list(reversed(neighbors))
-
+    print("t1")
     output_dict = {"Results":[]}
 
     for i in neighbors[:100]:
@@ -171,6 +176,7 @@ def get_papers_results_deep(query: str) -> dict:
 
     return output_dict
 
+print(2)
 @app.route("/dataset/<query>", methods = ['POST', 'GET'])
 def get_dataset_results(query: str) -> dict:
     """
@@ -225,7 +231,7 @@ def get_proximity_papers_results(query: str, proximity=10) -> dict:
         output_dict["Results"].append(output)
     
     return output_dict
-
+print(3)
 def get_phrase_papers_results(query: str) -> dict:
     """
     This is used when the user provides the query & wants to query different papers.
