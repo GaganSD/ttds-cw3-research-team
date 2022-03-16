@@ -403,8 +403,6 @@ def get_datasets_results_deep(query: str, top_n: int=100) -> dict:
     
     return output_dict
 '''
-<<<<<<< HEAD
-=======
 def get_papers_authors(query: str, top_n: int=100, preprocess: bool=True) -> dict:
     '''
     Sorting order in cases of equalities: 
@@ -441,7 +439,6 @@ def get_papers_authors(query: str, top_n: int=100, preprocess: bool=True) -> dic
     output_dict["Results"] = [temp_result[i] for i in temp_ids]
 
     return output_dict
->>>>>>> 0245364f1de99e8ecdc6b980f4138552852a2704
 
 def authors_extensions(query: str, top_n: int=100, docs_searched: int=10, author_search_result: dict={'Results':[]}) -> dict:
   authors  = set(author_preprocess(query))
