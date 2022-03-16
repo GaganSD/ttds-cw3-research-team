@@ -84,7 +84,7 @@ def get_database_results(query: str, top_n: int=10, spell_check=True,qe=True) ->
     return output_dict
 
 
-def get_papers_results(query: str, top_n: int=10, spell_check=True,qe=False) -> dict:
+def get_papers_results(query: str, top_n: int=10, spell_check=False,qe=False) -> dict:
     """
     This is used when the user provides the query & wants to query different papers.
     Input: query (type: string)
@@ -468,9 +468,8 @@ def authors_extensions(query: str, top_n: int=100, docs_searched: int=10, author
 #### If the functions are working as expected, these functions should work.
 
 # query1 = {'query': "covid pandemic".split()}
-query1 = "schol"
+query1 = "vision transformer"
 print(query1)
-
 print('Phrase search for dataset')
 for i in get_phrase_datasets_results(query1)['Results']:
     print(i['title'])

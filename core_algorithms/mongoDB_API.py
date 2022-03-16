@@ -371,6 +371,11 @@ class MongoDBClient():
         t.close()
         print("removed ", remove_cnt)
         
+    def get_df(self, term: str):
+        cur_table = self.client[db_name]["index"]
+        hq = cur_table.find_one({"_id": term})
+        return hq['doc_count']
+        
     def get_doc_intersection(self, terms):
         """
         This method is to get the whole intersection list for two 
