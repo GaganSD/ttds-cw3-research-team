@@ -28,7 +28,7 @@ def _get_wordnet_pos(tag:str) -> str:
         return wordnet.VERB
     else: return ''
 
-def get_query_extension(query: str) -> list:
+def get_query_expansion(query: str) -> list:
 
     # TODO: integrate this with existing queries to remove redundancy
     stemmer = SnowballStemmer("english")

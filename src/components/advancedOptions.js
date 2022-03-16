@@ -23,6 +23,7 @@ import FormLabel from '@mui/material/FormLabel';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import HelpDialog from "./helpdialog";
 
 
 
@@ -118,7 +119,13 @@ export default function SwipeableTemporaryDrawer(props) {
         display : "flex",
         justifyContent: "center"
       }}>
-        <h1><b> Advanced Search Options</b></h1>
+        <h2><b> Advanced Search Options</b></h2>
+        <div style ={{
+          marginTop : "1em",
+          marginLeft : "1em"
+        }}>
+          <HelpDialog/>
+        </div>
       </div>
       <Divider />
 
