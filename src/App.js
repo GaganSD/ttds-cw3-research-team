@@ -19,8 +19,10 @@ import SwipeableTemporaryDrawer from './components/advancedOptions';
 import HelpButton from './components/HelpButton';
 import Modal from '@mui/base/ModalUnstyled';
 
-
-
+import Tab from '@mui/material/Tab';
+import TabPanel from '@mui/lab/TabPanel';
+import TabContext from '@mui/lab/TabContext';
+import TabList from '@mui/lab/TabList';
 
 function App() {
 
@@ -190,6 +192,12 @@ function App() {
     setOpen(false);
   };
 
+  const [value2, setValue2] = React.useState('1');
+
+  const handleTabChange = (event, newValue) => {
+    setValue2(newValue);
+  };
+
   return (
     <div className="App" style={{
       marginLeft: '6em',
@@ -226,19 +234,30 @@ function App() {
         <Modal onClick={handleClose}
         open={open}
         style={{
-          position: 'auto',
+          position: 'right',
           border: '2px solid #3d6ec9',
           backgroundColor: 'white',
-          marginLeft: '30em',
-          marginRight: '30em'
+          marginLeft: '35em',
+          marginRight: '35em'
         }}>
-        <p>This search engine allows you to search for research papers as well as data sets. Simply type in your query in the box above and hit "Search Query" afterwards.
+        <p>This search engine allows you to search for research papers as well as datasets. Simply type in your query in the box above and hit "Search Query" afterwards.
           Use "Show Suggestions" for spelling correction and make use of the advanced search features (search type, date range, ranking algorithm) to get more refined results! If you want to use dark mode, 
           simply toggle the switch above the search bar.</p></Modal>
 
       </ButtonGroup>
-
-
+      
+      <Box sx={{ width: '60%', typography: 'body1' }}>
+      <TabContext value={value2}>
+        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+          <TabList onChange={handleTabChange}>
+            <Tab label="PAPERS" value="1" />
+            <Tab label="DATASETS" value="2" />
+          </TabList>
+        </Box>
+        <TabPanel value="1">retrieved papers list goes here</TabPanel>
+        <TabPanel value="2">retrieved datasets list goes here</TabPanel>
+      </TabContext>
+    </Box>
 
     <div>
 
