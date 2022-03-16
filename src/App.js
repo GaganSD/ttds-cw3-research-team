@@ -219,7 +219,7 @@ function App() {
     })}
     </div>
     <div style={{
-      marginBottom : "1 em"
+      marginBottom : "2 em"
     }}> 
       <PageButton show = {showPageButton.current}/>
     </div>
