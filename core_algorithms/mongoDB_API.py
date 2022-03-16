@@ -123,7 +123,7 @@ class MongoDBClient():
 
 
     def get_data(self, data_type: str, filter: dict, fields: list, skip: int = 0, 
-                    limit:int = 0):
+                    limit:int = 0, sort_by_time: int = 0):
         """
         The method to get a pymongo data cursor. 
         Note: If you are only getting one piece of data, use method get_one, which should be 
@@ -135,6 +135,8 @@ class MongoDBClient():
             fields -  Fields of information you want. e.g. [ "title", "text", "description" ].
             skip - start point, or docs to be skip at begining. default 0
             limit - max size of return result. default 0 (which means no limit)
+            sort_by_time - whether to sort by date. 0 means don't sort. 1 means oldest first
+                        (assending),  -1 means newest first(desencding).
 
         Returns:
             a mongodb cursor. Type: pymongo.cursor.Cursor
@@ -151,6 +153,8 @@ class MongoDBClient():
                                     limit = limit)
         # num = cur_table.count_documents(filter)
 
+        if sort_by_time != 0:
+            cursor.sort('date', sort_by_time)
         try:
             cursor[0]
         except IndexError as e:
@@ -502,3 +506,21 @@ if __name__ == "__main__":
 
     # res = client.get_doc_from_index("data")
     # print(len(res), res[100])
+
+    # import datetime
+    # import time
+    # s= time.time()
+    # res = client.get_doc_intersection(["covid", "19", "cnn"])
+    # print(time.time() - s, len(res), res[0], res[-1])
+    # s= time.time()
+
+    # cur = client.get_data("paper", 
+    #         {"_id": {"$in":  res}, 
+    #             "date":{"$gt": datetime.datetime(2021, 1,1),
+    #                     "$lt": datetime.datetime(2021, 12,30) }}, 
+    #         ["date"], limit = 1, sort_by_time=-1)
+
+    # print(time.time() - s)
+
+    # for data in cur:
+    #     print(data["date"])

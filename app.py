@@ -45,30 +45,86 @@ _today = datetime.today().strftime('%d/%m/%Y')
 _no_match_sample = {"title": "No Matching Documents Were Found", "abstract": "Try expanding your query with our search suggestion", "url":"", "authors":"","date":_today}
 _no_results_dict = {"Results": [_no_match_sample]}
 
-################################
 
-def get_author_papers_results(query: str, top_n: int=100) -> dict:
-    '''author_search_papers the author list (separated by comma ',' or semicolon ';') and expects papers from authors.
+@app.route("/<query>", methods = ['POST', 'GET'])
+def search_state_machine(search_query):
 
-    Sorting order: 
-    1 - Descending order of number of authors matching query (if more than 1 authors)
-    2 - Ascending order of position of author in the order (sum of positions if more than 1 authors matching)
-    3 - Ascending order of term appearance in the query
-    Input: query (type: string)
-    Example: "magdy"
-    Output: Dictionary (HashMap)
-    Format:
-    {
-        title: string, 
-        abstract/description: string,
-        authors: array of strings or empty array,
-        url: string
-        ...
-        any other information
-    }
+    results = None
+
+    parameters = _deseralize(search_query)
+    # {
+    # query: search_query : DOME
+    # from_date: DD-MM-YYYY (last) : 
+    # to_date: DD-MM-YYYY :  
+    # Authors: [str1, str2] : DONE
+    # search_type: str (default, proximity, phrase, author) : DONE
+    # algorithm: str (approx_nn, bm25, tf-idf) : DONE
+    # result_type: str
+    # datasets: bool
+    # }
+
+    ## search_type
+    ### algorithm_type
+    ### 
+
+    if parameters["search_type"] == "author":
+
+        if parameters["datasets"]:
+            print("no author search for datasets")
+        else:
+            results = get_author_papers_results(parameters['query'], parameters["start_date"], parameters["end_date"]) # Really done
+
+    elif parameters["search_type"] == "PHRASE":
+
+        if parameters["datasets"]:
+            results = get_phrase_datasets_results(parameters['query']) # really done
+        else:
+            results = get_phrase_papers_results(parameters['query']) # really done
+
+    elif parameters["search_type"] == "PROXIMITY":
+        if parameters["datasets"]:
+            results = get_proximity_datasets_results(parameters['query']) # really done
+        else:
+            results = get_proximity_papers_results(parameters['query']) # really done
+    elif parameters["search_type"] == "DEFAULT":
+
+        if parameters["datasets"]:
+
+            if parameters["algorithm"] == "APPROX_NN":
+                results = get_approx_nn_datasets_results(parameters['query']) # really done
+            elif parameters["algorithm"] == "BM25":
+                results = get_dataset_results_bm25(parameters['query']) # really done
+            elif parameters["algorithm"] == "TF_IDF":
+                results = get_tf_idf_dataset_results(parameters['query'])  # really done
+
+        else:
+
+            if parameters["algorithm"] == "APPROX_NN": 
+                results = get_approx_nn_papers_results(parameters['query']) #, parameters["start_date"], parameters["end_date"]) # really done
+            elif parameters["algorithm"] == "BM25":
+                results = get_papers_results_bm25(parameters['query']) # really done
+            elif parameters["algorithm"] == "TF_IDF":
+                results = get_paper_results_tf_idf(parameters['query'])
+
+    # results = filter_dates(results, parameters["start_date"], parameters["end_date"])
+    return results
+
+
+@app.route("/")
+def direct_access_to_backend():
+    return "Change PORT to 3000 to access the React frontend!"
+
+
+def get_author_papers_results(query: str, top_n: int=100, preprocess: bool=True) -> dict:
     '''
-
-    query = author_preprocess(query)
+    Sorting order in cases of equalities: 
+    1 - Descending order of number of authors matching query (if more than 1 authors)
+    2 - Ascending order of position of author in the author list (sum of positions if more than 1 authors matching)
+    3 - Ascending order of term appearance in the query
+    '''
+    if preprocess:
+      query = author_preprocess(query)
+    
     query_params = {'query': query}
     
     dict_occur = {}
@@ -83,13 +139,12 @@ def get_author_papers_results(query: str, top_n: int=100) -> dict:
           if id not in dict_occur: dict_occur[id] = [0, 0]
           dict_occur[id][0] += 1
           dict_occur[id][1] += i['pos'][0]
-                    
 
-    dict_occur = dict(sorted(dict_occur.items(), key=lambda x: (-x[1][0],x[1][1])))
-    temp_ids = list(dict_occur.keys())[:top_n]
+    dict_occur = dict(heapq.nsmallest(top_n, dict_occur.items(), key=lambda x: (-x[1][0],x[1][1])))
+    temp_ids = list(dict_occur.keys())
 
     output_dict = {}
-        
+
     temp_result = list(client.get_data('paper', {'_id':{"$in" : temp_ids}}, ['title', 'abstract','authors', 'url', 'date']))
     temp_result = {i['_id'] : i for i in temp_result}
     output_dict["Results"] = [temp_result[i] for i in temp_ids]
@@ -242,7 +297,6 @@ def get_proximity_datasets_results(query: str, proximity: int=10, top_n: int=10,
     query = preprocess(query,True, True) # stemming, removing stopwords
     query_params = {'query': query}
     
-    # These parts (getting dataset info like subtitle) must be changed to mongodb in the future
     kaggle_df = pd.read_csv('core_algorithms/ir_eval/kaggle_dataset_df_page500.csv')
     kaggle_df['Source'] = 'Kaggle'
     paperwithcode_df = pd.read_csv('core_algorithms/ir_eval/paperwithcode_df.csv')
@@ -250,7 +304,6 @@ def get_proximity_datasets_results(query: str, proximity: int=10, top_n: int=10,
     df = pd.concat([kaggle_df, paperwithcode_df])
     df = df.reset_index(drop=True)
     
-    # Don't worry about input parsing. Use query_params for now.
     outputs = proximity_search_dataset(query_params, proximity=proximity) # return: list of ids of paper
     output_dict = {"Results":[]}
     for result in outputs[:top_n]:
@@ -509,6 +562,7 @@ def get_paper_results_tf_idf(query: str, top_n: int=10, spell_check=True,qe=Fals
    
     return output_dict
 
+
 ############### REALLY DONE #################################################
 ############### REALLY DONE #################################################
 ############### REALLY DONE #################################################
@@ -523,70 +577,6 @@ def query_expansion(query):
     else:
         expanded_queries = ", ".join(expanded_queries)
         return {"QEResults": [expanded_queries, ""]}
-
-
-@app.route("/<query>", methods = ['POST', 'GET'])
-def search_state_machine(search_query):
-
-    results = None
-
-    parameters = _deseralize(search_query)
-    # {
-    # query: search_query : DOME
-    # from_date: DD-MM-YYYY (last) : 
-    # to_date: DD-MM-YYYY :  
-    # Authors: [str1, str2] : DONE
-    # search_type: str (default, proximity, phrase, author) : DONE
-    # algorithm: str (approx_nn, bm25, tf-idf) : DONE
-    # result_type: str
-    # datasets: bool
-    # }
-
-    ## search_type
-    ### algorithm_type
-    ### 
-
-    if parameters["search_type"] == "author":
-
-        if parameters["datasets"]:
-            print("no author search for datasets")
-        else:
-            results = get_author_papers_results(parameters['query'], parameters["start_date"], parameters["end_date"]) # Really done
-
-    elif parameters["search_type"] == "PHRASE":
-
-        if parameters["datasets"]:
-            results = get_phrase_datasets_results(parameters['query']) # really done
-        else:
-            results = get_phrase_papers_results(parameters['query']) # really done
-
-    elif parameters["search_type"] == "PROXIMITY":
-        if parameters["datasets"]:
-            results = get_proximity_datasets_results(parameters['query']) # really done
-        else:
-            results = get_proximity_papers_results(parameters['query']) # really done
-    elif parameters["search_type"] == "DEFAULT":
-
-        if parameters["datasets"]:
-
-            if parameters["algorithm"] == "APPROX_NN":
-                results = get_approx_nn_datasets_results(parameters['query']) # really done
-            elif parameters["algorithm"] == "BM25":
-                results = get_dataset_results_bm25(parameters['query']) # really done
-            elif parameters["algorithm"] == "TF_IDF":
-                results = get_tf_idf_dataset_results(parameters['query'])  # really done
-
-        else:
-
-            if parameters["algorithm"] == "APPROX_NN": 
-                results = get_approx_nn_papers_results(parameters['query']) #, parameters["start_date"], parameters["end_date"]) # really done
-            elif parameters["algorithm"] == "BM25":
-                results = get_papers_results_bm25(parameters['query']) # really done
-            elif parameters["algorithm"] == "TF_IDF":
-                results = get_paper_results_tf_idf(parameters['query'])
-
-    # results = filter_dates(results, parameters["start_date"], parameters["end_date"])
-    return results
 
 
 def _preprocess_query(query: str) -> dict:
@@ -605,11 +595,3 @@ def _preprocess_query(query: str) -> dict:
         _preprocessing_cache.put(query, query_params)
 
     return query_params
-
-@app.route("/")
-def hello_world():
-    return "Change PORT to 3000 to access the React frontend!"
-
-
-# if __name__ == "__main__":
-#     pass

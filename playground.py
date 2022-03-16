@@ -14,6 +14,7 @@ from core_algorithms.query_expansion import get_query_extension
 from core_algorithms.query_spell_check import query_spell_check
 
 import pandas as pd
+import heapq
 
 # import scann
 # from sentence_transformers import SentenceTransformer
@@ -402,6 +403,55 @@ def get_datasets_results_deep(query: str, top_n: int=100) -> dict:
     
     return output_dict
 '''
+<<<<<<< HEAD
+=======
+def get_papers_authors(query: str, top_n: int=100, preprocess: bool=True) -> dict:
+    '''
+    Sorting order in cases of equalities: 
+    1 - Descending order of number of authors matching query (if more than 1 authors)
+    2 - Ascending order of position of author in the author list (sum of positions if more than 1 authors matching)
+    3 - Ascending order of term appearance in the query
+    '''
+    if preprocess:
+      query = author_preprocess(query)
+    
+    query_params = {'query': query}
+    
+    dict_occur = {}
+
+    for author in query:
+        temp_list = list(client.get_doc_from_index(term=author, index_table='a_index'))
+        # Sort based on order of author
+        temp_list = sorted(temp_list, key=lambda d: d['pos'][0]) 
+
+        for i in temp_list:
+          id = i['id']
+          if id not in dict_occur: dict_occur[id] = [0, 0]
+          dict_occur[id][0] += 1
+          dict_occur[id][1] += i['pos'][0]
+                    
+    
+    dict_occur = dict(heapq.nsmallest(top_n, dict_occur.items(), key=lambda x: (-x[1][0],x[1][1])))
+    temp_ids = list(dict_occur.keys())
+    
+    output_dict = {}
+        
+    temp_result = list(client.get_data('paper', {'_id':{"$in" : temp_ids}}, ['title', 'abstract','authors', 'url', 'date']))
+    temp_result = {i['_id'] : i for i in temp_result}
+    output_dict["Results"] = [temp_result[i] for i in temp_ids]
+
+    return output_dict
+>>>>>>> 0245364f1de99e8ecdc6b980f4138552852a2704
+
+def authors_extensions(query: str, top_n: int=100, docs_searched: int=10, author_search_result: dict={'Results':[]}) -> dict:
+  authors  = set(author_preprocess(query))
+  coauthors = [author_preprocess(i['authors'])[:10] for i in sol["Results"][:docs_searched]]
+  merged_coauthors = [item for sublist in coauthors for item in sublist if item not in authors]
+  merged_coauthors = list(dict.fromkeys(merged_coauthors))
+  
+  results = get_papers_authors(merged_coauthors, top_n=100, preprocess=False)
+  return results
+
 
 
 #### If the functions are working as expected, these functions should work.
@@ -452,5 +502,10 @@ for i in  get_datasets_results_deep(query=query1, top_n=100)['Results']:
     print(i['title'])
 '''  
 print('Papers by authors')
-for i in  get_papers_authors(query="walid", top_n=100)['Results']:
+auth = get_papers_authors(query="walid", top_n=100)
+for i in auth['Results']:    
+    print(i['url'])
+
+print('Papers by authors extension')
+for i in authors_extensions(query: str, top_n: int=100, docs_searched: int=10, author_search_result=auth)['Results']:
     print(i['url'])
