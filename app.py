@@ -28,7 +28,7 @@ from core_algorithms.query_spell_check import query_spell_check
 
 
 import json
-import datetime
+from datetime import datetime
 import scann ## NOTE: Only works on linux machines
 import pandas as pd
 
@@ -51,10 +51,14 @@ _preprocessing_cache = LRUCache(1000)
 _results_cache = LRUCache(200)
 
 
-curr_day = datetime.datetime.today().strftime('%d/%m/%Y')
+curr_day = datetime.today().strftime('%d/%m/%Y')
+min_day = datetime.strptime("01-01-1000", '%d-%m-%Y')
 _no_match_sample = {"title": "No Matching Documents Were Found", "abstract": "Try expanding your query with our search suggestion", "url":"", "authors":"","date":_today}
 _no_results_dict = {"Results": [_no_match_sample]}
 
+@app.route("/")
+def hello():
+    return "hello"
 
 @app.route("/<query>", methods = ['POST', 'GET'])
 def search_state_machine(search_query):
@@ -77,40 +81,40 @@ def search_state_machine(search_query):
         if parameters["datasets"]:
             print("no AUTHOR search for datasets")
         else:
-            results = get_author_papers_results(parameters['query'], parameters["start_date"], parameters["end_date"])
+            results = get_author_papers_results(query=parameters['query'], start_date=parameters["start_date"], end_date=parameters["end_date"])
 
     elif parameters["search_type"] == "PHRASE":
 
         if parameters["datasets"]:
-            results = get_phrase_datasets_results(parameters['query'])
+            results = get_phrase_datasets_results(query=parameters['query'], start_date=parameters["start_date"], end_date=parameters["end_date"])
         else:
-            results = get_phrase_papers_results(parameters['query'])  
+            results = get_phrase_papers_results(query=parameters['query'], start_date=parameters["start_date"], end_date=parameters["end_date"])
 
     elif parameters["search_type"] == "PROXIMITY":
         if parameters["datasets"]:
-            results = get_proximity_datasets_results(parameters['query'])  
+            results = get_proximity_datasets_results(query=parameters['query'], start_date=parameters["start_date"], end_date=parameters["end_date"])
         else:
-            results = get_proximity_papers_results(parameters['query'])
+            results = get_proximity_papers_results(query=parameters['query'], start_date=parameters["start_date"], end_date=parameters["end_date"])
 
     elif parameters["search_type"] == "DEFAULT":
 
         if parameters["datasets"]:
 
             if parameters["algorithm"] == "APPROX_NN":
-                results = get_approx_nn_datasets_results(parameters['query'])  
+                results = get_approx_nn_datasets_results(query=parameters['query'], start_date=parameters["start_date"], end_date=parameters["end_date"])
             elif parameters["algorithm"] == "BM25":
-                results = get_dataset_results_bm25(parameters['query'])  
+                results = get_dataset_results_bm25(query=parameters['query'], start_date=parameters["start_date"], end_date=parameters["end_date"])
             elif parameters["algorithm"] == "TF_IDF":
-                results = get_tf_idf_dataset_results(parameters['query'])   
+                results = get_tf_idf_dataset_results(query=parameters['query'], start_date=parameters["start_date"], end_date=parameters["end_date"])
 
         else:
 
             if parameters["algorithm"] == "APPROX_NN": 
-                results = get_approx_nn_papers_results(parameters['query']) #, parameters["start_date"], parameters["end_date"])  
+                results = get_approx_nn_papers_results(query=parameters['query'], start_date=parameters["start_date"], end_date=parameters["end_date"])
             elif parameters["algorithm"] == "BM25":
-                results = get_papers_results_bm25(parameters['query'])  
+                results = get_papers_results_bm25(query=parameters['query'], start_date=parameters["start_date"], end_date=parameters["end_date"])
             elif parameters["algorithm"] == "TF_IDF":
-                results = get_paper_results_tf_idf(parameters['query'])
+                results = get_paper_results_tf_idf(query=parameters['query'], start_date=parameters["start_date"], end_date=parameters["end_date"])
 
     # results = filter_dates(results, parameters["start_date"], parameters["end_date"])
     return results
@@ -122,7 +126,7 @@ def direct_access_to_backend():
 
 ######################### Search Functions ########################
 
-def get_author_papers_results(query: str, top_n: int=100, preprocess: bool=True) -> dict:
+def get_author_papers_results(query: str, top_n: int=100, preprocess: bool=True, start_date:datetime = min_day, end_date:datetime = curr_day) -> dict:
     '''
     Sorting order in cases of equalities: 
     1 - Descending order of number of authors matching query (if more than 1 authors)
@@ -158,7 +162,7 @@ def get_author_papers_results(query: str, top_n: int=100, preprocess: bool=True)
 
     return output_dict
 
-def get_phrase_datasets_results(query: str, top_n: int=10, spell_check=True,qe=False) -> dict:
+def get_phrase_datasets_results(query: str, top_n: int=10, spell_check=True,qe=False, start_date:datetime = min_day, end_date:datetime = curr_day) -> dict:
     """
     Uses phrase search, not ranking algorithm
     Input: query (type: string)
@@ -189,7 +193,7 @@ def get_phrase_datasets_results(query: str, top_n: int=10, spell_check=True,qe=F
     return output_dict
 
 
-def get_phrase_papers_results(query: str, top_n: int=10, spell_check=True,qe=False) -> dict:
+def get_phrase_papers_results(query: str, top_n: int=10, spell_check=True,qe=False, start_date:datetime = min_day, end_date:datetime = curr_day) -> dict:
     """
     This function is using phrase search, not ranking algorithm
     Input: query (type: string)
@@ -212,7 +216,7 @@ def get_phrase_papers_results(query: str, top_n: int=10, spell_check=True,qe=Fal
     return output_dict
 
 
-def get_proximity_datasets_results(query: str, proximity: int=10, top_n: int=10, spell_check=True,qe=False) -> dict:
+def get_proximity_datasets_results(query: str, proximity: int=10, top_n: int=10, spell_check=True,qe=False, start_date:datetime = min_day, end_date:datetime = curr_day) -> dict:
     """
     Uses proximity search, not ranking algorithm
     Input: query (type: string)
@@ -241,7 +245,7 @@ def get_proximity_datasets_results(query: str, proximity: int=10, top_n: int=10,
     return output_dict
 
 
-def get_proximity_datasets_results(query: str, proximity: int=10, top_n: int=10, spell_check=True,qe=False) -> dict:
+def get_proximity_datasets_results(query: str, proximity: int=10, top_n: int=10, spell_check=True,qe=False, start_date:datetime = min_day, end_date:datetime = curr_day) -> dict:
     """
     Uses proximity search, not ranking algorithm
     Input: query (type: string)
@@ -270,7 +274,7 @@ def get_proximity_datasets_results(query: str, proximity: int=10, top_n: int=10,
     return output_dict
 
 
-def get_proximity_papers_results(query: str, proximity: int=10, top_n: int=10, spell_check=True,qe=False) -> dict:
+def get_proximity_papers_results(query: str, proximity: int=10, top_n: int=10, spell_check=True,qe=False, start_date:datetime = min_day, end_date:datetime = curr_day) -> dict:
     """
     This function is using proximity search, not ranking algorithm.
     By default, this function get the result of proximity=10
@@ -308,7 +312,7 @@ def get_approx_nn_datasets_results(query: str, top_n: int=100) -> dict:
     return output_dict
 
 
-def get_dataset_results_bm25(query: str, top_n: int=10, spell_check=True,qe=True) -> dict:
+def get_dataset_results_bm25(query: str, top_n: int=10, spell_check=True,qe=True, start_date:datetime = min_day, end_date:datetime = curr_day) -> dict:
     """
     This is used when the user provides the query & wants to query different databases.
     Input: query (type: string)
@@ -350,7 +354,7 @@ def get_dataset_results_bm25(query: str, top_n: int=10, spell_check=True,qe=True
 
 
 
-def get_tf_idf_dataset_results(query: str, top_n: int=10, spell_check=True,qe=True) -> dict:
+def get_tf_idf_dataset_results(query: str, top_n: int=10, spell_check=True,qe=True, start_date:datetime = min_day, end_date:datetime = curr_day) -> dict:
     """
     This is used when the user provides the query & wants to query different databases.
     Input: query (type: string)
@@ -392,7 +396,7 @@ def get_tf_idf_dataset_results(query: str, top_n: int=10, spell_check=True,qe=Tr
 
 
 
-def get_approx_nn_papers_results(query: str, top_n: int=10) -> dict:
+def get_approx_nn_papers_results(query: str, top_n: int=10, start_date:datetime = min_day, end_date:datetime = curr_day) -> dict:
     """
     This is used when the user provides the query & wants to query different papers.
     Input: query (type: string)
@@ -421,7 +425,7 @@ def get_approx_nn_papers_results(query: str, top_n: int=10) -> dict:
     return output_dict
 
 
-def get_papers_results_bm25(query: str, top_n: int=10, spell_check=True,qe=False) -> dict:
+def get_papers_results_bm25(query: str, top_n: int=10, spell_check=True,qe=False, start_date:datetime = min_day, end_date:datetime = curr_day) -> dict:
     """
     This is used when the user provides the query & wants to query different papers.
     Input: query (type: string)
@@ -455,7 +459,7 @@ def get_papers_results_bm25(query: str, top_n: int=10, spell_check=True,qe=False
    
     return output_dict
 
-def get_paper_results_tf_idf(query: str, top_n: int=10, spell_check=True,qe=False) -> dict:
+def get_paper_results_tf_idf(query: str, top_n: int=10, spell_check=True,qe=False, start_date:datetime = min_day, end_date:datetime = curr_day) -> dict:
     """
     This is used when the user provides the query & wants to query different papers.
     Input: query (type: string)
@@ -518,10 +522,11 @@ def _preprocess_query(query: str, stemming=True, remove_stopwords=True) -> dict:
     return query_params
 
 def _deserialize(query: str) -> dict:
+    print("ori", query)
     return_dict = {
         "query" :"",
-        "from_date" :  datetime.datetime.min.date(),
-        "to_date" : datetime.datetime.max.date(),
+        "start_date" :    datetime.min.date(),
+        "end_date" :   datetime.today().date(),
         "search_type" : "DEFAULT",
         "algorithm" : "APROX_NN",
         "datasets": False,
@@ -530,30 +535,28 @@ def _deserialize(query: str) -> dict:
 
     }
 
-    queries = (query[query.find("?")+1:].split("/"))[:-1]
+    queries = query.split("/")[:-1]
 
     for i in range(len(queries)):
         if i == 0:
-            return_dict["query"] = queries[i][2:]
+            return_dict["query"] = queries[i].replace("+", " ")
         if i == 1:
-            from_date = queries[3:]
+            from_date = queries[i][3:]
             if from_date != "inf":
-                return_dict["from_date"] = datetime.datetime.strptime(date, '%d-%m-%Y').date()
+                return_dict["start_date"] =   datetime.strptime(from_date, '%d-%m-%Y').date()
         if i == 2:
-            to_date = queries[3:]
-            if to_date != "inf"
-                return_dict["to_date"] = datetime.datetime.strptime(date, '%d-%m-%Y').date()
+            to_date = queries[i][3:]
+            if to_date != "inf":
+                return_dict["end_date"] =   datetime.strptime(to_date, '%d-%m-%Y').date()
         if i ==3:
-            st = queries[4:]
-            return_dict["search_type"] = st.replace("+","_")
+            st = queries[i][4:]
+            return_dict["algorithm"] = st.replace("+","_")
         if i == 4:
-            alg = queries[8:]
-            return_dict["algorithm"] = alg.replace("+","_")
-
-
-    print(return_dict)
-            
-
-
+            alg = queries[i][8:]
+            return_dict["search_type"] = alg.replace("+","_")
+        if i == 5:
+            ds = queries[i][3:]
+            if ds == "true":
+                return_dict["datasets"] = True
 
     return return_dict
