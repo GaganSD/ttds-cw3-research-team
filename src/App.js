@@ -132,9 +132,8 @@ function App() {
   }
 
   function SearchFunc() {
-    return fetch('http://127.0.0.1:5000/' + create_url(search, values.current)).then(response => response.json()).then(data => {
-      console.log("HEEERE")
-      showPageButton.current = true;
+    showPageButton.current = true;
+    return fetch('http://34.142.71.148:5000/' + create_url(search, values.current)).then(response => response.json()).then(data => {
       setJsonResults(data);
     });
   }
@@ -142,7 +141,7 @@ function App() {
   function QueryExpansion() {
     
     console.log(create_url(search, values.current));
-    return fetch('http://127.0.0.1:5000/QE/' + search).then(response => response.json()).then(data => {
+    return fetch('http://34.142.71.148:5000/QE/' + search).then(response => response.json()).then(data => {
       setJsonQE(data);
     });
   }
