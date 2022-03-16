@@ -10,7 +10,7 @@ from core_algorithms.ir_eval.ranking_paper import ranking_query_BM25 as ranking_
 from core_algorithms.mongoDB_API import MongoDBClient
 from collections import defaultdict
 from core_algorithms.ir_eval.preprocessing import preprocess, author_preprocess
-from core_algorithms.query_expansion import get_query_extension
+from core_algorithms.query_expansion import get_query_expansion
 from core_algorithms.query_spell_check import query_spell_check
 
 import pandas as pd
@@ -56,16 +56,19 @@ def get_database_results(query: str, top_n: int=10, spell_check=True,qe=True) ->
         any other information
     } 
     """
-    if spell_check:
-        query = ' '.join(query_spell_check(query))
+    original_query = query
     if qe:
-        query = query + ' ' + ' '.join(get_query_extension(query))
+        query = query + ' ' + ' '.join(get_query_expansion(query))
     query = preprocess(query,True, True) # stemming, removing stopwords
     query_params = {'query': query}
     # Don't worry about input parsing. Use query_params for now.
     scores = ranking_query_tfidf_dataset(query_params)
     output_dict = {'Results':[]}
-    
+    if spell_check&(len(scores) < 25):
+        new_query = ' '.join(query_spell_check(original_query))
+        new_query = preprocess(new_query)
+        new_query_params = {'query': new_query}
+        scores = ranking_query_tfidf_dataset(new_query_params)
     # These parts (getting dataset info like subtitle) must be changed to mongodb in the future
     kaggle_df = pd.read_csv('core_algorithms/ir_eval/kaggle_dataset_df_page500.csv')
     kaggle_df['Source'] = 'Kaggle'
@@ -98,14 +101,18 @@ def get_papers_results(query: str, top_n: int=10, spell_check=True,qe=False) -> 
         any other information
     } 
     """
-    if spell_check:
-        query = ' '.join(query_spell_check(query))
+    original_query = query
     if qe:
-        query = query + ' ' + ' '.join(get_query_extension(query))
+        query = query + ' ' + ' '.join(get_query_expansion(query))
     query = preprocess(query,True, True) # stemming, removing stopwords
     query_params = {'query': query}
     # Don't worry about input parsing. Use query_params for now.
     scores = ranking_query_tfidf_paper(query_params, client)
+    if spell_check&(len(scores) < 25):
+        new_query = ' '.join(query_spell_check(original_query))
+        new_query = preprocess(new_query)
+        new_query_params = {'query': new_query}
+        scores = ranking_query_tfidf_paper(new_query_params, client)
     output_dict = {}
     
     temp_ids = [i[0] for i in scores[:top_n]]
@@ -133,14 +140,18 @@ def get_database_results_bm25(query: str, top_n: int=10, spell_check=True,qe=Tru
         any other information
     } 
     """
-    if spell_check:
-        query = ' '.join(query_spell_check(query))
+    original_query = query
     if qe:
-        query = query + ' ' + ' '.join(get_query_extension(query))
+        query = query + ' ' + ' '.join(get_query_expansion(query))
     query = preprocess(query,True, True) # stemming, removing stopwords
     query_params = {'query': query}
     # Don't worry about input parsing. Use query_params for now.
     scores = ranking_query_bm25_dataset(query_params)
+    if spell_check&(len(scores) < 25):
+        new_query = ' '.join(query_spell_check(original_query))
+        new_query = preprocess(new_query)
+        new_query_params = {'query': new_query}
+        scores = ranking_query_bm25_dataset(new_query_params)
     output_dict = {'Results':[]}
     
     # These parts (getting dataset info like subtitle) must be changed to mongodb in the future
@@ -175,16 +186,19 @@ def get_papers_results_bm25(query: str, top_n: int=10, spell_check=True,qe=False
         any other information
     } 
     """
-    if spell_check:
-        query = ' '.join(query_spell_check(query))
+    original_query = query
     if qe:
-        query = query + ' ' + ' '.join(get_query_extension(query))
+        query = query + ' ' + ' '.join(get_query_expansion(query))
     query = preprocess(query,True, True) # stemming, removing stopwords
     query_params = {'query': query}
     # Don't worry about input parsing. Use query_params for now.
     scores = ranking_query_bm25_paper(query_params, client)
+    if spell_check&(len(scores) < 25):
+        new_query = ' '.join(query_spell_check(original_query))
+        new_query = preprocess(new_query)
+        new_query_params = {'query': new_query}
+        scores = ranking_query_bm25_paper(new_query_params, client)
     output_dict = {}
-    
     temp_ids = [i[0] for i in scores[:top_n]]
     
     temp_result = list(client.get_data('paper', {'_id':{"$in" : temp_ids}}, ['title', 'abstract','authors', 'url', 'date']))
@@ -193,7 +207,7 @@ def get_papers_results_bm25(query: str, top_n: int=10, spell_check=True,qe=False
    
     return output_dict
 
-def get_phrase_papers_results(query: str, top_n: int=10, spell_check=True,qe=False) -> dict:
+def get_phrase_papers_results(query: str, top_n: int=10, spell_check=False,qe=False) -> dict:
     """
     This is used when the user provides the query & wants to query different papers.
     This function is using phrase search, not ranking algorithm
@@ -214,7 +228,7 @@ def get_phrase_papers_results(query: str, top_n: int=10, spell_check=True,qe=Fal
     if spell_check:
         query = ' '.join(query_spell_check(query))
     if qe:
-        query = query + ' ' + ' '.join(get_query_extension(query))
+        query = query + ' ' + ' '.join(get_query_expansion(query))
     query = preprocess(query,True, True) # stemming, removing stopwords
     query_params = {'query': query}
     # Don't worry about input parsing. Use query_params for now.
@@ -228,7 +242,7 @@ def get_phrase_papers_results(query: str, top_n: int=10, spell_check=True,qe=Fal
     
     return output_dict
 
-def get_phrase_datasets_results(query: str, top_n: int=10, spell_check=True,qe=False) -> dict:
+def get_phrase_datasets_results(query: str, top_n: int=10, spell_check=False,qe=False) -> dict:
     """
     This is used when the user provides the query & wants to query different papers.
     This function is using phrase search, not ranking algorithm
@@ -249,7 +263,7 @@ def get_phrase_datasets_results(query: str, top_n: int=10, spell_check=True,qe=F
     if spell_check:
         query = ' '.join(query_spell_check(query))
     if qe:
-        query = query + ' ' + ' '.join(get_query_extension(query))
+        query = query + ' ' + ' '.join(get_query_expansion(query))
     query = preprocess(query,True, True) # stemming, removing stopwords
     query_params = {'query': query}
     
@@ -269,7 +283,7 @@ def get_phrase_datasets_results(query: str, top_n: int=10, spell_check=True,qe=F
         output_dict['Results'].append(output)
     return output_dict
 
-def get_proximity_papers_results(query: str, proximity: int=10, top_n: int=10, spell_check=True,qe=False) -> dict:
+def get_proximity_papers_results(query: str, proximity: int=10, top_n: int=10, spell_check=False,qe=False) -> dict:
     """
     This is used when the user provides the query & wants to query different papers.
     This function is using proximity search, not ranking algorithm.
@@ -292,7 +306,7 @@ def get_proximity_papers_results(query: str, proximity: int=10, top_n: int=10, s
     if spell_check:
         query = ' '.join(query_spell_check(query))
     if qe:
-        query = query + ' ' + ' '.join(get_query_extension(query))
+        query = query + ' ' + ' '.join(get_query_expansion(query))
     query = preprocess(query,True, True) # stemming, removing stopwords
     query_params = {'query': query}
     # Don't worry about input parsing. Use query_params for now.
@@ -306,7 +320,7 @@ def get_proximity_papers_results(query: str, proximity: int=10, top_n: int=10, s
     
     return output_dict
 
-def get_proximity_datasets_results(query: str, proximity: int=10, top_n: int=10, spell_check=True,qe=False) -> dict:
+def get_proximity_datasets_results(query: str, proximity: int=10, top_n: int=10, spell_check=False,qe=False) -> dict:
     """
     This is used when the user provides the query & wants to query different papers.
     This function is using proximity search, not ranking algorithm
@@ -327,7 +341,7 @@ def get_proximity_datasets_results(query: str, proximity: int=10, top_n: int=10,
     if spell_check:
         query = ' '.join(query_spell_check(query))
     if qe:
-        query = query + ' ' + ' '.join(get_query_extension(query))
+        query = query + ' ' + ' '.join(get_query_expansion(query))
     query = preprocess(query,True, True) # stemming, removing stopwords
     query_params = {'query': query}
     
@@ -504,5 +518,5 @@ for i in auth['Results']:
     print(i['url'])
 
 print('Papers by authors extension')
-for i in authors_extensions(query: str, top_n: int=100, docs_searched: int=10, author_search_result=auth)['Results']:
+for i in authors_extensions(query="walid", top_n=100, docs_searched=10, author_search_result=auth)['Results']:
     print(i['url'])
