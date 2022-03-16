@@ -16,6 +16,11 @@ import Switch from '@mui/material/Switch';
 import Link from '@mui/material/Link';
 import SwipeableTemporaryDrawer from './components/advancedOptions';
 
+import HelpButton from './components/HelpButton';
+import Modal from '@mui/base/ModalUnstyled';
+
+
+
 
 function App() {
 
@@ -175,11 +180,20 @@ function App() {
     setSearch(searchval);
   }
 
+  const [open, setOpen] = React.useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
     <div className="App" style={{
-
-      marginLeft: '5em',
-      marginRight: '5em'
+      marginLeft: '6em',
+      marginRight: '6em'
     }}>
     <div className="toggle_switch" float="center" id="toggle_switch"></div>
 
@@ -201,12 +215,31 @@ function App() {
         })}
       </div>
 
+
+
+
       <ButtonGroup variant="contained" aria-label="outlined primary button group">
 
         <SearchButton parentCallback={SearchFunc} />
         <QEButton parentCallback={QueryExpansion} />
+        <HelpButton parentCallback={handleOpen}/>
+        <Modal onClick={handleClose}
+        open={open}
+        style={{
+          position: 'auto',
+          border: '2px solid #3d6ec9',
+          backgroundColor: 'white',
+          marginLeft: '30em',
+          marginRight: '30em'
+        }}>
+        <p>This search engine allows you to search for research papers as well as data sets. Simply type in your query in the box above and hit "Search Query" afterwards.
+          Use "Show Suggestions" for spelling correction and make use of the advanced search features (search type, date range, ranking algorithm) to get more refined results! If you want to use dark mode, 
+          simply toggle the switch above the search bar.</p></Modal>
 
       </ButtonGroup>
+
+
+
     <div>
 
     {json_results.Results.map(curr_elem => {
