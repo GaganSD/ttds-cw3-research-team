@@ -23,6 +23,7 @@ import Tab from '@mui/material/Tab';
 import TabPanel from '@mui/lab/TabPanel';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
+import HelpDialog from "./components/helpdialog"
 
 function App() {
 
@@ -94,7 +95,7 @@ function App() {
 
   function SearchFunc() {
     showPageButton.current = true;
-    return fetch('http://34.142.71.148:5000/' + search).then(response => response.json()).then(data => {
+    return fetch('http://127.0.0.1:5000/' + create_url(search, values.current)).then(response => response.json()).then(data => {
       setJsonResults(data);
     });
   }
@@ -230,8 +231,7 @@ function App() {
 
         <SearchButton parentCallback={SearchFunc} />
         <QEButton parentCallback={QueryExpansion} />
-        <HelpButton parentCallback={handleOpen}/>
-        <Modal onClick={handleClose}
+        {/* <Modal onClick={handleClose}
         open={open}
         style={{
           position: 'right',
@@ -242,11 +242,11 @@ function App() {
         }}>
         <p>This search engine allows you to search for research papers as well as datasets. Simply type in your query in the box above and hit "Search Query" afterwards.
           Use "Show Suggestions" for spelling correction and make use of the advanced search features (search type, date range, ranking algorithm) to get more refined results! If you want to use dark mode, 
-          simply toggle the switch above the search bar.</p></Modal>
+          simply toggle the switch above the search bar.</p></Modal> */}
 
       </ButtonGroup>
       
-      <Box sx={{ width: '60%', typography: 'body1' }}>
+      {/* <Box sx={{ width: '60%', typography: 'body1' }}>
       <TabContext value={value2}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <TabList onChange={handleTabChange}>
@@ -257,7 +257,7 @@ function App() {
         <TabPanel value="1">retrieved papers list goes here</TabPanel>
         <TabPanel value="2">retrieved datasets list goes here</TabPanel>
       </TabContext>
-    </Box>
+    </Box> */}
 
     <div>
 
