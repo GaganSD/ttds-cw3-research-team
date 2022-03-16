@@ -4,6 +4,7 @@ from flask import Flask, request
 from flask_cors import CORS
 from sentence_transformers import SentenceTransformer
 from infra.LRUCache import LRUCache
+import datetime
 
 from core_algorithms.query_expansion import get_query_expansion
 
@@ -38,7 +39,7 @@ df_papers = pd.read_csv("/home/stylianosc/scann/papers/df.csv")
 
 client = MongoDBClient("34.142.18.57")
 _preprocessing_cache = LRUCache(1000)
-_results_cache = LRUCache(200
+_results_cache = LRUCache(200)
 
 
 _today = datetime.today().strftime('%d/%m/%Y')
@@ -63,10 +64,10 @@ def search_state_machine(search_query):
     # datasets: bool
     # }
 
-    if parameters["search_type"] == "author":
+    if parameters["search_type"] == "AUTHOR":
 
         if parameters["datasets"]:
-            print("no author search for datasets")
+            print("no AUTHOR search for datasets")
         else:
             results = get_author_papers_results(parameters['query'], parameters["start_date"], parameters["end_date"])
 
@@ -594,5 +595,42 @@ def _preprocess_query(query: str) -> dict:
 
 
 def _deserialize(query: str) -> dict:
+    return_dict = {
+        "query" :"",
+        "from_date" :  datetime.datetime.min.date(),
+        "to_date" : datetime.datetime.max.date(),
+        "search_type" : "DEFAULT",
+        "algorithm" : "APROX_NN",
+        "datasets": False,
+        "start_num": 0,
+        "end_num" : 0
 
-    return ""
+    }
+
+    queries = (query[query.find("?")+1:].split("/"))[:-1]
+
+    for i in range(len(queries)):
+        if i == 0:
+            return_dict["query"] = queries[i][2:]
+        if i == 1:
+            from_date = queries[3:]
+            if from_date != "inf":
+                return_dict["from_date"] = datetime.datetime.strptime(date, '%d-%m-%Y').date()
+        if i == 2:
+            to_date = queries[3:]
+            if to_date != "inf"
+                return_dict["to_date"] = datetime.datetime.strptime(date, '%d-%m-%Y').date()
+        if i ==3:
+            st = queries[4:]
+            return_dict["search_type"] = st.replace("+","_")
+        if i == 4:
+            alg = queries[8:]
+            return_dict["algorithm"] = alg.replace("+","_")
+
+
+    print(return_dict)
+            
+
+
+
+    return return_dict
