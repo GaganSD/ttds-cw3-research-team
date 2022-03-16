@@ -18,13 +18,12 @@ def run_this_bad_boi(query: str):
     print("bad brokne", _deserialize(request.args['q']))
     return {"Results":[]}
 
-print(2)
 def _deserialize(query: str) -> dict:
     print("ori", query)
     return_dict = {
         "query" :"",
-        "from_date" :    datetime.min.date(),
-        "to_date" :   datetime.today.date(),
+        "start_date" :    datetime.min.date(),
+        "end_date" :   datetime.today().date(),
         "search_type" : "DEFAULT",
         "algorithm" : "APROX_NN",
         "datasets": False,
@@ -41,17 +40,20 @@ def _deserialize(query: str) -> dict:
         if i == 1:
             from_date = queries[i][3:]
             if from_date != "inf":
-                return_dict["from_date"] =   datetime.strptime(from_date, '%d-%m-%Y').date()
+                return_dict["start_date"] =   datetime.strptime(from_date, '%d-%m-%Y').date()
         if i == 2:
             to_date = queries[i][3:]
             if to_date != "inf":
-                return_dict["to_date"] =   datetime.strptime(to_date, '%d-%m-%Y').date()
+                return_dict["end_date"] =   datetime.strptime(to_date, '%d-%m-%Y').date()
         if i ==3:
             st = queries[i][4:]
             return_dict["algorithm"] = st.replace("+","_")
         if i == 4:
             alg = queries[i][8:]
             return_dict["search_type"] = alg.replace("+","_")
-
+        if i == 5:
+            ds = queries[i][3:]
+            if ds == "true":
+                return_dict["datasets"] = True
 
     return return_dict
