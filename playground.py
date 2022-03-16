@@ -1,4 +1,4 @@
-from core_algorithms.query_expansion import get_query_extension
+from core_algorithms.query_expansion import get_query_expansion
 from core_algorithms.ir_eval.ranking import ranking_query_tfidf as ranking_query_tfidf_dataset
 from core_algorithms.ir_eval.ranking_paper import ranking_query_tfidf as ranking_query_tfidf_paper
 from core_algorithms.ir_eval.ranking_paper import phrase_search as phrase_search_paper
@@ -402,56 +402,6 @@ def get_datasets_results_deep(query: str, top_n: int=100) -> dict:
     
     return output_dict
 '''
-def get_papers_authors(query: str, top_n: int=100) -> dict:
-    '''
-    This is used when the user provides the author list (separated by comma ',' or semicolon ';') and expects papers from authors.
-
-    Sorting order: 
-    1 - Descending order of number of authors matching query (if more than 1 authors)
-    2 - Ascending order of position of author in the order (sum of positions if more than 1 authors matching)
-    3 - Ascending order of term appearance in the query
-    Input: query (type: string)
-    Example: "magdy"
-    Output: Dictionary (HashMap)
-    Format:
-    {
-        title: string,
-        abstract/description: string,
-        authors: array of strings or empty array,
-        url: string
-        ...
-        any other information
-    } 
-    
-    '''
-
-    query = author_preprocess(query)
-    query_params = {'query': query}
-    
-    dict_occur = {}
-
-    for author in query:
-        temp_list = list(client.get_doc_from_index(term=author, index_table='a_index'))
-        # Sort based on order of author
-        temp_list = sorted(temp_list, key=lambda d: d['pos'][0]) 
-
-        for i in temp_list:
-          id = i['id']
-          if id not in dict_occur: dict_occur[id] = [0, 0]
-          dict_occur[id][0] += 1
-          dict_occur[id][1] += i['pos'][0]
-                    
-
-    dict_occur = dict(sorted(dict_occur.items(), key=lambda x: (-x[1][0],x[1][1])))
-    temp_ids = list(dict_occur.keys())[:top_n]
-
-    output_dict = {}
-        
-    temp_result = list(client.get_data('paper', {'_id':{"$in" : temp_ids}}, ['title', 'abstract','authors', 'url', 'date']))
-    temp_result = {i['_id'] : i for i in temp_result}
-    output_dict["Results"] = [temp_result[i] for i in temp_ids]
-
-    return output_dict
 
 
 #### If the functions are working as expected, these functions should work.
