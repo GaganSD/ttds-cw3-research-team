@@ -63,46 +63,42 @@ def search_state_machine(search_query):
     # datasets: bool
     # }
 
-    ## search_type
-    ### algorithm_type
-    ### 
-
     if parameters["search_type"] == "author":
 
         if parameters["datasets"]:
             print("no author search for datasets")
         else:
-            results = get_author_papers_results(parameters['query'], parameters["start_date"], parameters["end_date"]) # Really done
+            results = get_author_papers_results(parameters['query'], parameters["start_date"], parameters["end_date"])
 
     elif parameters["search_type"] == "PHRASE":
 
         if parameters["datasets"]:
-            results = get_phrase_datasets_results(parameters['query']) # really done
+            results = get_phrase_datasets_results(parameters['query'])
         else:
-            results = get_phrase_papers_results(parameters['query']) # really done
+            results = get_phrase_papers_results(parameters['query'])  
 
     elif parameters["search_type"] == "PROXIMITY":
         if parameters["datasets"]:
-            results = get_proximity_datasets_results(parameters['query']) # really done
+            results = get_proximity_datasets_results(parameters['query'])  
         else:
-            results = get_proximity_papers_results(parameters['query']) # really done
+            results = get_proximity_papers_results(parameters['query'])  
     elif parameters["search_type"] == "DEFAULT":
 
         if parameters["datasets"]:
 
             if parameters["algorithm"] == "APPROX_NN":
-                results = get_approx_nn_datasets_results(parameters['query']) # really done
+                results = get_approx_nn_datasets_results(parameters['query'])  
             elif parameters["algorithm"] == "BM25":
-                results = get_dataset_results_bm25(parameters['query']) # really done
+                results = get_dataset_results_bm25(parameters['query'])  
             elif parameters["algorithm"] == "TF_IDF":
-                results = get_tf_idf_dataset_results(parameters['query'])  # really done
+                results = get_tf_idf_dataset_results(parameters['query'])   
 
         else:
 
             if parameters["algorithm"] == "APPROX_NN": 
-                results = get_approx_nn_papers_results(parameters['query']) #, parameters["start_date"], parameters["end_date"]) # really done
+                results = get_approx_nn_papers_results(parameters['query']) #, parameters["start_date"], parameters["end_date"])  
             elif parameters["algorithm"] == "BM25":
-                results = get_papers_results_bm25(parameters['query']) # really done
+                results = get_papers_results_bm25(parameters['query'])  
             elif parameters["algorithm"] == "TF_IDF":
                 results = get_paper_results_tf_idf(parameters['query'])
 
@@ -124,9 +120,9 @@ def get_author_papers_results(query: str, top_n: int=100, preprocess: bool=True)
     '''
     if preprocess:
       query = author_preprocess(query)
-    
+
     query_params = {'query': query}
-    
+
     dict_occur = {}
 
     for author in query:
@@ -563,9 +559,9 @@ def get_paper_results_tf_idf(query: str, top_n: int=10, spell_check=True,qe=Fals
     return output_dict
 
 
-############### REALLY DONE #################################################
-############### REALLY DONE #################################################
-############### REALLY DONE #################################################
+##############  #################################################
+##############  #################################################
+##############  #################################################
 
 
 @app.route("/QE/<query>", methods=['GET', 'POST'])
@@ -595,3 +591,8 @@ def _preprocess_query(query: str) -> dict:
         _preprocessing_cache.put(query, query_params)
 
     return query_params
+
+
+def _deserialize(query: str) -> dict:
+
+    return ""
