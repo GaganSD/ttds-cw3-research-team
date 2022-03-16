@@ -13,6 +13,10 @@ CORS(app)
 def hello():
     return "hello"
 
+@app.route("/test")
+def test():
+    return {"Results" :[]}
+
 @app.route('/<query>', methods=['GET', 'POST']) 
 def run_this_bad_boi(query: str):
     print("bad brokne", _deserialize(request.args['q']))

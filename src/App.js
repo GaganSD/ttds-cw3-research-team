@@ -30,6 +30,8 @@ function App() {
 
   const [search, setSearch] = React.useState('');
   const showPageButton = React.useRef(false);
+  const pageNum = React.useRef(1);
+  const resetPageButton = React.useRef(false);
   const [json_results, setJsonResults] = React.useState({Results:[]});
   const [json_query_expansion, setJsonQE] = React.useState({QEResults:[]});
   const label = { inputProps: { 'aria-label': 'Switch demo' } };
@@ -38,7 +40,8 @@ function App() {
     searchtype: "Default",
     range_from:null,
     range_to: null,
-    datasets: false
+    datasets: false,
+    pagenum: 1
   });
 
   function getOptions(type,optval){
@@ -76,6 +79,13 @@ function App() {
     console.log(values.current.datasets);
   }
 
+  const getPageNum = (pageNum) => {
+    values.current.pagenum = pageNum;
+    console.log(values.current.pagenum);
+    SearchFunc();
+
+  }
+
   const date_formatter = (date) =>{
     console.log("HERE GOES THE DATE");
     console.log(date);
@@ -108,8 +118,9 @@ function App() {
     url += vals.searchtype.split(" ").join("_");
     url += "/ds=";
     url += vals.datasets + "";
+    url += "/pn=";
+    url += vals.pagenum + "";
     url += "/";
-
 
     return url
 
@@ -121,8 +132,9 @@ function App() {
   }
 
   function SearchFunc() {
-    showPageButton.current = true;
     return fetch('http://127.0.0.1:5000/' + create_url(search, values.current)).then(response => response.json()).then(data => {
+      console.log("HEEERE")
+      showPageButton.current = true;
       setJsonResults(data);
     });
   }
@@ -226,6 +238,12 @@ function App() {
     setValue2(newValue);
   };
 
+  const resetPageButtonFunc = () => {
+    resetPageButton.current = true;
+    resetPageButton.current = false;
+
+  }
+
   return (
     <div className="App" style={{
       marginLeft: '6em',
@@ -258,11 +276,14 @@ function App() {
         flexDirection : "row"        
       }}>
         <ButtonGroup variant="contained" aria-label="outlined primary button group">
-          <SearchButton parentCallback={SearchFunc} />
+          <SearchButton parentCallback={() =>{
+            // resetPageButtonFunc();
+            SearchFunc();
+          }} />
           <QEButton parentCallback={QueryExpansion} />
         </ButtonGroup>
         <div style = {{
-          marginLeft : "2em"
+          paddingLeft : "5em"
         }}>
           <PaperOrDS parentCallback={getPoDS}/>
         </div>
@@ -293,7 +314,7 @@ function App() {
     <div style={{
       marginBottom : "2 em"
     }}> 
-      <PageButton show = {showPageButton.current}/>
+      <PageButton show = {showPageButton.current} parentCallback={getPageNum} reRender = {resetPageButton.current}/>
     </div>
 
     </div>
