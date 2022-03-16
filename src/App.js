@@ -244,12 +244,19 @@ function App() {
 
 
 
-      <div className = 'Searchoptions'>
+      <div className = 'Searchoptions' style={{
+        display : "flex",
+        flexDirection : "row"        
+      }}>
         <ButtonGroup variant="contained" aria-label="outlined primary button group">
           <SearchButton parentCallback={SearchFunc} />
           <QEButton parentCallback={QueryExpansion} />
         </ButtonGroup>
-        <PaperOrDS parentCallback={getPoDS}/>
+        <div style = {{
+          marginLeft : "2em"
+        }}>
+          <PaperOrDS parentCallback={getPoDS}/>
+        </div>
       </div>
       
 
