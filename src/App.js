@@ -15,6 +15,7 @@ import PageButton from './components/pagebutton';
 import Switch from '@mui/material/Switch';
 import Link from '@mui/material/Link';
 import SwipeableTemporaryDrawer from './components/advancedOptions';
+import PaperOrDS from './components/datasetorpaper';
 
 import HelpButton from './components/HelpButton';
 import Modal from '@mui/base/ModalUnstyled';
@@ -23,6 +24,7 @@ import Tab from '@mui/material/Tab';
 import TabPanel from '@mui/lab/TabPanel';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
+import HelpDialog from "./components/helpdialog"
 
 function App() {
 
@@ -35,7 +37,8 @@ function App() {
     algorithm: "Featured",
     searchtype: "Default",
     range_from:null,
-    range_to: null
+    range_to: null,
+    datasets: false
   });
 
   function getOptions(type,optval){
@@ -56,27 +59,44 @@ function App() {
     }
 
     console.log(values);
+    console.log(date_formatter(values.current.range_from));
 
 
   }
 
+  const getPoDS = (podval) => {
+    if(podval === "Papers"){
+      values.current.datasets = false;
+    }
+    else{
+
+      values.current.datasets = true;
+    }
+
+    console.log(values.current.datasets);
+  }
+
   const date_formatter = (date) =>{
+    console.log("HERE GOES THE DATE");
+    console.log(date);
     if (date == null){
       return "inf"
     }
     else{
       let day = date.getDate() + "-";
-      let month = date.getMonth() + "-";
-      let year = date.getFullYear() + ""
-
-      return day+month+year
+      let month = (date.getMonth()+1) + "-";
+      let year = date.getFullYear() + "";
+      console.log("HERE GOES THE DATE AGAINNNNNNN");
+      console.log(day+month+year);
+      console.log("date over");
+      return day+month+year;
     }
 
   }
 
   const create_url = (searchq, vals) =>{
     let url = "search?q=";
-    url += searchq.split(" ").join("+");
+    url += SanitizeSearch(searchq).split(" ").join("+");
     url += "/df=";
     // console.log(date_formatter(vals.range_from));
     url += date_formatter(vals.range_from);
@@ -86,15 +106,23 @@ function App() {
     url += vals.algorithm.split(" ").join("_");
     url += "/srchtyp=";
     url += vals.searchtype.split(" ").join("_");
+    url += "/ds=";
+    url += vals.datasets + "";
     url += "/";
+
 
     return url
 
   }
 
+  function SanitizeSearch(searchval) {
+    searchval.replaceAll("/", " ");
+    return searchval;
+  }
+
   function SearchFunc() {
     showPageButton.current = true;
-    return fetch('http://34.142.71.148:5000/' + search).then(response => response.json()).then(data => {
+    return fetch('http://34.142.71.148:5000/' + create_url(search, values.current)).then(response => response.json()).then(data => {
       setJsonResults(data);
     });
   }
@@ -208,7 +236,7 @@ function App() {
     <img src={research_logo} width="300em" height="150em"/>
 
     <UseSwitchesCustom  float="right" parentCallback={BasicSwitches} />
-      <div className='SearchOptions' style={{
+      <div className='Search' style={{
         width:'50%'
       }}>
         <SearchField
@@ -225,39 +253,22 @@ function App() {
 
 
 
-
-      <ButtonGroup variant="contained" aria-label="outlined primary button group">
-
-        <SearchButton parentCallback={SearchFunc} />
-        <QEButton parentCallback={QueryExpansion} />
-        <HelpButton parentCallback={handleOpen}/>
-        <Modal onClick={handleClose}
-        open={open}
-        style={{
-          position: 'right',
-          border: '2px solid #3d6ec9',
-          backgroundColor: 'white',
-          marginLeft: '35em',
-          marginRight: '35em'
+      <div className = 'Searchoptions' style={{
+        display : "flex",
+        flexDirection : "row"        
+      }}>
+        <ButtonGroup variant="contained" aria-label="outlined primary button group">
+          <SearchButton parentCallback={SearchFunc} />
+          <QEButton parentCallback={QueryExpansion} />
+        </ButtonGroup>
+        <div style = {{
+          marginLeft : "2em"
         }}>
-        <p>This search engine allows you to search for research papers as well as datasets. Simply type in your query in the box above and hit "Search Query" afterwards.
-          Use "Show Suggestions" for spelling correction and make use of the advanced search features (search type, date range, ranking algorithm) to get more refined results! If you want to use dark mode, 
-          simply toggle the switch above the search bar.</p></Modal>
-
-      </ButtonGroup>
+          <PaperOrDS parentCallback={getPoDS}/>
+        </div>
+      </div>
       
-      <Box sx={{ width: '60%', typography: 'body1' }}>
-      <TabContext value={value2}>
-        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <TabList onChange={handleTabChange}>
-            <Tab label="PAPERS" value="1" />
-            <Tab label="DATASETS" value="2" />
-          </TabList>
-        </Box>
-        <TabPanel value="1">retrieved papers list goes here</TabPanel>
-        <TabPanel value="2">retrieved datasets list goes here</TabPanel>
-      </TabContext>
-    </Box>
+
 
     <div>
 

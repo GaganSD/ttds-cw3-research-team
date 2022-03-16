@@ -7,7 +7,10 @@ from tqdm import tqdm
 import pickle
 import queue
 import datetime
+<<<<<<< HEAD
 
+=======
+>>>>>>> 7cc31b09cd29ba9c0589e632dad6c81541a01065
 
 db_name = "TTDS"
 collec_name = dict()
@@ -373,7 +376,11 @@ class MongoDBClient():
         t.close()
         print("removed ", remove_cnt)
         
-    
+    def get_df(self, term: str):
+        cur_table = self.client[db_name]["index"]
+        hq = cur_table.find_one({"_id": term})
+        return hq['doc_count']
+        
     def get_doc_intersection(self, terms, 
         start_date: datetime.datetime =  datetime.datetime(1900, 1,1), 
         end_date: datetime.datetime =  datetime.datetime(2030, 1,1), 

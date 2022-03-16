@@ -28,7 +28,7 @@ def _get_wordnet_pos(tag:str) -> str:
         return wordnet.VERB
     else: return ''
 
-def get_query_extension(query: str) -> list:
+def get_query_expansion(query: str) -> list:
 
     # TODO: integrate this with existing queries to remove redundancy
     stemmer = SnowballStemmer("english")
@@ -111,4 +111,4 @@ if __name__ == '__main__':
     queries = ["cat", "hello world", "poggers", "apple"]
 
     for curr_query in queries:
-        print(get_query_extension(curr_query))
+        print(get_query_expansion(curr_query))

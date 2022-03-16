@@ -15,6 +15,7 @@ from core_algorithms.mongoDB_API import MongoDBClient
 import itertools
 import tqdm
 from core_algorithms.ir_eval.preprocessing import preprocess
+import statistics
 
 
 class TimeLimitTerm(Exception): pass
@@ -61,15 +62,57 @@ def ranking_query_BM25(query_params, client = None):
         list_of_papers = client.get_topk_doc_from_index(term)
         term_end_time = time.time()
         print(term, ':', term_end_time-term_start_time)
-        doc_nums_term = len(list_of_papers)
-        # process_start = time.time()
+        doc_nums_term = client.get_df(term)#len(list_of_papers)
+        seen_ids = set()
         for relevant_paper in list_of_papers:
             paper_id = relevant_paper['id']
+            if paper_id in seen_ids:
+                break
+            seen_ids.add(paper_id)
             term_freq = len(relevant_paper['pos'])
             dl = relevant_paper['len']
             score = score_BM25(doc_nums, doc_nums_term, term_freq, k1 = 1.5, dl = dl, avgdl=4.82)
             scores[paper_id] += score
     return sorted(dict(scores).items(), key = lambda x : x[1], reverse=True)
+
+
+def ranking_query_tfidf_cosine(query_params, client = None):
+    terms = query_params['query']
+    scores = defaultdict(float)
+    #query_result_score = dict()
+    doc_nums = TOTAL_NUMBER_OF_SENTENCES
+    total_start_time = time.time()
+    tf_dict = dict()
+    for unique_term in set(terms):
+        tmp_tf = sum([term == unique_term for term in set(terms)])
+        tf_dict[unique_term] = tmp_tf
+    doc_scores = defaultdict(list)
+    query_vector = dict()
+    query_length = 0
+    for term in set(terms):
+        term_start_time = time.time()
+        list_of_papers = client.get_topk_doc_from_index(term)
+        term_end_time = time.time()
+        doc_nums_term = client.get_df(term)#len(list_of_papers)
+        print(term, ':', term_end_time-term_start_time)
+        query_score = score_tfidf(doc_nums,doc_nums_term, tf_dict[term])
+        query_length += query_score ** 2
+        query_vector[term] = query_score
+        seen_ids = set()
+        for relevant_paper in list_of_papers:
+            paper_id = relevant_paper['id']
+            if paper_id in seen_ids:
+                break
+            seen_ids.add(paper_id)
+            term_freq = len(relevant_paper['pos'])
+            doc_score = score_tfidf(doc_nums, doc_nums_term, term_freq) 
+            doc_scores[paper_id].append(doc_score ** 2) # to calculate length of document
+            score = query_score * doc_score 
+            scores[paper_id] += score
+    for doc_id in scores.keys():
+        scores[doc_id] = scores[doc_id] / np.sqrt(sum(doc_scores[doc_id])) / np.sqrt(query_length)
+    return sorted(dict(scores).items(), key = lambda x : x[1], reverse=True)
+
 
 def ranking_query_tfidf(query_params, client = None):
     terms = query_params['query']
@@ -82,14 +125,18 @@ def ranking_query_tfidf(query_params, client = None):
         list_of_papers = client.get_topk_doc_from_index(term)
         term_end_time = time.time()
         print(term, ':', term_end_time-term_start_time)
-        doc_nums_term = len(list_of_papers)
-        # process_start = time.time()
+        doc_nums_term = client.get_df(term)#len(list_of_papers)
+        seen_ids = set()
         for relevant_paper in list_of_papers:
             paper_id = relevant_paper['id']
+            if paper_id in seen_ids:
+                break
+            seen_ids.add(paper_id)
             term_freq = len(relevant_paper['pos'])
             score = score_tfidf(doc_nums, doc_nums_term, term_freq)
             scores[paper_id] += score
     return sorted(dict(scores).items(), key = lambda x : x[1], reverse=True)
+
 
 def score_tfidf(doc_nums, doc_nums_term, term_freq):
     return (1+np.log10(term_freq)) * np.log10(doc_nums/doc_nums_term)
