@@ -7,10 +7,6 @@ from tqdm import tqdm
 import pickle
 import queue
 import datetime
-<<<<<<< HEAD
-
-=======
->>>>>>> 7cc31b09cd29ba9c0589e632dad6c81541a01065
 
 db_name = "TTDS"
 collec_name = dict()
@@ -158,8 +154,8 @@ class MongoDBClient():
                                     limit = limit)
         # num = cur_table.count_documents(filter)
 
-        if sort_by_time != 0:
-            cursor.sort('date', sort_by_time)
+        # if sort_by_time != 0:
+        #     cursor.sort('date', sort_by_time)
         try:
             cursor[0]
         except IndexError as e:
@@ -167,6 +163,65 @@ class MongoDBClient():
             
         return cursor
     
+
+    def order_preserved_get_data(self, id_list, fields, 
+        start_date = datetime.datetime(1900, 1,1), 
+        end_date = datetime.datetime(2030, 1,1),
+         data_type = "paper"):
+        """
+        The get_data method that can keeps the order sended in in id_list.
+
+        Parameters:
+            id_list - list of doc ids (sorted previously or not)
+            data_type - The type of data. Should either be "paper" or "dataset".
+            filter - Filter for the data you want. e.g. { "source": "kaggle" }.
+            fields -  Fields of information you want. e.g. [ "title", "text", "description" ].
+            start_date - the start date for time filter
+            end_date - the start date for time filter
+
+        Returns:
+            a mongodb cursor. Type: pymongo.cursor.Cursor
+            the cursor can only be iterated in the following way:
+                for doc in cursor:
+            Don't use index or len() method.
+        """
+
+        if not self.check_data_type(data_type):
+            return -1
+
+        cur_table = self.client[db_name][collec_name[data_type]]
+
+        m = {'$match' : {"_id": {"$in": id_list}, 
+                        "date": {"$gte": start_date, "$lte": end_date}}}
+
+        project_items = {}
+        for field in fields:
+            project_items[field] = 1
+        
+        p = {'$project': project_items}
+
+        a = { "$addFields" : { "__order" : { "$indexOfArray" : [ id_list, "$_id" ] } } };
+        s = { "$sort" : { "__order" : 1 } };
+        
+        pipeline = [m, p, a, s]
+
+        cursor = cur_table.aggregate(pipeline)
+
+        ans = []
+        for res in cursor:
+            ans.append(res)
+        
+        return ans
+        # num = cur_table.count_documents(filter)
+
+        # if sort_by_time != 0:
+        #     cursor.sort('date', sort_by_time)
+        # try:
+        #     cursor[0]
+        # except IndexError as e:
+        #     logging.warning("can't find documents")
+            
+
     def get_one(self, data_type: str, filter: dict, fields: list):
         """
         The method to get ONLY ONE data from db. should be more efficient than get_data. 
@@ -378,7 +433,9 @@ class MongoDBClient():
         
     def get_df(self, term: str):
         cur_table = self.client[db_name]["index"]
-        hq = cur_table.find_one({"_id": term})
+        hq = cur_table.find_one({"_id": term}, ["doc_count"])
+        if hq == None:
+            return 0
         return hq['doc_count']
         
     def get_doc_intersection(self, terms, 
@@ -571,11 +628,13 @@ class MongoDBClient():
                                             '$lte' : end_date, 
                                         }
                                     }
-                            },{
-                                '$sort': {
-                                    'date': sort_by_date
-                                }
-                            }, {
+                            },
+                            # {
+                            #     '$sort': {
+                            #         'date': sort_by_date
+                            #     }
+                            # }, 
+                            {
                                 '$limit': topN
                             }, {
                                 '$project': {
@@ -640,9 +699,34 @@ if __name__ == "__main__":
     #                     "$lt": datetime.datetime(2021, 12,30) }},
     #         fields =  ['title', 'abstract','authors', 'url', 'date'], 
     #         sort_by_time= 1,
-    #                     limit=25)
+    #         limit=25)
 
     # print(time.time() - s)
 
     # for data in cur:
     #     print(data["date"])
+
+
+    # import time
+    # import datetime
+    # s= time.time()
+    # res = client.get_doc_intersection(terms="magdy", index_table='a_index', topN=1000, 
+    #     start_date=datetime.datetime(2021, 1,1), end_date=datetime.datetime(2021, 12,30))
+    # print(time.time() - s, len(res), res)
+
+    # s= time.time()
+    # res = client.get_doc_from_index(term="magdy", index_table='a_index')
+    # print(time.time() - s, len(res), res[0])
+
+
+    print(client.get_df("19"))
+
+
+    import time
+    import datetime
+    s= time.time()
+    res = client.order_preserved_get_data(id_list= ["arxiv-0704.0012", "arxiv-0704.0001"],
+        fields=["title", "date", "authors"], start_date=datetime.datetime(1997, 1,1), 
+        end_date=datetime.datetime(2021, 12,30))
+
+    print(time.time() - s, len(res), res)
