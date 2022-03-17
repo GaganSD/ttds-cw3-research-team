@@ -30,8 +30,10 @@ function App() {
 
   const [search, setSearch] = React.useState('');
   const showPageButton = React.useRef(false);
-  const pageNum = React.useRef(1);
-  const resetPageButton = React.useRef(false);
+  const [pagenum, setPageNum] = React.useState(1);
+  const [datasets, setDatasets] = React.useState(false);
+  const [noquery, setNoQuery] = React.useState(false);
+  const [gobackbuttondisabled, setGoBackButtonDisabled] = React.useState(true);
   const [json_results, setJsonResults] = React.useState({Results:[]});
   const [json_query_expansion, setJsonQE] = React.useState({QEResults:[]});
   const label = { inputProps: { 'aria-label': 'Switch demo' } };
@@ -43,7 +45,15 @@ function App() {
     datasets: false,
     pagenum: 1
   });
+  React.useEffect(() =>{
+      if(pagenum === 1){
+          setGoBackButtonDisabled(true);
+      }
+      else{
+          setGoBackButtonDisabled(false);
+      }
 
+  },[pagenum]);
   function getOptions(type,optval){
     if (type === "algorithms"){
       values.current.algorithm = optval;
@@ -66,17 +76,22 @@ function App() {
 
 
   }
+  const changePageNum = (val) => {
+    setPageNum(pagenum + val);
+  }
 
   const getPoDS = (podval) => {
     if(podval === "Papers"){
       values.current.datasets = false;
+      setDatasets(false);
     }
     else{
 
       values.current.datasets = true;
+      setDatasets(true);
     }
 
-    console.log(values.current.datasets);
+    // console.log(values.current.datasets);
   }
 
   const getPageNum = (pageNum) => {
@@ -87,7 +102,7 @@ function App() {
   }
 
   const date_formatter = (date) =>{
-    console.log("HERE GOES THE DATE");
+    // console.log("HERE GOES THE DATE");
     console.log(date);
     if (date == null){
       return "inf"
@@ -96,9 +111,9 @@ function App() {
       let day = date.getDate() + "-";
       let month = (date.getMonth()+1) + "-";
       let year = date.getFullYear() + "";
-      console.log("HERE GOES THE DATE AGAINNNNNNN");
+      // console.log("HERE GOES THE DATE AGAINNNNNNN");
       console.log(day+month+year);
-      console.log("date over");
+      // console.log("date over");
       return day+month+year;
     }
 
@@ -133,7 +148,11 @@ function App() {
 
   function SearchFunc() {
     showPageButton.current = true;
-    return fetch('http://34.142.71.148:5000/' + create_url(search, values.current)).then(response => response.json()).then(data => {
+    if(search === ""){
+      setNoQuery(true);
+
+    }
+    return fetch('http://127.0.0.1:5000/' + create_url(search, values.current)).then(response => response.json()).then(data => {
       setJsonResults(data);
     });
   }
@@ -237,11 +256,6 @@ function App() {
     setValue2(newValue);
   };
 
-  const resetPageButtonFunc = () => {
-    resetPageButton.current = true;
-    resetPageButton.current = false;
-
-  }
 
   return (
     <div className="App" style={{
@@ -261,7 +275,7 @@ function App() {
           parentCallback={TextEntered}
         />
       </div>
-      <SwipeableTemporaryDrawer hysteresis="0.52" parentCallback={getOptions}/>
+      <SwipeableTemporaryDrawer hysteresis="0.52" parentCallback={getOptions} datasets={datasets}/>
       <div>
         {json_query_expansion.QEResults.map(curr_elem => {
           return <Box>{curr_elem}</Box>;
@@ -276,7 +290,10 @@ function App() {
       }}>
         <ButtonGroup variant="contained" aria-label="outlined primary button group">
           <SearchButton parentCallback={() =>{
-            // resetPageButtonFunc();
+            console.log("yes");
+            setPageNum(1);
+            setGoBackButtonDisabled(true);
+            console.log(pagenum);
             SearchFunc();
           }} />
           <QEButton parentCallback={QueryExpansion} />
@@ -313,7 +330,7 @@ function App() {
     <div style={{
       marginBottom : "2 em"
     }}> 
-      <PageButton show = {showPageButton.current} parentCallback={getPageNum} reRender = {resetPageButton.current}/>
+      <PageButton pagenum = {pagenum} disableback = {gobackbuttondisabled} show = {showPageButton.current} sexyProp={setPageNum}/>
     </div>
 
     </div>
