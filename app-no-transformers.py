@@ -8,12 +8,11 @@
 from collections import defaultdict
 from flask import Flask, request
 from flask_cors import CORS
-from sentence_transformers import SentenceTransformer
+# from sentence_transformers import SentenceTransformer
 from infra.LRUCache import LRUCache
 import datetime
-import time
 import heapq
-import os
+
 import nltk
 from core_algorithms.query_expansion import get_query_expansion
 from core_algorithms.ir_eval.ranking import ranking_query_tfidf as ranking_query_tfidf_dataset
@@ -26,13 +25,13 @@ from core_algorithms.ir_eval.ranking import ranking_query_BM25 as ranking_query_
 from core_algorithms.ir_eval.ranking_paper import ranking_query_BM25 as ranking_query_bm25_paper
 from core_algorithms.mongoDB_API import MongoDBClient
 from core_algorithms.ir_eval.preprocessing import preprocess, author_preprocess
-from core_algorithms.query_expansion import get_query_expansion
+#from core_algorithms.query_expansion import get_query_extension
 from core_algorithms.query_spell_check import query_spell_check
 
 print(0.1)
 import json
 from datetime import datetime
-import scann ## NOTE: Only works on linux machines #NOTE:DL
+# import scann ## NOTE: Only works on linux machines #NOTE:DL
 import pandas as pd
 
 nltk.download('omw-1.4')
@@ -44,18 +43,19 @@ CORS(app)
 
 print(0.2)
 # Load paper index
-searcher = scann.scann_ops_pybind.load_searcher('/home/stylianosc/scann/papers/') #NOTE:DL
+# searcher = scann.scann_ops_pybind.load_searcher('/home/stylianosc/scann/papers/') #NOTE:DL
 print(0.3)
 # Load transformer encoder
-model = SentenceTransformer('all-MiniLM-L6-v2') #NOTE:DL
+# model = SentenceTransformer('all-MiniLM-L6-v2') #NOTE:DL
 print(0.4)
 # Load paper indices
-df_papers = pd.read_csv("/home/stylianosc/scann/papers/df.csv") #NOTE:DL
+# df_papers = pd.read_csv("/home/stylianosc/scann/papers/df.csv") #NOTE:DL
 print(0.5)
 
 client = MongoDBClient("34.142.18.57")
 _preprocessing_cache = LRUCache(1000)
 _results_cache = LRUCache(200)
+print(0.6)
 
 curr_day = datetime.today()
 min_day = datetime.strptime("01-01-1000", '%d-%m-%Y')
@@ -68,6 +68,7 @@ def hello():
 
 @app.route("/<search_query>", methods = ['POST', 'GET'])
 def search_state_machine(search_query):
+    print(1)
     results = {"Results":[{}]}
 
     parameters = _deserialize(request.args['q'])
@@ -90,110 +91,47 @@ def search_state_machine(search_query):
         else:
             results = get_author_papers_results(query=parameters['query'], start_date=parameters["start_date"], end_date=parameters["end_date"])
 
-    elif parameters["algorithm"] == "APPROX_NN":
+    elif parameters["search_type"] == "PHRASE":
+
         if parameters["datasets"]:
-            results = get_approx_nn_datasets_results(query=parameters['query'], 
-                start_date=parameters["start_date"], end_date=parameters["end_date"])
+            results = get_phrase_datasets_results(query=parameters['query'], start_date=parameters["start_date"], end_date=parameters["end_date"])
         else:
-            results = get_approx_nn_papers_results(query=parameters['query'], 
-                start_date=parameters["start_date"], end_date=parameters["end_date"])
+            results = get_phrase_papers_results(query=parameters['query'], start_date=parameters["start_date"], end_date=parameters["end_date"])
 
-    elif parameters["datasets"]:
-        results = get_datasets_results(query=parameters['query'],
-                            type = parameters["search_type"], 
-                            ranking = parameters["algorithm"], 
-                            start_date=parameters["start_date"], 
-                            end_date=parameters["end_date"])
+    elif parameters["search_type"] == "PROXIMITY":
+        if parameters["datasets"]:
+            results = get_proximity_datasets_results(query=parameters['query'], start_date=parameters["start_date"], end_date=parameters["end_date"])
+        else:
+            results = get_proximity_papers_results(query=parameters['query'], start_date=parameters["start_date"], end_date=parameters["end_date"])
 
-    else:
-        results = get_papers_results(query=parameters['query'],
-                            type = parameters["search_type"],
-                            ranking = parameters["algorithm"],  
-                            start_date=parameters["start_date"], 
-                            end_date=parameters["end_date"])
+    elif parameters["search_type"] == "DEFAULT":
+
+        if parameters["datasets"]:
+
+            if parameters["algorithm"] == "APPROX_NN":
+                pass #NOTE:DL #results = get_approx_nn_datasets_results(query=parameters['query'], start_date=parameters["start_date"], end_date=parameters["end_date"])
+            elif parameters["algorithm"] == "BM25":
+                results = get_dataset_results_bm25(query=parameters['query'], start_date=parameters["start_date"], end_date=parameters["end_date"])
+            elif parameters["algorithm"] == "TF_IDF":
+                results = get_tf_idf_dataset_results(query=parameters['query'], start_date=parameters["start_date"], end_date=parameters["end_date"])
+
+        else:
+
+            if parameters["algorithm"] == "APPROX_NN": 
+                pass #NOTE:DL #results = get_approx_nn_papers_results(query=parameters['query'], start_date=parameters["start_date"], end_date=parameters["end_date"])
+            elif parameters["algorithm"] == "BM25":
+                results = get_papers_results_bm25(query=parameters['query'], start_date=parameters["start_date"], end_date=parameters["end_date"])
+            elif parameters["algorithm"] == "TF_IDF":
+                results = get_paper_results_tf_idf(query=parameters['query'], start_date=parameters["start_date"], end_date=parameters["end_date"])
 
     return results
+
 
 @app.route("/")
 def direct_access_to_backend():
     return "Change PORT to 3000 to access the React frontend!"
 print(0.6)
-
 ######################### Search Functions ########################
-def get_datasets_results(query: str, top_n: int=10, spell_check=True, qe=False, 
-    type :str = "DEFAULT", ranking: str = "TF_IDF", 
-    start_date:datetime = min_day, end_date:datetime = curr_day) -> dict:
-
-    if spell_check:
-        query = ' '.join(query_spell_check(query))
-    if qe:
-        query = query + ' ' + ' '.join(get_query_expansion(query))
-    query = preprocess(query,True, True) # stemming, removing stopwords
-    query_params = {'query': query}
-    
-    kaggle_df = pd.read_csv('core_algorithms/ir_eval/kaggle_dataset_df_page500.csv')
-    kaggle_df['Source'] = 'Kaggle'
-    paperwithcode_df = pd.read_csv('core_algorithms/ir_eval/paperwithcode_df.csv')
-    paperwithcode_df['Source'] = 'Paper_with_code'
-
-    df = pd.concat([kaggle_df, paperwithcode_df])
-    df = df.reset_index(drop=True)
-    
-    if type == "DEFAULT":
-        if ranking == "TF_IDF":
-            scores = ranking_query_tfidf_dataset(query_params)
-        else:
-            scores = ranking_query_bm25_dataset(query_params)
-        outputs = [i[0] for i in scores[:top_n]]
-
-    elif type == "PHRASE":
-        outputs = phrase_search_dataset(query_params, start_time=time.time()) # return: list of ids of paper
-    elif type == "PROXIMITY":
-        outputs = proximity_search_dataset(query_params,  proximity=10) # return: list of ids of paper
-    
-    print(len(outputs))
-    output_dict = {"Results":[]}
-    for result in outputs[:top_n]:
-        output = df.iloc[result][['title','subtitle','description']].to_dict()
-        output_dict['Results'].append(output)
-
-    print(len(output_dict['Results']))
-
-    return output_dict
-
-def get_papers_results(query: str, top_n: int=10, spell_check=True, qe=False, 
-    type :str = "DEFAULT", ranking: str = "TF_IDF", 
-    start_date:datetime = min_day, end_date:datetime = curr_day) -> dict:
-
-    if spell_check:
-        query = ' '.join(query_spell_check(query))
-    if qe:
-        query = query + ' ' + ' '.join(get_query_expansion(query))
-
-    query = _preprocess_query(query, True, True) # stemming, removing stopwords
-    query_params = {'query': query}
-
-    if type == "DEFAULT":
-        if ranking == "TF_IDF":
-            scores = ranking_query_tfidf_paper(query_params, client)
-        else:
-            scores = ranking_query_bm25_paper(query_params, client)
-        outputs = [i[0] for i in scores[:top_n]]
-    elif type == "PHRASE":
-        outputs = phrase_search_paper(query_params, client, start_time=time.time()) # return: list of ids of paper
-    elif type == "PROXIMITY":
-        outputs = proximity_search_paper(query_params, client, proximity=10)
-
-    output_dict = {}
-
-    temp_result = list(client.order_preserved_get_data(id_list= outputs,
-        fields=['title', 'abstract','authors', 'url', 'date']))
-    
-    for result in temp_result:
-        result["date"] = result["date"].strftime("%m/%d/%Y")
-    output_dict["Results"] = temp_result
-   
-    return output_dict
 
 def get_author_papers_results(query: str, top_n: int=100, preprocess: bool=True, start_date:datetime = min_day, end_date:datetime = curr_day) -> dict:
     '''
@@ -259,7 +197,7 @@ def get_phrase_datasets_results(query: str, top_n: int=10, spell_check=True,qe=F
     """
     original_query = query
     if qe:
-        query = query + ' ' + ' '.join(get_query_expansion(query))
+        query = query + ' ' + ' '.join(get_query_extension(query))
     query = preprocess(query,True, True) # stemming, removing stopwords #TODO
     query_params = {'query': query}
 
@@ -294,10 +232,10 @@ def get_phrase_papers_results(query: str, top_n: int=10, spell_check=True,qe=Fal
     """
     original_query = query
     if qe:
-        query = query + ' ' + ' '.join(get_query_expansion(query))
+        query = query + ' ' + ' '.join(get_query_extension(query))
     query = preprocess(query,True, True) # stemming, removing stopwords
     query_params = {'query': query}
-    outputs = phrase_search_paper(query_params, client, start_time=time.time()) # return: list of ids of paper
+    outputs = phrase_search_paper(query_params, client) # return: list of ids of paper
     if spell_check&(len(outputs)< 25):
         new_query = ' '.join(query_spell_check(original_query))
         new_query = preprocess(new_query)
@@ -319,7 +257,7 @@ def get_proximity_datasets_results(query: str, proximity: int=10, top_n: int=10,
     """
     original_query = query
     if qe:
-        query = query + ' ' + ' '.join(get_query_expansion(query))
+        query = query + ' ' + ' '.join(get_query_extension(query))
     query = preprocess(query,True, True) # stemming, removing stopwords
     query_params = {'query': query}
     
@@ -344,34 +282,6 @@ def get_proximity_datasets_results(query: str, proximity: int=10, top_n: int=10,
     return output_dict
 
 
-def get_proximity_datasets_results(query: str, proximity: int=10, top_n: int=10, spell_check=True,qe=False, start_date:datetime = min_day, end_date:datetime = curr_day) -> dict:
-    """
-    Uses proximity search, not ranking algorithm
-    Input: query (type: string)
-    Output: search results (dict)
-    """
-    if spell_check:
-        query = ' '.join(query_spell_check(query))
-    if qe:
-        query = query + ' ' + ' '.join(get_query_expansion(query))
-    query = _preprocess_query(query,True, True) # stemming, removing stopwords
-    query_params = {'query': query}
-    
-    kaggle_df = pd.read_csv('core_algorithms/ir_eval/kaggle_dataset_df_page500.csv')
-    kaggle_df['Source'] = 'Kaggle'
-    paperwithcode_df = pd.read_csv('core_algorithms/ir_eval/paperwithcode_df.csv')
-    paperwithcode_df['Source'] = 'Paper_with_code'
-    df = pd.concat([kaggle_df, paperwithcode_df])
-    df = df.reset_index(drop=True)
-    
-    outputs = proximity_search_dataset(query_params, proximity=proximity) # return: list of ids of paper
-    output_dict = {"Results":[]}
-    for result in outputs[:top_n]:
-        output = df.iloc[result][['title','subtitle','description']].to_dict()
-        output_dict['Results'].append(output)
-
-    return output_dict
-
 
 def get_proximity_papers_results(query: str, proximity: int=10, top_n: int=10, spell_check=True,qe=False, start_date:datetime = min_day, end_date:datetime = curr_day) -> dict:
     """
@@ -382,7 +292,7 @@ def get_proximity_papers_results(query: str, proximity: int=10, top_n: int=10, s
     """
     original_query = query
     if qe:
-        query = query + ' ' + ' '.join(get_query_expansion(query))
+        query = query + ' ' + ' '.join(get_query_extension(query))
     query = _preprocess_query(query,True, True) # stemming, removing stopwords
     query_params = {'query': query}
     outputs = proximity_search_paper(query_params, client, proximity=proximity) # return: list of ids of paper
@@ -398,23 +308,23 @@ def get_proximity_papers_results(query: str, proximity: int=10, top_n: int=10, s
     output_dict["Results"] = [temp_result[i] for i in outputs[:top_n]]
     
     return output_dict
-#NOTE:DL
-def get_approx_nn_datasets_results(query: str, top_n: int=100, start_date:datetime = min_day, end_date:datetime = curr_day) -> dict:
-    """
-    Input: query (type: string)
-    Output: search results (dict)
-    """
-    query = model.encode(query, convert_to_tensor=True)
-    neighbors, distances = searcher_dataset.search(query, final_num_neighbors=1000)
+# #NOTE:DL
+# def get_approx_nn_datasets_results(query: str, top_n: int=100, start_date:datetime = min_day, end_date:datetime = curr_day) -> dict:
+#     """
+#     Input: query (type: string)
+#     Output: search results (dict)
+#     """
+#     query = model.encode(query, convert_to_tensor=True)
+#     neighbors, distances = searcher_dataset.search(query, final_num_neighbors=1000)
 
-    output_dict = {}
-    columns = ['title','subtitle','description', 'url']
-    output_dict["Results"] = [df_datasets.iloc[i][columns].to_dict() for i in neighbors[:top_n]]
+#     output_dict = {}
+#     columns = ['title','subtitle','description', 'url']
+#     output_dict["Results"] = [df_datasets.iloc[i][columns].to_dict() for i in neighbors[:top_n]]
     
-    return output_dict
+#     return output_dict
 
 
-def get_dataset_results_bm25(query: str, top_n: int=10, spell_check=True,qe=False, start_date:datetime = min_day, end_date:datetime = curr_day) -> dict:
+def get_dataset_results_bm25(query: str, top_n: int=10, spell_check=True,qe=True, start_date:datetime = min_day, end_date:datetime = curr_day) -> dict:
     """
     This is used when the user provides the query & wants to query different databases.
     Input: query (type: string)
@@ -433,7 +343,7 @@ def get_dataset_results_bm25(query: str, top_n: int=10, spell_check=True,qe=Fals
     """
     original_query = query
     if qe:
-        query = query + ' ' + ' '.join(get_query_expansion(query))
+        query = query + ' ' + ' '.join(get_query_extension(query))
     query = _preprocess_query(query,True, True) # stemming, removing stopwords
     query_params = {'query': query}
     scores = ranking_query_bm25_dataset(query_params)
@@ -459,7 +369,7 @@ def get_dataset_results_bm25(query: str, top_n: int=10, spell_check=True,qe=Fals
 
 
 
-def get_tf_idf_dataset_results(query: str, top_n: int=10, spell_check=True,qe=False, start_date:datetime = min_day, end_date:datetime = curr_day) -> dict:
+def get_tf_idf_dataset_results(query: str, top_n: int=10, spell_check=True,qe=True, start_date:datetime = min_day, end_date:datetime = curr_day) -> dict:
     """
     This is used when the user provides the query & wants to query different databases.
     Input: query (type: string)
@@ -478,7 +388,7 @@ def get_tf_idf_dataset_results(query: str, top_n: int=10, spell_check=True,qe=Fa
     """
     original_query = query
     if qe:
-        query = query + ' ' + ' '.join(get_query_expansion(query))
+        query = query + ' ' + ' '.join(get_query_extension(query))
     query = _preprocess_query(query,True, True) # stemming, removing stopwords
     query_params = {'query': query}
     scores = ranking_query_tfidf_dataset(query_params)
@@ -503,34 +413,34 @@ def get_tf_idf_dataset_results(query: str, top_n: int=10, spell_check=True,qe=Fa
     return output_dict
 
 
-#NOTE:DL
-def get_approx_nn_papers_results(query: str, top_n: int=10, start_date:datetime = min_day, end_date:datetime = curr_day) -> dict:
-    """
-    This is used when the user provides the query & wants to query different papers.
-    Input: query (type: string)
-    Example: "covid" or "covid vaccine"
+# #NOTE:DL
+# def get_approx_nn_papers_results(query: str, top_n: int=10, start_date:datetime = min_day, end_date:datetime = curr_day) -> dict:
+#     """
+#     This is used when the user provides the query & wants to query different papers.
+#     Input: query (type: string)
+#     Example: "covid" or "covid vaccine"
 
-    Output: Dictionary (HashMap)
-    Format:
-    {
-        title: string,
-        abstract/description: string,
-        authors: array of strings or empty array,
-        url: string
-        ...
-        any other information
-    } 
-    """
-    query = model.encode(query, convert_to_tensor=True)
-    neighbors, distances = searcher.search(query, final_num_neighbors=100)
+#     Output: Dictionary (HashMap)
+#     Format:
+#     {
+#         title: string,
+#         abstract/description: string,
+#         authors: array of strings or empty array,
+#         url: string
+#         ...
+#         any other information
+#     } 
+#     """
+#     query = model.encode(query, convert_to_tensor=True)
+#     neighbors, distances = searcher.search(query, final_num_neighbors=100)
 
-    output_dict = {}
-    temp_ids = [str(df_papers.iloc[i]._id) for i in neighbors[:top_n]]
-    temp_result = list(client.get_data('paper', {'_id':{"$in" : temp_ids}}, ['title', 'abstract','authors', 'url', 'date']))
-    temp_result = {i['_id'] : i for i in temp_result}
-    output_dict["Results"] = [temp_result[i] for i in temp_ids]
+#     output_dict = {}
+#     temp_ids = [str(df_papers.iloc[i]._id) for i in neighbors[:top_n]]
+#     temp_result = list(client.get_data('paper', {'_id':{"$in" : temp_ids}}, ['title', 'abstract','authors', 'url', 'date']))
+#     temp_result = {i['_id'] : i for i in temp_result}
+#     output_dict["Results"] = [temp_result[i] for i in temp_ids]
     
-    return output_dict
+#     return output_dict
 
 
 def get_papers_results_bm25(query: str, top_n: int=10, spell_check=True,qe=False, start_date:datetime = min_day, end_date:datetime = curr_day) -> dict:
@@ -552,7 +462,7 @@ def get_papers_results_bm25(query: str, top_n: int=10, spell_check=True,qe=False
     """
     original_query = query
     if qe:
-        query = query + ' ' + ' '.join(get_query_expansion(query))
+        query = query + ' ' + ' '.join(get_query_extension(query))
     query = _preprocess_query(query,True, True) # stemming, removing stopwords
     query_params = {'query': query}
     scores = ranking_query_bm25_paper(query_params, client)
@@ -588,8 +498,8 @@ def get_paper_results_tf_idf(query: str, top_n: int=10, spell_check=True,qe=Fals
     """
     original_query = query
     if qe:
-        query = query + ' ' + ' '.join(get_query_expansion(query))
-    query = preprocess(query,True, True) # stemming, removing stopwords
+        query = query + ' ' + ' '.join(get_query_extension(query))
+    query = _preprocess_query(query,True, True) # stemming, removing stopwords
     query_params = {'query': query}
     scores = ranking_query_tfidf_paper(query_params, client)
     output_dict = {}

@@ -81,6 +81,7 @@ export default function SwipeableTemporaryDrawer(props) {
       eventtype = "date";
     }
     if(eventtype === "radio"){
+      console.log(props.datasets);
       if(e.target.name === "algorithmbuttons"){
         setRadioChoiceAlgorithm(e.target.value);
       }
@@ -142,7 +143,7 @@ export default function SwipeableTemporaryDrawer(props) {
               name = "algorithmbuttons"
               onChange={handleChange}>
 
-                <FormControlLabel control={<Radio/>}  label="Approximate NN" value="APPROX_NN" />
+                <FormControlLabel control={<Radio/>}  label="Approximate Nearest Neighbours" value="APPROX_NN" />
                 <FormControlLabel control={<Radio/>} label="BM25" value="BM25"/>
                 <FormControlLabel control={<Radio/>}  label="TF-IDF" value="TF_IDF"/>
 
@@ -167,7 +168,7 @@ export default function SwipeableTemporaryDrawer(props) {
                 <FormControlLabel control={<Radio/>}  label="Default" value="DEFAULT" />
                 <FormControlLabel control={<Radio/>} label="Proximity Search" value="PROXIMITY"/>
                 <FormControlLabel control={<Radio/>}  label="Phrase Search" value="PHRASE"/>
-                <FormControlLabel control={<Radio/>} label="Author Search" value="AUTHOR"/>
+                <FormControlLabel control={<Radio/>} label="Author Search" value="AUTHOR" disabled={props.datasets}/>
               
 
               </RadioGroup>
@@ -204,7 +205,7 @@ export default function SwipeableTemporaryDrawer(props) {
               <Stack spacing={3}>
                 <DesktopDatePicker
                 label="From"
-                inputFormat="MM/dd/yyyy"
+                inputFormat="dd/MM/yyyy"
                 value={fromDate}
                 onChange={(newfromvalue) => {
                   setFromDate(newfromvalue);
@@ -215,7 +216,7 @@ export default function SwipeableTemporaryDrawer(props) {
                 />
                 <DesktopDatePicker
                 label="To"
-                inputFormat="MM/dd/yyyy"
+                inputFormat="dd/MM/yyyy"
                 value={toDate}
                 onChange={(newtovalue) => {
                   setToDate(newtovalue);

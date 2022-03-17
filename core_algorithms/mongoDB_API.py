@@ -163,7 +163,6 @@ class MongoDBClient():
             
         return cursor
     
-
     def order_preserved_get_data(self, id_list, fields, 
         start_date = datetime.datetime(1900, 1,1), 
         end_date = datetime.datetime(2030, 1,1),
@@ -212,16 +211,8 @@ class MongoDBClient():
             ans.append(res)
         
         return ans
-        # num = cur_table.count_documents(filter)
-
-        # if sort_by_time != 0:
-        #     cursor.sort('date', sort_by_time)
-        # try:
-        #     cursor[0]
-        # except IndexError as e:
-        #     logging.warning("can't find documents")
-            
-
+    
+    
     def get_one(self, data_type: str, filter: dict, fields: list):
         """
         The method to get ONLY ONE data from db. should be more efficient than get_data. 
@@ -434,8 +425,7 @@ class MongoDBClient():
     def get_df(self, term: str):
         cur_table = self.client[db_name]["index"]
         hq = cur_table.find_one({"_id": term}, ["doc_count"])
-        if hq == None:
-            return 0
+        if not hq: return 0
         return hq['doc_count']
         
     def get_doc_intersection(self, terms, 

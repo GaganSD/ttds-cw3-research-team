@@ -468,7 +468,7 @@ def authors_extensions(query: str, top_n: int=100, docs_searched: int=10, author
 #### If the functions are working as expected, these functions should work.
 
 # query1 = {'query': "covid pandemic".split()}
-query1 = "vision transformer"
+query1 = "cnn"
 print(query1)
 print('Phrase search for dataset')
 for i in get_phrase_datasets_results(query1)['Results']:
