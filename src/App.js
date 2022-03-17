@@ -16,6 +16,7 @@ import Switch from '@mui/material/Switch';
 import Link from '@mui/material/Link';
 import SwipeableTemporaryDrawer from './components/advancedOptions';
 import PaperOrDS from './components/datasetorpaper';
+import Alert from '@mui/material/Alert';
 
 import HelpButton from './components/HelpButton';
 import Modal from '@mui/base/ModalUnstyled';
@@ -32,9 +33,10 @@ function App() {
   const showPageButton = React.useRef(false);
   const [pagenum, setPageNum] = React.useState(1);
   const [datasets, setDatasets] = React.useState(false);
-  const [noquery, setNoQuery] = React.useState(false);
+  const [badquery, setBadQuery] = React.useState(false);
+  const [emptyresults, setEmptyResults] = React.useState(false);
   const [gobackbuttondisabled, setGoBackButtonDisabled] = React.useState(true);
-  const [json_results, setJsonResults] = React.useState({Results:[]});
+  const [json_results, setJsonResults] = React.useState({"Results":[]});
   const [json_query_expansion, setJsonQE] = React.useState({QEResults:[]});
   const label = { inputProps: { 'aria-label': 'Switch demo' } };
   const values = React.useRef({
@@ -147,14 +149,28 @@ function App() {
   }
 
   function SearchFunc() {
-    showPageButton.current = true;
-    if(search === ""){
-      setNoQuery(true);
+    if( !/^[0-9a-zA-Z\s]*$/.test(search)){
+      console.log("badquery");
+      setJsonResults({"Results": []})
+      showPageButton.current = false;
+      setBadQuery(true);
 
     }
-    return fetch('http://127.0.0.1:5000/' + create_url(search, values.current)).then(response => response.json()).then(data => {
-      setJsonResults(data);
-    });
+    else{
+      return fetch('http://127.0.0.1:5000/' + create_url(search, values.current)).then(response => response.json()).then(data => {
+        if(data.Results.length === 0){
+            console.log("empty");
+            setEmptyResults(true);
+            console.log(emptyresults)
+        }
+        else{
+          setBadQuery(false);
+          setEmptyResults(false);
+          showPageButton.current = true;
+          setJsonResults(data);
+        }
+      });
+    }
   }
 
   function QueryExpansion() {
@@ -274,10 +290,25 @@ function App() {
       <div className='Search' style={{
         width:'50%'
       }}>
-        <SearchField
+        { badquery ? <SearchField
           style={{ maxWidth: '80%' }}
           parentCallback={TextEntered}
+          error={true}
+          text = {"Bad Query Was Received"}
         />
+        : emptyresults ? <SearchField
+            style = {{maxWidth:'80%'}}
+            parentCallback={TextEntered}
+            error={true}
+            text = {"No Results were shown"}
+            />
+        : <SearchField
+            style={{maxWidth : '80%'}}
+            parentCallback={TextEntered}
+            error={false}
+            text = {"Query"}
+          />
+        }
       </div>
       <SwipeableTemporaryDrawer hysteresis="0.52" parentCallback={getOptions} datasets={datasets}/>
       <div>
@@ -336,6 +367,16 @@ function App() {
     }}> 
       <PageButton pagenum = {pagenum} disableback = {gobackbuttondisabled} show = {showPageButton.current} sexyProp={setPageNum}/>
     </div>
+    {/* <div style={{
+      position: 'fixed',
+      bottom: 0,
+
+      
+    }}>
+      { emptyresults ? <Alert severity="warning">No results were found</Alert> : null}
+      {badquery ? <Alert severity="warning">Bad Search Query</Alert> : null}
+    </div>
+   */}
 
     </div>
   )}

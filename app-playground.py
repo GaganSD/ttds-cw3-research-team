@@ -2,6 +2,9 @@
 from flask import Flask, request
 from flask_cors import CORS
 from datetime import datetime
+import json
+json_boi = open("example.json")
+test_json = json.load(json_boi)
 
 print(1)
 
@@ -15,12 +18,14 @@ def hello():
 
 @app.route("/test")
 def test():
-    return {"Results" :[]}
+    return test_json
 
 @app.route('/<query>', methods=['GET', 'POST']) 
 def run_this_bad_boi(query: str):
     print("bad brokne", _deserialize(request.args['q']))
     return {"Results":[]}
+    # return test_json
+
 
 def _deserialize(query: str) -> dict:
     print("ori", query)
