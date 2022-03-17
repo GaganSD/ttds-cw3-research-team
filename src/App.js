@@ -55,6 +55,8 @@ function App() {
           setGoBackButtonDisabled(false);
       }
 
+      values.current.pagenum = pagenum;
+
   },[pagenum]);
   function getOptions(type,optval){
     if (type === "algorithms"){
@@ -164,6 +166,8 @@ function App() {
             console.log(emptyresults)
         }
         else{
+          console.log("search complete");
+          console.log(create_url(search, values.current));
           setBadQuery(false);
           setEmptyResults(false);
           showPageButton.current = true;
@@ -363,9 +367,9 @@ function App() {
     })}
     </div>
     <div style={{
-      marginBottom : "2 em"
+      marginBottom: ".5em"
     }}> 
-      <PageButton pagenum = {pagenum} disableback = {gobackbuttondisabled} show = {showPageButton.current} sexyProp={setPageNum}/>
+      <PageButton pagenum = {pagenum} disableback = {gobackbuttondisabled} show = {showPageButton.current} sexyProp={setPageNum} searchCallback={SearchFunc}/>
     </div>
     {/* <div style={{
       position: 'fixed',
