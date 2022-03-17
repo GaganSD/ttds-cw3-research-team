@@ -154,15 +154,14 @@ class MongoDBClient():
                                     limit = limit)
         # num = cur_table.count_documents(filter)
 
-        if sort_by_time != 0:
-            cursor.sort('date', sort_by_time)
+        # if sort_by_time != 0:
+        #     cursor.sort('date', sort_by_time)
         try:
             cursor[0]
         except IndexError as e:
             logging.warning("can't find documents")
             
         return cursor
-    
     
     def order_preserved_get_data(self, id_list, fields, 
         start_date = datetime.datetime(1900, 1,1), 
@@ -619,11 +618,13 @@ class MongoDBClient():
                                             '$lte' : end_date, 
                                         }
                                     }
-                            },{
-                                '$sort': {
-                                    'date': sort_by_date
-                                }
-                            }, {
+                            },
+                            # {
+                            #     '$sort': {
+                            #         'date': sort_by_date
+                            #     }
+                            # }, 
+                            {
                                 '$limit': topN
                             }, {
                                 '$project': {
@@ -672,20 +673,50 @@ if __name__ == "__main__":
     # res = client.get_doc_from_index("data")
     # print(len(res), res[100])
 
-    # import datetime
     # import time
+    # import datetime
     # s= time.time()
-    # res = client.get_doc_intersection(["covid", "19", "cnn"])
-    # print(time.time() - s, len(res), res[0], res[-1])
+    # res = client.get_doc_intersection(["covid"], 
+    #             start_date = datetime.datetime(2020, 7,1),
+    #             end_date = datetime.datetime(2021, 1,1),
+    #             sort_by_date = 1, topN = 25)
+    # print(time.time() - s, len(res), res)
     # s= time.time()
 
     # cur = client.get_data("paper", 
-    #         {"_id": {"$in":  res}, 
+    #         {"_id": {"$in":  doc_id_list}, 
     #             "date":{"$gt": datetime.datetime(2021, 1,1),
-    #                     "$lt": datetime.datetime(2021, 12,30) }}, 
-    #         ["date"], limit = 1, sort_by_time=-1)
+    #                     "$lt": datetime.datetime(2021, 12,30) }},
+    #         fields =  ['title', 'abstract','authors', 'url', 'date'], 
+    #         sort_by_time= 1,
+    #         limit=25)
 
     # print(time.time() - s)
 
     # for data in cur:
     #     print(data["date"])
+
+
+    # import time
+    # import datetime
+    # s= time.time()
+    # res = client.get_doc_intersection(terms="magdy", index_table='a_index', topN=1000, 
+    #     start_date=datetime.datetime(2021, 1,1), end_date=datetime.datetime(2021, 12,30))
+    # print(time.time() - s, len(res), res)
+
+    # s= time.time()
+    # res = client.get_doc_from_index(term="magdy", index_table='a_index')
+    # print(time.time() - s, len(res), res[0])
+
+
+    print(client.get_df("19"))
+
+
+    import time
+    import datetime
+    s= time.time()
+    res = client.order_preserved_get_data(id_list= ["arxiv-0704.0012", "arxiv-0704.0001"],
+        fields=["title", "date", "authors"], start_date=datetime.datetime(1997, 1,1), 
+        end_date=datetime.datetime(2021, 12,30))
+
+    print(time.time() - s, len(res), res)
