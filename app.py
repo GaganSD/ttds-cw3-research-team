@@ -57,9 +57,9 @@ _preprocessing_cache = LRUCache(1000)
 _results_cache = LRUCache(200)
 print(0.6)
 
-curr_day = datetime.today().strftime('%d/%m/%Y')
+curr_day = datetime.today()
 min_day = datetime.strptime("01-01-1000", '%d-%m-%Y')
-_no_match_sample = {"title": "No Matching Documents Were Found", "abstract": "Try expanding your query with our search suggestion", "url":"", "authors":"","date":curr_day}
+_no_match_sample = {"title": "No Matching Documents Were Found", "abstract": "Try expanding your query with our search suggestion", "url":"", "authors":"","date":curr_day.strftime('%d/%m/%Y')}
 _no_results_dict = {"Results": [_no_match_sample]}
 
 @app.route("/")
@@ -124,7 +124,7 @@ def search_state_machine(search_query):
             elif parameters["algorithm"] == "TF_IDF":
                 results = get_paper_results_tf_idf(query=parameters['query'], start_date=parameters["start_date"], end_date=parameters["end_date"])
 
-    # results = filter_dates(results, parameters["start_date"], parameters["end_date"])
+    results = filter_dates(results, parameters["start_date"], parameters["end_date"])
     return results
 
 
@@ -169,6 +169,26 @@ def get_author_papers_results(query: str, top_n: int=100, preprocess: bool=True,
     output_dict["Results"] = [temp_result[i] for i in temp_ids]
 
     return output_dict
+
+def filter_dates(output: dict={'Results':[]}, start_date:datetime = min_day, end_date:datetime = curr_day):
+    output_dict = {}
+    output_dict['Results'] = [i for i in output['Results'] 
+                            if i['date']>= start_date  and 
+                            i['date'] <= end_date]
+    return output_dict
+
+def authors_extensions(query: str, top_n: int=100, docs_searched: int=10, author_search_result: dict={'Results':[]}) -> dict:
+    '''
+    Call using author_search_result (results of regular author search) to avoid recalculating
+    '''
+    authors  = set(author_preprocess(query))
+    coauthors = [author_preprocess(i['authors'])[:10] for i in author_search_result["Results"][:docs_searched]]
+    merged_coauthors = [item for sublist in coauthors for item in sublist if item not in authors]
+    merged_coauthors = list(dict.fromkeys(merged_coauthors))
+
+    results = get_author_papers_results(merged_coauthors, top_n=100, preprocess=False)
+    
+    return results
 
 def get_phrase_datasets_results(query: str, top_n: int=10, spell_check=True,qe=False, start_date:datetime = min_day, end_date:datetime = curr_day) -> dict:
     """
