@@ -196,8 +196,7 @@ def get_phrase_datasets_results(query: str, top_n: int=10, spell_check=True,qe=F
     Input: query (type: string)
     Output: search results (dict)
     """
-    if spell_check:
-        query = ' '.join(query_spell_check(query))
+    original_query = query
     if qe:
         query = query + ' ' + ' '.join(get_query_extension(query))
     query = preprocess(query,True, True) # stemming, removing stopwords #TODO
@@ -214,6 +213,11 @@ def get_phrase_datasets_results(query: str, top_n: int=10, spell_check=True,qe=F
     df = df.reset_index(drop=True)
 
     outputs = phrase_search_dataset(query_params) # return: list of ids of paper
+    if spell_check&(len(outputs)< 25):
+        new_query = ' '.join(query_spell_check(original_query))
+        new_query = preprocess(new_query)
+        new_query_params = {'query': new_query}
+        outputs = phrase_search_dataset(new_query_params)
     output_dict = {"Results":[]}
     for result in outputs[:top_n]:
         output = df.iloc[result][['title','subtitle','description']].to_dict()
@@ -227,16 +231,18 @@ def get_phrase_papers_results(query: str, top_n: int=10, spell_check=True,qe=Fal
     Input: query (type: string)
     Output: dict
     """
-    if spell_check:
-        query = ' '.join(query_spell_check(query))
+    original_query = query
     if qe:
         query = query + ' ' + ' '.join(get_query_extension(query))
     query = preprocess(query,True, True) # stemming, removing stopwords
     query_params = {'query': query}
     outputs = phrase_search_paper(query_params, client) # return: list of ids of paper
-    
+    if spell_check&(len(outputs)< 25):
+        new_query = ' '.join(query_spell_check(original_query))
+        new_query = preprocess(new_query)
+        new_query_params = {'query': new_query}
+        outputs = phrase_search_paper(new_query_params)
     output_dict = {}
-    
     temp_result = list(client.get_data('paper', {'_id':{"$in" : outputs[:top_n]}}, ['title', 'abstract','authors', 'url', 'date']))
     temp_result = {i['_id'] : i for i in temp_result}
     output_dict["Results"] = [temp_result[i] for i in outputs[:top_n]]
@@ -250,8 +256,7 @@ def get_proximity_datasets_results(query: str, proximity: int=10, top_n: int=10,
     Input: query (type: string)
     Output: search results (dict)
     """
-    if spell_check:
-        query = ' '.join(query_spell_check(query))
+    original_query = query
     if qe:
         query = query + ' ' + ' '.join(get_query_extension(query))
     query = preprocess(query,True, True) # stemming, removing stopwords
@@ -265,6 +270,11 @@ def get_proximity_datasets_results(query: str, proximity: int=10, top_n: int=10,
     df = df.reset_index(drop=True)
     
     outputs = proximity_search_dataset(query_params, proximity=proximity) # return: list of ids of paper
+    if spell_check&(len(outputs)< 25):
+        new_query = ' '.join(query_spell_check(original_query))
+        new_query = preprocess(new_query)
+        new_query_params = {'query': new_query}
+        outputs = proximity_search_dataset(new_query_params, proximity=proximity)
     output_dict = {"Results":[]}
     for result in outputs[:top_n]:
         output = df.iloc[result][['title','subtitle','description']].to_dict()
@@ -272,34 +282,6 @@ def get_proximity_datasets_results(query: str, proximity: int=10, top_n: int=10,
 
     return output_dict
 
-
-def get_proximity_datasets_results(query: str, proximity: int=10, top_n: int=10, spell_check=True,qe=False, start_date:datetime = min_day, end_date:datetime = curr_day) -> dict:
-    """
-    Uses proximity search, not ranking algorithm
-    Input: query (type: string)
-    Output: search results (dict)
-    """
-    if spell_check:
-        query = ' '.join(query_spell_check(query))
-    if qe:
-        query = query + ' ' + ' '.join(get_query_extension(query))
-    query = _preprocess_query(query,True, True) # stemming, removing stopwords
-    query_params = {'query': query}
-    
-    kaggle_df = pd.read_csv('core_algorithms/ir_eval/kaggle_dataset_df_page500.csv')
-    kaggle_df['Source'] = 'Kaggle'
-    paperwithcode_df = pd.read_csv('core_algorithms/ir_eval/paperwithcode_df.csv')
-    paperwithcode_df['Source'] = 'Paper_with_code'
-    df = pd.concat([kaggle_df, paperwithcode_df])
-    df = df.reset_index(drop=True)
-    
-    outputs = proximity_search_dataset(query_params, proximity=proximity) # return: list of ids of paper
-    output_dict = {"Results":[]}
-    for result in outputs[:top_n]:
-        output = df.iloc[result][['title','subtitle','description']].to_dict()
-        output_dict['Results'].append(output)
-
-    return output_dict
 
 
 def get_proximity_papers_results(query: str, proximity: int=10, top_n: int=10, spell_check=True,qe=False, start_date:datetime = min_day, end_date:datetime = curr_day) -> dict:
@@ -309,14 +291,17 @@ def get_proximity_papers_results(query: str, proximity: int=10, top_n: int=10, s
     Input: query (type: string)
     Output: search results (dict)
     """
-    if spell_check:
-        query = ' '.join(query_spell_check(query))
+    original_query = query
     if qe:
         query = query + ' ' + ' '.join(get_query_extension(query))
     query = _preprocess_query(query,True, True) # stemming, removing stopwords
     query_params = {'query': query}
     outputs = proximity_search_paper(query_params, client, proximity=proximity) # return: list of ids of paper
-    
+    if spell_check&(len(outputs)< 25):
+        new_query = ' '.join(query_spell_check(original_query))
+        new_query = preprocess(new_query)
+        new_query_params = {'query': new_query}
+        outputs = proximity_search_paper(new_query_params, proximity=proximity)
     output_dict = {}
 
     temp_result = list(client.get_data('paper', {'_id':{"$in" : outputs[:top_n]}}, ['title', 'abstract','authors', 'url', 'date']))
