@@ -303,7 +303,9 @@ function App() {
       marginRight: '6em'
     }}>
     <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
+      <>
         <GlobalStyles />
+
 
 
     <img src={research_logo} width="300em" height="150em"/>
@@ -338,7 +340,6 @@ function App() {
           return <Box>{curr_elem}</Box>;
         })}
       </div>
-
 
 
       <div className = 'Searchoptions' style={{
@@ -397,8 +398,8 @@ function App() {
       {badquery ? <Alert severity="warning">Bad Search Query</Alert> : null}
     </div>
    */}
+           </>
     </ThemeProvider>
-
     </div>
   )}
 

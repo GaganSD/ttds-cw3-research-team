@@ -23,7 +23,7 @@ def test():
 @app.route('/<query>', methods=['GET', 'POST']) 
 def run_this_bad_boi(query: str):
     print("bad brokne", _deserialize(request.args['q']))
-    return {"Results":[]}
+    return test_json#{"Results":[]}
     # return test_json
 
 
