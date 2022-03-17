@@ -21,7 +21,7 @@ export default function DsPaperRadio(props) {
         }}
       >
         <FormControlLabel value="Papers" control={<Radio />} label="Papers" />
-        <FormControlLabel value="DataSets" control={<Radio />} label="DataSets" />
+        <FormControlLabel value="DataSets" control={<Radio />} label="Datasets" />
       </RadioGroup>
     </FormControl>
   );

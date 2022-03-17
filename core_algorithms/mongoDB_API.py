@@ -414,9 +414,7 @@ class MongoDBClient():
             {
                 '$match': {
                     '_id': {
-                        '$in': [
-                            'covid'
-                        ]
+                        '$in': terms
                     }
                 }
             }, {

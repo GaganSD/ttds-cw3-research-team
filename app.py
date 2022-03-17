@@ -11,7 +11,9 @@ from flask_cors import CORS
 from sentence_transformers import SentenceTransformer
 from infra.LRUCache import LRUCache
 import datetime
+import heapq
 
+import nltk
 from core_algorithms.query_expansion import get_query_expansion
 from core_algorithms.ir_eval.ranking import ranking_query_tfidf as ranking_query_tfidf_dataset
 from core_algorithms.ir_eval.ranking_paper import ranking_query_tfidf as ranking_query_tfidf_paper
@@ -23,49 +25,55 @@ from core_algorithms.ir_eval.ranking import ranking_query_BM25 as ranking_query_
 from core_algorithms.ir_eval.ranking_paper import ranking_query_BM25 as ranking_query_bm25_paper
 from core_algorithms.mongoDB_API import MongoDBClient
 from core_algorithms.ir_eval.preprocessing import preprocess, author_preprocess
-from core_algorithms.query_expansion import get_query_extension
+#from core_algorithms.query_expansion import get_query_extension
 from core_algorithms.query_spell_check import query_spell_check
 
-
+print(0.1)
 import json
 from datetime import datetime
 import scann ## NOTE: Only works on linux machines
 import pandas as pd
 
+nltk.download('omw-1.4')
+
+
 # Create Flask app
 app = Flask(__name__)
 CORS(app)
 
+print(0.2)
 # Load paper index
 searcher = scann.scann_ops_pybind.load_searcher('/home/stylianosc/scann/papers/')
-
+print(0.3)
 # Load transformer encoder
 model = SentenceTransformer('all-MiniLM-L6-v2')
-
+print(0.4)
 # Load paper indices
 df_papers = pd.read_csv("/home/stylianosc/scann/papers/df.csv")
-
+print(0.5)
 
 client = MongoDBClient("34.142.18.57")
 _preprocessing_cache = LRUCache(1000)
 _results_cache = LRUCache(200)
-
+print(0.6)
 
 curr_day = datetime.today().strftime('%d/%m/%Y')
 min_day = datetime.strptime("01-01-1000", '%d-%m-%Y')
-_no_match_sample = {"title": "No Matching Documents Were Found", "abstract": "Try expanding your query with our search suggestion", "url":"", "authors":"","date":_today}
+_no_match_sample = {"title": "No Matching Documents Were Found", "abstract": "Try expanding your query with our search suggestion", "url":"", "authors":"","date":curr_day}
 _no_results_dict = {"Results": [_no_match_sample]}
 
 @app.route("/")
 def hello():
     return "hello"
 
-@app.route("/<query>", methods = ['POST', 'GET'])
+@app.route("/<search_query>", methods = ['POST', 'GET'])
 def search_state_machine(search_query):
+    print(1)
+    results = {"Results":[{}]}
 
-    results = None
-
-    parameters = _deseralize(search_query)
+    parameters = _deserialize(request.args['q'])
+    print(2)
+    print(parameters)
     # {
     # query: search_query : DOME
     # from_date: DD-MM-YYYY (last) : 
@@ -123,7 +131,7 @@ def search_state_machine(search_query):
 @app.route("/")
 def direct_access_to_backend():
     return "Change PORT to 3000 to access the React frontend!"
-
+print(0.6)
 ######################### Search Functions ########################
 
 def get_author_papers_results(query: str, top_n: int=100, preprocess: bool=True, start_date:datetime = min_day, end_date:datetime = curr_day) -> dict:
@@ -297,7 +305,7 @@ def get_proximity_papers_results(query: str, proximity: int=10, top_n: int=10, s
     
     return output_dict
 
-def get_approx_nn_datasets_results(query: str, top_n: int=100) -> dict:
+def get_approx_nn_datasets_results(query: str, top_n: int=100, start_date:datetime = min_day, end_date:datetime = curr_day) -> dict:
     """
     Input: query (type: string)
     Output: search results (dict)

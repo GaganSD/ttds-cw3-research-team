@@ -32,12 +32,12 @@ export default function HelpDialog(props){
                 onClose={handleClose}
                 aria-describedby="alert-dialog-slide-description"
                 >
-                <DialogTitle>{"Get Help with Re-Search?"}</DialogTitle>
+                <DialogTitle>{"Need Help with Re-Search?"}</DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-slide-description">
-                  This search engine allows you to search for research papers as well as datasets. Simply type in your query in the box above and hit "Search Query" afterwards.
-                    Use "Show Suggestions" for spelling correction and make use of the advanced search features (search type, date range, ranking algorithm) to get more refined results! If you want to use dark mode, 
-                  simply toggle the switch above the search bar .
+                  The advanced search features can be used to refine your search, if you have specific requirements (ranking algorithm, search type, date range) in addition to your query in mind! 
+                  If not, leave the options set to their default values and just type your query in the "Query" box, and hit "Search Query" afterwards.
+                  Use "Show Suggestions" for spelling correction suggestions. If you want to use dark mode, simply toggle the switch above the search bar.
                     </DialogContentText>
                 </DialogContent>
 
