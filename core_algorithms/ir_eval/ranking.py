@@ -121,7 +121,7 @@ def proximity_search(query_params, proximity=2, index_path = 'core_algorithms/ir
         if terms[0] not in term_list:
             return list()
         else:
-            return inverted_index[term_list.index(terms[0])]['dataset'].keys()
+            return list(inverted_index[term_list.index(terms[0])]['dataset'].keys())
     for i in range(len(terms)-1):
         term = terms[i]
         term_start_time = time.time()
@@ -184,7 +184,7 @@ def phrase_search(query_params, index_path = 'core_algorithms/ir_eval/last'):
         if terms[0] not in term_list:
             return list()
         else:
-            return inverted_index[term_list.index(terms[0])]['dataset'].keys()
+            return list(inverted_index[term_list.index(terms[0])]['dataset'].keys())
     for i in range(len(terms)-1):
         term1 = terms[i]
         term2 = terms[i+1]

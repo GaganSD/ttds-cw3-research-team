@@ -11,83 +11,126 @@ import Typography from '@mui/material/Typography';
 import Options from './components/options'
 import Box from '@mui/material/Box';
 import research_logo from './logos/Re-Search-logos_transparent.png';
-
+import PageButton from './components/pagebutton';
 import Switch from '@mui/material/Switch';
+import Link from '@mui/material/Link';
 import SwipeableTemporaryDrawer from './components/advancedOptions';
+import PaperOrDS from './components/datasetorpaper';
+
+import HelpButton from './components/HelpButton';
+import Modal from '@mui/base/ModalUnstyled';
+
+import Tab from '@mui/material/Tab';
+import TabPanel from '@mui/lab/TabPanel';
+import TabContext from '@mui/lab/TabContext';
+import TabList from '@mui/lab/TabList';
+import HelpDialog from "./components/helpdialog"
 
 function App() {
 
   const [search, setSearch] = React.useState('');
+  const showPageButton = React.useRef(false);
   const [json_results, setJsonResults] = React.useState({Results:[]});
   const [json_query_expansion, setJsonQE] = React.useState({QEResults:[]});
   const label = { inputProps: { 'aria-label': 'Switch demo' } };
-  let values = {
-    sort_by: "Featured",
-    authors: true,
-    author_text:'',
+  const values = React.useRef({
+    algorithm: "Featured",
+    searchtype: "Default",
     range_from:null,
-    range_to: null
-  };
+    range_to: null,
+    datasets: false
+  });
 
   function getOptions(type,optval){
-    if (type === "sort_by"){
-      values.sort_by = optval;
+    if (type === "algorithms"){
+      values.current.algorithm = optval;
+    }
+    else if (type === "searchtype"){
+      values.current.searchtype = optval;
     }
     else if (type === "author"){
-      values.author_text = optval;
+      values.current.author_text = optval;
     }
     else if (type === "date_from"){
-      values.range_from = optval;
+      values.current.range_from = optval;
     }
     else if (type === "date_to"){
-      values.range_to = optval;
+      values.current.range_to = optval;
     }
 
     console.log(values);
+    console.log(date_formatter(values.current.range_from));
 
 
   }
 
+  const getPoDS = (podval) => {
+    if(podval === "Papers"){
+      values.current.datasets = false;
+    }
+    else{
+
+      values.current.datasets = true;
+    }
+
+    console.log(values.current.datasets);
+  }
+
   const date_formatter = (date) =>{
+    console.log("HERE GOES THE DATE");
+    console.log(date);
     if (date == null){
       return "inf"
     }
     else{
       let day = date.getDate() + "-";
-      let month = date.getMonth() + "-";
-      let year = date.getFullYear() + ""
-
-      return day+month+year
+      let month = (date.getMonth()+1) + "-";
+      let year = date.getFullYear() + "";
+      console.log("HERE GOES THE DATE AGAINNNNNNN");
+      console.log(day+month+year);
+      console.log("date over");
+      return day+month+year;
     }
 
   }
 
   const create_url = (searchq, vals) =>{
     let url = "search?q=";
-    url += searchq.split(" ").join("+");
+    url += SanitizeSearch(searchq).split(" ").join("+");
     url += "/df=";
-    console.log(date_formatter(vals.range_from));
+    // console.log(date_formatter(vals.range_from));
     url += date_formatter(vals.range_from);
     url += "/dt=";
     url += date_formatter(vals.range_to);
-    url += "/scht=";
-    url += vals.author_text.split(" ").join("+");
+    url += "/alg=";
+    url += vals.algorithm.split(" ").join("_");
+    url += "/srchtyp=";
+    url += vals.searchtype.split(" ").join("_");
+    url += "/ds=";
+    url += vals.datasets + "";
     url += "/";
+
 
     return url
 
   }
 
+  function SanitizeSearch(searchval) {
+    searchval.replaceAll("/", " ");
+    return searchval;
+  }
+
   function SearchFunc() {
-    console.log(create_url(search, values));
-    return fetch('http://127.0.0.1:5000/' + search).then(response => response.json()).then(data => {
+    showPageButton.current = true;
+    return fetch('http://34.142.71.148:5000/' + create_url(search, values.current)).then(response => response.json()).then(data => {
       setJsonResults(data);
     });
   }
 
   function QueryExpansion() {
     
-    return fetch('http://127.0.0.1:5000/QE/' + search).then(response => response.json()).then(data => {
+    console.log(create_url(search, values.current));
+    return fetch('http://34.142.71.148:5000/QE/' + search).then(response => response.json()).then(data => {
       setJsonQE(data);
     });
   }
@@ -133,10 +176,14 @@ function App() {
   function abstractgenerator(text) {
 
     if (text!=""){
-      if (isMobile){
-        return text.substring(0,100)+"...";
+      if (isMobile){ 
+        if (text.length>100){
+          return text.substring(0,100)+"...";
+        }    
       } else {
+        if (text.length>500){
         return text.substring(0,500)+"...";
+        }
       }
     }
   }
@@ -150,7 +197,6 @@ function App() {
       return "Author: "+ authors;
     }
   }
-
 
   function BasicSwitches() {
     return (
@@ -168,18 +214,33 @@ function App() {
     setSearch(searchval);
   }
 
+  const [open, setOpen] = React.useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const [value2, setValue2] = React.useState('1');
+
+  const handleTabChange = (event, newValue) => {
+    setValue2(newValue);
+  };
+
   return (
     <div className="App" style={{
-
-      marginLeft: '5em',
-      marginRight: '5em'
+      marginLeft: '6em',
+      marginRight: '6em'
     }}>
     <div className="toggle_switch" float="center" id="toggle_switch"></div>
 
     <img src={research_logo} width="300em" height="150em"/>
 
     <UseSwitchesCustom  float="right" parentCallback={BasicSwitches} />
-      <div className='SearchOptions' style={{
+      <div className='Search' style={{
         width:'50%'
       }}>
         <SearchField
@@ -187,19 +248,32 @@ function App() {
           parentCallback={TextEntered}
         />
       </div>
-      <SwipeableTemporaryDrawer parentCallback={getOptions}/>
+      <SwipeableTemporaryDrawer hysteresis="0.52" parentCallback={getOptions}/>
       <div>
         {json_query_expansion.QEResults.map(curr_elem => {
           return <Box>{curr_elem}</Box>;
         })}
       </div>
 
-      <ButtonGroup variant="contained" aria-label="outlined primary button group">
 
-        <SearchButton parentCallback={SearchFunc} />
-        <QEButton parentCallback={QueryExpansion} />
 
-      </ButtonGroup>
+      <div className = 'Searchoptions' style={{
+        display : "flex",
+        flexDirection : "row"        
+      }}>
+        <ButtonGroup variant="contained" aria-label="outlined primary button group">
+          <SearchButton parentCallback={SearchFunc} />
+          <QEButton parentCallback={QueryExpansion} />
+        </ButtonGroup>
+        <div style = {{
+          marginLeft : "2em"
+        }}>
+          <PaperOrDS parentCallback={getPoDS}/>
+        </div>
+      </div>
+      
+
+
     <div>
 
     {json_results.Results.map(curr_elem => {
@@ -208,7 +282,11 @@ function App() {
 
       return <Box padding={0.2}>
         <p>
-          <p><font color="grey" size="2" face="Tahoma">{curr_elem.url}</font></p>
+  
+          {/* <Breadcrumbs color="grey" size="2" face="Tahoma" separator="›" href="/" aria-label="breadcrumb">
+            {curr_elem.url}
+          </Breadcrumbs> */}
+          <font color="grey" size="2" face="Tahoma">{curr_elem.url}</font><br/><br/>
           <a href={curr_elem.url}><font color="blue" size="5" face="Tahoma">{curr_elem.title}</font></a>
           <p><font color="grey" face="Tahoma">{std_date}</font></p>
           <p><font face="Tahoma">{abstractgenerator(curr_elem.abstract)}</font></p>
@@ -216,6 +294,12 @@ function App() {
         </p></Box>;
     })}
     </div>
+    <div style={{
+      marginBottom : "2 em"
+    }}> 
+      <PageButton show = {showPageButton.current}/>
+    </div>
+
     </div>
   )}
 

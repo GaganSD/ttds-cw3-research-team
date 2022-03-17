@@ -6,6 +6,7 @@ import logging
 from tqdm import tqdm
 import pickle
 import queue
+import datetime
 
 db_name = "TTDS"
 collec_name = dict()
@@ -123,7 +124,7 @@ class MongoDBClient():
 
 
     def get_data(self, data_type: str, filter: dict, fields: list, skip: int = 0, 
-                    limit:int = 0):
+                    limit:int = 0, sort_by_time: int = 0):
         """
         The method to get a pymongo data cursor. 
         Note: If you are only getting one piece of data, use method get_one, which should be 
@@ -135,6 +136,8 @@ class MongoDBClient():
             fields -  Fields of information you want. e.g. [ "title", "text", "description" ].
             skip - start point, or docs to be skip at begining. default 0
             limit - max size of return result. default 0 (which means no limit)
+            sort_by_time - whether to sort by date. 0 means don't sort. 1 means oldest first
+                        (assending),  -1 means newest first(desencding).
 
         Returns:
             a mongodb cursor. Type: pymongo.cursor.Cursor
@@ -151,6 +154,8 @@ class MongoDBClient():
                                     limit = limit)
         # num = cur_table.count_documents(filter)
 
+        if sort_by_time != 0:
+            cursor.sort('date', sort_by_time)
         try:
             cursor[0]
         except IndexError as e:
@@ -267,7 +272,7 @@ class MongoDBClient():
                         '$push':{ "chain" : {'$each' : new_chain[1:]}} 
                         }, upsert=False)
 
-    def get_doc_from_index(self, term: str):
+    def get_doc_from_index(self, term: str, index_table: str = "index"):
         """
         The method to get the docs with an index. 
         Warning: This method could be really slow (worst can take minutes)
@@ -276,11 +281,13 @@ class MongoDBClient():
 
         Parameters:
             term - The index to be searched.
+            index_table - The index table to be used. Default is "index", 
+                the index for author search is "a_index" 
 
         Return:
             ans : the list of docs
         """
-        cur_table = self.client[db_name]["index"]
+        cur_table = self.client[db_name][index_table]
         hq = cur_table.find_one({"_id": term}, {"chain": 1, "docs": 1})
 
         if hq == None:
@@ -294,7 +301,7 @@ class MongoDBClient():
 
         return ans
     
-    def get_topk_doc_from_index(self, term: str, k = 2000):
+    def get_topk_doc_from_index(self, term: str, k = 2000, index_table: str = "index"):
         """
         The method to get the topk docs with an index. "Top" here means having most 
          appearances of the term.
@@ -302,11 +309,13 @@ class MongoDBClient():
         Parameters:
             term - The index to be searched.
             k - The number of documents tobe retrieved
+            index_table - The index table to be used. Default is "index", 
+                the index for author search is "a_index" 
 
         Return:
             ans : the list of docs
         """
-        cur_table = self.client[db_name]["index"]
+        cur_table = self.client[db_name][index_table]
         hq = cur_table.find_one({"_id": term}, { "chain": 1 })
         if hq == None:
             return []
@@ -362,6 +371,224 @@ class MongoDBClient():
             
         t.close()
         print("removed ", remove_cnt)
+        
+    def get_df(self, term: str):
+        cur_table = self.client[db_name]["index"]
+        hq = cur_table.find_one({"_id": term})
+        return hq['doc_count']
+        
+    def get_doc_intersection(self, terms, 
+        start_date: datetime.datetime =  datetime.datetime(1900, 1,1), 
+        end_date: datetime.datetime =  datetime.datetime(2030, 1,1), 
+        sort_by_date = 0, topN = 25, index_table = "index"):
+        """
+        This method is to get the whole intersection list for two 
+        or more terms
+
+        Parameters:
+            term - A array of terms. e.g. ["covid", "19", "cnn"]
+            start_date - Start date of the filter
+            end_date - End date of the filter
+            sort_by_time - whether to sort by date. 0 means don't sort. 1 means oldest first
+                        (assending),  -1 means newest first(desencding).
+            topN - The number of top results to get 
+            index_table - The time index table to use. "a_index" for author index
+
+        Return:
+            ans : the list of docs ids. 
+        """
+        cur_table = self.client[db_name][index_table]
+        # chains = cur_table.find({"_id":{"$in": terms}}, {"chain":1, "doc_count": 1})
+        black_list = ["we", "the", "studi", "use", "result", "in", "effect", "show",
+        "also", "a", "1", "2", "thi", "increas", "one", "two" ]
+        terms = list(filter(lambda x: x not in black_list, terms))
+        # print(terms)
+
+        pipeline = []
+        if len(terms) == 1:
+            pipeline = [
+            {
+                '$match': {
+                    '_id': {
+                        '$in': [
+                            'covid'
+                        ]
+                    }
+                }
+            }, {
+                '$project': {
+                    'chain': 1
+                }
+            }, {
+                '$unwind': '$chain'
+            }, {
+                '$lookup': {
+                    'from': 'index', 
+                    'localField': 'chain', 
+                    'foreignField': '_id', 
+                    'as': 'docs'
+                }
+            }, {
+                '$project': {
+                    'chain': 1, 
+                    'new_docs': {
+                        '$arrayElemAt': [
+                            '$docs', 0
+                        ]
+                    }
+                }
+            }, {
+                '$project': {
+                    'chain': 1, 
+                    'docs': '$new_docs.docs'
+                }
+            }, {
+                '$group': {
+                    '_id': '$_id', 
+                    'full_docs_list': {
+                        '$addToSet': '$docs.id'
+                    }
+                }
+            }, {
+                '$project': {
+                    'commonSets': {
+                        '$reduce': {
+                            'input': '$full_docs_list', 
+                            'initialValue': [], 
+                            'in': {
+                                '$concatArrays': [
+                                    '$$value', '$$this'
+                                ]
+                            }
+                        }
+                    }
+                }
+            },
+        ]
+        else:
+            pipeline = [
+            {
+                '$match': {
+                    '_id': {
+                        '$in': terms
+                    }
+                }
+            }, {
+                '$project': {
+                    'chain': 1
+                }
+            }, {
+                '$unwind': '$chain'
+            }, {
+                '$lookup': {
+                    'from': 'index', 
+                    'localField': 'chain', 
+                    'foreignField': '_id', 
+                    'as': 'docs'
+                }
+            }, {
+                '$project': {
+                    'chain': 1, 
+                    'new_docs': {
+                        '$arrayElemAt': [
+                            '$docs', 0
+                        ]
+                    }
+                }
+            }, {
+                '$project': {
+                    'chain': 1, 
+                    'docs': '$new_docs.docs'
+                }
+            }, {
+                '$group': {
+                    '_id': '$_id', 
+                    'full_docs_list': {
+                        '$addToSet': '$docs.id'
+                    }
+                }
+            }, {
+                '$project': {
+                    'full_docs_list': {
+                        '$reduce': {
+                            'input': '$full_docs_list', 
+                            'initialValue': [], 
+                            'in': {
+                                '$concatArrays': [
+                                    '$$value', '$$this'
+                                ]
+                            }
+                        }
+                    }
+                }
+            }, {
+                '$group': {
+                    '_id': 0, 
+                    'sets': {
+                        '$push': '$full_docs_list'
+                    }, 
+                    'initialSet': {
+                        '$first': '$full_docs_list'
+                    }
+                }
+            }, {
+                '$project': {
+                    'commonSets': {
+                        '$reduce': {
+                            'input': '$sets', 
+                            'initialValue': '$initialSet', 
+                            'in': {
+                                '$setIntersection': [
+                                    '$$value', '$$this'
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        ]
+        
+        pipeline.append(
+                { 
+                    '$lookup': {
+                        'from': 'papers_info', 
+                        'localField': 'commonSets', 
+                        'foreignField': '_id', 
+                        'pipeline': [
+                            {
+                                '$project': {
+                                    'date': 1
+                                }
+                            }, 
+                            {
+                                "$match": 
+                                    {
+                                        'date' : 
+                                        {
+                                            '$gte' : start_date, 
+                                            '$lte' : end_date, 
+                                        }
+                                    }
+                            },{
+                                '$sort': {
+                                    'date': sort_by_date
+                                }
+                            }, {
+                                '$limit': topN
+                            }, {
+                                '$project': {
+                                    'date': 0
+                                    }, 
+                            }
+                        ],             
+                        'as': 'sorted_list'
+                    }
+                }
+            )
+
+        cursor = cur_table.aggregate(pipeline, allowDiskUse = True)
+        for res in cursor:
+            return [x["_id"] for x in res["sorted_list"]]
 
 
 # example of using API
@@ -394,3 +621,21 @@ if __name__ == "__main__":
 
     # res = client.get_doc_from_index("data")
     # print(len(res), res[100])
+
+    # import datetime
+    # import time
+    # s= time.time()
+    # res = client.get_doc_intersection(["covid", "19", "cnn"])
+    # print(time.time() - s, len(res), res[0], res[-1])
+    # s= time.time()
+
+    # cur = client.get_data("paper", 
+    #         {"_id": {"$in":  res}, 
+    #             "date":{"$gt": datetime.datetime(2021, 1,1),
+    #                     "$lt": datetime.datetime(2021, 12,30) }}, 
+    #         ["date"], limit = 1, sort_by_time=-1)
+
+    # print(time.time() - s)
+
+    # for data in cur:
+    #     print(data["date"])
