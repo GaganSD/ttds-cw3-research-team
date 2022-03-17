@@ -25,7 +25,13 @@ import Tab from '@mui/material/Tab';
 import TabPanel from '@mui/lab/TabPanel';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
-import HelpDialog from "./components/helpdialog"
+import HelpDialog from "./components/helpdialog";
+
+import React from 'react';
+import { ThemeProvider } from 'styled-components';
+import { lightTheme, darkTheme } from './components/theme';
+import { GlobalStyles } from './components/global';
+
 
 function App() {
 
@@ -282,6 +288,16 @@ function App() {
 
 
   return (
+    <ThemeProvider theme={lightTheme}>
+      <>
+        <GlobalStyles />
+        <button>Toggle theme</button>
+        <h1>It's a light theme!</h1>
+        <footer>
+        </footer>
+      </>
+    </ThemeProvider>
+
     <div className="App" style={{
       marginLeft: '6em',
       marginRight: '6em'

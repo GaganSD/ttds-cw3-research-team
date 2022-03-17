@@ -12,6 +12,7 @@ from sentence_transformers import SentenceTransformer
 from infra.LRUCache import LRUCache
 import datetime
 import heapq
+import time
 
 import nltk
 from core_algorithms.query_expansion import get_query_expansion
