@@ -81,6 +81,7 @@ export default function SwipeableTemporaryDrawer(props) {
       eventtype = "date";
     }
     if(eventtype === "radio"){
+      console.log(props.datasets);
       if(e.target.name === "algorithmbuttons"){
         setRadioChoiceAlgorithm(e.target.value);
       }
@@ -167,7 +168,7 @@ export default function SwipeableTemporaryDrawer(props) {
                 <FormControlLabel control={<Radio/>}  label="Default" value="DEFAULT" />
                 <FormControlLabel control={<Radio/>} label="Proximity Search" value="PROXIMITY"/>
                 <FormControlLabel control={<Radio/>}  label="Phrase Search" value="PHRASE"/>
-                <FormControlLabel control={<Radio/>} label="Author Search" value="AUTHOR"/>
+                <FormControlLabel control={<Radio/>} label="Author Search" value="AUTHOR" disabled={props.datasets}/>
               
 
               </RadioGroup>
