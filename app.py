@@ -324,7 +324,7 @@ def get_approx_nn_datasets_results(query: str, top_n: int=100, start_date:dateti
     return output_dict
 
 
-def get_dataset_results_bm25(query: str, top_n: int=10, spell_check=True,qe=True, start_date:datetime = min_day, end_date:datetime = curr_day) -> dict:
+def get_dataset_results_bm25(query: str, top_n: int=10, spell_check=True,qe=False, start_date:datetime = min_day, end_date:datetime = curr_day) -> dict:
     """
     This is used when the user provides the query & wants to query different databases.
     Input: query (type: string)
@@ -369,7 +369,7 @@ def get_dataset_results_bm25(query: str, top_n: int=10, spell_check=True,qe=True
 
 
 
-def get_tf_idf_dataset_results(query: str, top_n: int=10, spell_check=True,qe=True, start_date:datetime = min_day, end_date:datetime = curr_day) -> dict:
+def get_tf_idf_dataset_results(query: str, top_n: int=10, spell_check=True,qe=False, start_date:datetime = min_day, end_date:datetime = curr_day) -> dict:
     """
     This is used when the user provides the query & wants to query different databases.
     Input: query (type: string)

@@ -8,7 +8,7 @@
 from collections import defaultdict
 from flask import Flask, request
 from flask_cors import CORS
-from sentence_transformers import SentenceTransformer
+# from sentence_transformers import SentenceTransformer
 from infra.LRUCache import LRUCache
 import datetime
 import heapq
@@ -293,8 +293,7 @@ def get_proximity_papers_results(query: str, proximity: int=10, top_n: int=10, s
     original_query = query
     if qe:
         query = query + ' ' + ' '.join(get_query_extension(query))
-    query = _preprocess_query(query,True, True) # stemming, removing stopwords
-    query_params = {'query': query}
+    query_params = _preprocess_query(query,True, True) # stemming, removing stopwords
     outputs = proximity_search_paper(query_params, client, proximity=proximity) # return: list of ids of paper
     if spell_check&(len(outputs)< 25):
         new_query = ' '.join(query_spell_check(original_query))
@@ -324,7 +323,7 @@ def get_proximity_papers_results(query: str, proximity: int=10, top_n: int=10, s
 #     return output_dict
 
 
-def get_dataset_results_bm25(query: str, top_n: int=10, spell_check=True,qe=True, start_date:datetime = min_day, end_date:datetime = curr_day) -> dict:
+def get_dataset_results_bm25(query: str, top_n: int=10, spell_check=True,qe=False, start_date:datetime = min_day, end_date:datetime = curr_day) -> dict:
     """
     This is used when the user provides the query & wants to query different databases.
     Input: query (type: string)
@@ -344,14 +343,12 @@ def get_dataset_results_bm25(query: str, top_n: int=10, spell_check=True,qe=True
     original_query = query
     if qe:
         query = query + ' ' + ' '.join(get_query_extension(query))
-    query = _preprocess_query(query,True, True) # stemming, removing stopwords
-    query_params = {'query': query}
+    query_params = _preprocess_query(query,True, True) # stemming, removing stopwords
     scores = ranking_query_bm25_dataset(query_params)
     output_dict = {'Results':[]}
     if spell_check&(len(scores)< 25):
         new_query = ' '.join(query_spell_check(original_query))
-        new_query = _preprocess_query(new_query)
-        new_query_params = {'query': new_query}
+        new_query_params = _preprocess_query(new_query)
         scores = ranking_query_bm25_dataset(new_query_params)
     # These parts (getting dataset info like subtitle) must be changed to mongodb in the future
     kaggle_df = pd.read_csv('core_algorithms/ir_eval/kaggle_dataset_df_page500.csv')
@@ -369,7 +366,7 @@ def get_dataset_results_bm25(query: str, top_n: int=10, spell_check=True,qe=True
 
 
 
-def get_tf_idf_dataset_results(query: str, top_n: int=10, spell_check=True,qe=True, start_date:datetime = min_day, end_date:datetime = curr_day) -> dict:
+def get_tf_idf_dataset_results(query: str, top_n: int=10, spell_check=True,qe=False, start_date:datetime = min_day, end_date:datetime = curr_day) -> dict:
     """
     This is used when the user provides the query & wants to query different databases.
     Input: query (type: string)
@@ -389,14 +386,12 @@ def get_tf_idf_dataset_results(query: str, top_n: int=10, spell_check=True,qe=Tr
     original_query = query
     if qe:
         query = query + ' ' + ' '.join(get_query_extension(query))
-    query = _preprocess_query(query,True, True) # stemming, removing stopwords
-    query_params = {'query': query}
+    query_params = _preprocess_query(query,True, True) # stemming, removing stopwords
     scores = ranking_query_tfidf_dataset(query_params)
     output_dict = {'Results':[]}
     if spell_check&(len(scores) < 25):
         new_query = ' '.join(query_spell_check(original_query))
-        new_query = _preprocess_query(new_query)
-        new_query_params = {'query': new_query}
+        new_query_params = _preprocess_query(new_query)
         scores = ranking_query_tfidf_dataset(new_query_params)
     # These parts (getting dataset info like subtitle) must be changed to mongodb in the future
     kaggle_df = pd.read_csv('core_algorithms/ir_eval/kaggle_dataset_df_page500.csv')
@@ -463,13 +458,11 @@ def get_papers_results_bm25(query: str, top_n: int=10, spell_check=True,qe=False
     original_query = query
     if qe:
         query = query + ' ' + ' '.join(get_query_extension(query))
-    query = _preprocess_query(query,True, True) # stemming, removing stopwords
-    query_params = {'query': query}
+    query_params = _preprocess_query(query,True, True) # stemming, removing stopwords
     scores = ranking_query_bm25_paper(query_params, client)
     if spell_check&(len(scores) < 25):
         new_query = ' '.join(query_spell_check(original_query))
-        new_query = _preprocess_query(new_query)
-        new_query_params = {'query': new_query}
+        new_query_params = _preprocess_query(new_query)
         scores = ranking_query_bm25_paper(new_query_params, client)
     output_dict = {}
     temp_ids = [i[0] for i in scores[:top_n]]
@@ -499,15 +492,15 @@ def get_paper_results_tf_idf(query: str, top_n: int=10, spell_check=True,qe=Fals
     original_query = query
     if qe:
         query = query + ' ' + ' '.join(get_query_extension(query))
-    query = _preprocess_query(query,True, True) # stemming, removing stopwords
-    query_params = {'query': query}
+    query_params = _preprocess_query(query,True, True) # stemming, removing stopwords
     scores = ranking_query_tfidf_paper(query_params, client)
     output_dict = {}
     if spell_check&(len(scores) < 25):
+        print('hey')
         new_query = ' '.join(query_spell_check(original_query))
-        new_query = _preprocess_query(new_query)
-        new_query_params = {'query': new_query}
+        new_query_params = _preprocess_query(new_query)
         scores = ranking_query_tfidf_paper(new_query_params, client)
+    print(scores[:10])
     temp_ids = [i[0] for i in scores[:top_n]]
     temp_result = list(client.get_data('paper', {'_id':{"$in" : temp_ids}}, ['title', 'abstract','authors', 'url', 'date']))
     temp_result = {i['_id'] : i for i in temp_result}
