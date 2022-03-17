@@ -44,12 +44,16 @@ CORS(app)
 print(0.2)
 # Load paper index
 searcher = scann.scann_ops_pybind.load_searcher('/home/stylianosc/scann/papers/') #NOTE:DL
+# Load dataset index
+searcher_dataset = scann.scann_ops_pybind.load_searcher('core_algorithms/ir_eval/datasets/')
 print(0.3)
 # Load transformer encoder
 model = SentenceTransformer('all-MiniLM-L6-v2') #NOTE:DL
 print(0.4)
 # Load paper indices
 df_papers = pd.read_csv("/home/stylianosc/scann/papers/df.csv") #NOTE:DL
+# Load dataset indices
+df_datasets = pd.read_csv("core_algorithms/ir_eval/datasets/indices_dataset.csv")
 print(0.5)
 
 client = MongoDBClient("34.142.18.57")
