@@ -486,7 +486,7 @@ def get_papers_results_bm25(query: str, top_n: int=10, spell_check=True,qe=False
         new_query = ' '.join(query_spell_check(original_query))
         new_query = _preprocess_query(new_query)
         new_query_params = {'query': new_query}
-        scores = ranking_query_tfidf_dataset(new_query_params)
+        scores = ranking_query_bm25_paper(new_query_params, client)
     output_dict = {}
     temp_ids = [i[0] for i in scores[:top_n]]
     temp_result = list(client.get_data('paper', {'_id':{"$in" : temp_ids}}, ['title', 'abstract','authors', 'url', 'date']))
@@ -523,7 +523,7 @@ def get_paper_results_tf_idf(query: str, top_n: int=10, spell_check=True,qe=Fals
         new_query = ' '.join(query_spell_check(original_query))
         new_query = _preprocess_query(new_query)
         new_query_params = {'query': new_query}
-        scores = ranking_query_tfidf_dataset(new_query_params)
+        scores = ranking_query_tfidf_paper(new_query_params, client)
     temp_ids = [i[0] for i in scores[:top_n]]
     temp_result = list(client.get_data('paper', {'_id':{"$in" : temp_ids}}, ['title', 'abstract','authors', 'url', 'date']))
     temp_result = {i['_id'] : i for i in temp_result}
