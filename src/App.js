@@ -25,9 +25,25 @@ import Tab from '@mui/material/Tab';
 import TabPanel from '@mui/lab/TabPanel';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
-import HelpDialog from "./components/helpdialog"
+import HelpDialog from "./components/helpdialog";
+
+import { useEffect, useState } from "react";
+
+import { ThemeProvider } from 'styled-components';
+import { lightTheme, darkTheme } from './components/theme';
+import { GlobalStyles } from './components/global';
+
 
 function App() {
+  const [theme, setTheme] = useState('light');
+  const toggleTheme = () => {
+    console.log("switch");
+    if (theme === 'light') {
+      setTheme('dark');
+    } else {
+      setTheme('light');
+    }
+  }
 
   const [search, setSearch] = React.useState('');
   const showPageButton = React.useRef(false);
@@ -159,7 +175,7 @@ function App() {
 
     }
     else{
-      return fetch('http://127.0.0.1:5000/' + create_url(search, values.current)).then(response => response.json()).then(data => {
+      return fetch('http://34.142.71.148:5000/' + create_url(search, values.current)).then(response => response.json()).then(data => {
         if(data.Results.length === 0){
             console.log("empty");
             setEmptyResults(true);
@@ -286,11 +302,13 @@ function App() {
       marginLeft: '6em',
       marginRight: '6em'
     }}>
-    <div className="toggle_switch" float="center" id="toggle_switch"></div>
+    <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
+        <GlobalStyles />
+
 
     <img src={research_logo} width="300em" height="150em"/>
+    <button onClick={toggleTheme}>Lights</button>
 
-    <UseSwitchesCustom  float="right" parentCallback={BasicSwitches} />
       <div className='Search' style={{
         width:'50%'
       }}>
@@ -374,13 +392,12 @@ function App() {
     {/* <div style={{
       position: 'fixed',
       bottom: 0,
-
-      
     }}>
       { emptyresults ? <Alert severity="warning">No results were found</Alert> : null}
       {badquery ? <Alert severity="warning">Bad Search Query</Alert> : null}
     </div>
    */}
+    </ThemeProvider>
 
     </div>
   )}
