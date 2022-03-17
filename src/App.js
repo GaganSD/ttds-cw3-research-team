@@ -176,10 +176,14 @@ function App() {
   function abstractgenerator(text) {
 
     if (text!=""){
-      if (isMobile){
-        return text.substring(0,100)+"...";
+      if (isMobile){ 
+        if (text.length>100){
+          return text.substring(0,100)+"...";
+        }    
       } else {
+        if (text.length>500){
         return text.substring(0,500)+"...";
+        }
       }
     }
   }
