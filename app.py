@@ -57,9 +57,9 @@ _preprocessing_cache = LRUCache(1000)
 _results_cache = LRUCache(200)
 print(0.6)
 
-curr_day = datetime.today().strftime('%d/%m/%Y')
+curr_day = datetime.today()
 min_day = datetime.strptime("01-01-1000", '%d-%m-%Y')
-_no_match_sample = {"title": "No Matching Documents Were Found", "abstract": "Try expanding your query with our search suggestion", "url":"", "authors":"","date":curr_day}
+_no_match_sample = {"title": "No Matching Documents Were Found", "abstract": "Try expanding your query with our search suggestion", "url":"", "authors":"","date":curr_day.strftime('%d/%m/%Y')}
 _no_results_dict = {"Results": [_no_match_sample]}
 
 @app.route("/")
@@ -124,7 +124,7 @@ def search_state_machine(search_query):
             elif parameters["algorithm"] == "TF_IDF":
                 results = get_paper_results_tf_idf(query=parameters['query'], start_date=parameters["start_date"], end_date=parameters["end_date"])
 
-    # results = filter_dates(results, parameters["start_date"], parameters["end_date"])
+    results = filter_dates(results, parameters["start_date"], parameters["end_date"])
     return results
 
 
@@ -169,6 +169,26 @@ def get_author_papers_results(query: str, top_n: int=100, preprocess: bool=True,
     output_dict["Results"] = [temp_result[i] for i in temp_ids]
 
     return output_dict
+
+def filter_dates(output: dict={'Results':[]}, start_date:datetime = min_day, end_date:datetime = curr_day):
+    output_dict = {}
+    output_dict['Results'] = [i for i in output['Results'] 
+                            if i['date']>= start_date  and 
+                            i['date'] <= end_date]
+    return output_dict
+
+def authors_extensions(query: str, top_n: int=100, docs_searched: int=10, author_search_result: dict={'Results':[]}) -> dict:
+    '''
+    Call using author_search_result (results of regular author search) to avoid recalculating
+    '''
+    authors  = set(author_preprocess(query))
+    coauthors = [author_preprocess(i['authors'])[:10] for i in author_search_result["Results"][:docs_searched]]
+    merged_coauthors = [item for sublist in coauthors for item in sublist if item not in authors]
+    merged_coauthors = list(dict.fromkeys(merged_coauthors))
+
+    results = get_author_papers_results(merged_coauthors, top_n=100, preprocess=False)
+    
+    return results
 
 def get_phrase_datasets_results(query: str, top_n: int=10, spell_check=True,qe=False, start_date:datetime = min_day, end_date:datetime = curr_day) -> dict:
     """
@@ -337,15 +357,18 @@ def get_dataset_results_bm25(query: str, top_n: int=10, spell_check=True,qe=True
         any other information
     } 
     """
-    if spell_check:
-        query = ' '.join(query_spell_check(query))
+    original_query = query
     if qe:
         query = query + ' ' + ' '.join(get_query_extension(query))
     query = _preprocess_query(query,True, True) # stemming, removing stopwords
     query_params = {'query': query}
     scores = ranking_query_bm25_dataset(query_params)
     output_dict = {'Results':[]}
-    
+    if spell_check&(len(scores)< 25):
+        new_query = ' '.join(query_spell_check(original_query))
+        new_query = _preprocess_query(new_query)
+        new_query_params = {'query': new_query}
+        scores = ranking_query_bm25_dataset(new_query_params)
     # These parts (getting dataset info like subtitle) must be changed to mongodb in the future
     kaggle_df = pd.read_csv('core_algorithms/ir_eval/kaggle_dataset_df_page500.csv')
     kaggle_df['Source'] = 'Kaggle'
@@ -379,15 +402,18 @@ def get_tf_idf_dataset_results(query: str, top_n: int=10, spell_check=True,qe=Tr
         any other information
     } 
     """
-    if spell_check:
-        query = ' '.join(query_spell_check(query))
+    original_query = query
     if qe:
         query = query + ' ' + ' '.join(get_query_extension(query))
     query = _preprocess_query(query,True, True) # stemming, removing stopwords
     query_params = {'query': query}
     scores = ranking_query_tfidf_dataset(query_params)
     output_dict = {'Results':[]}
-    
+    if spell_check&(len(scores) < 25):
+        new_query = ' '.join(query_spell_check(original_query))
+        new_query = _preprocess_query(new_query)
+        new_query_params = {'query': new_query}
+        scores = ranking_query_tfidf_dataset(new_query_params)
     # These parts (getting dataset info like subtitle) must be changed to mongodb in the future
     kaggle_df = pd.read_csv('core_algorithms/ir_eval/kaggle_dataset_df_page500.csv')
     kaggle_df['Source'] = 'Kaggle'
@@ -450,17 +476,19 @@ def get_papers_results_bm25(query: str, top_n: int=10, spell_check=True,qe=False
         any other information
     } 
     """
-    if spell_check:
-        query = ' '.join(query_spell_check(query))
+    original_query = query
     if qe:
         query = query + ' ' + ' '.join(get_query_extension(query))
     query = _preprocess_query(query,True, True) # stemming, removing stopwords
     query_params = {'query': query}
     scores = ranking_query_bm25_paper(query_params, client)
+    if spell_check&(len(scores) < 25):
+        new_query = ' '.join(query_spell_check(original_query))
+        new_query = _preprocess_query(new_query)
+        new_query_params = {'query': new_query}
+        scores = ranking_query_bm25_paper(new_query_params, client)
     output_dict = {}
-    
     temp_ids = [i[0] for i in scores[:top_n]]
-    
     temp_result = list(client.get_data('paper', {'_id':{"$in" : temp_ids}}, ['title', 'abstract','authors', 'url', 'date']))
     temp_result = {i['_id'] : i for i in temp_result}
     output_dict["Results"] = [temp_result[i] for i in temp_ids]
@@ -484,17 +512,19 @@ def get_paper_results_tf_idf(query: str, top_n: int=10, spell_check=True,qe=Fals
         any other information
     } 
     """
-    if spell_check:
-        query = ' '.join(query_spell_check(query))
+    original_query = query
     if qe:
         query = query + ' ' + ' '.join(get_query_extension(query))
-    query = preprocess(query,True, True) # stemming, removing stopwords
+    query = _preprocess_query(query,True, True) # stemming, removing stopwords
     query_params = {'query': query}
     scores = ranking_query_tfidf_paper(query_params, client)
     output_dict = {}
-    
+    if spell_check&(len(scores) < 25):
+        new_query = ' '.join(query_spell_check(original_query))
+        new_query = _preprocess_query(new_query)
+        new_query_params = {'query': new_query}
+        scores = ranking_query_tfidf_paper(new_query_params, client)
     temp_ids = [i[0] for i in scores[:top_n]]
-    
     temp_result = list(client.get_data('paper', {'_id':{"$in" : temp_ids}}, ['title', 'abstract','authors', 'url', 'date']))
     temp_result = {i['_id'] : i for i in temp_result}
     output_dict["Results"] = [temp_result[i] for i in temp_ids]

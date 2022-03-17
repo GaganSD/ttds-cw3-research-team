@@ -16,6 +16,7 @@ import Switch from '@mui/material/Switch';
 import Link from '@mui/material/Link';
 import SwipeableTemporaryDrawer from './components/advancedOptions';
 import PaperOrDS from './components/datasetorpaper';
+import Alert from '@mui/material/Alert';
 
 import HelpButton from './components/HelpButton';
 import Modal from '@mui/base/ModalUnstyled';
@@ -30,7 +31,12 @@ function App() {
 
   const [search, setSearch] = React.useState('');
   const showPageButton = React.useRef(false);
-  const [json_results, setJsonResults] = React.useState({Results:[]});
+  const [pagenum, setPageNum] = React.useState(1);
+  const [datasets, setDatasets] = React.useState(false);
+  const [badquery, setBadQuery] = React.useState(false);
+  const [emptyresults, setEmptyResults] = React.useState(false);
+  const [gobackbuttondisabled, setGoBackButtonDisabled] = React.useState(true);
+  const [json_results, setJsonResults] = React.useState({"Results":[]});
   const [json_query_expansion, setJsonQE] = React.useState({QEResults:[]});
   const label = { inputProps: { 'aria-label': 'Switch demo' } };
   const values = React.useRef({
@@ -38,9 +44,20 @@ function App() {
     searchtype: "Default",
     range_from:null,
     range_to: null,
-    datasets: false
+    datasets: false,
+    pagenum: 1
   });
+  React.useEffect(() =>{
+      if(pagenum === 1){
+          setGoBackButtonDisabled(true);
+      }
+      else{
+          setGoBackButtonDisabled(false);
+      }
 
+      values.current.pagenum = pagenum;
+
+  },[pagenum]);
   function getOptions(type,optval){
     if (type === "algorithms"){
       values.current.algorithm = optval;
@@ -63,21 +80,33 @@ function App() {
 
 
   }
+  const changePageNum = (val) => {
+    setPageNum(pagenum + val);
+  }
 
   const getPoDS = (podval) => {
     if(podval === "Papers"){
       values.current.datasets = false;
+      setDatasets(false);
     }
     else{
 
       values.current.datasets = true;
+      setDatasets(true);
     }
 
-    console.log(values.current.datasets);
+    // console.log(values.current.datasets);
+  }
+
+  const getPageNum = (pageNum) => {
+    values.current.pagenum = pageNum;
+    console.log(values.current.pagenum);
+    SearchFunc();
+
   }
 
   const date_formatter = (date) =>{
-    console.log("HERE GOES THE DATE");
+    // console.log("HERE GOES THE DATE");
     console.log(date);
     if (date == null){
       return "inf"
@@ -86,9 +115,9 @@ function App() {
       let day = date.getDate() + "-";
       let month = (date.getMonth()+1) + "-";
       let year = date.getFullYear() + "";
-      console.log("HERE GOES THE DATE AGAINNNNNNN");
+      // console.log("HERE GOES THE DATE AGAINNNNNNN");
       console.log(day+month+year);
-      console.log("date over");
+      // console.log("date over");
       return day+month+year;
     }
 
@@ -108,8 +137,9 @@ function App() {
     url += vals.searchtype.split(" ").join("_");
     url += "/ds=";
     url += vals.datasets + "";
+    url += "/pn=";
+    url += vals.pagenum + "";
     url += "/";
-
 
     return url
 
@@ -121,10 +151,30 @@ function App() {
   }
 
   function SearchFunc() {
-    showPageButton.current = true;
-    return fetch('http://34.142.71.148:5000/' + create_url(search, values.current)).then(response => response.json()).then(data => {
-      setJsonResults(data);
-    });
+    if( !/^[0-9a-zA-Z\s]*$/.test(search)){
+      console.log("badquery");
+      setJsonResults({"Results": []})
+      showPageButton.current = false;
+      setBadQuery(true);
+
+    }
+    else{
+      return fetch('http://34.142.71.148:5000/' + create_url(search, values.current)).then(response => response.json()).then(data => {
+        if(data.Results.length === 0){
+            console.log("empty");
+            setEmptyResults(true);
+            console.log(emptyresults)
+        }
+        else{
+          console.log("search complete");
+          console.log(create_url(search, values.current));
+          setBadQuery(false);
+          setEmptyResults(false);
+          showPageButton.current = true;
+          setJsonResults(data);
+        }
+      });
+    }
   }
 
   function QueryExpansion() {
@@ -230,6 +280,7 @@ function App() {
     setValue2(newValue);
   };
 
+
   return (
     <div className="App" style={{
       marginLeft: '6em',
@@ -243,12 +294,27 @@ function App() {
       <div className='Search' style={{
         width:'50%'
       }}>
-        <SearchField
+        { badquery ? <SearchField
           style={{ maxWidth: '80%' }}
           parentCallback={TextEntered}
+          error={true}
+          text = {"Bad Query Was Received"}
         />
+        : emptyresults ? <SearchField
+            style = {{maxWidth:'80%'}}
+            parentCallback={TextEntered}
+            error={true}
+            text = {"No Results were shown"}
+            />
+        : <SearchField
+            style={{maxWidth : '80%'}}
+            parentCallback={TextEntered}
+            error={false}
+            text = {"Query"}
+          />
+        }
       </div>
-      <SwipeableTemporaryDrawer hysteresis="0.52" parentCallback={getOptions}/>
+      <SwipeableTemporaryDrawer hysteresis="0.52" parentCallback={getOptions} datasets={datasets}/>
       <div>
         {json_query_expansion.QEResults.map(curr_elem => {
           return <Box>{curr_elem}</Box>;
@@ -262,11 +328,17 @@ function App() {
         flexDirection : "row"        
       }}>
         <ButtonGroup variant="contained" aria-label="outlined primary button group">
-          <SearchButton parentCallback={SearchFunc} />
+          <SearchButton parentCallback={() =>{
+            console.log("yes");
+            setPageNum(1);
+            setGoBackButtonDisabled(true);
+            console.log(pagenum);
+            SearchFunc();
+          }} />
           <QEButton parentCallback={QueryExpansion} />
         </ButtonGroup>
         <div style = {{
-          marginLeft : "2em"
+          paddingLeft : "5em"
         }}>
           <PaperOrDS parentCallback={getPoDS}/>
         </div>
@@ -295,10 +367,20 @@ function App() {
     })}
     </div>
     <div style={{
-      marginBottom : "2 em"
+      marginBottom: ".5em"
     }}> 
-      <PageButton show = {showPageButton.current}/>
+      <PageButton pagenum = {pagenum} disableback = {gobackbuttondisabled} show = {showPageButton.current} sexyProp={setPageNum} searchCallback={SearchFunc}/>
     </div>
+    {/* <div style={{
+      position: 'fixed',
+      bottom: 0,
+
+      
+    }}>
+      { emptyresults ? <Alert severity="warning">No results were found</Alert> : null}
+      {badquery ? <Alert severity="warning">Bad Search Query</Alert> : null}
+    </div>
+   */}
 
     </div>
   )}

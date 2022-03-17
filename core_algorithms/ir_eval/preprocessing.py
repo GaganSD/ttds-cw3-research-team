@@ -65,7 +65,10 @@ def author_preprocess(string):
         filtered = filter(lambda x: len(x) > 0 and not x[-1] == '.', names)
         ans.extend(filtered)
 
+    et_al = ['et', 'al']    
+    
     ans = [term.lower() for term in ans]
+    ans = [i for i in ans if i not in et_al]
     ans = list(dict.fromkeys(ans))
     
     return ans
