@@ -166,7 +166,8 @@ class MongoDBClient():
     def order_preserved_get_data(self, id_list, fields, 
         start_date = datetime.datetime(1900, 1,1), 
         end_date = datetime.datetime(2030, 1,1),
-         data_type = "paper"):
+        data_type = "paper",
+        limit = 0):
         """
         The get_data method that can keeps the order sended in in id_list.
 
@@ -201,8 +202,9 @@ class MongoDBClient():
 
         a = { "$addFields" : { "__order" : { "$indexOfArray" : [ id_list, "$_id" ] } } };
         s = { "$sort" : { "__order" : 1 } };
+        l = { "$limit" : limit }
         
-        pipeline = [m, p, a, s]
+        pipeline = [m, p, a, s] if not limit else [m, p, a, s, l]
 
         cursor = cur_table.aggregate(pipeline)
 
