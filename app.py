@@ -12,7 +12,7 @@ from sentence_transformers import SentenceTransformer
 from infra.LRUCache import LRUCache
 import datetime
 import heapq
-
+import time
 import nltk
 from core_algorithms.query_expansion import get_query_expansion
 from core_algorithms.ir_eval.ranking import ranking_query_tfidf as ranking_query_tfidf_dataset
