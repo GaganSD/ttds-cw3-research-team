@@ -235,7 +235,7 @@ def get_phrase_papers_results(query: str, top_n: int=10, spell_check=True,qe=Fal
         query = query + ' ' + ' '.join(get_query_extension(query))
     query = preprocess(query,True, True) # stemming, removing stopwords
     query_params = {'query': query}
-    outputs = phrase_search_paper(query_params, client) # return: list of ids of paper
+    outputs = phrase_search_paper(query_params, client, start_time=time.time()) # return: list of ids of paper
     if spell_check&(len(outputs)< 25):
         new_query = ' '.join(query_spell_check(original_query))
         new_query = preprocess(new_query)

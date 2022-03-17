@@ -163,6 +163,57 @@ class MongoDBClient():
             
         return cursor
     
+    
+    def order_preserved_get_data(self, id_list, fields, 
+        start_date = datetime.datetime(1900, 1,1), 
+        end_date = datetime.datetime(2030, 1,1),
+         data_type = "paper"):
+        """
+        The get_data method that can keeps the order sended in in id_list.
+
+        Parameters:
+            id_list - list of doc ids (sorted previously or not)
+            data_type - The type of data. Should either be "paper" or "dataset".
+            filter - Filter for the data you want. e.g. { "source": "kaggle" }.
+            fields -  Fields of information you want. e.g. [ "title", "text", "description" ].
+            start_date - the start date for time filter
+            end_date - the start date for time filter
+
+        Returns:
+            a mongodb cursor. Type: pymongo.cursor.Cursor
+            the cursor can only be iterated in the following way:
+                for doc in cursor:
+            Don't use index or len() method.
+        """
+
+        if not self.check_data_type(data_type):
+            return -1
+
+        cur_table = self.client[db_name][collec_name[data_type]]
+
+        m = {'$match' : {"_id": {"$in": id_list}, 
+                        "date": {"$gte": start_date, "$lte": end_date}}}
+
+        project_items = {}
+        for field in fields:
+            project_items[field] = 1
+        
+        p = {'$project': project_items}
+
+        a = { "$addFields" : { "__order" : { "$indexOfArray" : [ id_list, "$_id" ] } } };
+        s = { "$sort" : { "__order" : 1 } };
+        
+        pipeline = [m, p, a, s]
+
+        cursor = cur_table.aggregate(pipeline)
+
+        ans = []
+        for res in cursor:
+            ans.append(res)
+        
+        return ans
+    
+    
     def get_one(self, data_type: str, filter: dict, fields: list):
         """
         The method to get ONLY ONE data from db. should be more efficient than get_data. 
