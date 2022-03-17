@@ -8,7 +8,7 @@
 from collections import defaultdict
 from flask import Flask, request
 from flask_cors import CORS
-from sentence_transformers import SentenceTransformer
+# from sentence_transformers import SentenceTransformer
 from infra.LRUCache import LRUCache
 import datetime
 import heapq
