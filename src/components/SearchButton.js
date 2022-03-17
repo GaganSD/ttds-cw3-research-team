@@ -3,12 +3,12 @@ import Button from '@mui/material/Button';
 
 export default function SearchButton(props){
     return(
-        <Button variant="contained" onClick = {() => {
+        <Button variant="contained" style={{display: 'flex', justifyContent: 'center'}} onClick = {() => {
             props.parentCallback();
         }
 
         }>
-            ㅤSearch Queryㅤ
+            Search Query
         </Button>
 
     );

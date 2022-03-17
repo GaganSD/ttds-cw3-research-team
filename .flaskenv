@@ -1,2 +1,4 @@
-FLASK_APP=app-playground.py
-FLASK_ENV=production
+FLASK_APP=app.py
+FLASK_DEBUG=True
+
+
