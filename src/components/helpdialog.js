@@ -32,10 +32,14 @@ export default function HelpDialog(props){
                 onClose={handleClose}
                 aria-describedby="alert-dialog-slide-description"
                 >
-                <DialogTitle>{"Need Help with Re-Search?"}</DialogTitle>
+                <DialogTitle>{"Advanced Options Features:"}</DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-slide-description">
-                  The advanced search features can be used to refine your search, if you have specific requirements (ranking algorithm, search type, date range) in addition to your query in mind! 
+                  The advanced search features can be used to refine your search and help satisfy specific requirements for your queries. 
+                  
+                  You can choose three different ranking algorithms and filter your results by date range. You can also choose search type
+                  however, we 
+                  If you have specific requirements (ranking algorithm, search type, date range) in addition to your query in mind! 
                   If not, leave the options set to their default values and just type your query in the "Query" box, and hit "Search Query" afterwards.
                   Use "Show Suggestions" for spelling correction suggestions. If you want to use dark mode, simply toggle the switch above the search bar.
                     </DialogContentText>
