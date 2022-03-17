@@ -375,6 +375,7 @@ class MongoDBClient():
     def get_df(self, term: str):
         cur_table = self.client[db_name]["index"]
         hq = cur_table.find_one({"_id": term})
+        if not hq: return 0
         return hq['doc_count']
         
     def get_doc_intersection(self, terms, 
