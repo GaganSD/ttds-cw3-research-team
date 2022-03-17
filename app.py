@@ -83,9 +83,7 @@ def call_top_n(N, parameters):
 
     elif parameters["algorithm"] == "APPROX_NN":
         if parameters["datasets"]:
-            results = get_approx_nn_datasets_results(query=parameters['query'], 
-                start_date=parameters["start_date"], end_date=parameters["end_date"]
-                , top_n=N)
+            results = get_approx_nn_datasets_results(query=parameters['query'], top_n=N)
         else:
             results = get_approx_nn_papers_results(query=parameters['query'], 
                 start_date=parameters["start_date"], end_date=parameters["end_date"]
@@ -94,9 +92,7 @@ def call_top_n(N, parameters):
     elif parameters["datasets"]:
         results = get_datasets_results(query=parameters['query'],
                             type = parameters["search_type"], 
-                            ranking = parameters["algorithm"], 
-                            start_date=parameters["start_date"], 
-                            end_date=parameters["end_date"], top_n=N)
+                            ranking = parameters["algorithm"], top_n=N)
 
     else:
         results = get_papers_results(query=parameters['query'],
@@ -149,8 +145,7 @@ print(0.6)
 
 ######################### Search Functions ########################
 def get_datasets_results(query: str, top_n: int=10, spell_check=True, qe=False, 
-    type :str = "DEFAULT", ranking: str = "TF_IDF", 
-    start_date:datetime = min_day, end_date:datetime = curr_day) -> dict:
+    type :str = "DEFAULT", ranking: str = "TF_IDF",) -> dict:
 
     # if spell_check:
     #     query = ' '.join(query_spell_check(query))
@@ -203,7 +198,7 @@ def get_papers_results(query: str, top_n: int=10, spell_check=True, qe=False,
             scores = ranking_query_tfidf_paper(query_params, client)
         else:
             scores = ranking_query_bm25_paper(query_params, client)
-        outputs = [i[0] for i in scores[:top_n]]
+        outputs = [i[0] for i in scores]
     elif type == "PHRASE":
         outputs = phrase_search_paper(query_params, client, start_time=time.time()) # return: list of ids of paper
     elif type == "PROXIMITY":
@@ -212,8 +207,11 @@ def get_papers_results(query: str, top_n: int=10, spell_check=True, qe=False,
     output_dict = {}
     print(start_date, end_date)
     temp_result = list(client.order_preserved_get_data(id_list= outputs,
-        start_date=start_date, end_date=end_date,
-        fields=['title', 'abstract','authors', 'url', 'date']))
+                                                       start_date=start_date, end_date=end_date,
+                                                       fields=['title', 'abstract','authors', 'url', 'date'],
+                                                       limit=top_n
+                                                      )
+                      )
     
     for result in temp_result:
         result["date"] = result["date"].strftime("%d/%m/%Y")
@@ -229,6 +227,7 @@ def get_author_papers_results(query: str, top_n: int=100, preprocess: bool=True,
     2 - Ascending order of position of author in the author list (sum of positions if more than 1 authors matching)
     3 - Ascending order of term appearance in the query
     '''
+    date_changed = start_date != min_day or end_date != curr_day
     if preprocess:
       query = author_preprocess(query)
 
@@ -247,15 +246,22 @@ def get_author_papers_results(query: str, top_n: int=100, preprocess: bool=True,
           dict_occur[id][0] += 1
           dict_occur[id][1] += i['pos'][0]
 
-    dict_occur = dict(heapq.nsmallest(top_n, dict_occur.items(), key=lambda x: (-x[1][0],x[1][1])))
-    temp_ids = list(dict_occur.keys())
+    dict_occur = dict(heapq.nsmallest(top_n if not date_changed else len(dict_occur), dict_occur.items(), key=lambda x: (-x[1][0],x[1][1])))
+    outputs = list(dict_occur.keys())
 
     output_dict = {}
 
-    temp_result = list(client.get_data('paper', {'_id':{"$in" : temp_ids}}, ['title', 'abstract','authors', 'url', 'date']))
-    temp_result = {i['_id'] : i for i in temp_result}
-    output_dict["Results"] = [temp_result[i] for i in temp_ids]
+    temp_result = list(client.order_preserved_get_data(id_list= outputs,
+                                                       start_date=start_date, end_date=end_date,
+                                                       fields=['title', 'abstract','authors', 'url', 'date'],
+                                                       limit=top_n
+                                                      )
+                      )   
+    for result in temp_result:
+        result["date"] = result["date"].strftime("%d/%m/%Y")
 
+    output_dict["Results"] = temp_result
+    
     return output_dict
 
 def filter_dates(output: dict={'Results':[]}, start_date:datetime = min_day, end_date:datetime = curr_day):
@@ -422,7 +428,7 @@ def authors_extensions(query: str, top_n: int=100, docs_searched: int=10, author
     
 #     return output_dict
 #NOTE:DL
-def get_approx_nn_datasets_results(query: str, top_n: int=100, start_date:datetime = min_day, end_date:datetime = curr_day) -> dict:
+def get_approx_nn_datasets_results(query: str, top_n: int=100) -> dict:
     """
     Input: query (type: string)
     Output: search results (dict)
@@ -541,13 +547,21 @@ def get_approx_nn_papers_results(query: str, top_n: int=10, start_date:datetime 
     } 
     """
     query = model.encode(query, convert_to_tensor=True)
-    neighbors, distances = searcher.search(query, final_num_neighbors=100)
+    neighbors, distances = searcher.search(query, final_num_neighbors=1000)
 
     output_dict = {}
-    temp_ids = [str(df_papers.iloc[i]._id) for i in neighbors[:top_n]]
-    temp_result = list(client.get_data('paper', {'_id':{"$in" : temp_ids}}, ['title', 'abstract','authors', 'url', 'date']))
-    temp_result = {i['_id'] : i for i in temp_result}
-    output_dict["Results"] = [temp_result[i] for i in temp_ids]
+    outputs = [str(df_papers.iloc[i]._id) for i in neighbors]
+    
+    temp_result = list(client.order_preserved_get_data(id_list= outputs,
+                                                       start_date=start_date, end_date=end_date,
+                                                       fields=['title', 'abstract','authors', 'url', 'date'],
+                                                       limit=top_n
+                                                      )
+                      )   
+    for result in temp_result:
+        result["date"] = result["date"].strftime("%d/%m/%Y")
+
+    output_dict["Results"] = temp_result
     
     return output_dict
 
