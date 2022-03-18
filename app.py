@@ -17,7 +17,7 @@ import os
 import nltk
 from core_algorithms.query_expansion import get_query_expansion
 from core_algorithms.ir_eval.ranking import ranking_query_tfidf as ranking_query_tfidf_dataset
-from core_algorithms.ir_eval.ranking_paper import ranking_query_tfidf as ranking_query_tfidf_paper
+from core_algorithms.ir_eval.ranking_paper import ranking_query_tfidf_cosine as ranking_query_tfidf_paper
 from core_algorithms.ir_eval.ranking_paper import phrase_search as phrase_search_paper
 from core_algorithms.ir_eval.ranking import phrase_search as phrase_search_dataset
 from core_algorithms.ir_eval.ranking_paper import proximity_search as proximity_search_paper
