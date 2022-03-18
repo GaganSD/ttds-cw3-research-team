@@ -56,6 +56,8 @@ print(0.4)
 df_papers = pd.read_csv("/home/stylianosc/scann/papers/df.csv") #NOTE:DL
 # Load dataset indices
 df_datasets = pd.read_csv("core_algorithms/ir_eval/datasets/indices_dataset.csv")
+df_datasets.rename(columns={"description": "abstract"}, inplace=True)
+
 print(0.5)
 
 # Load datasets for inverted index
@@ -66,6 +68,7 @@ paperwithcode_df['Source'] = 'Paper_with_code'
 
 df = pd.concat([kaggle_df, paperwithcode_df])
 df = df.reset_index(drop=True)
+df.rename(columns={"description": "abstract"}, inplace=True)
 
 client = MongoDBClient("34.142.18.57")
 _preprocessing_cache = LRUCache(1000)
@@ -81,6 +84,7 @@ def hello():
     return "hello"
 
 def call_top_n(N, parameters):
+    results = {"Results":[]}
     if parameters["search_type"] == "AUTHOR":
 
         if parameters["datasets"]:
@@ -183,13 +187,12 @@ def get_datasets_results(query: str, top_n: int=10, spell_check=True, qe=False,
         outputs = phrase_search_dataset(query_params, start_time=time.time()) # return: list of ids of paper
     elif type == "PROXIMITY":
         outputs = proximity_search_dataset(query_params,  proximity=10) # return: list of ids of paper
-    
+
     output_dict = {"Results":[]}
     for result in outputs[:top_n]:
-        output = df.iloc[result][['title','subtitle','description']].to_dict()
-        output["abstract"] = output["description"]
-        output_dict['Results'].append(output)
 
+        output = df.iloc[result]['title','subtitle','abstract'].to_dict()
+        #output["abstract"] = output["description"]
     return output_dict
 
 def get_papers_results(query: str, top_n: int=10, spell_check=True, qe=False, 
@@ -224,12 +227,11 @@ def get_papers_results(query: str, top_n: int=10, spell_check=True, qe=False,
                                                        limit=top_n
                                                       )
                       )
-    
+
     for result in temp_result:
         result["date"] = result["date"].strftime("%d/%m/%Y")
 
     output_dict["Results"] = temp_result
-   
     return output_dict
 
 def get_author_papers_results(query: str, top_n: int=100, preprocess: bool=True, start_date:datetime = min_day, end_date:datetime = curr_day) -> dict:
@@ -449,10 +451,13 @@ def get_approx_nn_datasets_results(query: str, top_n: int=100) -> dict:
     neighbors, distances = searcher_dataset.search(query, final_num_neighbors=1000)
 
     output_dict = {}
-    columns = ['title','subtitle','description', 'url']
+
+    columns = ['title','subtitle','abstract', 'url']
     output_dict["Results"] = [df_datasets.iloc[i][columns].to_dict() for i in neighbors[:top_n]]
-    output["abstract"] = output["description"]
+    #output_dict["abstract"] = output_dict["Results"]["description"]
+
     return output_dict
+
 
 # def get_dataset_results_bm25(query: str, top_n: int=10, spell_check=True,qe=False, start_date:datetime = min_day, end_date:datetime = curr_day) -> dict:
 #     """
