@@ -175,7 +175,8 @@ def get_datasets_results(query: str, top_n: int=10, spell_check=True, qe=False,
     
     output_dict = {"Results":[]}
     for result in outputs[:top_n]:
-        output = df.iloc[result][['title','subtitle','description']].rename(columns={"description": "abstract"}).to_dict()
+        output = df.iloc[result][['title','subtitle','description']].to_dict()
+        output["abstract"] = output["description"]
         output_dict['Results'].append(output)
 
     return output_dict
@@ -438,8 +439,8 @@ def get_approx_nn_datasets_results(query: str, top_n: int=100) -> dict:
 
     output_dict = {}
     columns = ['title','subtitle','description', 'url']
-    output_dict["Results"] = [df_datasets.iloc[i][columns].rename(columns={"description": "abstract"}).to_dict() for i in neighbors[:top_n]]
-   
+    output_dict["Results"] = [df_datasets.iloc[i][columns]].to_dict() for i in neighbors[:top_n]]
+    output["abstract"] = output["description"]
     return output_dict
 
 # def get_dataset_results_bm25(query: str, top_n: int=10, spell_check=True,qe=False, start_date:datetime = min_day, end_date:datetime = curr_day) -> dict:
