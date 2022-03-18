@@ -16,13 +16,11 @@ export default function PageButton(props){
             <Button disabled= {props.disableback} onClick = {() => {
                 if(props.pagenum !== 1){
                     props.sexyProp(props.pagenum-1);
-                    props.searchCallback();
                 }
             }}> {"<"} </Button>
             <Button>Page {props.pagenum +""}</Button>
             <Button onClick={() => {
                 props.sexyProp(props.pagenum + 1);
-                props.searchCallback();
             }}> {">"} </Button>
         </ButtonGroup>
     )
