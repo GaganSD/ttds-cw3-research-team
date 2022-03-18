@@ -103,6 +103,7 @@ def call_top_n(N, parameters):
                             ranking = parameters["algorithm"], top_n=N)
 
     else:
+        print(parameters['query'])
         results = get_papers_results(query=parameters['query'],
                             type = parameters["search_type"],
                             ranking = parameters["algorithm"],  
@@ -114,6 +115,7 @@ def call_top_n(N, parameters):
 def get_full_result(parameters, id):
     result = call_top_n(1000, parameters)
     _results_cache.put(id, result)
+    return result
 
 @app.route("/<search_query>", methods = ['POST', 'GET'])
 def search_state_machine(search_query):
@@ -121,7 +123,7 @@ def search_state_machine(search_query):
 
     parameters = _deserialize(request.args['q'])
     id = request.args['q'].rpartition("/pn=")[0]
-    print("id!:", id)
+    # print("id!:", id)
     print(parameters)
     # {
     # query: search_query : DOME
@@ -133,13 +135,22 @@ def search_state_machine(search_query):
     # datasets: bool
     # page_num: int
     # }
+    pn = parameters["page_num"]
 
     if parameters["page_num"] > 1:
-        pn = parameters["page_num"]
-        _results_cache.get(id+'_thread').join()
-        return_result = {"Results" : _results_cache.get(id)['Results'][(pn-1)*25:pn*25]}
-        return return_result
+        thread = _results_cache.get(id+'_thread')
+        if not thread is None:
+            thread.join()
+        content = _results_cache.get(id)
+        if content is None:
+            content = get_full_result(parameters, id)
+
+        return {"Results" : content['Results'][ (pn-1)*25 : pn*25 ]}
     else:
+        content = _results_cache.get(id)
+        if not content is None:
+            return {"Results" : content['Results'][ (pn-1)*25 : pn*25 ]}
+
         results = call_top_n(25, parameters)
         thread = threading.Thread(target=get_full_result, args=(parameters, id))
         _results_cache.put(id+'_thread', thread)
@@ -439,7 +450,7 @@ def get_approx_nn_datasets_results(query: str, top_n: int=100) -> dict:
 
     output_dict = {}
     columns = ['title','subtitle','description', 'url']
-    output_dict["Results"] = [df_datasets.iloc[i][columns]].to_dict() for i in neighbors[:top_n]]
+    output_dict["Results"] = [df_datasets.iloc[i][columns].to_dict() for i in neighbors[:top_n]]
     output["abstract"] = output["description"]
     return output_dict
 
@@ -657,7 +668,7 @@ def _preprocess_query(query: str, stemming=True, remove_stopwords=True) -> dict:
     cached_data = _preprocessing_cache.get(query)
     query_params = None
 
-    if cached_data != -1:
+    if cached_data is not None:
         query_params = cached_data
     else:
         query_params = preprocess(query, stemming, remove_stopwords) # stemming, removing stopwords
