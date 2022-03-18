@@ -178,6 +178,7 @@ def get_datasets_results(query: str, top_n: int=10, spell_check=True, qe=False,
         output = df.iloc[result][['title','subtitle','description']].to_dict()
         output_dict['Results'].append(output)
 
+    output_dict['abstract'] = output_dict['description']
     return output_dict
 
 def get_papers_results(query: str, top_n: int=10, spell_check=True, qe=False, 
@@ -439,7 +440,8 @@ def get_approx_nn_datasets_results(query: str, top_n: int=100) -> dict:
     output_dict = {}
     columns = ['title','subtitle','description', 'url']
     output_dict["Results"] = [df_datasets.iloc[i][columns].to_dict() for i in neighbors[:top_n]]
-    
+
+    output_dict['abstract'] = output_dict['description']
     return output_dict
 
 # def get_dataset_results_bm25(query: str, top_n: int=10, spell_check=True,qe=False, start_date:datetime = min_day, end_date:datetime = curr_day) -> dict:
@@ -562,7 +564,6 @@ def get_approx_nn_papers_results(query: str, top_n: int=10, start_date:datetime 
         result["date"] = result["date"].strftime("%d/%m/%Y")
 
     output_dict["Results"] = temp_result
-    
     return output_dict
 
 
