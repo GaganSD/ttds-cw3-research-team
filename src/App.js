@@ -180,7 +180,7 @@ function App() {
 
     }
     else{
-      return fetch('http://127.0.0.1:5000/' + create_url(search, values.current)).then(response => response.json()).then(data => {
+      return fetch('http://34.142.71.148:5000/' + create_url(search, values.current)).then(response => response.json()).then(data => {
         if(data.Results.length === 0){
             console.log("empty");
             setEmptyResults(true);
@@ -230,7 +230,7 @@ function App() {
     if (isNaN(dateItems[monthIndex])){ //in case the month is written as a word
       var d = new Date(string_date);
     } else {
-      
+
       var month=parseInt(dateItems[monthIndex]);
       month-=1;
 
