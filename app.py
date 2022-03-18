@@ -56,6 +56,8 @@ print(0.4)
 df_papers = pd.read_csv("/home/stylianosc/scann/papers/df.csv") #NOTE:DL
 # Load dataset indices
 df_datasets = pd.read_csv("core_algorithms/ir_eval/datasets/indices_dataset.csv")
+df_datasets.rename(columns={"description": "abstract"}, inplace=True)
+
 print(0.5)
 
 # Load datasets for inverted index
@@ -66,6 +68,7 @@ paperwithcode_df['Source'] = 'Paper_with_code'
 
 df = pd.concat([kaggle_df, paperwithcode_df])
 df = df.reset_index(drop=True)
+df.rename(columns={"description": "abstract"}, inplace=True)
 
 client = MongoDBClient("34.142.18.57")
 _preprocessing_cache = LRUCache(1000)
@@ -176,10 +179,9 @@ def get_datasets_results(query: str, top_n: int=10, spell_check=True, qe=False,
 
     output_dict = {"Results":[]}
     for result in outputs[:top_n]:
+
         output = df.iloc[result]['title','subtitle','description'].to_dict()
         output["abstract"] = output["description"]
-        output_dict['Results'].append(output)
-
     return output_dict
 
 def get_papers_results(query: str, top_n: int=10, spell_check=True, qe=False, 
@@ -438,9 +440,11 @@ def get_approx_nn_datasets_results(query: str, top_n: int=100) -> dict:
     neighbors, distances = searcher_dataset.search(query, final_num_neighbors=1000)
 
     output_dict = {}
+
     columns = ['title','subtitle','description', 'url']
     output_dict["Results"] = [df_datasets.iloc[i][columns].to_dict() for i in neighbors[:top_n]]
     output_dict["abstract"] = output_dict["Results"]["description"]
+
     return output_dict
 
 
