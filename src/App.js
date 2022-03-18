@@ -70,8 +70,9 @@ function App() {
       else{
           setGoBackButtonDisabled(false);
       }
-
+      console.log("CHANGINGGG");
       values.current.pagenum = pagenum;
+      SearchFunc();
 
   },[pagenum]);
   function getOptions(type,optval){
@@ -167,7 +168,11 @@ function App() {
   }
 
   function SearchFunc() {
-    if( !/^[0-9a-zA-Z\s]*$/.test(search)){
+    if(search === ""){
+      console.log("EMPTY SEARCH")
+
+    }
+    else if( !/^[0-9a-zA-Z\s]*$/.test(search)){
       console.log("badquery");
       setJsonResults({"Results": []})
       showPageButton.current = false;
@@ -175,7 +180,7 @@ function App() {
 
     }
     else{
-      return fetch('http://34.142.71.148:5000/' + create_url(search, values.current)).then(response => response.json()).then(data => {
+      return fetch('http://127.0.0.1:5000/' + create_url(search, values.current)).then(response => response.json()).then(data => {
         if(data.Results.length === 0){
             console.log("empty");
             setEmptyResults(true);
@@ -388,7 +393,7 @@ function App() {
     <div style={{
       marginBottom: ".5em"
     }}> 
-      <PageButton pagenum = {pagenum} disableback = {gobackbuttondisabled} show = {showPageButton.current} sexyProp={setPageNum} searchCallback={SearchFunc}/>
+      <PageButton pagenum = {pagenum} disableback = {gobackbuttondisabled} show = {showPageButton.current} sexyProp={setPageNum} />
     </div>
     {/* <div style={{
       position: 'fixed',

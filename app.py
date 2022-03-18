@@ -58,6 +58,15 @@ df_papers = pd.read_csv("/home/stylianosc/scann/papers/df.csv") #NOTE:DL
 df_datasets = pd.read_csv("core_algorithms/ir_eval/datasets/indices_dataset.csv")
 print(0.5)
 
+# Load datasets for inverted index
+kaggle_df = pd.read_csv('core_algorithms/ir_eval/kaggle_dataset_df_page500.csv')
+kaggle_df['Source'] = 'Kaggle'
+paperwithcode_df = pd.read_csv('core_algorithms/ir_eval/paperwithcode_df.csv')
+paperwithcode_df['Source'] = 'Paper_with_code'
+
+df = pd.concat([kaggle_df, paperwithcode_df])
+df = df.reset_index(drop=True)
+
 client = MongoDBClient("34.142.18.57")
 _preprocessing_cache = LRUCache(1000)
 _results_cache = LRUCache(200)
@@ -86,8 +95,7 @@ def call_top_n(N, parameters):
             results = get_approx_nn_datasets_results(query=parameters['query'], top_n=N)
         else:
             results = get_approx_nn_papers_results(query=parameters['query'], 
-                start_date=parameters["start_date"], end_date=parameters["end_date"]
-                , top_n=N)
+                start_date=parameters["start_date"], end_date=parameters["end_date"], top_n=N)
 
     elif parameters["datasets"]:
         results = get_datasets_results(query=parameters['query'],
@@ -152,15 +160,7 @@ def get_datasets_results(query: str, top_n: int=10, spell_check=True, qe=False,
     if qe:
         query = query + ' ' + ' '.join(get_query_expansion(query))
     query_params = _preprocess_query(query,True, True) # stemming, removing stopwords
-    
-    kaggle_df = pd.read_csv('core_algorithms/ir_eval/kaggle_dataset_df_page500.csv')
-    kaggle_df['Source'] = 'Kaggle'
-    paperwithcode_df = pd.read_csv('core_algorithms/ir_eval/paperwithcode_df.csv')
-    paperwithcode_df['Source'] = 'Paper_with_code'
 
-    df = pd.concat([kaggle_df, paperwithcode_df])
-    df = df.reset_index(drop=True)
-    
     if type == "DEFAULT":
         if ranking == "TF_IDF":
             scores = ranking_query_tfidf_dataset(query_params)
@@ -175,7 +175,7 @@ def get_datasets_results(query: str, top_n: int=10, spell_check=True, qe=False,
     
     output_dict = {"Results":[]}
     for result in outputs[:top_n]:
-        output = df.iloc[result][['title','subtitle','description']].to_dict()
+        output = df.iloc[result][['title','subtitle','description']].rename(columns={"description": "abstract"}).to_dict()
         output_dict['Results'].append(output)
 
     return output_dict
@@ -438,8 +438,8 @@ def get_approx_nn_datasets_results(query: str, top_n: int=100) -> dict:
 
     output_dict = {}
     columns = ['title','subtitle','description', 'url']
-    output_dict["Results"] = [df_datasets.iloc[i][columns].to_dict() for i in neighbors[:top_n]]
-    
+    output_dict["Results"] = [df_datasets.iloc[i][columns].rename(columns={"description": "abstract"}).to_dict() for i in neighbors[:top_n]]
+   
     return output_dict
 
 # def get_dataset_results_bm25(query: str, top_n: int=10, spell_check=True,qe=False, start_date:datetime = min_day, end_date:datetime = curr_day) -> dict:
@@ -562,7 +562,6 @@ def get_approx_nn_papers_results(query: str, top_n: int=10, start_date:datetime 
         result["date"] = result["date"].strftime("%d/%m/%Y")
 
     output_dict["Results"] = temp_result
-    
     return output_dict
 
 
