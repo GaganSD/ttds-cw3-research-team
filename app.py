@@ -5,38 +5,38 @@
 # in linux machines.
 ############################
 
-from collections import defaultdict
 from flask import Flask, request
 from flask_cors import CORS
 from sentence_transformers import SentenceTransformer
 from infra.LRUCache import LRUCache
-import datetime
-import time
-import heapq
-import os
-import nltk
-from core_algorithms.query_expansion import get_query_expansion
-from core_algorithms.ir_eval.ranking import ranking_query_tfidf as ranking_query_tfidf_dataset
+from datetime import datetime
+
+from infra.helpers import curr_day, min_day, deserialize, filter_dates
+
+from core_algorithms.ir_eval.ranking_paper import ranking_query_BM25 as ranking_query_bm25_paper
 from core_algorithms.ir_eval.ranking_paper import ranking_query_tfidf_cosine as ranking_query_tfidf_paper
 from core_algorithms.ir_eval.ranking_paper import phrase_search as phrase_search_paper
-from core_algorithms.ir_eval.ranking import phrase_search as phrase_search_dataset
 from core_algorithms.ir_eval.ranking_paper import proximity_search as proximity_search_paper
+
+from core_algorithms.ir_eval.ranking import ranking_query_tfidf as ranking_query_tfidf_dataset
+from core_algorithms.ir_eval.ranking import phrase_search as phrase_search_dataset
 from core_algorithms.ir_eval.ranking import proximity_search as proximity_search_dataset
 from core_algorithms.ir_eval.ranking import ranking_query_BM25 as ranking_query_bm25_dataset
-from core_algorithms.ir_eval.ranking_paper import ranking_query_BM25 as ranking_query_bm25_paper
+
 from core_algorithms.mongoDB_API import MongoDBClient
 from core_algorithms.ir_eval.preprocessing import preprocess, author_preprocess
 from core_algorithms.query_expansion import get_query_expansion
-from core_algorithms.query_spell_check import query_spell_check
+from core_algorithms.adv_query_options import query_spell_check, get_query_expansion
 
 print(0.1)
 import json
-from datetime import datetime
 import scann ## NOTE: Only works on linux machines #NOTE:DL
 import pandas as pd
 import threading
+import datetime
+import time
+import heapq
 
-nltk.download('omw-1.4')
 
 
 # Create Flask app
@@ -44,9 +44,8 @@ app = Flask(__name__)
 CORS(app)
 
 print(0.2)
-# Load paper index
+# Load paper & dataset index. 
 searcher = scann.scann_ops_pybind.load_searcher('/home/stylianosc/scann/papers/') #NOTE:DL
-# Load dataset index
 searcher_dataset = scann.scann_ops_pybind.load_searcher('core_algorithms/ir_eval/datasets/')
 print(0.3)
 # Load transformer encoder
@@ -74,14 +73,6 @@ client = MongoDBClient("34.142.18.57")
 _preprocessing_cache = LRUCache(1000)
 _results_cache = LRUCache(200)
 
-curr_day = datetime.today()
-min_day = datetime.strptime("01-01-1000", '%d-%m-%Y')
-_no_match_sample = {"title": "No Matching Documents Were Found", "abstract": "Try expanding your query with our search suggestion", "url":"", "authors":"","date":curr_day.strftime('%d/%m/%Y')}
-_no_results_dict = {"Results": [_no_match_sample]}
-
-@app.route("/")
-def hello():
-    return "hello"
 
 def call_top_n(N, parameters):
     results = {"Results":[]}
@@ -124,10 +115,8 @@ def get_full_result(parameters, id):
 def search_state_machine(search_query):
     results = {"Results":[{}]}
 
-    parameters = _deserialize(request.args['q'])
+    parameters = deserialize(request.args['q'])
     id = request.args['q'].rpartition("/pn=")[0]
-    # print("id!:", id)
-    print(parameters)
     # {
     # query: search_query : DOME
     # from_date: DD-MM-YYYY (last) : 
@@ -207,8 +196,7 @@ def get_papers_results(query: str, top_n: int=10, spell_check=True, qe=False,
         query = query + ' ' + ' '.join(get_query_expansion(query))
 
     query_params = _preprocess_query(query, True, True) # stemming, removing stopwords
-    # query_params = {'query': query}
-    print(query)
+
 
     if type == "DEFAULT":
         if ranking == "TF_IDF":
@@ -222,7 +210,7 @@ def get_papers_results(query: str, top_n: int=10, spell_check=True, qe=False,
         outputs = proximity_search_paper(query_params, client, proximity=10)
 
     output_dict = {}
-    print(start_date, end_date)
+
     temp_result = list(client.order_preserved_get_data(id_list= outputs,
                                                        start_date=start_date, end_date=end_date,
                                                        fields=['title', 'abstract','authors', 'url', 'date'],
@@ -272,7 +260,7 @@ def get_author_papers_results(query: str, top_n: int=100, preprocess: bool=True,
                                                        fields=['title', 'abstract','authors', 'url', 'date'],
                                                        limit=top_n
                                                       )
-                      )   
+                      )
     for result in temp_result:
         result["date"] = result["date"].strftime("%d/%m/%Y")
 
@@ -280,12 +268,6 @@ def get_author_papers_results(query: str, top_n: int=100, preprocess: bool=True,
     
     return output_dict
 
-def filter_dates(output: dict={'Results':[]}, start_date:datetime = min_day, end_date:datetime = curr_day):
-    output_dict = {}
-    output_dict['Results'] = [i for i in output['Results'] 
-                            if i['date']>= start_date  and 
-                            i['date'] <= end_date]
-    return output_dict
 
 def authors_extensions(query: str, top_n: int=100, docs_searched: int=10, author_search_result: dict={'Results':[]}) -> dict:
     '''
@@ -374,43 +356,4 @@ def _preprocess_query(query: str, stemming=True, remove_stopwords=True) -> dict:
 
     return query_params
 
-def _deserialize(query: str) -> dict:
 
-    return_dict = {
-        "query" :"",
-        "start_date" :   datetime.min,
-        "end_date" :   datetime.today(),
-        "search_type" : "DEFAULT",
-        "algorithm" : "APROX_NN",
-        "datasets": False,
-        "page_num" : 1
-    }
-
-    queries = query.split("/")[:-1]
-
-    for i in range(len(queries)):
-        if i == 0:
-            return_dict["query"] = queries[i].replace("+", " ")
-        if i == 1:
-            from_date = queries[i][3:]
-            if from_date != "inf":
-                return_dict["start_date"] =   datetime.strptime(from_date, '%d-%m-%Y')
-        if i == 2:
-            to_date = queries[i][3:]
-            if to_date != "inf":
-                return_dict["end_date"] =   datetime.strptime(to_date, '%d-%m-%Y')
-        if i ==3:
-            st = queries[i][4:]
-            return_dict["algorithm"] = st.replace("+","_")
-        if i == 4:
-            alg = queries[i][8:]
-            return_dict["search_type"] = alg.replace("+","_")
-        if i == 5:
-            ds = queries[i][3:]
-            if ds == "true":
-                return_dict["datasets"] = True
-        if i == 6:
-            pn = queries[i][3:]
-            return_dict["page_num"] = int(pn)
-
-    return return_dict
