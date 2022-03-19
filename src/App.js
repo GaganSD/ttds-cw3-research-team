@@ -229,7 +229,7 @@ function App() {
     if (isNaN(dateItems[monthIndex])){ //in case the month is written as a word
       var d = new Date(string_date);
     } else {
-      
+
       var month=parseInt(dateItems[monthIndex]);
       month-=1;
 

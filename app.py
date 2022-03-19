@@ -17,7 +17,7 @@ import os
 import nltk
 from core_algorithms.query_expansion import get_query_expansion
 from core_algorithms.ir_eval.ranking import ranking_query_tfidf as ranking_query_tfidf_dataset
-from core_algorithms.ir_eval.ranking_paper import ranking_query_tfidf as ranking_query_tfidf_paper
+from core_algorithms.ir_eval.ranking_paper import ranking_query_tfidf_cosine as ranking_query_tfidf_paper
 from core_algorithms.ir_eval.ranking_paper import phrase_search as phrase_search_paper
 from core_algorithms.ir_eval.ranking import phrase_search as phrase_search_dataset
 from core_algorithms.ir_eval.ranking_paper import proximity_search as proximity_search_paper
@@ -56,7 +56,19 @@ print(0.4)
 df_papers = pd.read_csv("/home/stylianosc/scann/papers/df.csv") #NOTE:DL
 # Load dataset indices
 df_datasets = pd.read_csv("core_algorithms/ir_eval/datasets/indices_dataset.csv")
+df_datasets.rename(columns={"description": "abstract"}, inplace=True)
+
 print(0.5)
+
+# Load datasets for inverted index
+kaggle_df = pd.read_csv('core_algorithms/ir_eval/kaggle_dataset_df_page500.csv')
+kaggle_df['Source'] = 'Kaggle'
+paperwithcode_df = pd.read_csv('core_algorithms/ir_eval/paperwithcode_df.csv')
+paperwithcode_df['Source'] = 'Paper_with_code'
+
+df = pd.concat([kaggle_df, paperwithcode_df])
+df = df.reset_index(drop=True)
+df.rename(columns={"description": "abstract"}, inplace=True)
 
 client = MongoDBClient("34.142.18.57")
 _preprocessing_cache = LRUCache(1000)
@@ -72,6 +84,7 @@ def hello():
     return "hello"
 
 def call_top_n(N, parameters):
+    results = {"Results":[]}
     if parameters["search_type"] == "AUTHOR":
 
         if parameters["datasets"]:
@@ -86,8 +99,7 @@ def call_top_n(N, parameters):
             results = get_approx_nn_datasets_results(query=parameters['query'], top_n=N)
         else:
             results = get_approx_nn_papers_results(query=parameters['query'], 
-                start_date=parameters["start_date"], end_date=parameters["end_date"]
-                , top_n=N)
+                start_date=parameters["start_date"], end_date=parameters["end_date"], top_n=N)
 
     elif parameters["datasets"]:
         results = get_datasets_results(query=parameters['query'],
@@ -95,6 +107,7 @@ def call_top_n(N, parameters):
                             ranking = parameters["algorithm"], top_n=N)
 
     else:
+        print(parameters['query'])
         results = get_papers_results(query=parameters['query'],
                             type = parameters["search_type"],
                             ranking = parameters["algorithm"],  
@@ -106,6 +119,7 @@ def call_top_n(N, parameters):
 def get_full_result(parameters, id):
     result = call_top_n(1000, parameters)
     _results_cache.put(id, result)
+    return result
 
 @app.route("/<search_query>", methods = ['POST', 'GET'])
 def search_state_machine(search_query):
@@ -113,7 +127,7 @@ def search_state_machine(search_query):
 
     parameters = _deserialize(request.args['q'])
     id = request.args['q'].rpartition("/pn=")[0]
-    print("id!:", id)
+    # print("id!:", id)
     print(parameters)
     # {
     # query: search_query : DOME
@@ -125,13 +139,22 @@ def search_state_machine(search_query):
     # datasets: bool
     # page_num: int
     # }
+    pn = parameters["page_num"]
 
     if parameters["page_num"] > 1:
-        pn = parameters["page_num"]
-        _results_cache.get(id+'_thread').join()
-        return_result = {"Results" : _results_cache.get(id)['Results'][(pn-1)*25:pn*25]}
-        return return_result
+        thread = _results_cache.get(id+'_thread')
+        if not thread is None:
+            thread.join()
+        content = _results_cache.get(id)
+        if content is None:
+            content = get_full_result(parameters, id)
+
+        return {"Results" : content['Results'][ (pn-1)*25 : pn*25 ]}
     else:
+        content = _results_cache.get(id)
+        if not content is None:
+            return {"Results" : content['Results'][ (pn-1)*25 : pn*25 ]}
+
         results = call_top_n(25, parameters)
         thread = threading.Thread(target=get_full_result, args=(parameters, id))
         _results_cache.put(id+'_thread', thread)
@@ -152,15 +175,7 @@ def get_datasets_results(query: str, top_n: int=10, spell_check=True, qe=False,
     if qe:
         query = query + ' ' + ' '.join(get_query_expansion(query))
     query_params = _preprocess_query(query,True, True) # stemming, removing stopwords
-    
-    kaggle_df = pd.read_csv('core_algorithms/ir_eval/kaggle_dataset_df_page500.csv')
-    kaggle_df['Source'] = 'Kaggle'
-    paperwithcode_df = pd.read_csv('core_algorithms/ir_eval/paperwithcode_df.csv')
-    paperwithcode_df['Source'] = 'Paper_with_code'
 
-    df = pd.concat([kaggle_df, paperwithcode_df])
-    df = df.reset_index(drop=True)
-    
     if type == "DEFAULT":
         if ranking == "TF_IDF":
             scores = ranking_query_tfidf_dataset(query_params)
@@ -172,14 +187,12 @@ def get_datasets_results(query: str, top_n: int=10, spell_check=True, qe=False,
         outputs = phrase_search_dataset(query_params, start_time=time.time()) # return: list of ids of paper
     elif type == "PROXIMITY":
         outputs = proximity_search_dataset(query_params,  proximity=10) # return: list of ids of paper
-    
+
     output_dict = {"Results":[]}
     for result in outputs[:top_n]:
-        output = df.iloc[result][['title','subtitle','description']].to_dict()
-        output['abstract'] = output_dict['description']
 
-        output_dict['Results'].append(output)
-
+        output = df.iloc[result]['title','subtitle','abstract'].to_dict()
+        #output["abstract"] = output["description"]
     return output_dict
 
 def get_papers_results(query: str, top_n: int=10, spell_check=True, qe=False, 
@@ -214,12 +227,11 @@ def get_papers_results(query: str, top_n: int=10, spell_check=True, qe=False,
                                                        limit=top_n
                                                       )
                       )
-    
+
     for result in temp_result:
         result["date"] = result["date"].strftime("%d/%m/%Y")
 
     output_dict["Results"] = temp_result
-   
     return output_dict
 
 def get_author_papers_results(query: str, top_n: int=100, preprocess: bool=True, start_date:datetime = min_day, end_date:datetime = curr_day) -> dict:
@@ -439,11 +451,13 @@ def get_approx_nn_datasets_results(query: str, top_n: int=100) -> dict:
     neighbors, distances = searcher_dataset.search(query, final_num_neighbors=1000)
 
     output_dict = {}
-    columns = ['title','subtitle','description', 'url']
-    output_dict["Results"] = [df_datasets.iloc[i][columns].to_dict() for i in neighbors[:top_n]]
 
-    output_dict['abstract'] = output_dict['description']
+    columns = ['title','subtitle','abstract', 'url']
+    output_dict["Results"] = [df_datasets.iloc[i][columns].to_dict() for i in neighbors[:top_n]]
+    #output_dict["abstract"] = output_dict["Results"]["description"]
+
     return output_dict
+
 
 # def get_dataset_results_bm25(query: str, top_n: int=10, spell_check=True,qe=False, start_date:datetime = min_day, end_date:datetime = curr_day) -> dict:
 #     """
@@ -659,7 +673,7 @@ def _preprocess_query(query: str, stemming=True, remove_stopwords=True) -> dict:
     cached_data = _preprocessing_cache.get(query)
     query_params = None
 
-    if cached_data != -1:
+    if cached_data is not None:
         query_params = cached_data
     else:
         query_params = preprocess(query, stemming, remove_stopwords) # stemming, removing stopwords

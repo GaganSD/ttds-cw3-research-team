@@ -5,6 +5,40 @@ import LoadingButton from '@mui/lab/LoadingButton';
 export default function SearchButton(props){
 
 const [process, setProcess] = React.useState({label: 'Search Query'})
+async function task() {
+    return new Promise(() => {
+        props.parentCallback();
+      })
+  }
+    return(
+        <Button variant="contained" style={{display: 'flex', justifyContent: 'center'}} onClick = { async () => {
+            
+            
+            setProcess({label: 'Loading...' });
+            const promises = await task();
+            promises.then(setProcess({label: 'Search Query'}));
+
+
+           //another attempt that doesnt work:
+           //setProcess({label: 'Loading...' }).then(props.parentCallback()).then(setProcess({label: 'Search Query'}));
+                
+        }
+        }>
+            {process.label}
+        </Button>
+
+    );
+}
+
+
+//this is just the old code in case i/we dont figure out how to make it dependent on the retrieval:
+/* import React, { Component } from 'react';
+import Button from '@mui/material/Button';
+import LoadingButton from '@mui/lab/LoadingButton';
+
+export default function SearchButton(props){
+
+const [process, setProcess] = React.useState({label: 'Search Query'})
 
     return(
         <Button variant="contained" style={{display: 'flex', justifyContent: 'center'}} onClick = {() => {
@@ -26,4 +60,4 @@ const [process, setProcess] = React.useState({label: 'Search Query'})
         </Button>
 
     );
-}
+} */

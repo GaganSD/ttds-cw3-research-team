@@ -14,7 +14,8 @@ class LRUCache:
         if key in self.pairs:
             self.pairs.move_to_end(key)
             return self.pairs[key]
-        else: return -1
+        else: 
+            return None
 
     def put(self, key: int, value: int) -> None:
         
