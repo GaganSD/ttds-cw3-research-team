@@ -176,9 +176,10 @@ def get_datasets_results(query: str, top_n: int=10, spell_check=True, qe=False,
     output_dict = {"Results":[]}
     for result in outputs[:top_n]:
         output = df.iloc[result][['title','subtitle','description']].to_dict()
+        output['abstract'] = output_dict['description']
+
         output_dict['Results'].append(output)
 
-    output_dict['abstract'] = output_dict['description']
     return output_dict
 
 def get_papers_results(query: str, top_n: int=10, spell_check=True, qe=False, 

@@ -32,8 +32,7 @@ import { useEffect, useState } from "react";
 import { ThemeProvider } from 'styled-components';
 import { lightTheme, darkTheme } from './components/theme';
 import { GlobalStyles } from './components/global';
-
-
+//TODO: ADD Latex
 function App() {
   const [theme, setTheme] = useState('light');
   const toggleTheme = () => {
@@ -180,7 +179,7 @@ function App() {
 
     }
     else{
-      return fetch('http://127.0.0.1:5000/' + create_url(search, values.current)).then(response => response.json()).then(data => {
+      return fetch('http://localhost:5000/' + create_url(search, values.current)).then(response => response.json()).then(data => {
         if(data.Results.length === 0){
             console.log("empty");
             setEmptyResults(true);
@@ -253,7 +252,7 @@ function App() {
         }    
       } else {
         if (text.length>500){
-        return text.substring(0,500)+"...";
+        return text.substring(0,500) + "...";
         }
       }
     }
@@ -263,8 +262,8 @@ function App() {
     var lower=authors.toLowerCase()
     if (authors.includes(",")){
       return "Authors: "+ authors;
-    } else if (!(lower == "n/a" || lower == "na"
-                 || lower == "n-a" || lower == "")){
+    } else if (!(lower == "n/a" || lower == "na" || lower == "NA"
+                 || lower == "n-a" || lower == "" || lower == " ")){
       return "Author: "+ authors;
     }
   }
@@ -345,6 +344,7 @@ function App() {
           return <Box>{curr_elem}</Box>;
         })}
       </div>
+      <br/>
 
 
       <div className = 'Searchoptions' style={{
@@ -361,13 +361,10 @@ function App() {
           }} />
           <QEButton parentCallback={QueryExpansion} />
         </ButtonGroup>
-        <div style = {{
-          paddingLeft : "5em"
-        }}>
-          <PaperOrDS parentCallback={getPoDS}/>
-        </div>
+
       </div>
-      
+      <br/>
+      <PaperOrDS parentCallback={getPoDS}/>
 
 
     <div>
@@ -382,10 +379,10 @@ function App() {
           {/* <Breadcrumbs color="grey" size="2" face="Tahoma" separator="›" href="/" aria-label="breadcrumb">
             {curr_elem.url}
           </Breadcrumbs> */}
-          <font color="grey" size="2" face="Tahoma">{curr_elem.url}</font><br/><br/>
-          <a href={curr_elem.url}><font color="blue" size="5" face="Tahoma">{curr_elem.title}</font></a>
+          <font color="grey" size="2" face="Tahoma">{curr_elem.url}</font><br/>
+          <a href={curr_elem.url}><font color="#5998ec" size="5">{curr_elem.title}</font></a>
           <p><font color="grey" face="Tahoma">{std_date}</font></p>
-          <p><font face="Tahoma">{abstractgenerator(curr_elem.abstract)}</font></p>
+          <p>{abstractgenerator(curr_elem.abstract)}</p>
           <p><font face="Tahoma">{authorlist(curr_elem.authors)}</font></p>
         </p></Box>;
     })}
