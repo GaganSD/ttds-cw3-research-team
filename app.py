@@ -25,7 +25,6 @@ from core_algorithms.ir_eval.ranking import ranking_query_BM25 as ranking_query_
 
 from core_algorithms.mongoDB_API import MongoDBClient
 from core_algorithms.ir_eval.preprocessing import preprocess, author_preprocess
-from core_algorithms.query_expansion import get_query_expansion
 from core_algorithms.adv_query_options import query_spell_check, get_query_expansion
 
 print(0.1)

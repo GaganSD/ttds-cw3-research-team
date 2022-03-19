@@ -32,7 +32,7 @@ import { useEffect, useState } from "react";
 import { ThemeProvider } from 'styled-components';
 import { lightTheme, darkTheme } from './components/theme';
 import { GlobalStyles } from './components/global';
-//TODO: ADD Latex
+//TODO: Remove latex & markdown formatting 
 function App() {
   const [theme, setTheme] = useState('light');
   const toggleTheme = () => {
@@ -42,7 +42,7 @@ function App() {
     } else {
       setTheme('light');
     }
-  }
+}
 
   const [search, setSearch] = React.useState('');
   const showPageButton = React.useRef(false);
@@ -143,7 +143,6 @@ function App() {
     let url = "search?q=";
     url += SanitizeSearch(searchq).split(" ").join("+");
     url += "/df=";
-    // console.log(date_formatter(vals.range_from));
     url += date_formatter(vals.range_from);
     url += "/dt=";
     url += date_formatter(vals.range_to);
@@ -266,8 +265,9 @@ function App() {
 
       var d = new Date(year,month,dateItems[dayIndex]);
     }
-
-    let formatted = [String ("0" + d.getDate()).slice(-2), String ("0" + (d.getMonth() +1)).slice(-2), d.getFullYear()].join('/');
+    const monthNames = ["January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"];
+    let formatted = monthNames[d.getMonth()] + ", " +  d.getFullYear();
 
     return formatted;
   }
@@ -292,10 +292,10 @@ function App() {
   function authorlist(authors){
     var lower=authors.toLowerCase()
     if (authors.includes(",")){
-      return "Authors: "+ authors;
+      return authors;
     } else if (!(lower == "n/a" || lower == "na" || lower == "NA"
                  || lower == "n-a" || lower == "" || lower == " ")){
-      return "Author: "+ authors;
+      return authors;
     }
   }
 
@@ -410,11 +410,12 @@ function App() {
           {/* <Breadcrumbs color="grey" size="2" face="Tahoma" separator="›" href="/" aria-label="breadcrumb">
             {curr_elem.url}
           </Breadcrumbs> */}
-          <a href={curr_elem.url}><font size="5">{curr_elem.title}</font></a><br/>
-          <font color="#595F6A" size="2" face="Tahoma">{fix_url(curr_elem.url)} - {std_date}</font><br/>
+          {/* TODO: Enable latex formatting in author title
+          TODO: Remove latex & markdown formatting in description */}
+          <a href={curr_elem.url}><font size="5">{curr_elem.title}</font></a><br/> 
+          <font color="#595F6A" size="2" face="Tahoma">{fix_url(curr_elem.url)} - {std_date} - {authorlist(curr_elem.authors)}</font><br/> 
           {/* <font color="#595F6A" face="Tahoma"></font><br/> */}
-          <font color="#595F6A" face="Tahoma">{authorlist(curr_elem.authors)}</font>
-          <font color="#595F6A">{abstractgenerator(curr_elem.abstract)}</font><br/>
+          <font color="#595F6A">ㅤ{abstractgenerator(curr_elem.abstract)}</font><br/>
         </p></Box>;
     })}
     </div>

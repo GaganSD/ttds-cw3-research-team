@@ -1,11 +1,11 @@
 {
 	"Results": [
 		{
-			"title": "BEEP BOOP",
+			"title": "\s{T}itle",
 			"date": "24/07/2022",
 			"url": "https://beepboop.com",
-			"abstract": "/textbf{a} \textbf{domestic} .  Hello",
-			"authors": "SpongeBob"
+			"abstract": "This text should be bold: \textbf{domestic}",
+			"authors": "\s{S}pongeBob"
 		},
 		{
 			"title": "Cat",
