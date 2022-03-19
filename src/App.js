@@ -166,6 +166,37 @@ function App() {
     return searchval;
   }
 
+  function extractHostname(raw_url) {
+    
+    var hostname;  
+    
+    if (raw_url.indexOf("//") > -1) { // remove protocol
+      hostname = raw_url.split('/')[2];
+    } else {
+      hostname = raw_url.split('/')[0];
+    }
+    hostname = hostname.split(':')[0]; // find & remove port number
+    hostname = hostname.split('?')[0]; // find & remove "?"
+
+    return hostname;
+  }
+
+  function fix_url(raw_url) {
+    var domain = extractHostname(raw_url),
+    splitArr = domain.split('.'),
+    arr_len = splitArr.length;
+
+    if (arr_len > 2) {
+      domain = splitArr[arr_len - 2] + '.' + splitArr[arr_len - 1];
+      //check to see if it's using a Country Code Top Level Domain (ccTLD) (i.e. ".me.uk")
+      if (splitArr[arr_len - 2].length == 2 && splitArr[arr_len - 1].length == 2) {
+        //this is using a ccTLD
+        domain = splitArr[arr_len - 3] + '.' + domain;
+      }
+    }
+    return domain;
+  }
+
   function SearchFunc() {
     if(search === ""){
       console.log("EMPTY SEARCH")
@@ -379,11 +410,11 @@ function App() {
           {/* <Breadcrumbs color="grey" size="2" face="Tahoma" separator="›" href="/" aria-label="breadcrumb">
             {curr_elem.url}
           </Breadcrumbs> */}
-          <font color="grey" size="2" face="Tahoma">{curr_elem.url}</font><br/>
-          <a href={curr_elem.url}><font color="#5998ec" size="5">{curr_elem.title}</font></a>
-          <p><font color="grey" face="Tahoma">{std_date}</font></p>
-          <p>{abstractgenerator(curr_elem.abstract)}</p>
-          <p><font face="Tahoma">{authorlist(curr_elem.authors)}</font></p>
+          <a href={curr_elem.url}><font size="5">{curr_elem.title}</font></a><br/>
+          <font color="#595F6A" size="2" face="Tahoma">{fix_url(curr_elem.url)} - {std_date}</font><br/>
+          {/* <font color="#595F6A" face="Tahoma"></font><br/> */}
+          <font color="#595F6A" face="Tahoma">{authorlist(curr_elem.authors)}</font>
+          <font color="#595F6A">{abstractgenerator(curr_elem.abstract)}</font><br/>
         </p></Box>;
     })}
     </div>
