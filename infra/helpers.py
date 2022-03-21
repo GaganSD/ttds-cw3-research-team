@@ -1,5 +1,5 @@
 from datetime import datetime
-
+from io import StringIO
 
 curr_day = datetime.today()
 min_day = datetime.strptime("01-01-1000", '%d-%m-%Y')
@@ -52,3 +52,39 @@ def filter_dates(output: dict={'Results':[]}, start_date:datetime = min_day, end
                             if i['date']>= start_date  and 
                             i['date'] <= end_date]
     return output_dict
+
+class Formatting:
+
+    def __init__(self):
+        """
+        This class has methods that helps format markdown and latex (#TODO: Leo)
+        """
+        from markdown import Markdown
+
+        # For markdown
+        Markdown.output_formats["plain"] = self._unmark_element
+
+        self._md = Markdown(output_format="plain")
+        self._md.stripTopLevelTags = False
+
+    def remove_markdown(self, corpus: str) -> str:
+        """
+        Removes all markdown formatting from the string.
+        """
+        # Part of this method is derived from: 
+        # https://stackoverflow.com/questions/761824/python-how-to-convert-markdown-formatted-text-to-text
+        return self._md.convert(corpus)
+
+    def _unmark_element(self, element, stream=None):
+        """
+        Private helper method to unmark element.
+        """
+        if stream is None:
+            stream = StringIO()
+        if element.text:
+            stream.write(element.text)
+        for sub in element:
+            self._unmark_element(sub, stream)
+        if element.tail:
+            stream.write(element.tail)
+        return stream.getvalue()
