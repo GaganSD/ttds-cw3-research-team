@@ -1,7 +1,7 @@
 from audioop import avg
 from cmath import nan
 import json
-import pickle
+import pickle5 as pickle
 import sys
 # from db.DB import get_db_instance
 from pathlib import Path

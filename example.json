@@ -1,5 +1,13 @@
 {
-	"Results": [{
+	"Results": [
+		{
+			"title": "\s{T}itle",
+			"date": "24/07/2022",
+			"url": "https://beepboop.com",
+			"abstract": "This text should be bold: \textbf{domestic}",
+			"authors": "\s{S}pongeBob"
+		},
+		{
 			"title": "Cat",
 			"date": "24/07/2021",
 			"url": "https://en.wikipedia.org/wiki/Cat",

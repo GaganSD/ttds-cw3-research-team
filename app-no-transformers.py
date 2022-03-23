@@ -29,7 +29,7 @@ from core_algorithms.adv_query_options import query_spell_check, get_query_expan
 
 print(0.1)
 import json
-import scann ## NOTE: Only works on linux machines #NOTE:DL
+# import scann ## NOTE: Only works on linux machines #NOTE:DL
 import pandas as pd
 import threading
 import datetime
@@ -43,12 +43,12 @@ app = Flask(__name__)
 CORS(app)
 
 print(0.2)
-# Load paper & dataset index. 
-searcher = scann.scann_ops_pybind.load_searcher('/home/stylianosc/scann/papers/') #NOTE:DL
-searcher_dataset = scann.scann_ops_pybind.load_searcher('core_algorithms/ir_eval/datasets/')
-print(0.3)
-# Load transformer encoder
-model = SentenceTransformer('all-MiniLM-L6-v2') #NOTE:DL
+# # Load paper & dataset index. 
+# searcher = scann.scann_ops_pybind.load_searcher('/home/stylianosc/scann/papers/') #NOTE:DL
+# searcher_dataset = scann.scann_ops_pybind.load_searcher('core_algorithms/ir_eval/datasets/') #NOTE:DL
+# print(0.3)
+# # Load transformer encoder
+# model = SentenceTransformer('all-MiniLM-L6-v2') #NOTE:DL
 print(0.4)
 # Load paper indices
 df_papers = pd.read_csv("/home/stylianosc/scann/papers/df.csv") #NOTE:DL
@@ -282,47 +282,47 @@ def authors_extensions(query: str, top_n: int=100, docs_searched: int=10, author
     return results
 
 
-#NOTE:DL
-def get_approx_nn_datasets_results(query: str, top_n: int=100) -> dict:
-    """
-    Input: query (type: string)
-    Output: search results (dict)
-    """
-    query = model.encode(query, convert_to_tensor=True)
-    neighbors, distances = searcher_dataset.search(query, final_num_neighbors=1000)
+# #NOTE:DL
+# def get_approx_nn_datasets_results(query: str, top_n: int=100) -> dict:
+#     """
+#     Input: query (type: string)
+#     Output: search results (dict)
+#     """
+#     query = model.encode(query, convert_to_tensor=True)
+#     neighbors, distances = searcher_dataset.search(query, final_num_neighbors=1000)
 
-    output_dict = {}
+#     output_dict = {}
 
-    columns = ['title','subtitle','abstract', 'url']
-    output_dict["Results"] = [df_datasets.iloc[i][columns].to_dict() for i in neighbors[:top_n]]
-    #output_dict["abstract"] = output_dict["Results"]["description"]
+#     columns = ['title','subtitle','abstract', 'url']
+#     output_dict["Results"] = [df_datasets.iloc[i][columns].to_dict() for i in neighbors[:top_n]]
+#     #output_dict["abstract"] = output_dict["Results"]["description"]
 
-    return output_dict
+#     return output_dict
 
 
-#NOTE:DL
-def get_approx_nn_papers_results(query: str, top_n: int=10, start_date:datetime = min_day, end_date:datetime = curr_day) -> dict:
-    """
-    Input: query (type: string)
-    Output: Dictionary (HashMap)
-    """
-    query = model.encode(query, convert_to_tensor=True)
-    neighbors, _ = searcher.search(query, final_num_neighbors=1000)
+# #NOTE:DL
+# def get_approx_nn_papers_results(query: str, top_n: int=10, start_date:datetime = min_day, end_date:datetime = curr_day) -> dict:
+#     """
+#     Input: query (type: string)
+#     Output: Dictionary (HashMap)
+#     """
+#     query = model.encode(query, convert_to_tensor=True)
+#     neighbors, _ = searcher.search(query, final_num_neighbors=1000)
 
-    output_dict = {}
-    outputs = [str(df_papers.iloc[i]._id) for i in neighbors]
+#     output_dict = {}
+#     outputs = [str(df_papers.iloc[i]._id) for i in neighbors]
     
-    temp_result = list(client.order_preserved_get_data(id_list= outputs,
-                                                       start_date=start_date, end_date=end_date,
-                                                       fields=['title', 'abstract','authors', 'url', 'date'],
-                                                       limit=top_n
-                                                      )
-                      )   
-    for result in temp_result:
-        result["date"] = result["date"].strftime("%d/%m/%Y")
+#     temp_result = list(client.order_preserved_get_data(id_list= outputs,
+#                                                        start_date=start_date, end_date=end_date,
+#                                                        fields=['title', 'abstract','authors', 'url', 'date'],
+#                                                        limit=top_n
+#                                                       )
+#                       )   
+#     for result in temp_result:
+#         result["date"] = result["date"].strftime("%d/%m/%Y")
 
-    output_dict["Results"] = temp_result
-    return output_dict
+#     output_dict["Results"] = temp_result
+#     return output_dict
 
 
 @app.route("/QE/<query>", methods=['GET', 'POST'])
@@ -354,5 +354,3 @@ def _preprocess_query(query: str, stemming=True, remove_stopwords=True) -> dict:
         _preprocessing_cache.put(query, query_params)
 
     return query_params
-
-

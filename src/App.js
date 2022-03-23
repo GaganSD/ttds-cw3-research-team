@@ -16,6 +16,7 @@ import Switch from '@mui/material/Switch';
 import Link from '@mui/material/Link';
 import SwipeableTemporaryDrawer from './components/advancedOptions';
 import PaperOrDS from './components/datasetorpaper';
+import Alert from '@mui/material/Alert';
 
 import HelpButton from './components/HelpButton';
 import Modal from '@mui/base/ModalUnstyled';
@@ -24,13 +25,33 @@ import Tab from '@mui/material/Tab';
 import TabPanel from '@mui/lab/TabPanel';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
-import HelpDialog from "./components/helpdialog"
+import HelpDialog from "./components/helpdialog";
 
+import { useEffect, useState } from "react";
+
+import { ThemeProvider } from 'styled-components';
+import { lightTheme, darkTheme } from './components/theme';
+import { GlobalStyles } from './components/global';
+//TODO: Remove latex & markdown formatting 
 function App() {
+  const [theme, setTheme] = useState('light');
+  const toggleTheme = () => {
+    console.log("switch");
+    if (theme === 'light') {
+      setTheme('dark');
+    } else {
+      setTheme('light');
+    }
+}
 
   const [search, setSearch] = React.useState('');
   const showPageButton = React.useRef(false);
-  const [json_results, setJsonResults] = React.useState({Results:[]});
+  const [pagenum, setPageNum] = React.useState(1);
+  const [datasets, setDatasets] = React.useState(false);
+  const [badquery, setBadQuery] = React.useState(false);
+  const [emptyresults, setEmptyResults] = React.useState(false);
+  const [gobackbuttondisabled, setGoBackButtonDisabled] = React.useState(true);
+  const [json_results, setJsonResults] = React.useState({"Results":[]});
   const [json_query_expansion, setJsonQE] = React.useState({QEResults:[]});
   const label = { inputProps: { 'aria-label': 'Switch demo' } };
   const values = React.useRef({
@@ -38,9 +59,21 @@ function App() {
     searchtype: "Default",
     range_from:null,
     range_to: null,
-    datasets: false
+    datasets: false,
+    pagenum: 1
   });
+  React.useEffect(() =>{
+      if(pagenum === 1){
+          setGoBackButtonDisabled(true);
+      }
+      else{
+          setGoBackButtonDisabled(false);
+      }
+      console.log("CHANGINGGG");
+      values.current.pagenum = pagenum;
+      SearchFunc();
 
+  },[pagenum]);
   function getOptions(type,optval){
     if (type === "algorithms"){
       values.current.algorithm = optval;
@@ -63,21 +96,33 @@ function App() {
 
 
   }
+  const changePageNum = (val) => {
+    setPageNum(pagenum + val);
+  }
 
   const getPoDS = (podval) => {
     if(podval === "Papers"){
       values.current.datasets = false;
+      setDatasets(false);
     }
     else{
 
       values.current.datasets = true;
+      setDatasets(true);
     }
 
-    console.log(values.current.datasets);
+    // console.log(values.current.datasets);
+  }
+
+  const getPageNum = (pageNum) => {
+    values.current.pagenum = pageNum;
+    console.log(values.current.pagenum);
+    SearchFunc();
+
   }
 
   const date_formatter = (date) =>{
-    console.log("HERE GOES THE DATE");
+    // console.log("HERE GOES THE DATE");
     console.log(date);
     if (date == null){
       return "inf"
@@ -86,9 +131,9 @@ function App() {
       let day = date.getDate() + "-";
       let month = (date.getMonth()+1) + "-";
       let year = date.getFullYear() + "";
-      console.log("HERE GOES THE DATE AGAINNNNNNN");
+      // console.log("HERE GOES THE DATE AGAINNNNNNN");
       console.log(day+month+year);
-      console.log("date over");
+      // console.log("date over");
       return day+month+year;
     }
 
@@ -98,7 +143,6 @@ function App() {
     let url = "search?q=";
     url += SanitizeSearch(searchq).split(" ").join("+");
     url += "/df=";
-    // console.log(date_formatter(vals.range_from));
     url += date_formatter(vals.range_from);
     url += "/dt=";
     url += date_formatter(vals.range_to);
@@ -108,8 +152,9 @@ function App() {
     url += vals.searchtype.split(" ").join("_");
     url += "/ds=";
     url += vals.datasets + "";
+    url += "/pn=";
+    url += vals.pagenum + "";
     url += "/";
-
 
     return url
 
@@ -120,11 +165,66 @@ function App() {
     return searchval;
   }
 
+  function extractHostname(raw_url) {
+    
+    var hostname;  
+    
+    if (raw_url.indexOf("//") > -1) { // remove protocol
+      hostname = raw_url.split('/')[2];
+    } else {
+      hostname = raw_url.split('/')[0];
+    }
+    hostname = hostname.split(':')[0]; // find & remove port number
+    hostname = hostname.split('?')[0]; // find & remove "?"
+
+    return hostname;
+  }
+
+  function fix_url(raw_url) {
+    var domain = extractHostname(raw_url),
+    splitArr = domain.split('.'),
+    arr_len = splitArr.length;
+
+    if (arr_len > 2) {
+      domain = splitArr[arr_len - 2] + '.' + splitArr[arr_len - 1];
+      //check to see if it's using a Country Code Top Level Domain (ccTLD) (i.e. ".me.uk")
+      if (splitArr[arr_len - 2].length == 2 && splitArr[arr_len - 1].length == 2) {
+        //this is using a ccTLD
+        domain = splitArr[arr_len - 3] + '.' + domain;
+      }
+    }
+    return domain;
+  }
+
   function SearchFunc() {
-    showPageButton.current = true;
-    return fetch('http://34.142.71.148:5000/' + create_url(search, values.current)).then(response => response.json()).then(data => {
-      setJsonResults(data);
-    });
+    if(search === ""){
+      console.log("EMPTY SEARCH")
+
+    }
+    else if( !/^[0-9a-zA-Z\s]*$/.test(search)){
+      console.log("badquery");
+      setJsonResults({"Results": []})
+      showPageButton.current = false;
+      setBadQuery(true);
+
+    }
+    else{
+      return fetch('http://localhost:5000/' + create_url(search, values.current)).then(response => response.json()).then(data => {
+        if(data.Results.length === 0){
+            console.log("empty");
+            setEmptyResults(true);
+            console.log(emptyresults)
+        }
+        else{
+          console.log("search complete");
+          console.log(create_url(search, values.current));
+          setBadQuery(false);
+          setEmptyResults(false);
+          showPageButton.current = true;
+          setJsonResults(data);
+        }
+      });
+    }
   }
 
   function QueryExpansion() {
@@ -159,14 +259,15 @@ function App() {
     if (isNaN(dateItems[monthIndex])){ //in case the month is written as a word
       var d = new Date(string_date);
     } else {
-      
+
       var month=parseInt(dateItems[monthIndex]);
       month-=1;
 
       var d = new Date(year,month,dateItems[dayIndex]);
     }
-
-    let formatted = [String ("0" + d.getDate()).slice(-2), String ("0" + (d.getMonth() +1)).slice(-2), d.getFullYear()].join('/');
+    const monthNames = ["January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"];
+    let formatted = monthNames[d.getMonth()] + ", " +  d.getFullYear();
 
     return formatted;
   }
@@ -182,7 +283,7 @@ function App() {
         }    
       } else {
         if (text.length>500){
-        return text.substring(0,500)+"...";
+        return text.substring(0,500) + "...";
         }
       }
     }
@@ -191,10 +292,10 @@ function App() {
   function authorlist(authors){
     var lower=authors.toLowerCase()
     if (authors.includes(",")){
-      return "Authors: "+ authors;
-    } else if (!(lower == "n/a" || lower == "na"
-                 || lower == "n-a" || lower == "")){
-      return "Author: "+ authors;
+      return authors;
+    } else if (!(lower == "n/a" || lower == "na" || lower == "NA"
+                 || lower == "n-a" || lower == "" || lower == " ")){
+      return authors;
     }
   }
 
@@ -230,31 +331,51 @@ function App() {
     setValue2(newValue);
   };
 
+
   return (
     <div className="App" style={{
       marginLeft: '6em',
       marginRight: '6em'
     }}>
-    <div className="toggle_switch" float="center" id="toggle_switch"></div>
+    <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
+      <>
+        <GlobalStyles />
+
+
 
     <img src={research_logo} width="300em" height="150em"/>
+    <button onClick={toggleTheme}>Lights</button>
 
-    <UseSwitchesCustom  float="right" parentCallback={BasicSwitches} />
       <div className='Search' style={{
         width:'50%'
       }}>
-        <SearchField
+        { badquery ? <SearchField
           style={{ maxWidth: '80%' }}
           parentCallback={TextEntered}
+          error={true}
+          text = {"Bad Query Was Received"}
         />
+        : emptyresults ? <SearchField
+            style = {{maxWidth:'80%'}}
+            parentCallback={TextEntered}
+            error={true}
+            text = {"No Results were shown"}
+            />
+        : <SearchField
+            style={{maxWidth : '80%'}}
+            parentCallback={TextEntered}
+            error={false}
+            text = {"Query"}
+          />
+        }
       </div>
-      <SwipeableTemporaryDrawer hysteresis="0.52" parentCallback={getOptions}/>
+      <SwipeableTemporaryDrawer hysteresis="0.52" parentCallback={getOptions} datasets={datasets}/>
       <div>
         {json_query_expansion.QEResults.map(curr_elem => {
           return <Box>{curr_elem}</Box>;
         })}
       </div>
-
+      <br/>
 
 
       <div className = 'Searchoptions' style={{
@@ -262,16 +383,19 @@ function App() {
         flexDirection : "row"        
       }}>
         <ButtonGroup variant="contained" aria-label="outlined primary button group">
-          <SearchButton parentCallback={SearchFunc} />
+          <SearchButton parentCallback={() =>{
+            console.log("yes");
+            setPageNum(1);
+            setGoBackButtonDisabled(true);
+            console.log(pagenum);
+            SearchFunc();
+          }} />
           <QEButton parentCallback={QueryExpansion} />
         </ButtonGroup>
-        <div style = {{
-          marginLeft : "2em"
-        }}>
-          <PaperOrDS parentCallback={getPoDS}/>
-        </div>
+
       </div>
-      
+      <br/>
+      <PaperOrDS parentCallback={getPoDS}/>
 
 
     <div>
@@ -286,20 +410,30 @@ function App() {
           {/* <Breadcrumbs color="grey" size="2" face="Tahoma" separator="›" href="/" aria-label="breadcrumb">
             {curr_elem.url}
           </Breadcrumbs> */}
-          <font color="grey" size="2" face="Tahoma">{curr_elem.url}</font><br/><br/>
-          <a href={curr_elem.url}><font color="blue" size="5" face="Tahoma">{curr_elem.title}</font></a>
-          <p><font color="grey" face="Tahoma">{std_date}</font></p>
-          <p><font face="Tahoma">{abstractgenerator(curr_elem.abstract)}</font></p>
-          <p><font face="Tahoma">{authorlist(curr_elem.authors)}</font></p>
+          {/* TODO: Enable latex formatting in author title
+          TODO: Remove latex & markdown formatting in description */}
+          <a href={curr_elem.url}><font size="5">{curr_elem.title}</font></a><br/> 
+          <font color="#595F6A" size="2" face="Tahoma">{fix_url(curr_elem.url)} - {std_date} - {authorlist(curr_elem.authors)}</font><br/> 
+          {/* <font color="#595F6A" face="Tahoma"></font><br/> */}
+          <font color="#595F6A">ㅤ{abstractgenerator(curr_elem.abstract)}</font><br/>
         </p></Box>;
     })}
     </div>
     <div style={{
-      marginBottom : "2 em"
+      marginBottom: ".5em"
     }}> 
-      <PageButton show = {showPageButton.current}/>
+      <PageButton pagenum = {pagenum} disableback = {gobackbuttondisabled} show = {showPageButton.current} sexyProp={setPageNum} />
     </div>
-
+    {/* <div style={{
+      position: 'fixed',
+      bottom: 0,
+    }}>
+      { emptyresults ? <Alert severity="warning">No results were found</Alert> : null}
+      {badquery ? <Alert severity="warning">Bad Search Query</Alert> : null}
+    </div>
+   */}
+           </>
+    </ThemeProvider>
     </div>
   )}
 

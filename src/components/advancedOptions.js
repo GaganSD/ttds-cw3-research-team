@@ -25,9 +25,14 @@ import RadioGroup from '@mui/material/RadioGroup';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import HelpDialog from "./helpdialog";
 
+import { useEffect, useState } from "react";
 
+import { ThemeProvider } from 'styled-components';
+import { lightTheme, darkTheme } from './theme';
+import { GlobalStyles } from './global';
 
 export default function SwipeableTemporaryDrawer(props) {
+
   const [state, setState] = React.useState({
     top: false,
     left: false,
@@ -42,6 +47,10 @@ export default function SwipeableTemporaryDrawer(props) {
   //   range_from:null,                                                                                     
   //   range_to: null
   // };
+  // const [theme, setTheme] = useState('light');
+  // <button onClick={toggleTheme}>Lights</button>
+
+
 
   const [fromDate, setFromDate] = React.useState(null);
   const [toDate, setToDate] = React.useState(null);
@@ -81,6 +90,7 @@ export default function SwipeableTemporaryDrawer(props) {
       eventtype = "date";
     }
     if(eventtype === "radio"){
+      console.log(props.datasets);
       if(e.target.name === "algorithmbuttons"){
         setRadioChoiceAlgorithm(e.target.value);
       }
@@ -107,7 +117,14 @@ export default function SwipeableTemporaryDrawer(props) {
 
     setState({ ...state, [anchor]: open });
   };
-
+  // const toggleTheme = () => {
+  //   console.log("switch");
+  //   if (theme === 'light') {
+  //     setTheme('dark');
+  //   } else {
+  //     setTheme('light');
+  //   }
+  // }
   const list = (anchor) => (
     <Box
       sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 400}}
@@ -119,7 +136,7 @@ export default function SwipeableTemporaryDrawer(props) {
         display : "flex",
         justifyContent: "center"
       }}>
-        <h2><b> Advanced Search Options</b></h2>
+        <h2><b> Advanced Options</b></h2>
         <div style ={{
           marginTop : "1em",
           marginLeft : "1em"
@@ -135,14 +152,14 @@ export default function SwipeableTemporaryDrawer(props) {
         <FormControl sx = {{
           margin:2
         }}>
-            <FormLabel id="sortby">Algorithm:</FormLabel>
+            <FormLabel id="sortby">Retrieval Algorithm:</FormLabel>
             <RadioGroup
               aria-labelledby='algorithmbuttons'
               defaultValue= {radio_choice_algorithm}
               name = "algorithmbuttons"
               onChange={handleChange}>
 
-                <FormControlLabel control={<Radio/>}  label="Approximate NN" value="APPROX_NN" />
+                <FormControlLabel control={<Radio/>}  label="Transformers & Nearest Neighbors" value="APPROX_NN" />
                 <FormControlLabel control={<Radio/>} label="BM25" value="BM25"/>
                 <FormControlLabel control={<Radio/>}  label="TF-IDF" value="TF_IDF"/>
 
@@ -164,10 +181,10 @@ export default function SwipeableTemporaryDrawer(props) {
               name = "searchtypebuttons"
               onChange={handleChange}>
 
-                <FormControlLabel control={<Radio/>}  label="Default" value="DEFAULT" />
+                <FormControlLabel control={<Radio/>}  label="Default (Transformers)" value="DEFAULT" />
                 <FormControlLabel control={<Radio/>} label="Proximity Search" value="PROXIMITY"/>
                 <FormControlLabel control={<Radio/>}  label="Phrase Search" value="PHRASE"/>
-                <FormControlLabel control={<Radio/>} label="Author Search" value="AUTHOR"/>
+                <FormControlLabel control={<Radio/>} label="Author Search (By Last Name)" value="AUTHOR" disabled={props.datasets}/>
               
 
               </RadioGroup>
@@ -204,7 +221,7 @@ export default function SwipeableTemporaryDrawer(props) {
               <Stack spacing={3}>
                 <DesktopDatePicker
                 label="From"
-                inputFormat="MM/dd/yyyy"
+                inputFormat="dd/MM/yyyy"
                 value={fromDate}
                 onChange={(newfromvalue) => {
                   setFromDate(newfromvalue);
@@ -215,7 +232,7 @@ export default function SwipeableTemporaryDrawer(props) {
                 />
                 <DesktopDatePicker
                 label="To"
-                inputFormat="MM/dd/yyyy"
+                inputFormat="dd/MM/yyyy"
                 value={toDate}
                 onChange={(newtovalue) => {
                   setToDate(newtovalue);
@@ -247,8 +264,12 @@ export default function SwipeableTemporaryDrawer(props) {
   );
 
   return (
+
     <div>
-      {['Advanced Search Options'].map((anchor) => (
+    {/* <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
+    <>
+      <GlobalStyles /> */}
+      {['Advanced Options'].map((anchor) => (
         <React.Fragment key={"left"}>
           <Button onClick={toggleDrawer("left", true)}>{anchor}</Button>
           <SwipeableDrawer
@@ -261,6 +282,7 @@ export default function SwipeableTemporaryDrawer(props) {
           </SwipeableDrawer>
         </React.Fragment>
       ))}
+
     </div>
   );
 }

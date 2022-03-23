@@ -1,18 +1,53 @@
 title,abstract,id
-Accuracy of physical and occupational therapists' early predictions of recovery after severe middle cerebral artery stroke.,"INTRODUCTION
-The ability of physical therapists (PTs) and occupational therapists (OTs) to predict level of outcome accurately was investigated prospectively in 91 severely disabled stroke patients with a first-ever middle cerebral artery (MCA) stroke.
-
-
-METHODS
-Within the second and fifth week after stroke onset, 364 predictions were made by 59 PTs and 47 OTs about walking ability, dexterity, activities of daily living (ADL), need for additional care in ADL, time required to achieve independent walking ability and maximal level of ADL, and destination of discharge at six months after stroke. The functional recovery patterns of stroke patients were assessed by an independent observer. The accuracy of the therapists' predictions was compared with that of derived prediction models. In addition, the influence of characteristics of patients and therapists on the accuracy of the predictions was investigated.
-
-
-RESULTS
-Compared to observed outcomes at six months after stroke, therapists' lowest accuracies of prediction were found for the moment at which maximal ADL score was achieved (rs = 0.07; p = NS), and highest accuracy was for level of dexterity of the hemiplegic arm (rs = 0.78; p <0.01). Therapists' predictions of functional outcome at six months tended to be too pessimistic. No significant differences were observed for dexterity and walking ability when the predictions by PTs and OTs were compared with those of regression models, whereas significant differences were found for the accuracies of OTs' and PTs' first prediction of destination of discharge and second predictions of outcome in ADL and need for additional care in ADL. No significant differences were found between the accuracy of PTs' and OTs' predictions, and their ability to predict functional outcome was not significantly influenced by the characteristics of patient and therapists.
-
-
-CONCLUSIONS
-At two and five weeks after stroke, OTs and PTs can accurately predict level of walking ability and dexterity at six months. The prediction of time required for achieving maximal level of recovery, destination of discharge, outcome of ADL as well as need for additional care in ADL leaves room for improvement.",pubmed-10688342
+The 'COVID' Crash of the 2020 U.S. Stock Market,"  We employed the log-periodic power law singularity (LPPLS) methodology to
+systematically investigate the 2020 stock market crash in the U.S. equities
+sectors with different levels of total market capitalizations through four
+major U.S. stock market indexes, including the Wilshire 5000 Total Market
+index, the S&P 500 index, the S&P MidCap 400 index, and the Russell 2000 index,
+representing the stocks overall, the large capitalization stocks, the middle
+capitalization stocks and the small capitalization stocks, respectively. During
+the 2020 U.S. stock market crash, all four indexes lost more than a third of
+their values within five weeks, while both the middle capitalization stocks and
+the small capitalization stocks have suffered much greater losses than the
+large capitalization stocks and stocks overall. Our results indicate that the
+price trajectories of these four stock market indexes prior to the 2020 stock
+market crash have clearly featured the obvious LPPLS bubble pattern and were
+indeed in a positive bubble regime. Contrary to the popular belief that the
+COVID-19 led to the 2020 stock market crash, the 2020 U.S. stock market crash
+was endogenous, stemming from the increasingly systemic instability of the
+stock market itself. We also performed the complementary post-mortem analysis
+of the 2020 U.S. stock market crash. Our analyses indicate that the 2020 U.S.
+stock market crash originated from a bubble which began to form as early as
+September 2018; and the bubbles in stocks with different levels of total market
+capitalizations have significantly different starting time profiles. This study
+not only sheds new light on the making of the 2020 U.S. stock market crash but
+also creates a novel pipeline for future real-time crash detection and
+mechanism dissection of any financial market and/or economic index.
+",arxiv-2101.03625
+"FinGAT: Financial Graph Attention Networks for Recommending Top-K
+  Profitable Stocks","  Financial technology (FinTech) has drawn much attention among investors and
+companies. While conventional stock analysis in FinTech targets at predicting
+stock prices, less effort is made for profitable stock recommendation. Besides,
+in existing approaches on modeling time series of stock prices, the
+relationships among stocks and sectors (i.e., categories of stocks) are either
+neglected or pre-defined. Ignoring stock relationships will miss the
+information shared between stocks while using pre-defined relationships cannot
+depict the latent interactions or influence of stock prices between stocks. In
+this work, we aim at recommending the top-K profitable stocks in terms of
+return ratio using time series of stock prices and sector information. We
+propose a novel deep learning-based model, Financial Graph Attention Networks
+(FinGAT), to tackle the task under the setting that no pre-defined
+relationships between stocks are given. The idea of FinGAT is three-fold.
+First, we devise a hierarchical learning component to learn short-term and
+long-term sequential patterns from stock time series. Second, a fully-connected
+graph between stocks and a fully-connected graph between sectors are
+constructed, along with graph attention networks, to learn the latent
+interactions among stocks and sectors. Third, a multi-task objective is devised
+to jointly recommend the profitable stocks and predict the stock movement.
+Experiments conducted on Taiwan Stock, S&P 500, and NASDAQ datasets exhibit
+remarkable recommendation performance of our FinGAT, comparing to
+state-of-the-art methods.
+",arxiv-2106.10159
 Temporal Relational Ranking for Stock Prediction,"  Stock prediction aims to predict the future trends of a stock in order to
 help investors to make good investment decisions. Traditional solutions for
 stock prediction are based on time-series models. With the recent success of
@@ -37,109 +72,47 @@ Extensive experiments demonstrate the superiority of our RSR method. It
 outperforms state-of-the-art stock prediction solutions achieving an average
 return ratio of 98% and 71% on NYSE and NASDAQ, respectively.
 ",arxiv-1809.09441
-Prediction of peak oxygen uptake in men using pulmonary and hemodynamic variables during exercise.,"PURPOSE
-Many attempts have been made to predict peak VO2 from data obtained at rest or submaximal exercise. Predictive submaximal tests using the heart rate (HR) response have limited accuracy. Some tests incorporate submaximal gas exchange data, but a predictive test without gas exchange measurements would be of benefit. Addition of stroke volume and pulmonary function (PF) measurements might increase the predictability of a submaximal exercise test.
+Graph-Based Stock Recommendation by Time-Aware Relational Attention Network,"The stock market investors aim at maximizing their investment returns. Stock recommendation task is to recommend stocks with higher return ratios for the investors. Most stock prediction methods study the historical sequence patterns to predict stock trend or price in the near future. In fact, the future price of a stock is correlated not only with its historical price, but also with other stocks. In this article, we take into account the relationships between stocks (corporations) by stock relation graph. Furthermore, we propose a Time-aware Relational Attention Network (TRAN) for graph-based stock recommendation according to return ratio ranking. In TRAN, the time-aware relational attention mechanism is designed to capture time-varying correlation strengths between stocks by the interaction of historical sequences and stock description documents. With the dynamic strengths, the nodes of the stock relation graph aggregate the features of neighbor stock nodes by graph convolution operation. For a given group of stocks, the proposed TRAN model can output the ranking results of stocks according to their return ratios. The experimental results on several real-world datasets demonstrate the effectiveness of our TRAN for stock recommendation.",paperswithcode-https://dl.acm.org/doi/10.1145/3451397
+The effect of medical elastic compression stockings with different slope values on edema. Measurements underneath three different types of stockings.,"BACKGROUND
+Medical elastic compression stockings are widely used in venous diseases. Their effects on the venous system have been shown in the past. Up to now, little is known about the slope or stiffness factor of stockings.
+
+
+OBJECTIVE
+To evaluate the effect of different slope and stiffness factors of medical elastic compression stockings on the venous system.
 
 
 METHODS
-In this study, an incremental exercise test (10 W x min(-1)) was performed in 30 healthy men of various habitual activity levels. Step-wise multiple regression analysis was used to isolate the most important predictor variables of peak VO2 from a set of measurements of PF: lung volumes, diffusion capacity, airway resistance, and maximum inspiratory and expiratory pressures; gas exchange; minute ventilation (V(E)), tidal volume (V(T)), respiratory exchange ratio (RER = carbon dioxide output divided by VO2); and hemodynamics (HR, stroke index (SI) = stroke volume/body surface area, and mean arterial pressure). These measurements were made at rest and during submaximal exercise.
+Examinations were carried out in 29 legs of 25 different patients (12 men, 13 women) with a mean age of 66.0 years. All patients were known with chronic venous insufficiency. On all these patients three different elastic medical compression stockings were tested; one with a low slope, one with a high slope, and one with a low slope but a higher pressure at the ankle. The tests were carried out by determining capillary filtration rate (CFR) with air-plethysmography (APG) while wearing the stockings.
 
 
 RESULTS
-Using the set of PF variables (expressed as percentages of predicted), FEV1 explained 30% of the variance of peak VO2. No other PF variables were predictive. After addition of resting hemodynamic data, SI was included in the prediction equation, raising the predictability to 40%. At the 60-W exercise level, 48% of the variance in peak VO2 could be explained by SI and FEV1. At 150 W, the prediction increased to 81%. At this level VCO2/O2 (RER) also entered the prediction equation of peak VO2: 6.44 x FEV1(%) + 13.0 x SI - 1921 x RER + 2380 (SE = 142 mL x min(-1) x m(-2), P < 0.0001). Leaving out the gas exchange variable RER, maximally 64% of the variance in peak VO2 could be explained.
-
-
-CONCLUSION
-In conclusion, inclusion of pulmonary function and hemodynamic measurements could improve the prediction accuracy of a submaximal exercise test. The submaximal exercise test should be performed until a level of 150 W is reached. Noninvasive stroke volume measurements by means of EIC have additional value to measurement of HR alone. Finally, measurement of gas exchange significantly improves the predictability of peak VO2.",pubmed-10731016
-A Rational Finance Explanation of the Stock Predictability Puzzle,"  In this paper, we address one of the main puzzles in finance observed in the
-stock market by proponents of behavioral finance: the stock predictability
-puzzle. We offer a statistical model within the context of rational finance
-which can be used without relying on behavioral finance assumptions to model
-the predictability of stock returns. We incorporate the predictability of stock
-returns into the well-known Black-Scholes option pricing formula. Empirically,
-we analyze the option and spot trader's market predictability of stock prices
-by defining a forward-looking measure which we call ""implied excess
-predictability"". The empirical results indicate the effect of option trader's
-predictability of stock returns on the price of stock options is an increasing
-function of moneyness, while this effect is decreasing for spot traders. These
-empirical results indicate potential asymmetric predictability of stock prices
-by spot and option traders. We show in pricing options with the strike price
-significantly higher or lower than the stock price, the predictability of the
-underlying stock's return should be incorporated into the option pricing
-formula. In pricing options that have moneyness close to one, stock return
-predictability is not incorporated into the option pricing model because stock
-return predictability is the same for both types of traders. In other words,
-spot traders and option traders are equally informed about the future value of
-the stock market in this case. Comparing different volatility measures, we find
-that the difference between implied and realized variances or variance risk
-premium can potentially be used as a stock return predictor.
-",arxiv-1911.02194
-Accounting for intubation status in predicting mortality for victims of motor vehicle crashes.,"BACKGROUND
-Two of the important predictors of mortality for trauma patients are the Glasgow Coma Scale and the respiratory rate. However, for intubated patients, the verbal response component of the Glasgow Coma Scale and the respiratory rate cannot be accurately obtained. This study extends previous work that attempts to predict mortality accurately for intubated patients without using verbal response and respiratory rate.
-
-
-METHODS
-The New York State Trauma Registry was used to identify 1994 and 1995 victims of motor vehicle crashes (MVCs). For the subset of patients who were not intubated, we developed two statistical models to predict mortality: one did not contain verbal response or respiratory rate, and the other contained a predicted verbal response. These were compared with a model that did include verbal response and respiratory rate. We also compared the predictive abilities of the first two models for all MVC patients (intubated and nonintubated) and determined the extent to which intubated patients were at increased risk of dying in the hospital after having adjusted for other predictors of mortality.
-
-
-RESULTS
-For nonintubated patients, the statistical model without verbal response and the model with predicted verbal response had slightly better discrimination and worse calibration than the model that included verbal response and respiratory rate. Predicted verbal response did not improve the strength of the model without verbal response. For all MVC patients (intubated and nonintubated), predicted verbal response was not a significant predictor of mortality when used in combination with the other predictors. Intubation status was a significant predictor, with intubated patients having a higher probability of dying in the hospital than patients with otherwise identical risk factors.
-
-
-CONCLUSION
-Inpatient mortality for intubated MVC patients can be accurately predicted without respiratory rate or verbal response. There appears to be no need for predicted verbal response to be part of the prediction formula, but intubation status is an important independent predictor of mortality and should be used in statistical models that predict mortality for MVC patients.",pubmed-10647569
-Topology prediction of Brucella abortus Omp2b and Omp2a porins after critical assessment of transmembrane beta strands prediction by several secondary structure prediction methods.,"In order to propose a reliable model for Brucella porin topology, several structure prediction methods were evaluated in their ability to predict porin topology. Four porins of known structure were selected as test-cases and their secondary structure delineated. The specificity and sensitivity of 11 methods were separately evaluated. Our critical assessment shows that some secondary structure prediction methods (PHD, Dsc, Sopma) originally designed to predict globular protein structure are useful on porin topology prediction. The overall best prediction is obtained by combining these three ""generalist"" methods with a transmembrane beta strand prediction technique. This ""consensus"" method was applied to Brucella porins Omp2b and Omp2a, sharing no sequence homology with any other porin. The predicted topology is a 16-stranded antiparallel beta barrel with Omp2a showing a higher number of negatively charged residue in the exposed loops than Omp2b. Experiments are in progress to validate the proposed topology and the functional hypotheses. The ability of the proposed consensus method to predict topology of complex outer membrane protein is briefly discussed.",pubmed-10698111
-Is it better to combine predictions?,"We have compared the accuracy of the individual protein secondary structure prediction methods: PHD, DSC, NNSSP and Predator against the accuracy obtained by combing the predictions of the methods. A range of ways of combing predictions were tested: voting, biased voting, linear discrimination, neural networks and decision trees. The combined methods that involve 'learning' (the non-voting methods) were trained using a set of 496 non-homologous domains; this dataset was biased as some of the secondary structure prediction methods had used them for training. We used two independent test sets to compare predictions: the first consisted of 17 non-homologous domains from CASP3 (Third Community Wide Experiment on the Critical Assessment of Techniques for Protein Structure Prediction); the second set consisted of 405 domains that were selected in the same way as the training set, and were non-homologous to each other and the training set. On both test datasets the most accurate individual method was NNSSP, then PHD, DSC and the least accurate was Predator; however, it was not possible to conclusively show a significant difference between the individual methods. Comparing the accuracy of the single methods with that obtained by combing predictions it was found that it was better to use a combination of predictions. On both test datasets it was possible to obtain a approximately 3% improvement in accuracy by combing predictions. In most cases the combined methods were statistically significantly better (at P = 0.05 on the CASP3 test set, and P = 0.01 on the EBI test set). On the CASP3 test dataset there was no significant difference in accuracy between any of the combined method of prediction: on the EBI test dataset, linear discrimination and neural networks significantly outperformed voting techniques. We conclude that it is better to combine predictions.",pubmed-10679525
-"A Robust Predictive Model for Stock Price Prediction Using Deep Learning
-  and Natural Language Processing","  Prediction of future movement of stock prices has been a subject matter of
-many research work. There is a gamut of literature of technical analysis of
-stock prices where the objective is to identify patterns in stock price
-movements and derive profit from it. Improving the prediction accuracy remains
-the single most challenge in this area of research. We propose a hybrid
-approach for stock price movement prediction using machine learning, deep
-learning, and natural language processing. We select the NIFTY 50 index values
-of the National Stock Exchange of India, and collect its daily price movement
-over a period of three years (2015 to 2017). Based on the data of 2015 to 2017,
-we build various predictive models using machine learning, and then use those
-models to predict the closing value of NIFTY 50 for the period January 2018
-till June 2019 with a prediction horizon of one week. For predicting the price
-movement patterns, we use a number of classification techniques, while for
-predicting the actual closing price of the stock, various regression models
-have been used. We also build a Long and Short-Term Memory - based deep
-learning network for predicting the closing price of the stocks and compare the
-prediction accuracies of the machine learning models with the LSTM model. We
-further augment the predictive model by integrating a sentiment analysis module
-on twitter data to correlate the public sentiment of stock prices with the
-market sentiment. This has been done using twitter sentiment and previous week
-closing values to predict stock price movement for the next week. We tested our
-proposed scheme using a cross validation method based on Self Organizing Fuzzy
-Neural Networks and found extremely interesting results.
-",arxiv-1912.07700
-Predicting the therapeutic alliance in alcoholism treatment.,"OBJECTIVE
-Prediction of the therapeutic alliance in alcoholism treatment (as rated by the client and by the therapist) was examined in light of a range of potentially relevant factors, including client demographics, drinking history, current drinking, current psychosocial functioning and therapist demographics.
-
-
-METHOD
-The data were gathered in Project MATCH. The present analyses were based on data from 707 outpatients and 480 aftercare clients assigned to one of the three Project MATCH treatments. Potential predictor variables were evaluated by first examining bivariate linear relationships between the variables and ratings of the alliance, and then entering blocks of these predictors into multiple linear regression equations with alliance ratings as the dependent variables. All analysis incorporated adjustments for the nonindependence of ratings pertaining to clients seen by the same therapist.
-
-
-RESULTS
-In simple regressions evaluating bivariate relationships, outpatients' ratings of the alliance were positively predicted by client age, motivational readiness to change, socialization, level of perceived social support and therapist age, and were negatively predicted by client educational level, level of depression, and meaning seeking. Therapist ratings in the outpatient sample were positively predicted by the client being female and by level of overall alcohol involvement, severity of alcohol dependence, negative consequences of alcohol use, and readiness to change. Among aftercare clients, ratings of the alliance were positively predicted by readiness to change, socialization and social support, and were negatively predicted by level of depression. Therapist ratings of the alliance in the aftercare sample were positively predicted by the client being female and therapist educational level, and were negatively predicted by pretreatment drinks per drinking day. Of the variables having significant bivariate relationships with alliance scores, only a few were identified as significant predictors in multiple regression equations. Among outpatients, client age and motivational readiness to change remained positive predictors and client education a negative predictor of client ratings of the alliance, while client gender remained a significant predictor of therapist ratings. Among aftercare clients, readiness to change and level of depression remained significant predictors of client ratings, while none of the variables remained a significant predictor of therapist ratings.
+The mean value of the CFR without wearing a stocking was 4.65 ml/min (SD = 1.68), with Compriform (low slope, 30 mmHg) the mean CFR was 3.54 ml/min (SD = 1.22), with Bellavar (high slope, 30 mmHg) a mean CFR of 3.15 ml/min (SD = 1.17) was found, and the mean CFR related to Fast-fit (low slope, 34.5 mmHg) was 3.02 ml/min (SD = 1.12). There is a highly statistically significant difference in CFR between no stockings and wearing a stocking (paired Student's t-test; P < 0.01). Regarding the individual stocking, there is a highly statistically significant difference in CFR between the Compriform and the other two stockings (paired Student's t-test; P < 0.01). Between Bellavar and the Fast-fit the difference was not statistically significant.
 
 
 CONCLUSIONS
-While the data indicate that several client variables predict the nature of both the client's and therapist's perception of the therapeutic alliance, the significant relationships are of modest magnitude, and few variables remain predictive after controlling for causally prior variables. The strongest relationship identified in both the outpatient and aftercare samples is that between clients' motivational readiness to change and their ratings of the alliance.",pubmed-10627108
-Value of somatosensory and motor evoked potentials in predicting arm recovery after a stroke.,"OBJECTIVES
-Prediction of motor recovery in the arm in patients with stroke is generally based on clinical examination. However, neurophysiological measures may also have a predictive value. The aims of this study were to assess the role of somatosensory (SSEPs) and motor (MEPs) evoked potentials in the prediction of arm motor recovery and to determine whether these measures added further predictive information to that gained from clinical examination.
-
-
-METHODS
-Sixty four patients who had had a stroke and presented with obvious motor deficit of the arm were examined in terms of three clinical variables (motor performance, muscle tone, and overall disability) and for SSEPs and MEPs. Clinical and neurophysiological examinations were done at entry to the study (2 to 5 weeks poststroke), and at about 2 months after stroke. Further clinical follow up was conducted at 6 and 12 months after stroke.
-
-
-RESULTS
-Neurophysiological measures made in the acute phase were of little use alone in predicting motor recovery of the arm at 2, 6, and 12 months after stroke. At 2 months, the absence of SSEPs and MEPs indicated a very poor outcome. Conversely, if the responses were preserved, a great variation in motor outcome was found. Multiple regression analysis showed that the addition of SSEPs and MEPs to the clinical examination increased the possibility of predicting arm recovery in the long term. In the acute phase, the combination of the motor score and SSEPs were best able to predict outcome. The long term outcome based on variables taken at 2 months, was best predicted through incorporating the three clinical measures and MEPs.
-
-
-CONCLUSIONS
-Neurophysiological measures alone are of limited value in predicting long term outcome. However, predictive accuracy is substantially improved through the combined use of both of these measures and clinical variables.",pubmed-10675214
+There is a statistically significant difference in CFR, and consequently in the development of edema, between not wearing an elastic compression stocking and wearing an elastic compression stocking. There is also a statistically significant difference in CFR between elastic compression stockings with the same compression, but a low slope profile and a high slope profile. Stockings with a low slope, but a higher compression may perform as well as stockings with a higher slope but a lower compression in reducing the CFR. In patients with a strong tendency to develop edema it may be advisable to prescribe stockings with a high slope profile.",pubmed-10759802
+What stock market returns to expect for the future?,"In evaluating proposals for reforming Social Security that involve stock investments, the Office of the Chief Actuary (OCACT) has generally used a 7.0 percent real return for stocks. The 1994-96 Advisory Council specified that OCACT should use that return in making its 75-year projections of investment-based reform proposals. The assumed ultimate real return on Treasury bonds of 3.0 percent implies a long-run equity premium of 4.0 percent. There are two equity-premium concepts: the realized equity premium, which is measured by the actual rates of return; and the required equity premium, which investors expect to receive for being willing to hold available stocks and bonds. Over the past two centuries, the realized premium was 3.5 percent on average, but 5.2 percent for 1926 to 1998. Some critics argue that the 7.0 percent projected stock returns are too high. They base their arguments on recent developments in the capital market, the current high value of the stock market, and the expectation of slower economic growth. Increased use of mutual funds and the decline in their costs suggest a lower required premium, as does the rising fraction of the American public investing in stocks. The size of the decrease is limited, however, because the largest cost savings do not apply to the very wealthy and to large institutional investors, who hold a much larger share of the stock market's total value than do new investors. These trends suggest a lower equity premium for projections than the 5.2 percent of the past 75 years. Also, a declining required premium is likely to imply a temporary increase in the realized premium because a rising willingness to hold stocks tends to increase their price. Therefore, it would be a mistake during a transition period to extrapolate what may be a temporarily high realized return. In the standard (Solow) economic growth model, an assumption of slower long-run growth lowers the marginal product of capital if the savings rate is constant. But lower savings as growth slows should partially or fully offset that effect. The present high stock prices, together with projected slow economic growth, are not consistent with a 7.0 percent return. With a plausible level of adjusted dividends (dividends plus net share repurchases), the ratio of stock value to gross domestic product (GDP) would rise more than 20-fold over 75 years. Similarly, the steady-state Gordon formula--that stock returns equal the adjusted dividend yield plus the growth rate of stock prices (equal to that of GDP)--suggests a return of roughly 4.0 percent to 4.5 percent. Moreover, when relative stock values have been high, returns over the following decade have tended to be low. To eliminate the inconsistency posed by the assumed 7.0 percent return, one could assume higher GDP growth, a lower long-run stock return, or a lower short-run stock return with a 7.0 percent return on a lower base thereafter. For example, with an adjusted dividend yield of 2.5 percent to 3.0 percent, the market would have to decline about 35 percent to 45 percent in real terms over the next decade to reach steady state. In short, either the stock market is overvalued and requires a correction to justify a 7.0 percent return thereafter, or it is correctly valued and the long-run return is substantially lower than 7.0 percent (or some combination). This article argues that the ""overvalued"" view is more convincing, since the ""correctly valued"" hypothesis implies an implausibly small equity premium. Although OCACT could adopt a lower rate for the entire 75-year period, a better approach would be to assume lower returns over the next decade and a 7.0 percent return thereafter.",pubmed-11131980
+"Molecular profiles of Trypanosoma brucei, T. evansi and T. equiperdum stocks revealed by the random amplified polymorphic DNA method.","A total of 20 random primers (10-mers) were used to amplify RAPD markers from the genomic DNA of four Trypanosoma brucei stocks from East and West Africa, four T. evansi stocks from Africa, Asia and South America and one T. equiperdum stock from Asia. Between 65 and 88 reproducible fragments ranging from 0.25 to 2.15 kb were generated from these stocks depending on the stock/primer combination. The similarity coefficient (SC) among the stocks of T. brucei from Kenya, Nigeria, Tanzania and Zambia ranged from 62.9% to 74.0% (average: 67.6%). The SC among the stocks of T. evansi from Kenya, China and Brazil was 76.4%-95.5% (average: 86.4%), while the SC between T. evansi stock from China and Brazil was 95.5%. For T. evansi and T. equiperdum, the SC among the stocks ranged from 81.2% to 94.4% (average: 87.6%). As for the SC among the stocks of T. brucei and T. evansi, it was found to be from 54.7% to 80.3% (average: 68.0%) and the SC among stocks of T. brucei and T. equiperdum was from 59.4% to 76.9% (average: 68.1%). Our results indicate that the stocks of T. evansi from China and from Brazil are more closely related to the stock of T. equiperdum from China than to the stocks of T. evansi isolated from Kenya and to the stocks of T. brucei. In addition, our results further support the hypothesis that T. evansi stocks from China and Brazil could have arisen from a single lineage. The possible evolution of T. evansi and T. equiperdum is also discussed.",pubmed-14727188
+"Braided and Knotted Stocks in the Stock Market: Anticipating the flash
+  crashes","  A simple and elegant arrangement of stock components of a portfolio (market
+index-DJIA) in a recent paper [1], has led to the construction of crossing of
+stocks diagram. The crossing stocks method revealed hidden remarkable algebraic
+and geometrical aspects of stock market. The present paper continues to uncover
+new mathematical structures residing from crossings of stocks diagram by
+introducing topological properties stock market is endowed with. The crossings
+of stocks are categorized as overcrossings and undercrossings and interpreted
+as generators of braid that stocks form in the process of prices quotations in
+the market. Topological structure of the stock market is even richer if the
+closure of stocks braid is considered, such that it forms a knot. To
+distinguish the kind of knot that stock market forms, Alexander-Conway
+polynomial and the Jones polynomials are calculated for some knotted stocks.
+These invariants of knots are important for the future practical applications
+topological stock market might have. Such application may account of the
+relation between Jones polynomial and phase transition statistical models to
+provide a clear way to anticipate the transition of financial markets to the
+phase that leads to crisis. The resemblance between braided stocks and logic
+gates of topological quantum computers could quantum encode the stock market
+behavior.
+",arxiv-1404.6637
+Effect of graduated compression stockings on limb oxygenation and venous function during exercise in patients with venous insufficiency.,"Despite the established role of compression as the basis for nonoperative treatment of chronic venous insufficiency (CVI), its mechanism of action remains unclear. Near-infrared spectroscopy (NIRS) provides continuous noninvasive monitoring of changes in tissue oxyhemoglobin (HbO2) and deoxyhemoglobin (Hb). We applied NIRS to evaluate the effect of graded stockings on venous function and calf muscle oxygenation during exercise in patients with CVI. Ten patients (age 56 +/- 5 years) with CVI were rested in supine posture for 20 minutes. NIRS optodes were attached to the calf. Venous function was assessed in each patient with and without graded compression stockings (classes I to III) at rest in the supine position, standing, with 10 tiptoe exercises, and on standard walking at 1.6 km/h for 5 minutes. Venous function was assessed by measuring changes in Hb and total hemoglobin (HbT) during the test, and muscle oxygenation was assessed by the oxygenation index (HbD), which is the difference between HbO2 and Hb. Standing without stockings caused a significant increase in Hb concentration by 10.75 +/- 2.24 micromol/L compared with the supine position (p < .001). This value was reduced when stockings were applied to 6.38 +/- 2.75 micromol/L with class III stockings (p = .005). During tiptoe exercise, the residual Hb concentration value without stockings was 7.62 +/- 2.12 micromol/L compared with 5.88 +/- 2.87, 3.77 +/- 3.37, and 3.46 +/- 2.73 micromol/L for class I, II, and III stockings, respectively. The reduction in Hb concentration reached significance with class II and III stockings compared to without stockings (p = .04). The HbT concentration was also reduced during tiptoe exercise, with increasing compression from 15.46 +/- 5.31 micromol/L without compression to 11.52 +/- 4.26 pmol/L with class III stockings (p = .048). During walking, the Hb concentration was 11.40 +/- 3.10 pmol/L without stockings, decreasing significantly (p < .001) and progressively to 8.49 +/- 3.24, 7.71 +/- 3.51, and 6.89 +/- 3.16 micromol/L with class I, II, and III stockings, respectively. Limb oxygenation (as measured by HbO2 concentration) during walking exercise, however, increased with higher-compression stockings and reached significance with class III stockings only (p = .03). In patients with venous insufficiency, graduated compression stockings may achieve their beneficial effects by reducing venous pooling and improving deeper tissue oxygenation.",pubmed-15127858
+Electrophoretically detectable genetic variation in natural and hatchery stocks of Atlantic salmon in Finland.,"To survey the genetic resources of Atlantic salmon (Salmo salar L.) stocks in Finland, an electrophoretic study was made of natural and hatchery stocks. The stocks were compared with the nearest stocks in the USSR, and the effects of hatchery rearing were evaluated. The genetic variation within and between stocks was measured from 20 samples, of which three (Kola, Neva and Onega) were from the USSR. Twenty-five enzyme loci were examined, of which six were polymorphic: AAT-4, IDH-3, ME-3, MDH-3, PGM-1, and SDH-1. The mean heterozygosity of all the populations was 4.2% (1.0-7.2). For the natural salmon stocks of the Arctic Ocean, the mean heterozygosity was 6.3%, for the natural stocks of Atlantic salmon in the Baltic 4.8%, for the hatchery stocks 3.6%, and for the lake salmon (Salmo salar m. sebago Girard) 1.8%. The results are in agreement with the hypothesis that the amount of variation depends on the effective population size and that culture diminishes variation by decreasing the effective population size. All the stocks originating from different rivers differed from each other with statistical significance. The most unique stocks were the River Kola stock and the lake salmon stock from Lake Saimaa. The genetic distances were consistent with the geographic distance between the rivers from which the stocks originated. Stress is laid on the importance in fish culture of maintaining separate stocks and using larger brood stocks.",pubmed-2777627

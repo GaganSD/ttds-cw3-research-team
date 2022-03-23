@@ -67,11 +67,11 @@ def ranking_query_BM25(query_params, client = None):
         for relevant_paper in list_of_papers:
             paper_id = relevant_paper['id']
             if paper_id in seen_ids:
-                break
+                continue
             seen_ids.add(paper_id)
             term_freq = len(relevant_paper['pos'])
             dl = relevant_paper['len']
-            score = score_BM25(doc_nums, doc_nums_term, term_freq, k1 = 1.5, dl = dl, avgdl=4.82)
+            score = score_BM25(doc_nums, doc_nums_term, term_freq, k1 = 1.5, dl = dl, avgdl=10.0)
             scores[paper_id] += score
     return sorted(dict(scores).items(), key = lambda x : x[1], reverse=True)
 
@@ -102,7 +102,7 @@ def ranking_query_tfidf_cosine(query_params, client = None):
         for relevant_paper in list_of_papers:
             paper_id = relevant_paper['id']
             if paper_id in seen_ids:
-                break
+                continue
             seen_ids.add(paper_id)
             term_freq = len(relevant_paper['pos'])
             doc_score = score_tfidf(doc_nums, doc_nums_term, term_freq) 
@@ -130,7 +130,7 @@ def ranking_query_tfidf(query_params, client = None):
         for relevant_paper in list_of_papers:
             paper_id = relevant_paper['id']
             if paper_id in seen_ids:
-                break
+                continue
             seen_ids.add(paper_id)
             term_freq = len(relevant_paper['pos'])
             score = score_tfidf(doc_nums, doc_nums_term, term_freq)
