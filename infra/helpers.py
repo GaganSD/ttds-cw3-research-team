@@ -1,5 +1,6 @@
 from datetime import datetime
 from io import StringIO
+import re
 
 curr_day = datetime.today()
 min_day = datetime.strptime("01-01-1000", '%d-%m-%Y')
@@ -67,6 +68,9 @@ class Formatting:
         self._md = Markdown(output_format="plain")
         self._md.stripTopLevelTags = False
 
+        # For latex
+        self.latex_regex = r"(\$+)(?:(?!\1)[\s\S])*\1"
+
     def remove_markdown(self, corpus: str) -> str:
         """
         Removes all markdown formatting from the string.
@@ -74,6 +78,10 @@ class Formatting:
         # Part of this method is derived from: 
         # https://stackoverflow.com/questions/761824/python-how-to-convert-markdown-formatted-text-to-text
         return self._md.convert(corpus)
+
+    def remove_latex(self, corpus: str) -> str:
+
+        return re.sub(self.latex_regex, "", corpus, 0, re.MULTILINE)
 
     def _unmark_element(self, element, stream=None):
         """
@@ -88,3 +96,9 @@ class Formatting:
         if element.tail:
             stream.write(element.tail)
         return stream.getvalue()
+
+format_ = Formatting()
+test_str = "This is an example $$a \\text{$a$}$$. How to remove it? Another random math expression $\\mathbb{R}$..."
+t2 = "\\begin{eqarray}...\\begin{eqarry}"
+
+print(format_.remove_latex(test_str))
