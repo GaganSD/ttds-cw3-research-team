@@ -35,11 +35,10 @@ export default function HelpDialog(props){
                 <DialogTitle>{"Advanced Options Help:"}</DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-slide-description">
-                  The advanced search features can be used to refine your search and help satisfy specific requirements for your queries. 
-                  
-                  You can choose between three different ranking algorithms and filter your results by date range. Furthermore, you can specify the search type.
+                  The advanced search features can be used to refine your search and help satisfy specific requirements for your queries.     
+                  You can choose between three different ranking algorithms and pick one of the follwing search types: Transformers, Proximity Search, Phrase Search, or Author Search.
+                  Furthermore, you can specify a date range for the publication date of the paper(s)/dataset(s) you are searching for. 
                   If you do not have specific requirements in mind, just leave the options set to their default values, type your query in the "Query" box, and hit "Search Query" afterwards.
-                  Use "Show Suggestions" for spelling correction suggestions. If you want to use dark mode, simply toggle the switch above the search bar.
                     </DialogContentText>
                 </DialogContent>
 
