@@ -7,7 +7,8 @@
 
 from flask import Flask, request
 from flask_cors import CORS
-from sentence_transformers import SentenceTransformer
+#NOTE:DL
+# from sentence_transformers import SentenceTransformer
 from infra.LRUCache import LRUCache
 from datetime import datetime
 
