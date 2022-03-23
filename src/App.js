@@ -209,7 +209,7 @@ function App() {
 
     }
     else{
-      return fetch('http://localhost:5000/' + create_url(search, values.current)).then(response => response.json()).then(data => {
+      return fetch('http://34.142.71.148:5000/' + create_url(search, values.current)).then(response => response.json()).then(data => {
         if(data.Results.length === 0){
             console.log("empty");
             setEmptyResults(true);
