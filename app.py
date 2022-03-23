@@ -36,11 +36,17 @@ import datetime
 import time
 import heapq
 
-
+#from OpenSSL import SSL
+#context = SSL.Context(SSL.PROTOCOL_TLSv1_2)
+#context.use_privatekey_file('server.key')
+#context.use_certificate_file('server.crt')
 
 # Create Flask app
 app = Flask(__name__)
 CORS(app)
+
+
+
 
 print(0.2)
 # Load paper & dataset index. 
@@ -154,7 +160,7 @@ def direct_access_to_backend():
 print(0.6)
 
 ######################### Search Functions ########################
-def get_datasets_results(query: str, top_n: int=10, spell_check=False, qe=False, 
+def get_datasets_results(query: str, top_n: int=10, spell_check=False, qe=False,
     type :str = "DEFAULT", ranking: str = "TF_IDF",) -> dict:
 
     if spell_check:
@@ -180,8 +186,11 @@ def get_datasets_results(query: str, top_n: int=10, spell_check=False, qe=False,
     for result in outputs[:top_n]:
 
         output = df.iloc[result]['title','subtitle','abstract'].to_dict()
-        output["abstract"] = output["description"]
-        output_dict["Results"].append(output)
+       # output["abstract"] = str(output["description"])
+        for key, value in output.values():
+            output[key] = str(value)
+
+    output_dict["Results"].append(output)
 
     return output_dict
 
@@ -294,9 +303,15 @@ def get_approx_nn_datasets_results(query: str, top_n: int=100) -> dict:
     output_dict = {}
 
     columns = ['title','subtitle','abstract', 'url']
-    output_dict["Results"] = [df_datasets.iloc[i][columns].to_dict() for i in neighbors[:top_n]]
+#    output_dict["Results"] = for i in [df_datasets.iloc[i][columns].to_dict() for i in neighbors[:top_n]]
+  #  for curr_dict in output_dict["Results"]:
+ #       curr_dict["abstract"] = output["
     #output_dict["abstract"] = output_dict["Results"]["description"]
-
+    for curr in neighbors[:top_n]:
+       curr = df_datasets.iloc[curr][columns].to_dict()
+       for key, value in curr.values():
+          curr[key] = str(value)
+    output_dict["Results"] = [curr]
     return output_dict
 
 
