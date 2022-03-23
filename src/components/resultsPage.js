@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Box } from '@mui/system';
 import { useParams } from 'react-router-dom'
-import research_logo from '../logos/Re-Search-logos_transparent.png';
+import research_logo from '../logos/re-search-logos_transparent.png';
 import SearchField from './search';
 import SearchButton from './SearchButton';
 import SettingsSuggestIcon from '@mui/icons-material/SettingsSuggest';
