@@ -161,7 +161,7 @@ function App() {
   }
 
   function SanitizeSearch(searchval) {
-    searchval.replaceAll("/", " ");
+    searchval.replace("/", " ");
     return searchval;
   }
 
@@ -209,7 +209,7 @@ function App() {
 
     }
     else{
-      return fetch('http://34.142.71.148:5000/' + create_url(search, values.current)).then(response => response.json()).then(data => {
+      return fetch('http://localhost:5000/' + create_url(search, values.current)).then(response => response.json()).then(data => {
         if(data.Results.length === 0){
             console.log("empty");
             setEmptyResults(true);
@@ -237,7 +237,7 @@ function App() {
 
   function standardize_dates(string_date) {
 
-    string_date=string_date.replaceAll('-','/');
+    string_date=string_date.replace('-','/');
     string_date = string_date.replace(/\s+/g,"");
 
     var _format="d/m/y"
