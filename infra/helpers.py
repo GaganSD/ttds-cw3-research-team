@@ -25,11 +25,11 @@ def deserialize(query: str) -> dict:
             return_dict["query"] = queries[i].replace("+", " ")
         if i == 1:
             from_date = queries[i][3:]
-            if from_date != "inf":
+            if from_date != "No date available" :
                 return_dict["start_date"] =   datetime.strptime(from_date, '%d-%m-%Y')
         if i == 2:
             to_date = queries[i][3:]
-            if to_date != "inf":
+            if to_date != "No date available":
                 return_dict["end_date"] =   datetime.strptime(to_date, '%d-%m-%Y')
         if i ==3:
             st = queries[i][4:]
