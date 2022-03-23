@@ -364,9 +364,11 @@ class MongoDBClient():
                     filter = {"_id": temp_chain}, 
                     update = {'$inc':{"docs" : new_docs} }, upsert=False)
                 
+                break
+                
         cur_table.find_one_and_update(
                 filter = {"_id": term}, 
-                update = {'$inc':{"doc_count" : new_cur_size} }, upsert=False)
+                update = {'$set':{"doc_count" : new_cur_size} }, upsert=False)
     
         
     def get_doc_from_index(self, term: str, index_table: str = "index"):
