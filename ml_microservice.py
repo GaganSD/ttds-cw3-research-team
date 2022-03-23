@@ -85,7 +85,7 @@ def serve_datasets(query, top_n=100):
     return get_approx_nn_datasets_results(query, top_n)
 
 
-@app.route("datasets/<query>/<top_n>", methods=['GET', 'POST'])
+@app.route("papers/<query>/<top_n>", methods=['GET', 'POST'])
 def serve_papers(query, top_n):
     return get_approx_nn_papers_results(query, top_n)
 

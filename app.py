@@ -32,6 +32,8 @@ import threading
 import datetime
 import time
 import heapq
+import requests
+
 
 curr_formatter = Formatting()
 
@@ -75,10 +77,13 @@ def call_top_n(N, parameters):
 
     elif parameters["algorithm"] == "APPROX_NN":
         if parameters["datasets"]:
-            results = get_approx_nn_datasets_results(query=parameters['query'], top_n=N)
+            results = requests.get('https://localhost:5000/datasets/' + query + "/" + str(N) + "/" \ 
+             + parameters['query'] + "/" + parameters["start_date"] + "/" + parameters["end_date"])
+
+get_approx_nn_datasets_results(query=parameters['query'], top_n=N)
         else:
-            results = get_approx_nn_papers_results(query=parameters['query'], 
-                start_date=parameters["start_date"], end_date=parameters["end_date"], top_n=N)
+            results = requests.get('https://localhost:5000/papers/' + query + "/" + str(N) + "/" \ 
+             + parameters['query'] + "/" + parameters["start_date"] + "/" + parameters["end_date"])
 
     elif parameters["datasets"]:
         results = get_datasets_results(query=parameters['query'],
