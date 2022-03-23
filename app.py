@@ -53,10 +53,17 @@ df_datasets.rename(columns={"description": "abstract"}, inplace=True)
 kaggle_df = pd.read_csv('core_algorithms/ir_eval/kaggle_dataset_df_page500.csv')
 kaggle_df['Source'] = 'Kaggle'
 paperwithcode_df = pd.read_csv('core_algorithms/ir_eval/paperwithcode_df.csv')
+paperwithcode_df.rename(columns={"owner":"ownerUser"}, inplace=True)
 paperwithcode_df['Source'] = 'Paper_with_code'
-
-df = pd.concat([kaggle_df, paperwithcode_df])
+uci_df = pd.read_csv("core_algorithms/ir_eval/uci_dataset_test.csv")
+uci_df.rename(columns={"Name":"title", "Abstract":"description", "Datapage URL":"ownerUser"}, inplace=True)
+uci_df['Source'] = 'uci'
+edi_df = pd.read_csv("core_algorithms/ir_eval/edinburgh_research_datasets_info.csv")
+edi_df.rename(columns={"Name":"title", "URL":"ownerUser"}, inplace=True)
+edi_df['Source'] = 'Edi'
+df = pd.concat([kaggle_df, paperwithcode_df, uci_df, edi_df], axis=0)
 df = df.reset_index(drop=True)
+
 df.rename(columns={"description": "abstract"}, inplace=True)
 
 client = MongoDBClient("34.142.18.57")
@@ -77,11 +84,15 @@ def call_top_n(N, parameters):
 
     elif parameters["algorithm"] == "APPROX_NN":
         if parameters["datasets"]:
-            results = requests.get('https://localhost:5000/datasets/' + query + "/" + str(N) + "/"  \
-             + parameters['query'] + "/" + parameters["start_date"] + "/" + parameters["end_date"])
+#<<<<<<< HEAD
+#            results = requests.get('https://localhost:5000/datasets/' + query + "/" + str(N) + "/"  \
+#             + parameters['query'] + "/" + parameters["start_date"] + "/" + parameters["end_date"])
+#        else:
+#            results = requests.get('https://localhost:5000/papers/' + query + "/" + str(N) + "/" \
+#=======
+            results = requests.get('https://localhost:5000/datasets/' + parameters['query'] + "/" + str(N) + "/" + parameters["start_date"] + "/" + parameters["end_date"])
         else:
-            results = requests.get('https://localhost:5000/papers/' + query + "/" + str(N) + "/" \
-             + parameters['query'] + "/" + parameters["start_date"] + "/" + parameters["end_date"])
+            results = requests.get('https://localhost:5000/papers/' + parameters['query'] + "/" + str(N) + "/" + parameters["start_date"] + "/" + parameters["end_date"])
 
     elif parameters["datasets"]:
         results = get_datasets_results(query=parameters['query'],
