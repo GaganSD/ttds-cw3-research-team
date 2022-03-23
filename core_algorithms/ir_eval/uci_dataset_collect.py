@@ -250,5 +250,5 @@ def extract_url_dataset(dataset, msg_flag=False):
         return None
 
 print("building")
-build_local_database("uci_dataset_test.csv",msg_flag=True)
+build_local_database("core_algorithms/ir_eval/uci_dataset_test.csv",msg_flag=True)
 print("done")

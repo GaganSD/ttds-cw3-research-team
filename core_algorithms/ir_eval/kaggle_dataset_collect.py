@@ -13,7 +13,7 @@ api.authenticate()
 DEBUG = False
 is_old_data = False
 
-latest_path = "kaggle_dataset_df_page500.csv"
+latest_path = "core_algorithms/ir_eval/kaggle_dataset_df_page500.csv"
 if os.path.exists(latest_path):
     latest_data = pd.read_csv(latest_path)
     latest_data_df = latest_data.copy()
@@ -66,13 +66,13 @@ while True:
         if is_old_data:
             datasets_df = pd.concat([latest_data_df, datasets_df], axis=0)
             datasets_df = datasets_df.reset_index(drop=True)
-        datasets_df.to_csv(f'kaggle_dataset_df_page{list_page}.csv', index=False)
+        datasets_df.to_csv(f'core_algorithms/ir_eval/kaggle_dataset_df_page{list_page}.csv', index=False)
         if list_page != 5:
-            os.remove(f'kaggle_dataset_df_page{list_page-5}.csv')
+            os.remove(f'core_algorithms/ir_eval/kaggle_dataset_df_page{list_page-5}.csv')
     list_page += 1
 
 datasets_df = pd.DataFrame(datasets, columns = meta_cols)   
 if is_old_data:
     datasets_df = pd.concat([latest_data_df, datasets_df], axis=0)
     datasets_df = datasets_df.reset_index(drop=True)
-datasets_df.to_csv(f'kaggle_dataset_df_page500.csv', index=False)
+datasets_df.to_csv(f'core_algorithms/ir_eval/kaggle_dataset_df_page500.csv', index=False)

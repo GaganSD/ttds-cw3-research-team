@@ -62,7 +62,7 @@ class Parser:
         return None
 
     def _save_to_csv(self):
-        self.main_dataset.to_csv('edinburgh_research_datasets_info.csv')
+        self.main_dataset.to_csv('core_algorithms/ir_eval/edinburgh_research_datasets_info.csv')
 
         
 curr_parser = Parser()
