@@ -13,10 +13,15 @@ import paperswithcode
 
 import schedule
 import time
+import os
+
+def datasets_collection():
+    os.system("source core_algorithms/ir_eval/create_inverted_index.sh")
 
 schedule.every().day.do(paperswithcode.live_index)
 schedule.every().monday.do(arxiv.live_index)
 schedule.every().day.do(pubmed.live_index)
+schedule.every().week.do(datasets_collection)
 
 while True:
     schedule.run_pending()
