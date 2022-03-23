@@ -10,7 +10,7 @@ import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import Options from './components/options'
 import Box from '@mui/material/Box';
-import research_logo from './logos/re-search-logos_transparent.png';
+import research_logo from './logos/Re-Search-logos_transparent.png';
 import PageButton from './components/pagebutton';
 import Switch from '@mui/material/Switch';
 import Link from '@mui/material/Link';
@@ -125,7 +125,10 @@ function App() {
     // console.log("HERE GOES THE DATE");
     console.log(date);
     if (date == null){
-      return "inf"
+      return "No date available"
+    }
+    else if (date.toLowerCase() == "not available" || date.toLowerCase()== "nan" || date.toLowerCase()=="unavailable" || date.toLowerCase()=="undefined" || date.toLowerCase()== "undefined, nan"){
+      return "No date available"
     }
     else{
       let day = date.getDate() + "-";
@@ -134,7 +137,7 @@ function App() {
       // console.log("HERE GOES THE DATE AGAINNNNNNN");
       console.log(day+month+year);
       // console.log("date over");
-      return day+month+year;
+      return "- " + day+month+year;
     }
 
   }
@@ -161,14 +164,14 @@ function App() {
   }
 
   function SanitizeSearch(searchval) {
-    searchval.replace("/", " ");
+    searchval.replaceAll("/", " ");
     return searchval;
   }
 
   function extractHostname(raw_url) {
-
-    var hostname;
-
+    
+    var hostname;  
+    
     if (raw_url.indexOf("//") > -1) { // remove protocol
       hostname = raw_url.split('/')[2];
     } else {
@@ -230,14 +233,14 @@ function App() {
   function QueryExpansion() {
     
     console.log(create_url(search, values.current));
-    return fetch('http://localhost:5000/QE/' + search).then(response => response.json()).then(data => {
+    return fetch('http://34.142.71.148:5000/QE/' + search).then(response => response.json()).then(data => {
       setJsonQE(data);
     });
   }
 
   function standardize_dates(string_date) {
 
-    string_date=string_date.replace('-','/');
+    string_date=string_date.replaceAll('-','/');
     string_date = string_date.replace(/\s+/g,"");
 
     var _format="d/m/y"
@@ -269,6 +272,10 @@ function App() {
       "July", "August", "September", "October", "November", "December"];
     let formatted = monthNames[d.getMonth()] + ", " +  d.getFullYear();
 
+    if (formatted == "undefined, NaN"){
+      return ""
+    }
+
     return formatted;
   }
 
@@ -292,10 +299,11 @@ function App() {
   function authorlist(authors){
     var lower=authors.toLowerCase()
     if (authors.includes(",")){
-      return authors;
-    } else if (!(lower == "n/a" || lower == "na" || lower == "NA"
-                 || lower == "n-a" || lower == "" || lower == " ")){
-      return authors;
+      return "-" + authors;
+    } 
+    else if (!(lower == "n/a" || lower == "na" || lower == "NA"
+                 || lower == "n-a" || lower == "" || lower == " " || lower == "nan" || lower == "n.a.")){
+      return "- " + authors;
     }
   }
 
@@ -343,7 +351,7 @@ function App() {
 
 
 
-    {/* <img src={research_logo} width="300em" height="150em"/> */}
+    <img src={research_logo} width="300em" height="150em"/>
     <button onClick={toggleTheme}>Lights</button>
 
       <div className='Search' style={{
@@ -353,7 +361,7 @@ function App() {
           style={{ maxWidth: '80%' }}
           parentCallback={TextEntered}
           error={true}
-          text = {"Bad Query Was Received"}
+          text = {"Bad Query Was Received - Please remove special characters from your query and try again!"}
         />
         : emptyresults ? <SearchField
             style = {{maxWidth:'80%'}}
@@ -413,7 +421,7 @@ function App() {
           {/* TODO: Enable latex formatting in author title
           TODO: Remove latex & markdown formatting in description */}
           <a href={curr_elem.url}><font size="5">{curr_elem.title}</font></a><br/> 
-          <font color="#595F6A" size="2" face="Tahoma">{fix_url(curr_elem.url)} - {std_date} - {authorlist(curr_elem.authors)}</font><br/> 
+          <font color="#595F6A" size="2" face="Tahoma">{fix_url(curr_elem.url)}  {std_date}  {authorlist(curr_elem.authors)}</font><br/> 
           {/* <font color="#595F6A" face="Tahoma"></font><br/> */}
           <font color="#595F6A">ㅤ{abstractgenerator(curr_elem.abstract)}</font><br/>
         </p></Box>;
