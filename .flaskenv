@@ -1,2 +1,2 @@
-FLASK_APP=app-no-transformers.py
+FLASK_APP=app.py
 FLASK_DEBUG=True
