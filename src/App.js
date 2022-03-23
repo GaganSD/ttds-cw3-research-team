@@ -209,7 +209,7 @@ function App() {
 
     }
     else{
-      return fetch('http://localhost:5000/' + create_url(search, values.current)).then(response => response.json()).then(data => {
+      return fetch('http://34.142.71.148:5000/' + create_url(search, values.current)).then(response => response.json()).then(data => {
         if(data.Results.length === 0){
             console.log("empty");
             setEmptyResults(true);
@@ -269,6 +269,10 @@ function App() {
       "July", "August", "September", "October", "November", "December"];
     let formatted = monthNames[d.getMonth()] + ", " +  d.getFullYear();
 
+    if (formatted == "undefined, NaN"){
+      return ""
+    }
+
     return formatted;
   }
 
@@ -292,10 +296,11 @@ function App() {
   function authorlist(authors){
     var lower=authors.toLowerCase()
     if (authors.includes(",")){
-      return authors;
-    } else if (!(lower == "n/a" || lower == "na" || lower == "NA"
-                 || lower == "n-a" || lower == "" || lower == " ")){
-      return authors;
+      return "-" + authors;
+    } 
+    else if (!(lower == "n/a" || lower == "na" || lower == "NA"
+                 || lower == "n-a" || lower == "" || lower == " " || lower == "nan" || lower == "n.a.")){
+      return "- " + authors;
     }
   }
 
@@ -353,7 +358,7 @@ function App() {
           style={{ maxWidth: '80%' }}
           parentCallback={TextEntered}
           error={true}
-          text = {"Bad Query Was Received"}
+          text = {"Bad Query Was Received - Please remove special characters from your query and try again!"}
         />
         : emptyresults ? <SearchField
             style = {{maxWidth:'80%'}}
@@ -413,7 +418,7 @@ function App() {
           {/* TODO: Enable latex formatting in author title
           TODO: Remove latex & markdown formatting in description */}
           <a href={curr_elem.url}><font size="5">{curr_elem.title}</font></a><br/> 
-          <font color="#595F6A" size="2" face="Tahoma">{fix_url(curr_elem.url)} - {std_date} - {authorlist(curr_elem.authors)}</font><br/> 
+          <font color="#595F6A" size="2" face="Tahoma">{fix_url(curr_elem.url)}  {std_date}  {authorlist(curr_elem.authors)}</font><br/> 
           {/* <font color="#595F6A" face="Tahoma"></font><br/> */}
           <font color="#595F6A">ㅤ{abstractgenerator(curr_elem.abstract)}</font><br/>
         </p></Box>;
