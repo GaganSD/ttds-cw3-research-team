@@ -354,7 +354,7 @@ class MongoDBClient():
             new_docs = []
             
             for temp_doc in temp_docs:
-                if temp_doc['_id'] == doc_id]: matching_docs.append(temp_doc)
+                if temp_doc['_id'] == doc_id: matching_docs.append(temp_doc)
                 else: new_docs.append(temp_doc)
                     
             if len(matching_docs) > 0:
