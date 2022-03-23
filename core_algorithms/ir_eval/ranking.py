@@ -213,8 +213,15 @@ if __name__ == '__main__':
     kaggle_df = pd.read_csv('core_algorithms/ir_eval/kaggle_dataset_df_page500.csv')
     kaggle_df['Source'] = 'Kaggle'
     paperwithcode_df = pd.read_csv('core_algorithms/ir_eval/paperwithcode_df.csv')
+    paperwithcode_df.rename(columns={"owner":"ownerUser"}, inplace=True)
     paperwithcode_df['Source'] = 'Paper_with_code'
-    df = pd.concat([kaggle_df, paperwithcode_df])
+    uci_df = pd.read_csv("core_algorithms/ir_eval/uci_dataset_test.csv")
+    uci_df.rename(columns={"Name":"title", "Abstract":"description", "Datapage URL":"ownerUser"}, inplace=True)
+    uci_df['Source'] = 'uci'
+    edi_df = pd.read_csv("core_algorithms/ir_eval/edinburgh_research_datasets_info.csv")
+    edi_df.rename(columns={"Name":"title", "URL":"ownerUser"}, inplace=True)
+    edi_df['Source'] = 'Edi'
+    df = pd.concat([kaggle_df, paperwithcode_df, uci_df, edi_df], axis=0)
     df = df.reset_index(drop=True)
     query_params1 = {'query': ["haskell"]}
     # query_params2 = {'query': ["statistics","health"]}
