@@ -125,10 +125,7 @@ function App() {
     // console.log("HERE GOES THE DATE");
     console.log(date);
     if (date == null){
-      return "No date available"
-    }
-    else if (date.toLowerCase() == "not available" || date.toLowerCase()== "nan" || date.toLowerCase()=="unavailable" || date.toLowerCase()=="undefined" || date.toLowerCase()== "undefined, nan"){
-      return "No date available"
+      return "inf"
     }
     else{
       let day = date.getDate() + "-";
@@ -137,7 +134,7 @@ function App() {
       // console.log("HERE GOES THE DATE AGAINNNNNNN");
       console.log(day+month+year);
       // console.log("date over");
-      return "- " + day+month+year;
+      return day+month+year;
     }
 
   }
@@ -212,7 +209,7 @@ function App() {
 
     }
     else{
-      return fetch('http://localhost:5000/' + create_url(search, values.current)).then(response => response.json()).then(data => {
+      return fetch('http://34.142.71.148:5000/' + create_url(search, values.current)).then(response => response.json()).then(data => {
         if(data.Results.length === 0){
             console.log("empty");
             setEmptyResults(true);
