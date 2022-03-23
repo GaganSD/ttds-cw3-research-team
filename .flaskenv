@@ -1,4 +1,4 @@
-FLASK_APP=app-playground.py
+FLASK_APP=app-no-transformers.py
 FLASK_DEBUG=True
 
 

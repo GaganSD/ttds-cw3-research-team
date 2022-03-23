@@ -45,7 +45,7 @@ CORS(app)
 print(0.2)
 # Load paper & dataset index. 
 # searcher = scann.scann_ops_pybind.load_searcher('/home/stylianosc/scann/papers/') #NOTE:DL
-searcher_dataset = scann.scann_ops_pybind.load_searcher('core_algorithms/ir_eval/datasets/')
+# searcher_dataset = scann.scann_ops_pybind.load_searcher('core_algorithms/ir_eval/datasets/')
 print(0.3)
 # Load transformer encoder
 # model = SentenceTransformer('all-MiniLM-L6-v2') #NOTE:DL
@@ -85,11 +85,12 @@ def call_top_n(N, parameters):
                 top_n=N)
 
     elif parameters["algorithm"] == "APPROX_NN":
-        if parameters["datasets"]:
-            results = get_approx_nn_datasets_results(query=parameters['query'], top_n=N)
-        else:
-            results = get_approx_nn_papers_results(query=parameters['query'], 
-                start_date=parameters["start_date"], end_date=parameters["end_date"], top_n=N)
+        pass
+        # if parameters["datasets"]:
+        #     # results = get_approx_nn_datasets_results(query=parameters['query'], top_n=N)
+        # else:
+            # results = get_approx_nn_papers_results(query=parameters['query'], 
+            #     start_date=parameters["start_date"], end_date=parameters["end_date"], top_n=N)
 
     elif parameters["datasets"]:
         results = get_datasets_results(query=parameters['query'],
