@@ -28,7 +28,7 @@ handler.setFormatter(formatter)
 logger.addHandler(handler)
 
 class IndexGenerator:
-    def __init__(self, activate_stemming = True, activate_stop = False, start_index=0, local_dataset=None, source_name="", identifier=""):
+    def __init__(self, client_ip = "34.142.18.57", activate_stemming = True, activate_stop = False, start_index=0, local_dataset=None, source_name="", identifier=""):
         """ This class reaeds the documents from db, generates an inverted index and saves it into db.
         
         Keyword Arguments:
@@ -40,7 +40,7 @@ class IndexGenerator:
         self.activate_stop = activate_stop
         self.start = start_index
         self.local_dataset = local_dataset
-        self.client = MongoDBClient("127.0.0.1")
+        self.client = MongoDBClient(client_ip)
         self.source_name = source_name
         self.identifier = identifier
         self.temp = dict()
