@@ -98,6 +98,10 @@ export default function ResultsPage(props) {
             "July", "August", "September", "October", "November", "December"];
         let formatted = monthNames[d.getMonth()] + ", " + d.getFullYear();
 
+        if (formatted == "undefined, NaN"){
+            return "";
+        }
+
         return formatted;
     }
 
@@ -121,10 +125,10 @@ export default function ResultsPage(props) {
     function authorlist(authors) {
         var lower = authors.toLowerCase()
         if (authors.includes(",")) {
-            return authors;
+            return "- " + authors;
         } else if (!(lower == "n/a" || lower == "na" || lower == "NA"
             || lower == "n-a" || lower == "" || lower == " ")) {
-            return authors;
+            return "- " + authors;
         }
     }
     function fix_url(raw_url) {
@@ -225,7 +229,7 @@ export default function ResultsPage(props) {
             // console.log("HERE GOES THE DATE AGAINNNNNNN");
             console.log(day + month + year);
             // console.log("date over");
-            return day + month + year;
+            return "- " + day + month + year;
         }
 
     }
