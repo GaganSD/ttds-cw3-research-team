@@ -10,7 +10,7 @@ import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import Options from './components/options'
 import Box from '@mui/material/Box';
-import research_logo from './logos/re-search-logos_transparent.png';
+import research_logo from './logos/researchlogomain.png';
 import PageButton from './components/pagebutton';
 import Switch from '@mui/material/Switch';
 import Link from '@mui/material/Link';
@@ -311,7 +311,7 @@ function App() {
     let formatted = monthNames[d.getMonth()] + ", " +  d.getFullYear();
 
     if (formatted == "undefined, NaN"){
-      return ""
+      return null;
     }
 
     return formatted;
@@ -389,7 +389,7 @@ function App() {
 
 
 
-    <img src={research_logo} width="300em" height="150em"/>
+    <img src={research_logo} flex="1" height="350em" width="350em" resizeMode="contain"/>
     <button onClick={toggleTheme}>Lights</button>
 
       <div className='Search' style={{
