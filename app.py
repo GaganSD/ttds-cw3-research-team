@@ -73,6 +73,7 @@ _results_cache = LRUCache(200)
 
 def call_top_n(N, parameters):
     results = {"Results":[]}
+    print(parameters)
     if parameters["search_type"] == "AUTHOR":
 
         if parameters["datasets"]:
@@ -84,11 +85,15 @@ def call_top_n(N, parameters):
 
     elif parameters["algorithm"] == "APPROX_NN":
         if parameters["datasets"]:
-            results = requests.get('https://localhost:5000/datasets/' + parameters['query'] + "/" + str(N) + "/" \ 
-             + parameters['query'] + "/" + parameters["start_date"] + "/" + parameters["end_date"])
+#<<<<<<< HEAD
+#            results = requests.get('https://localhost:5000/datasets/' + query + "/" + str(N) + "/"  \
+#             + parameters['query'] + "/" + parameters["start_date"] + "/" + parameters["end_date"])
+#        else:
+#            results = requests.get('https://localhost:5000/papers/' + query + "/" + str(N) + "/" \
+#=======
+            results = requests.get('https://localhost:5000/datasets/' + parameters['query'] + "/" + str(N) + "/" + parameters["start_date_str"] + "/" + parameters["end_date_str"])
         else:
-            results = requests.get('https://localhost:5000/papers/' + parameters['query'] + "/" + str(N) + "/" \ 
-             + parameters['query'] + "/" + parameters["start_date"] + "/" + parameters["end_date"])
+            results = requests.get('https://localhost:5000/papers/' + parameters['query'] + "/" + str(N) + "/" + parameters["start_date_str"] + "/" + parameters["end_date_str"])
 
     elif parameters["datasets"]:
         results = get_datasets_results(query=parameters['query'],
@@ -98,8 +103,8 @@ def call_top_n(N, parameters):
     else:
         results = get_papers_results(query=parameters['query'],
                             input_type = parameters["search_type"],
-                            ranking = parameters["algorithm"],  
-                            start_date=parameters["start_date"], 
+                            ranking = parameters["algorithm"],
+                            start_date=parameters["start_date"],
                             end_date=parameters["end_date"], top_n=N)
 
     return results
