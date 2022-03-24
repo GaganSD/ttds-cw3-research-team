@@ -12,6 +12,7 @@ import PaperOrDS from './datasetorpaper';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import QEButton from './QueryExpansionButton';
 import PageButton from './pagebutton';
+import research_logo_side from '../logos/researchlogoside.png';
 
 export default function ResultsPage(props) {
     React.useEffect(() => {
@@ -297,13 +298,16 @@ export default function ResultsPage(props) {
                         flexDirection: 'row',
                         justifyContent: 'center'
                     }}>
+                    <div style={{
+                            marginTop: '-0.8em',
+                            marginRight: '2em'
+                        }}><img src={research_logo_side} height="100em" width="250em"/></div>
                         <div className='Options' style={{
-                            marginRight: '10em',
+                            marginRight: '3em',
                             marginTop: '1.5em'
                         }}>
                             <SwipeableTemporaryDrawer hysteresis="0.52" parentCallback={getOptions} datasets={datasets} />
                         </div>
-                        <h1>Re-Search</h1>
                         <div className='SearchField' style={{
                             width: '30%',
                             marginTop: '1.5em',
