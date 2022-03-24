@@ -311,7 +311,7 @@ function App() {
     let formatted = monthNames[d.getMonth()] + ", " +  d.getFullYear();
 
     if (formatted == "undefined, NaN"){
-      return null;
+      return "";
     }
 
     return formatted;
