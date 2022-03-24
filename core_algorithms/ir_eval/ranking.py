@@ -1,7 +1,7 @@
 from audioop import avg
 from cmath import nan
 import json
-import pickle5 as pickle #note: for python 3.8+ use "import pickle" instead. 
+import pickle #note: for python 3.8+ use "import pickle" instead. 
 
 import sys
 # from db.DB import get_db_instance

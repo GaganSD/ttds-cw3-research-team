@@ -17,7 +17,7 @@ from core_algorithms.ir_eval.ranking_paper import ranking_query_tfidf_cosine as 
 from core_algorithms.ir_eval.ranking_paper import phrase_search as phrase_search_paper
 from core_algorithms.ir_eval.ranking_paper import proximity_search as proximity_search_paper
 
-from core_algorithms.ir_eval.ranking import ranking_query_tfidf as ranking_query_tfidf_dataset
+from core_algorithms.ir_eval.ranking import ranking_query_tfidf as ranking_query_tfidf_dataset # this will give you an error for python 3.8
 from core_algorithms.ir_eval.ranking import phrase_search as phrase_search_dataset
 from core_algorithms.ir_eval.ranking import proximity_search as proximity_search_dataset
 from core_algorithms.ir_eval.ranking import ranking_query_BM25 as ranking_query_bm25_dataset
@@ -42,9 +42,6 @@ app = Flask(__name__)
 CORS(app)
 
 print("completed.. your server will be up in less than 5 seconds..")
-# Load paper indices
-df_papers = pd.read_csv("/home/stylianosc/scann/papers/df.csv")
-# Load dataset indices
 df_datasets = pd.read_csv("core_algorithms/ir_eval/datasets/indices_dataset.csv")
 df_datasets.rename(columns={"description": "abstract"}, inplace=True)
 
@@ -85,15 +82,9 @@ def call_top_n(N, parameters):
 
     elif parameters["algorithm"] == "APPROX_NN":
         if parameters["datasets"]:
-#<<<<<<< HEAD
-#            results = requests.get('https://localhost:5000/datasets/' + query + "/" + str(N) + "/"  \
-#             + parameters['query'] + "/" + parameters["start_date"] + "/" + parameters["end_date"])
-#        else:
-#            results = requests.get('https://localhost:5000/papers/' + query + "/" + str(N) + "/" \
-#=======
-            results = requests.get('https://localhost:5000/datasets/' + parameters['query'] + "/" + str(N) + "/" + parameters["start_date_str"] + "/" + parameters["end_date_str"])
+            results = requests.get('https://34.142.71.148:5000/datasets/' + parameters['query'] + "/" + str(N) + "/" + parameters["start_date_str"] + "/" + parameters["end_date_str"])
         else:
-            results = requests.get('https://localhost:5000/papers/' + parameters['query'] + "/" + str(N) + "/" + parameters["start_date_str"] + "/" + parameters["end_date_str"])
+            results = requests.get('https://34.142.71.148:5000/papers/' + parameters['query'] + "/" + str(N) + "/" + parameters["start_date_str"] + "/" + parameters["end_date_str"])
 
     elif parameters["datasets"]:
         results = get_datasets_results(query=parameters['query'],
@@ -320,3 +311,5 @@ def _preprocess_query(query: str, stemming=True, remove_stopwords=True) -> dict:
         _preprocessing_cache.put(query, query_params)
 
     return query_params
+
+print("eee")
