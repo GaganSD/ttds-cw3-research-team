@@ -56,7 +56,7 @@ def get_approx_nn_datasets_results(query: str, top_n: int=100) -> dict:
 
     return output_dict
 
-def get_approx_nn_papers_results(query: str, top_n: int=10, start_date:datetime = min_day, end_date:datetime = curr_day) -> dict:
+def get_approx_nn_papers_results(query: str="", top_n: int=10, start_date:datetime = min_day, end_date:datetime = curr_day) -> dict:
     """
     Input: query (input_type: string)
     Output: Dictionary (HashMap)
@@ -66,13 +66,13 @@ def get_approx_nn_papers_results(query: str, top_n: int=10, start_date:datetime 
 
     output_dict = {}
     outputs = [str(df_papers.iloc[i]._id) for i in neighbors]
-    
-    temp_result = list(client.order_preserved_get_data(id_list= outputs,
+
+    temp_result = list(client.order_preserved_get_data(id_list=outputs,
                                                        start_date=start_date, end_date=end_date,
                                                        fields=['title', 'abstract','authors', 'url', 'date'],
                                                        limit=top_n
                                                       )
-                      )   
+                      )
     for result in temp_result:
         result["date"] = result["date"].strftime("%d/%m/%Y")
 
@@ -80,13 +80,17 @@ def get_approx_nn_papers_results(query: str, top_n: int=10, start_date:datetime 
     return output_dict
 
 
-@app.route("datasets/<query>/<top_n>", methods=['GET', 'POST'])
-def serve_datasets(query, top_n=100):
-    return get_approx_nn_datasets_results(query, top_n)
+@app.route("/datasets/<query>/<top_n>/from_date/to_date", methods=['GET', 'POST'])
+def serve_datasets(query, top_n, from_date, to_date):
+    from_date = datetime.strptime(from_date, '%d-%m-%Y')
+    to_date = datetime.strptime(to_date, '%d-%m-%Y')
+    return get_approx_nn_datasets_results(query, top_n, from_date, to_date)
 
 
-@app.route("papers/<query>/<top_n>", methods=['GET', 'POST'])
-def serve_papers(query, top_n):
-    return get_approx_nn_papers_results(query, top_n)
+@app.route("/papers/<query>/<top_n>", methods=['GET', 'POST'])
+def serve_papers(query, top_n, from_date, to_date):
+    from_date = datetime.strptime(from_date, '%d-%m-%Y')
+    to_date = datetime.strptime(from_date, '%d-%m-%Y')
 
-    
+    return get_approx_nn_papers_results(query, top_n, from_date, to_date)
+
