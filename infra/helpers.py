@@ -66,7 +66,6 @@ class Formatting:
         """
         from markdown import Markdown
 
-        # For markdown
         Markdown.output_formats["plain"] = self._unmark_element
 
         self._md = Markdown(output_format="plain")

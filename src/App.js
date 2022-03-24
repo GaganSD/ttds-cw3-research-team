@@ -10,7 +10,7 @@ import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import Options from './components/options'
 import Box from '@mui/material/Box';
-import research_logo from './logos/Re-Search-logos_transparent.png';
+import research_logo from './logos/re-search-logos_transparent.png';
 import PageButton from './components/pagebutton';
 import Switch from '@mui/material/Switch';
 import Link from '@mui/material/Link';
@@ -250,13 +250,13 @@ function App() {
 
     }
     else{
-      return fetch('http://34.142.71.148:5000/' + create_url(search, values.current)).then(response => response.json()).then(data => {
-        if(data.Results.length === 0){
+      return fetch('http://localhost:5000/' + create_url(search, values.current)).then(response => response.json()).then(data => {
+        if(data.Results.length === 0) {
             console.log("empty");
             setEmptyResults(true);
             console.log(emptyresults)
         }
-        else{
+        else {
           console.log("search complete");
           console.log(create_url(search, values.current));
           setBadQuery(false);
@@ -271,7 +271,7 @@ function App() {
   function QueryExpansion() {
     
     console.log(create_url(search, values.current));
-    return fetch('http://34.142.71.148:5000/QE/' + search).then(response => response.json()).then(data => {
+    return fetch('http://localhost:5000/QE/' + search).then(response => response.json()).then(data => {
       setJsonQE(data);
     });
   }
