@@ -32,8 +32,27 @@ import { useEffect, useState } from "react";
 import { ThemeProvider } from 'styled-components';
 import { lightTheme, darkTheme } from './components/theme';
 import { GlobalStyles } from './components/global';
+import { useNavigate } from 'react-router-dom';
 //TODO: Remove latex & markdown formatting 
 function App() {
+
+  let navigate = useNavigate();
+  const routeChange = () => {
+    if(search === ''|| !/^(?!\s+$).+/.test(search)){
+      console.log(search);
+      console.log("empty query");
+    }
+    else if( !/^[0-9a-zA-Z\s]*$/.test(search) ){
+      console.log("badquery");
+      setBadQuery(true);
+
+    }
+    else{
+      let path = create_url(search, values.current);
+      console.log(path);
+      navigate(path);
+    }
+  }
   const [theme, setTheme] = useState('light');
   const toggleTheme = () => {
     console.log("switch");
@@ -55,8 +74,8 @@ function App() {
   const [json_query_expansion, setJsonQE] = React.useState({QEResults:[]});
   const label = { inputProps: { 'aria-label': 'Switch demo' } };
   const values = React.useRef({
-    algorithm: "Featured",
-    searchtype: "Default",
+    algorithm: "FEATURED",
+    searchtype: "DEFAULT",
     range_from:null,
     range_to: null,
     datasets: false,
@@ -77,6 +96,7 @@ function App() {
   function getOptions(type,optval){
     if (type === "algorithms"){
       values.current.algorithm = optval;
+
     }
     else if (type === "searchtype"){
       values.current.searchtype = optval;
@@ -140,7 +160,28 @@ function App() {
   }
 
   const create_url = (searchq, vals) =>{
-    let url = "search?q=";
+    let url = "search/q=";
+    url += SanitizeSearch(searchq).split(" ").join("+");
+    url += "/df=";
+    url += date_formatter(vals.range_from);
+    url += "/dt=";
+    url += date_formatter(vals.range_to);
+    url += "/alg=";
+    url += vals.algorithm.split(" ").join("_");
+    url += "/srchtyp=";
+    url += vals.searchtype.split(" ").join("_");
+    url += "/ds=";
+    url += vals.datasets + "";
+    url += "/pn=";
+    url += vals.pagenum + "";
+    url += "/";
+
+    return url
+
+  }
+
+    const create_route_url = (searchq, vals) =>{
+    let url = "search/q=";
     url += SanitizeSearch(searchq).split(" ").join("+");
     url += "/df=";
     url += date_formatter(vals.range_from);
@@ -201,7 +242,7 @@ function App() {
       console.log("EMPTY SEARCH")
 
     }
-    else if( !/^[0-9a-zA-Z\s]*$/.test(search)){
+    else if( !/^[0-9a-zA-Z\s]*$/.test(search) || !/^(?!\s+$).+/.test(search)){
       console.log("badquery");
       setJsonResults({"Results": []})
       showPageButton.current = false;
@@ -388,13 +429,9 @@ function App() {
         flexDirection : "row"        
       }}>
         <ButtonGroup variant="contained" aria-label="outlined primary button group">
-          <SearchButton parentCallback={() =>{
-            console.log("yes");
-            setPageNum(1);
-            setGoBackButtonDisabled(true);
-            console.log(pagenum);
-            SearchFunc();
-          }} />
+          <Button onClick={routeChange} variant="contained" style={{display: 'flex', justifyContent:'center'}}>
+          Search
+          </Button>
           <QEButton parentCallback={QueryExpansion} />
         </ButtonGroup>
 
