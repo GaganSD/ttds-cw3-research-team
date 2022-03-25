@@ -19,7 +19,7 @@ export default function ResultsPage(props) {
         console.log("reeeeeee");
         let search_query = "search?" + (window.location.pathname).slice(8)
         console.log(search_query);
-        return fetch('http://localhost:5000/' + search_query).then(response => response.json()).then(data => {
+        return fetch('http://34.83.49.212:5000/' + search_query).then(response => response.json()).then(data => {
             console.log("search complete");
             console.log(create_url(search, values.current));
             setBadQuery(false);
@@ -175,7 +175,7 @@ export default function ResultsPage(props) {
 
         }
         else {
-            return fetch('http://localhost:5000/' + create_url(search, values.current)).then(response => response.json()).then(data => {
+            return fetch('http://34.83.49.212:5000/' + create_url(search, values.current)).then(response => response.json()).then(data => {
                 console.log(create_url(search, values.current));
                 if (data.Results.length === 0) {
                     console.log("empty");
@@ -197,7 +197,7 @@ export default function ResultsPage(props) {
     function QueryExpansion() {
 
         console.log(create_url(search, values.current));
-        return fetch('http://localhost:5000/QE/' + search).then(response => response.json()).then(data => {
+        return fetch('http://34.83.49.212:5000/QE/' + search).then(response => response.json()).then(data => {
             setJsonQE(data);
         });
     }
