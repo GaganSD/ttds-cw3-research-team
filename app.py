@@ -82,9 +82,9 @@ def call_top_n(N, parameters):
 
     elif parameters["algorithm"] == "APPROX_NN":
         if parameters["datasets"]:
-            results = requests.get('http://localhost:5000/datasets/' + parameters['query'] + "/" + str(N) + "/" + parameters["start_date_str"] + "/" + parameters["end_date_str"])
+            results = requests.get('http://34.83.49.212:5000/datasets/' + parameters['query'] + "/" + str(N) + "/" + parameters["start_date_str"] + "/" + parameters["end_date_str"])
         else:
-            results = requests.get('https://localhost:5000/papers/' + parameters['query'] + "/" + str(N) + "/" + parameters["start_date_str"] + "/" + parameters["end_date_str"])
+            results = requests.get('http://34.83.49.212:5000/papers/' + parameters['query'] + "/" + str(N) + "/" + parameters["start_date_str"] + "/" + parameters["end_date_str"])
 
     elif parameters["datasets"]:
         results = get_datasets_results(query=parameters['query'],
