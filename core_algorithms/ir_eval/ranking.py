@@ -1,7 +1,8 @@
 from audioop import avg
 from cmath import nan
 import json
-import pickle5 as pickle
+import pickle #note: for python 3.8+ use "import pickle" instead. 
+
 import sys
 # from db.DB import get_db_instance
 from pathlib import Path
@@ -67,7 +68,7 @@ def ranking_query_BM25(query_params, index_path = 'core_algorithms/ir_eval/last'
         for dataset_id, relevant_dataset in list_of_datasets.items():
             term_freq = len(relevant_dataset['pos'])
             dl = relevant_dataset['len']
-            score = score_BM25(doc_nums, doc_nums_term, term_freq, k1 = 1.5, dl = dl, avgdl=4.82)
+            score = score_BM25(doc_nums, doc_nums_term, term_freq, k1 = 1.5, dl = dl, avgdl=58)
             scores[dataset_id] += score
     return sorted(dict(scores).items(), key = lambda x : x[1], reverse=True)
 
@@ -212,8 +213,15 @@ if __name__ == '__main__':
     kaggle_df = pd.read_csv('core_algorithms/ir_eval/kaggle_dataset_df_page500.csv')
     kaggle_df['Source'] = 'Kaggle'
     paperwithcode_df = pd.read_csv('core_algorithms/ir_eval/paperwithcode_df.csv')
+    paperwithcode_df.rename(columns={"owner":"ownerUser"}, inplace=True)
     paperwithcode_df['Source'] = 'Paper_with_code'
-    df = pd.concat([kaggle_df, paperwithcode_df])
+    uci_df = pd.read_csv("core_algorithms/ir_eval/uci_dataset_test.csv")
+    uci_df.rename(columns={"Name":"title", "Abstract":"description", "Datapage URL":"ownerUser"}, inplace=True)
+    uci_df['Source'] = 'uci'
+    edi_df = pd.read_csv("core_algorithms/ir_eval/edinburgh_research_datasets_info.csv")
+    edi_df.rename(columns={"Name":"title", "URL":"ownerUser"}, inplace=True)
+    edi_df['Source'] = 'Edi'
+    df = pd.concat([kaggle_df, paperwithcode_df, uci_df, edi_df], axis=0)
     df = df.reset_index(drop=True)
     query_params1 = {'query': ["haskell"]}
     # query_params2 = {'query': ["statistics","health"]}

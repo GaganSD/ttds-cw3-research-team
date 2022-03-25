@@ -6,10 +6,7 @@ import json
 import pickle
 import pandas as pd
 
-#import pandas as pd
-
 import preprocessing
-# import database_functions
 import argparse
 import logging
 from collections import defaultdict
@@ -56,7 +53,7 @@ class IndexGenerator:
                 dataset = self.local_dataset.iloc[i]
                 sentence = str(dataset['title']) + ' ' + str(dataset['subtitle']) + ' ' + str(dataset['description'])
                 self.__load_tempfile(ds_id = i, sentence = sentence)
-            self.__save_pickle('last')
+            self.__save_pickle('core_algorithms/ir_eval/last')
             
 
     def __load_tempfile(self, ds_id, sentence):
@@ -84,13 +81,19 @@ class IndexGenerator:
             pickle.dump(list(self.temp.values()), handle, protocol=pickle.HIGHEST_PROTOCOL)
         self.temp.clear()
 
-def run_with_arguments(stem, stop, start, local_kaggle_dataset=None, local_paperwithcode_dataset=None):
+def run_with_arguments(stem, stop, start, local_kaggle_dataset=None, local_paperwithcode_dataset=None,
+                       local_uci_dataset=None, local_edi_dataset=None):
     if (local_kaggle_dataset is None) & (local_paperwithcode_dataset is None):
         indexGen = IndexGenerator(activate_stop=stop, activate_stemming=stem, start_index=start, local_dataset=None)
     else:
         kaggle_df = pd.read_csv(local_kaggle_dataset)
         paperwithcode_df = pd.read_csv(local_paperwithcode_dataset)
-        df = pd.concat([kaggle_df, paperwithcode_df])
+        paperwithcode_df.rename(columns={"owner":"ownerUser"}, inplace=True)
+        uci_df = pd.read_csv(local_uci_dataset)
+        uci_df.rename(columns={"Name":"title", "Abstract":"description", "Datapage URL":"ownerUser"}, inplace=True)
+        edi_df = pd.read_csv(local_edi_dataset)
+        edi_df.rename(columns={"Name":"title", "URL":"ownerUser"}, inplace=True)
+        df = pd.concat([kaggle_df, paperwithcode_df, uci_df, edi_df], axis=0)
         df = df.reset_index(drop=True)
         indexGen = IndexGenerator(activate_stop=stop, activate_stemming=stem, start_index=start, local_dataset= df)
     indexGen.run_indexing()
@@ -101,6 +104,9 @@ parser.add_argument('--remove_stopwords', nargs="?", type=str, default='False', 
 parser.add_argument('--start', nargs="?", type=int, default=0, help='Start batch index')
 parser.add_argument('--local_kaggle_dataset', type=str, default=True, help='Local Kaggle dataset path')
 parser.add_argument('--local_paperwithcode_dataset', type=str, default=True, help='Local paperwithcode dataset path')
+parser.add_argument('--local_uci_dataset', type=str, default=True, help='Local UCI dataset path')
+parser.add_argument('--local_edi_dataset', type=str, default=True, help='Local edi dataset path')
 args = parser.parse_args()
 
-run_with_arguments(eval(args.stemming), eval(args.remove_stopwords), args.start, args.local_kaggle_dataset, args.local_paperwithcode_dataset)
+run_with_arguments(eval(args.stemming), eval(args.remove_stopwords), args.start, 
+                   args.local_kaggle_dataset, args.local_paperwithcode_dataset, args.local_uci_dataset, args.local_edi_dataset)

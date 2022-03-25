@@ -94,6 +94,8 @@ def ranking_query_tfidf_cosine(query_params, client = None):
         list_of_papers = client.get_topk_doc_from_index(term)
         term_end_time = time.time()
         doc_nums_term = client.get_df(term)#len(list_of_papers)
+        if doc_nums_term == 0:
+            doc_nums_term = 1
         print(term, ':', term_end_time-term_start_time)
         query_score = score_tfidf(doc_nums,doc_nums_term, tf_dict[term])
         query_length += query_score ** 2

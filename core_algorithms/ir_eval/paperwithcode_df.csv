@@ -1013,7 +1013,8 @@ RT-GENE,"Presents a diverse eye-gaze dataset.
 Source: [RT-GENE: Real-Time Eye Gaze Estimation in Natural Environments](/paper/rt-gene-real-time-eye-gaze-estimation-in)",https://paperswithcode.com/dataset/rt-gene,,,,,,,
 WN18RR,"**WN18RR** is a link prediction dataset created from WN18, which is a subset of WordNet. WN18 consists of 18 relations and 40,943 entities. However, many text triples are obtained by inverting triples from the training set. Thus the WN18RR dataset is created to ensure that the evaluation dataset does not have inverse relation test leakage. In summary, WN18RR dataset contains 93,003 triples with 40,943 entities and 11 relation types.
 
-Source: [End-to-end Structure-Aware Convolutional Networks for Knowledge Base Completion](https://arxiv.org/abs/1811.04441)",https://paperswithcode.com/dataset/wn18rr,01/01/2018,,,,,,
+Source: [End-to-end Structure-Aware Convolutional Networks for Knowledge Base Completion](https://arxiv.org/abs/1811.04441)",https://paperswithcode.com/dataset/wn18rr,01/12/2013,,,,,,
+FB15k-237,"**FB15k-237** is a link prediction dataset created from FB15k. While FB15k consists of 1,345 relations, 14,951 entities, and 592,213 triples, many triples are inverses that cause leakage from the training to testing and validation splits. FB15k-237 was created by Toutanova and Chen (2015) to ensure that the testing and evaluation datasets do not have inverse relation test leakage. In summary, FB15k-237 dataset contains 310,079 triples with 14,505 entities and 237 relation types.",https://paperswithcode.com/dataset/fb15k-237,01/07/2015,,,,,,
 T-LESS,"**T-LESS** is a dataset for estimating the 6D pose, i.e. translation and rotation, of texture-less rigid objects. The dataset features thirty industry-relevant objects with no significant texture and no discriminative color or reflectance properties. The objects exhibit symmetries and mutual similarities in shape and/or size. Compared to other datasets, a unique property is that some of the objects are parts of others. The dataset includes training and test images that were captured with three synchronized sensors, specifically a structured-light and a time-of-flight RGB-D sensor and a high-resolution RGB camera. There are approximately 39K training and 10K test images from each sensor. Additionally, two types of 3D models are provided for each object, i.e. a manually created CAD model and a semi-automatically reconstructed one. Training images depict individual objects against a black background. Test images originate from twenty test scenes having varying complexity, which increases from simple scenes with several isolated objects to very challenging ones with multiple instances of several objects and with a high amount of clutter and occlusion. The images were captured from a systematically sampled view sphere around the object/scene, and are annotated with accurate ground truth 6D poses of all modeled objects.
 
 Source: [http://cmp.felk.cvut.cz/t-less/](http://cmp.felk.cvut.cz/t-less/)
@@ -1280,6 +1281,9 @@ S3DIS,"The Stanford 3D Indoor Scene Dataset (**S3DIS**) dataset contains 6 large
 Source: [Grid-GCN for Fast and Scalable Point Cloud Learning](https://arxiv.org/abs/1912.02984)
 Image Source: [https://www.researchgate.net/figure/Examples-of-classified-scenes-in-S3DIS-dataset-left-with-groundtruth-right_fig2_328307943](https://www.researchgate.net/figure/Examples-of-classified-scenes-in-S3DIS-dataset-left-with-groundtruth-right_fig2_328307943)",https://paperswithcode.com/dataset/s3dis,01/06/2016,Stanford 3D Indoor Scene Dataset (S3DIS),,,,,
 VoxCeleb1,"**VoxCeleb1** is an audio dataset containing over 100,000 utterances for 1,251 celebrities, extracted from videos uploaded to YouTube.",https://paperswithcode.com/dataset/voxceleb1,26/06/2017,VoxCeleb1,,,,,
+OQMD v1.2,"The OQMD is a database of DFT calculated thermodynamic and structural properties of one million materials, created in Chris Wolverton's group at Northwestern University.
+
+The OQMD v1.2 dataset for CGNN is downloadable from [this link](https://drive.google.com/file/d/1I6nS4l15SeX5S4VcU3jKG5Iqvomj7eXB/view?usp=sharing), which contains 561,888 materials. Its format is described in [here](https://github.com/Tony-Y/cgnn#dataset-files). The original data is available at [the OQMD website](https://oqmd.org).",https://paperswithcode.com/dataset/oqmd-v1-2,27/05/2019,The Open Quantum Materials Database,,,,,
 Moments in Time,"Moments in Time is a large-scale dataset for recognizing and understanding action in videos. The dataset includes a collection of one million labeled 3 second videos, involving people, animals, objects or natural phenomena, that capture the gist of a dynamic scene.",https://paperswithcode.com/dataset/moments-in-time,,,,,,,
 VQA-CP,"The **VQA-CP** dataset was constructed by reorganizing VQA v2 such that the correlation between the question type and correct answer differs in the training and test splits. For example, the most common answer to questions starting with What sport… is tennis in the training set, but skiing in the test set. A model that guesses an answer primarily from the question will perform poorly.
 
@@ -1586,7 +1590,12 @@ Street Scene,"**Street Scene** is a dataset for video anomaly detection. Street 
 
 Source: [A Survey of Single-SceneVideo Anomaly Detection](https://arxiv.org/abs/2004.05993)
 Image Source: [https://www.merl.com/demos/video-anomaly-detection](https://www.merl.com/demos/video-anomaly-detection)",https://paperswithcode.com/dataset/street-scene,01/01/2019,,,,,,
-Materials Project,The **Materials Project** is a collection of chemical compounds labelled with different attributes.,https://paperswithcode.com/dataset/materials-project,,,,,,,
+Materials Project,"The **Materials Project** is a collection of chemical compounds labelled with different attributes.
+
+The dataset links:
+
+* [MP 2018.6.1](https://github.com/materialsvirtuallab/megnet/tree/master/mvl_models/mp-2018.6.1) (69,239 materials)
+* [MP 2019.4.1](https://github.com/materialsvirtuallab/megnet/tree/master/mvl_models/mp-2019.4.1) (133,420 materials)",https://paperswithcode.com/dataset/materials-project,,,,,,,
 Semantic3D,"**Semantic3D** is a point cloud dataset of scanned outdoor scenes with over 3 billion points. It contains 15 training and 15 test scenes annotated with 8 class labels. This large labelled 3D point cloud data set of natural covers a range of diverse urban scenes: churches, streets, railroad tracks, squares, villages, soccer fields, castles to name just a few. The point clouds provided are scanned statically with state-of-the-art equipment and contain very fine details.
 
 Source: [Tangent Convolutions for Dense Prediction in 3D](https://arxiv.org/abs/1807.02443)
@@ -1640,6 +1649,12 @@ Image Source: [https://www.researchgate.net/figure/Examples-of-fundus-images-fro
 DBRD,"The DBRD (pronounced dee-bird) dataset contains over 110k book reviews along with associated binary sentiment polarity labels. It is greatly influenced by the Large Movie Review Dataset and intended as a benchmark for sentiment classification in Dutch. 
 
 Source: [DBRD](https://github.com/benjaminvdb/DBRD)",https://paperswithcode.com/dataset/dbrd,,Dutch Book Reviews Dataset,,,,,
+Kaggle-Credit Card Fraud Dataset,"The dataset contains transactions made by credit cards in September 2013 by European cardholders.  
+This dataset presents transactions that occurred in two days, where we have 492 frauds out of 284,807 transactions. The dataset is highly unbalanced, the positive class (frauds) account for 0.172% of all transactions.  
+   
+It contains only numerical input variables which are the result of a PCA transformation. Unfortunately, due to confidentiality issues, we cannot provide the original features and more background information about the data. Features V1, V2, … V28 are the principal components obtained with PCA, the only features which have not been transformed with PCA are 'Time' and 'Amount'. Feature 'Time' contains the seconds elapsed between each transaction and the first transaction in the dataset. The feature 'Amount' is the transaction Amount, this feature can be used for example-dependent cost-sensitive learning. Feature 'Class' is the response variable and it takes value 1 in case of fraud and 0 otherwise.
+  
+Given the class imbalance ratio, we recommend measuring the accuracy using the Area Under the Precision-Recall Curve (AUPRC). Confusion matrix accuracy is not meaningful for unbalanced classification.",https://paperswithcode.com/dataset/kaggle-credit-card-fraud-dataset,01/04/2021,,,,,,
 Thyroid,"**Thyroid** is a dataset for detection of thyroid diseases, in which patients diagnosed with hypothyroid or subnormal are anomalies against normal patients. It contains 2800 training data instance and 972 test instances, with 29 or so attributes.
 
 Source: [Deep Reinforcement Learning for Unknown Anomaly Detection](https://arxiv.org/abs/2009.06847)
@@ -3005,7 +3020,7 @@ SNAP,"**SNAP** is a collection of large network datasets. It includes graphs rep
 
 [Graph classification datasets](http://snap.stanford.edu/data/#disjointgraphs) : disjoint graphs from different classes
 
-Image Source: [https://snap.stanford.edu/data/](https://snap.stanford.edu/data/)",https://paperswithcode.com/dataset/snap,,Standford Large Network Dataset Collection,,,,,
+Image Source: [https://snap.stanford.edu/data/](https://snap.stanford.edu/data/)",https://paperswithcode.com/dataset/snap,28/06/2009,Stanford Large Network Dataset Collection,,,,,
 BioASQ,"**BioASQ** is a question answering dataset. Instances in the BioASQ dataset are composed of a question (Q), human-annotated answers (A), and the relevant contexts (C) (also called snippets).
 
 Source: [Transferability of Natural Language Inference to Biomedical Question Answering](https://arxiv.org/abs/2007.00217)
@@ -4906,7 +4921,7 @@ EuroSAT,"**Eurosat** is a dataset and deep learning benchmark for land use and l
 
 Source: [EuroSAT](https://github.com/phelber/eurosat)
 Image Source: [EuroSAT](https://github.com/phelber/eurosat)",https://paperswithcode.com/dataset/eurosat,31/08/2017,EuroSAT,,,,,
-RESISC45,"RESISC45 dataset is a dataset for Remote Sensing Image Scene Classification (RESISC). It contains 31,500 images with 45 scene classes and 700 images in each class.",https://paperswithcode.com/dataset/resisc45,01/03/2017,RESISC45,,,,,
+RESISC45,"RESISC45 dataset is a dataset for Remote Sensing Image Scene Classification (RESISC). It contains 31,500 RGB images of size 256×256 divided into 45 scene classes, each class containing 700 images. Among its notable features, RESISC45 contains varying spatial resolution ranging from 20cm to more than 30m/px.",https://paperswithcode.com/dataset/resisc45,01/03/2017,RESISC45,,,,,
 Country211,"Country211 is an internal OpenAI dataset designed to assess the geolocation capability of visual representations. It filters the YFCC100m dataset (Thomee et al., 2016) to find 211 countries (defined as having an ISO-3166 country code) that have at least 300 photos with GPS coordinates. OpenAI built a balanced dataset with 211 categories, by sampling 200 photos for training and 100 photos for testing, for each country.",https://paperswithcode.com/dataset/country211,,Country211,,,,,
 Hateful Memes,"The Hateful Memes data set is a multimodal dataset for hateful meme detection (image + text) that contains 10,000+ new multimodal examples created by Facebook AI. Images were licensed from Getty Images so that researchers can use the data set to support their work.",https://paperswithcode.com/dataset/hateful-memes,10/05/2020,Hateful Memes,,,,,
 Rendered SST2,"The **Rendered SST2** dataset is an internal OpenAI dataset that measures the optical character recognition capability of visual representations.
@@ -12787,7 +12802,10 @@ roughly 4700 hours of video segments with approximately 150,000
 distinct speakers, spanning a wide variety of people, languages
 and face poses.",https://paperswithcode.com/dataset/avspeech,10/04/2018,,,,,,
 Kinect-WSJ,"Kinect-WSJ is a multichannel, multispeaker, reverberated, noisy dataset which extends the [WSJ0-2mix](/dataset/wsj0-2mix-1) singlechannel, non-reverberated, noiseless dataset to the strong reverberation and noise conditions and the Kinect-like microphone array geometry used in [CHiME-5](/dataset/chime-5).",https://paperswithcode.com/dataset/kinect-wsj,24/10/2019,,,,,,
-BiasBios,,https://paperswithcode.com/dataset/biasbios,27/01/2019,Bias in Bios,,,,,
+BiasBios,"The purpose of this dataset was to study gender bias in occupations. Online biographies, written in English, were collected to find the names, pronouns, and occupations. Twenty-eight most frequent occupations were identified based on their appearances.  The resulting dataset consists of 397,340 biographies spanning twenty-eight different occupations. Of these occupations, the professor is the most frequent, with 118,400 biographies, while the rapper is the least frequent, with 1,406 biographies. 
+Important information about the biographies:
+1. The longest biography is 194 tokens, while the shortest is eighteen; the median biography length is seventy-two tokens.
+2. It should be noted that the demographics of online biographies’ subjects differ from those of the overall workforce and that this dataset does not contain all biographies on the Internet.",https://paperswithcode.com/dataset/biasbios,27/01/2019,Bias in Bios,,,,,
 AM-2k,"AM-2k contains 2,000 high-resolution natural animal images from 20 categories along with manually labeled alpha mattes.",https://paperswithcode.com/dataset/am-2k-1,20/10/2020,Animal Matting - 2k,,,,,
 BG-20k,"BG-20k contains 20,000 high-resolution background images excluded salient objects, which can be used to help generate high quality synthetic data.",https://paperswithcode.com/dataset/bg-20k,20/10/2020,Background Dataset - 20k,,,,,
 SPoC,"Pseudocode-to-Code (SPoC) is a program synthesis dataset, containing 18,356 programs with human-authored pseudocode and test cases.
@@ -13688,7 +13706,7 @@ Image source: [Monocular Quasi-Dense 3D Object Tracking](https://arxiv.org/pdf/2
 UIT-ViCTSD,"UIT-ViCTSD (Vietnamese Constructive and Toxic Speech Detection) is a dataset for constructive and toxic speech detection in Vietnamese. It consists of 10,000 human-annotated comments.",https://paperswithcode.com/dataset/uit-victsd,18/03/2021,UIT Vietnamese Constructive and Toxic Speech Detection,,,,,
 ParaCrawl,"ParaCrawl v.7.1 is a parallel dataset with 41 language pairs primarily aligned with English (39 out of 41) and mined using the parallel-data-crawling tool Bitextor which includes downloading documents, preprocessing and normalization, aligning documents and segments, and filtering noisy data via Bicleaner. ParaCrawl focuses on European languages, but also includes 9 lower-resource, non-European language pairs in v7.1.
 
-Source: [Quality at a Glance: An Audit of Web-Crawled Multilingual Datasets](https://arxiv.org/pdf/2103.12028.pdf)",https://paperswithcode.com/dataset/paracrawl,01/08/2019,,,,,,
+Source: [Quality at a Glance: An Audit of Web-Crawled Multilingual Datasets](https://arxiv.org/pdf/2103.12028.pdf)",https://paperswithcode.com/dataset/paracrawl,01/07/2020,,,,,,
 mC4,"**mC4** is a multilingual variant of the [C4](https://paperswithcode.com/dataset/c4) dataset called mC4. mC4 comprises natural text in 101 languages drawn from the public Common Crawl web scrape. 
 
 Source: [mT5: A Massively Multilingual Pre-trained Text-to-Text Transformer](https://arxiv.org/pdf/2010.11934v3.pdf)",https://paperswithcode.com/dataset/mc4,22/10/2020,,,,,,
@@ -18679,7 +18697,7 @@ agent's previous action again, instead of the agent's new action.
 [ale]: https://github.com/mgbellemare/Arcade-Learning-Environment
 [gcp_bucket]: https://console.cloud.google.com/storage/browser/atari-replay-datasets
 [project_page]: https://offline-rl.github.io",https://paperswithcode.com/dataset/dqn-replay-dataset,10/07/2019,,,,,,
-JS Fake Chorales,"A MIDI dataset of 500 4-part chorales generated by the KS_Chorus algorithm, annotated with results from hundreds of listening test participants, with 100 further unannotated chorales.",https://paperswithcode.com/dataset/js-fake-chorales,21/07/2021,JS Fake Chorales,,,,,
+JS Fake Chorales,"A MIDI dataset of 500 4-part chorales generated by the KS_Chorus algorithm, annotated with results from hundreds of listening test participants, with 150 further unannotated chorales.",https://paperswithcode.com/dataset/js-fake-chorales,21/07/2021,JS Fake Chorales,,,,,
 QC-Science,"QC-Science contains 47832 question-answer pairs belonging to the science domain tagged with labels of the form subject - chapter - topic. The dataset was collected with the help of a leading e-learning platform. The dataset consists of 40895 samples for training, 2153 samples for validation and 4784 samples for testing.
 
 Description adopted from: [https://arxiv.org/pdf/2107.10649v1.pdf](https://arxiv.org/pdf/2107.10649v1.pdf)
@@ -19372,11 +19390,9 @@ FlickrStyle10K,"FlickrStyle10K is collected and built on Flickr30K image caption
 PEM Fuel Cell Dataset,"This dataset are about Nafion 112 membrane standard tests and MEA activation tests of PEM fuel cell in various operation condition. Dataset include two general electrochemical analysis method, Polarization and Impedance curves. In this dataset, effect of different pressure of H2/O2 gas, different voltages and various humidity conditions in several steps are considered. Behavior of PEM fuel cell during distinct operation condition tests, activation procedure and different operation condition before and after activation analysis can be concluded from data. In Polarization curves, voltage and power density change as a function of flows of H2/O2 and relative humidity. Resistance of the used equivalent circuit of fuel cell can be calculated from Impedance data. Thus, experimental response of the cell is obvious in the presented data, which is useful in depth analysis, simulation and material performance investigation in PEM fuel cell researches.",https://paperswithcode.com/dataset/pem-fuel-cell-dataset,27/02/2020,Proton Exchange Membrane (PEM) Fuel Cell Dataset,,,,,
 OSLD,"Open Set Logo Detection Dataset (OSLD Dataset) is a dataset of eCommerce product images with associated brand logo images. It is released under creative commons (CC BY-NC 4.0) license to promote research in open set logo detection. The dataset can be used only for research purposes. The dataset contains:
 
-- 20K product images from amazon.com
-- 12.1K logo classes with 20.8K canonical logo images downloaded from the Web
-- Bounding box annotations for the logos in the 20K product images
-- Bounding box to canonical logo image match pair annotations
-- 1M unlabeled product image URLs from amazon.com for semi/self-supervised learning for logo detection
+- 20K eCommerce product images, with logo bounding box annotations
+- 12.1K logo classes with 20.8K canonical logo images
+- Product image logo bounding box to canonical logo image match pair annotations
 
 Image source: [https://arxiv.org/pdf/1911.07440.pdf](https://arxiv.org/pdf/1911.07440.pdf)",https://paperswithcode.com/dataset/osld,18/11/2019,Open Set Logo Detection Dataset,,,,,
 ESPADA,"We present a new aerial image dataset, named ESPADA, intended for the training of deep neural networks for depth image estimation from a single aerial image. Given the difficulty of creating aerial image datasets containing image pairs of chromatic images related to their depth images, simulators such as AirSim have been proposed to generate synthetic images from photorealistic scenes. The latter enables the generation of thousands of images that can be used to train and evaluate neural models. However, we argue that synthetic photorealistic aerial image datasets can be improved by adding images generated from photogrammetric models imported into the simulator, thus enabling a less artificial generation of both chromatic and depth images. To assess the quality of these images, we compare the performance of 4 deep neural networks whose pre-trained models and code for re-training are publicly available. We also use ORB-SLAM, in its RGB-D version, to indirectly assess the estimated depth image. To accomplish this, chromatic images from 3 aerial videos and their depth images, estimated with the networks trained with ESPADA, are fed into ORB-SLAM. The estimated camera pose is compared against the trajectory retrieved from the GPS flight trajectory. Our results indicate that images generated from photogrammetric models improve the performance of depth estimation from a single aerial image.",https://paperswithcode.com/dataset/espada,04/08/2021,Extended Synthetic and Photogrammetric Aerial-Image Dataset,,,,,
@@ -19432,7 +19448,7 @@ The CrossedWires dataset includes PyTorch and Tensforflow models with test accur
 HeadlineCause,**HeadlineCause** is a dataset for detecting implicit causal relations between pairs of news headlines. The dataset includes over 5000 headline pairs from English news and over 9000 headline pairs from Russian news labeled through crowdsourcing. The pairs vary from totally unrelated or belonging to the same general topic to the ones including causation and refutation relations.,https://paperswithcode.com/dataset/headlinecause,28/08/2021,,,,,,
 TIMo,"TIMo (Time-of-Flight Indoor Monitoring) is a dataset of infrared and depth videos intended for the use in Anomaly Detection and Person Detection/People Counting. It features more than 1,500 sequences for anomaly detection, which sum up to more than 500,000 individual frames. For person detection the dataset contains more than than 240 sequences. The data was captured using a Microsoft Azure Kinect RGB-D camera. In addition, we provide annotations of anomalous frame ranges for use with anomaly detection and bounding boxes and segmentation masks for use with person detection. The data was captured in parts from a tilted view and a top-down perspective.",https://paperswithcode.com/dataset/timo,27/08/2021,TIMo (Time-of-Flight Indoor Monitoring),,,,,
 Lyra,"Lyra is a dataset for code generation that consists on Python code with embedded SQL. This dataset contains 2,000 carefully annotated database manipulation programs from real usage projects. Each program is paired with both a Chinese comment and an English comment.",https://paperswithcode.com/dataset/lyra,27/08/2021,,,,,,
-BSARD,"The **Belgian Statutory Article Retrieval Dataset (BSARD)** consists of 1,100+ French native legal questions labeled by experienced jurists with relevant articles from a corpus of 22,600+ Belgian law articles. It is used for Statutory article retrieval, which is the task of automatically retrieving law articles relevant to a legal question.",https://paperswithcode.com/dataset/bsard,26/08/2021,Belgian Statutory Article Retrieval Dataset,,,,,
+BSARD,"The **Belgian Statutory Article Retrieval Dataset (BSARD)** is a French native corpus for studying *statutory article retrieval*. BSARD consists of more than 22,600 statutory articles from Belgian law and about 1,100 legal questions posed by Belgian citizens and labeled by experienced jurists with relevant articles from the corpus.",https://paperswithcode.com/dataset/bsard,26/08/2021,Belgian Statutory Article Retrieval Dataset,,,,,
 ReadingBank,"ReadingBank is a benchmark dataset for reading order detection built with weak supervision from WORD documents, which contains 500K document images with a wide range of document types as well as the corresponding reading order information.",https://paperswithcode.com/dataset/readingbank,26/08/2021,,,,,,
 WikiNLDB,"WikiNLDB is a novel dataset for training Natural Language Databases (NLDBs) which is generated by transforming structured data from Wikidata into natural language facts and queries.
 
@@ -20279,7 +20295,7 @@ It is made from the sexual predator identification dataset from PAN12 and from t
 It provides both full-length predator chats from PervertedJustice as well as short segments of non-predator chats. Together these can be used to evaluate eSPD systems.",https://paperswithcode.com/dataset/panc,01/08/2021,,,,,,
 STPLS3D,"Our project (STPLS3D) aims to provide a large-scale aerial photogrammetry dataset with synthetic and real annotated 3D point clouds for semantic and instance segmentation tasks.
 
-Although various 3D datasets with different functions and scales have been proposed recently, it remains challenging for individuals to complete the whole pipeline of large-scale data collection, sanitization, and annotation (e.g., semantic and instance labels). Moreover, the created datasets usually suffer from extremely imbalanced class distribution or partial low-quality data samples. Motivated by this, we explore the procedurally synthetic 3D data generation paradigm to equip individuals with the full capability of creating large-scale annotated photogrammetry point clouds. Specifically, we introduce a synthetic aerial photogrammetry point clouds generation pipeline that takes full advantage of open geospatial data sources and off-the-shelf commercial packages. Unlike generating synthetic data in virtual games, where the simulated data usually have limited gaming environments created by artists, the proposed pipeline simulates the reconstruction process of the real environment by following the same UAV flight pattern on a wide variety of synthetic terrain shapes and building densities, which ensure similar quality, noise pattern, and diversity with real data. In addition, the precise semantic and instance annotations can be generated fully automatically, avoiding the expensive and time-consuming manual annotation process.  Based on the proposed pipeline, we present a richly-annotated synthetic 3D aerial photogrammetry point cloud dataset, termed STPLS3D, with more than 16 km^2 of landscapes and up to 18 fine-grained semantic categories. For verification purposes, we also provide a parallel dataset collected from four areas in the real environment.",https://paperswithcode.com/dataset/stpls3d,01/09/2021,,,,,,
+Although various 3D datasets with different functions and scales have been proposed recently, it remains challenging for individuals to complete the whole pipeline of large-scale data collection, sanitization, and annotation (e.g., semantic and instance labels). Moreover, the created datasets usually suffer from extremely imbalanced class distribution or partial low-quality data samples. Motivated by this, we explore the procedurally synthetic 3D data generation paradigm to equip individuals with the full capability of creating large-scale annotated photogrammetry point clouds. Specifically, we introduce a synthetic aerial photogrammetry point clouds generation pipeline that takes full advantage of open geospatial data sources and off-the-shelf commercial packages. Unlike generating synthetic data in virtual games, where the simulated data usually have limited gaming environments created by artists, the proposed pipeline simulates the reconstruction process of the real environment by following the same UAV flight pattern on a wide variety of synthetic terrain shapes and building densities, which ensure similar quality, noise pattern, and diversity with real data. In addition, the precise semantic and instance annotations can be generated fully automatically, avoiding the expensive and time-consuming manual annotation process.  Based on the proposed pipeline, we present a richly-annotated synthetic 3D aerial photogrammetry point cloud dataset, termed STPLS3D, with more than 16 km^2 of landscapes and up to 18 fine-grained semantic categories. For verification purposes, we also provide a parallel dataset collected from four areas in the real environment.",https://paperswithcode.com/dataset/stpls3d,17/03/2022,,,,,,
 Nico-illust,"This dataset contains over 400,000 images (illustrations) from Niconico Seiga and Niconico Shunga",https://paperswithcode.com/dataset/nico-illust,,Nico-Illust,,,,,
 Restaurant-ACOS,"The Restaurant-ACOS dataset is constructed based on the SemEval 2016 Restaurant dataset (Pontiki et al., 2016) and its expansion datasets (Fan et al., 2019; Xu et al., 2020).
 The SemEval 2016 Restaurant dataset (Pontiki et al., 2016) was annotated with explicit and implicit aspects, categories, and sentiment. (Fan et al., 2019; Xu et al., 2020) further added the opinion annotations. We integrate their annotations to construct aspect-category-opinion-sentiment quadruples and further annotate the implicit opinions. The Restaurant-ACOS dataset contains 2286 sentences with 3658 quadruples.
@@ -22705,7 +22721,7 @@ Opinion/Not-Opinion Classification.
 Furthermore, researchers can experiment with and investigate the effects of different domains on users' feedback.
 
 Source: [AWARE: Aspect-Based Sentiment Analysis Dataset of Apps Reviews for Requirements Elicitation](https://doi.org/10.1109/ASEW52652.2021.00049)",https://paperswithcode.com/dataset/aware,19/11/2021,AWARE: Aspect-Based Sentiment Analysis Dataset of Apps Reviews for Requirements Elicitation,,,,,
-ManyTypes4TypeScript,Type Inference dataset for TypeScript,https://paperswithcode.com/dataset/manytypes4typescript,,,,,,,
+ManyTypes4TypeScript,[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.6336114.svg)](https://doi.org/10.5281/zenodo.6336114) Type Inference dataset for TypeScript. Click on DOI tag for dataset files.,https://paperswithcode.com/dataset/manytypes4typescript,07/03/2022,,,,,,
 Survey answers,"Please see paper for questions. These are the answers to the surveys, processed and included in the paper via knitr",https://paperswithcode.com/dataset/survey-answers,25/01/2022,"Answers to surveys in both papers, as well as processed answers",,,,,
 MARIDA,"**MARIDA** (**Marine Debris Archive**) is the first dataset based on the multispectral Sentinel-2 (S2) satellite data, which distinguishes Marine Debris from various marine features that co-exist, including Sargassum macroalgae, Ships, Natural Organic Material, Waves, Wakes, Foam, dissimilar water types (i.e., Clear, Turbid Water, Sediment-Laden Water, Shallow Water), and Clouds. MARIDA is an open-access dataset which enables the research community to explore the spectral behaviour of certain floating materials, sea state features and water types, to develop and evaluate Marine Debris detection solutions based on artificial intelligence and deep learning architectures, as well as satellite pre-processing pipelines.  Although it is designed to be beneficial for several machine learning tasks, it primarily aims to benchmark weakly supervised pixel-level semantic segmentation learning methods. 
 
@@ -23770,3 +23786,399 @@ WSJ Dow Jones Stock Data,Please see code repository. [https://github.com/nlandol
 ZInd,"The Zillow Indoor Dataset (ZInD) provides extensive visual data that covers a real world distribution of unfurnished residential homes. It consists of primary 360º panoramas with annotated room layouts, windows, doors and openings (W/D/O), merged rooms, secondary localized panoramas, and final 2D floor plans. The figure above illustrates the various representations (from left to right beyond capture): Room layout with W/D/O annotations, merged layouts, 3D textured mesh, and final 2D floor plan.",https://paperswithcode.com/dataset/zind,,Zillow Indoor Dataset,,,,,
 IMDB-Clean,"We have cleaned the noisy IMDB-WIKI dataset using a constrained clustering method, resulting this new benchmark for in-the-wild age estimation. The annotations also allow this dataset to use for some other tasks, like gender classification and face recognition/verification. For more details, please refer to our FPAge paper.",https://paperswithcode.com/dataset/imdb-clean,21/06/2021,,,,,,
 TriggerCit 2021 Thailand / Nepal floods,"Twitter dataset related to flood events onsets in Thailand and Nepal, focused on September 26/27, 2022, June 16/17 2021 and July 01/02 2021. The dataset has been processed with a VisualCit pipeline in order to automatically filter a relevant subset of posts through automated image analysis, using deep learning techniques. The posts were then geolocated using the CIME algorithm. Additional information about the data collection and data processing are described in http://arxiv.org/abs/2202.12014",https://paperswithcode.com/dataset/triggercit-2021-thailand-nepal-floods,24/02/2022,"Twitter dataset of flood-related images for September 2021, Thailand and June/July 2021, Nepal floods",,,,,
+CRC100K,"* This is a set of 100,000 non-overlapping image patches from hematoxylin & eosin (H&E) stained histological images of human colorectal cancer (CRC) and normal tissue.
+* All images are 224x224 pixels (px) at 0.5 microns per pixel (MPP).
+* For tissue classification; the classes are: Adipose (ADI), background (BACK), debris (DEB), lymphocytes (LYM), mucus (MUC), smooth muscle (MUS), normal colon mucosa (NORM), cancer-associated stroma (STR), colorectal adenocarcinoma epithelium (TUM).
+* The images were manually extracted from N=86 H&E stained human cancer tissue slides from formalin-fixed paraffin-embedded (FFPE) samples from the NCT Biobank (National Center for Tumor Diseases, Heidelberg, Germany) and the UMM pathology archive (University Medical Center Mannheim, Mannheim, Germany). Tissue samples contained CRC primary tumor slides and tumor tissue from CRC liver metastases; normal tissue classes were augmented with non-tumorous regions from gastrectomy specimen to increase variability.",https://paperswithcode.com/dataset/crc100k,07/04/2018,"100,000 histological images of human colorectal cancer and healthy tissue",,,,,
+Dafonts Free,"This is a dataset of 18624 fonts labeled as 100% Free and Public domain / GPL / OFL on https://www.dafont.com/ with .ttf and .otf extensions.
+
+Code used to create it can be found at: https://github.com/duskvirkus/dafonts-free",https://paperswithcode.com/dataset/dafonts-free,06/03/2022,,,,,,
+Mathematical Mathematics Memes,"### Dataset Description
+
+This dataset contains +10k math memes. Memes were approved by admins before being shared with group members. Thus all memes follow the community standards. Memes are about college math or above.
+
+### Acknowledgements
+
+Thanks to the [Mathematical Mathematics Memes](https://web.facebook.com/groups/1567682496877142/) community for sharing OC memes.
+
+### Inspiration
+
+- Generate more high-quality math memes.
+- Detect hateful or abusive memes.
+- Study the popularity of the memes.
+- Extract text and predict popularity.
+
+### Copyright
+Copyright of all images kept by their respective owners. All images posted on Facebook are subject to fair use.
+
+** Disclaimer: These memes were collected by blind web scraping, and I have not reviewed the vast majority of them. I do not agree with any of the sentiments contained therein. **",https://paperswithcode.com/dataset/mathematical-mathematics-memes,,,,,,,
+EmoSpeech,"**EmoSpeech** contains keywords with diverse emotions and background sounds, presented to explore new challenges in audio analysis.",https://paperswithcode.com/dataset/emospeech,18/10/2019,,,,,,
+Earth on Canvas,"A Zero-Shot Sketch-based Inter-Modal Object Retrieval Scheme for Remote Sensing Images
+
+WITH the advancement in sensor technology, huge amounts of data are being collected from various satellites. Hence, the task of target-based data retrieval and acquisition has become exceedingly challenging. Existing satellites essentially scan a vast overlapping region of the Earth using various sensing techniques, like multi-spectral, hyperspectral, Synthetic Aperture Radar (SAR), video, and compressed sensing, to name a few. With increasing complexity and different sensing techniques at our disposal, it has become our primary interest to design efficient algorithms to retrieve data from multiple data modalities, given the complementary information that is captured by different sensors. This type of problem is referred to as inter-modal data retrieval. In remote sensing (RS), there are primarily two important types of problems, i.e., land-cover classification and object detection. In this work, we focus on the target-based object retrieval part, which falls under the realm of object detection in RS. Object retrieval essentially requires high-resolution imagery for objects to be distinctly visible in the image. The main challenge with the conventional retrieval approach using large-scale databases is that, quite often, we do not have any query image sample of the target class at our disposal. The target of interest solely exists as a perception to the user in the form of an imprecise sketch. In such situations where a photo query is absent, it can be immensely useful if we can promptly make a quick hand-made sketch of the target. Sketches are a highly symbolic and hieroglyphic representation of data. One can exploit the notion of this minimalistic representative of sketch queries for sketch-based image retrieval (SBIR) framework. While dealing with satellite images, it is imperative to collect as many samples of images as possible for each object class for object recognition with a high success rate. However, in general, there exists a considerable number of classes for which we seldom have any training data samples. Therefore, for such classes, we can use the zero-shot learning (ZSL) strategy. The ZSL approach aims to solve a task without receiving any example of that task during the training phase. This makes the network capable of handling an unseen class (new class) sample obtained during the inference phase upon deployment of the network. Hence, we propose the aerial sketch-image dataset, namely Earth on Canvas dataset.
+
+
+Classes in this dataset:
+Airplane, Baseball Diamond, Buildings, Freeway, Golf Course, Harbor, Intersection, Mobile home park, Overpass, Parking lot,  River, Runway, Storage tank, Tennis court.",https://paperswithcode.com/dataset/ushasi-chaudhuri,12/08/2020,,,,,,
+NTU-X,NTU-X is an extended version of popular [NTU](/dataset/ntu-rgb-d/) dataset.,https://paperswithcode.com/dataset/ntu-x,27/01/2021,,,,,,
+LSFB Datasets,"# Sign Language Datasets for French Belgian Sign Language
+This dataset is built upon the work of Belgian linguists from the University of Namur. During eight years, they've collected and annotated 50 hours of videos depicting sign language conversation. 100 signers were recorded, making it one of the most representative sign language corpus. 
+The annotation has been sanitized and enriched with metadata to construct two, easy to use, datasets for sign language recognition. One for continuous sign language recognition and the other for isolated sign recognition. 
+
+## LSFB-CONT
+The dataset for continuous sign language recognition is made of over 25h of video clips. Each clip is associated with a time-aligned annotation file containing the start and the end of each sign along with a gloss (label) associated with all unique signs. Mediapipe pose and hands information were also computed for each video clip and these metadata are made available in the dataset.
+
+## LSFB-ISOL
+The isolated version of the dataset contains only clips showing one isolated sign issued from the LSFB-CONT dataset. We chose to keep all the signs with at least 40 examples, leading to a dataset containing over 50 000 clips for 635 different glosses (labels). The Mediapipe metadata is also available for this dataset.",https://paperswithcode.com/dataset/lsfb-datasets,18/07/2021,French Belgian Sign Language Datasets,,,,,
+TR_AR_S2S,"Dubbed series are gaining a lot of popularity in recent years with strong support from major media service providers. Such popularity is fueled by studies that showed that dubbed versions of TV shows are more popular than their subtitled equivalents. 
+
+This work proposes an unsupervised approach to construct speech-to-speech corpus, aligned on short segment levels, to produce a parallel speech corpus in the source- and target- languages. Our methodology exploits video frames, speech recognition, machine translation, and noisy frames removal algorithms to match segments in both languages.",https://paperswithcode.com/dataset/tr-ar-s2s,07/03/2022,,,,,,
+Kubric,"**Kubric** is a data generation pipeline for creating semi-realistic synthetic multi-object videos with rich annotations such as instance segmentation masks, depth maps, and optical flow.
+
+It also presents a series of 13 different generated datasets for tasks ranging from studying 3D NeRF models to optical flow estimation.
+
+*Kubric is mainly built on-top of pybullet (for physics simulation) and Blender (for rendering); however, the code is kept modular to potentially support different rendering backends.*",https://paperswithcode.com/dataset/kubric,07/03/2022,,,,,,
+Pretrained Models of the Benchmarking Algorithms for UVCGAN,"The pretrained models from four image translation algorithms: ACL-GAN, Council-GAN, CycleGAN, and U-GAT-IT on three benchmarking datasets: Selfie2Anime, CelebA_gender, CelebA_glasses.
+
+We trained the models to provide benchmarks for the algorithm we detailed in the paper ""UVCGAN: UNet Vision Transformer Cycle-consistent GAN for Unpaired Image-to-Image Translation."". 
+
+We only trained a model if a pretrained model is provided by a benchmarking algorithm.",https://paperswithcode.com/dataset/pretrained-models-of-the-benchmarking,04/03/2022,,,,,,
+Fitness-AQA,"Largest, first-of-its-kind, in-the-wild, fine-grained workout/exercise posture analysis dataset, covering three different exercises: BackSquat, Barbell Row, and Overhead Press. Seven different types of exercise errors are covered. Unlabeled data is also provided to facilitate self-supervised learning.",https://paperswithcode.com/dataset/fitness-aqa,28/02/2022,Fitness Action Quality Assessment,,,,,
+WITS,"This dataset is an extension of MASAC, a multimodal, multi-party, Hindi-English code-mixed dialogue dataset compiled from the popular Indian TV show,
+‘Sarabhai v/s Sarabhai’.  WITS was created by augmenting MASAC with natural language explanations for each sarcastic dialogue. The dataset consists of the transcribed sarcastic dialogues from 55 episodes of the TV show, along with audio and video multimodal signals. It was designed to facilitate Sarcasm Explanation in Dialogue (SED), a novel task aimed at generating a natural language explanation for a given sarcastic dialogue, that spells out the intended irony. Each data instance in WITS is associated with a corresponding video, audio, and textual transcript where the last utterance is sarcastic in nature. All the final selected explanations contain the following attributes:
+
+• Sarcasm source: The speaker in the dialog who is being sarcastic.
+• Sarcasm target: The person/ thing towards whom the sarcasm is directed.
+• Action word: Verb/ action used to describe how the sarcasm is taking place.  e.g. mocking, insults, taunts, etc.
+• Description: A description of the scene to help contextualize the sarcasm.",https://paperswithcode.com/dataset/wits,12/03/2022,Why Is This Sarcastic?,,,,,
+FloW,"- Marine wastes are severely threatening marine animals and their habitat, also causing an impact on human life through toxic substances transportation and accumulation. To prevent the wastes especially the plastic trash from getting into the ocean, it is essential to detect and clean the floating wastes in inland waters efficiently like in rivers, lakes, and canals.
+
+- FloW is the first dataset for floating waste detection in inland waters. It contains a vision-based sub-dataset, FloW-Img, and a multimodal dataset, FloW-RI which contains the spatial and temporal calibrated image and millimeter-wave radar data.
+
+- By publishing Flow, it is hoped that more attention from research communities could be paid to floating waste detection in inland waters as well as the challenging small object detection over the water surface. In addition, waste detection based on millimeter-wave radar data or the fusion of image and radar data is also a novel task and FloW provides accessible real-world data.",https://paperswithcode.com/dataset/flow,,,,,,,
+ATOM3D,"**ATOM3D** is a unified collection of datasets concerning the three-dimensional structure of biomolecules, including proteins, small molecules, and nucleic acids. These datasets are specifically designed to provide a benchmark for machine learning methods which operate on 3D molecular structure, and represent a variety of important structural, functional, and engineering tasks. All datasets are provided in a standardized format along with a Python package containing processing code, utilities, models, and dataloaders for common machine learning frameworks such as PyTorch. ATOM3D is designed to be a living database, where datasets are updated and tasks are added as the field progresses.
+
+Description from: [https://www.atom3d.ai/](https://www.atom3d.ai/)",https://paperswithcode.com/dataset/atom3d,07/12/2020,,,,,,
+SILG,"**Symbolic Interactive Language Grounding** (**SILG**) is a multi-environment benchmark which unifies a collection of diverse grounded language learning environments under a common interface. SILG consists of grid-world environments that require generalization to new dynamics, entities, and partially observed worlds (RTFM, Messenger, NetHack), as well as symbolic counterparts of visual worlds that require interpreting rich natural language with respect to complex scenes (ALFWorld, Touchdown). Together, these environments provide diverse grounding challenges in richness of observation space, action space, language specification, and plan complexity.",https://paperswithcode.com/dataset/silg,20/10/2021,Symbolic Interactive Language Grounding,,,,,
+MPSGaze,This is a synthetic dataset containing full images (instead of only cropped faces) that provides ground truth 3D gaze directions for multiple people in one image.,https://paperswithcode.com/dataset/mpsgaze,01/03/2022,Multi-Person Swap Gaze Dataset,,,,,
+I.PHI,**I.PHI** processes the Packard Humanities Institute (PHI) database of ancient Greek inscriptions including the geographical and chronological metadata into a machine actionable format. The processed dataset is referred to as I.PHI.,https://paperswithcode.com/dataset/i-phi,09/03/2022,,,,,,
+Human Activity Recognition,We provide six different datasets with diverse range of activities,https://paperswithcode.com/dataset/human-activity-recognition,06/07/2020,,,,,,
+ImageNet-Patch,"ImageNet-Patch: A Dataset for Benchmarking Machine Learning Robustness against Adversarial Patches
+
+Adversarial patches are optimized contiguous pixel blocks in an input image that cause a machine-learning model to misclassify it. However, their optimization is computationally demanding, and requires careful hyperparameter tuning, potentially leading to suboptimal robustness evaluations. To overcome these issues, we propose ImageNet-Patch, a dataset to benchmark machine-learning models against adversarial patches. It consists of a set of patches, optimized to generalize across different models, and readily applicable to ImageNet data after preprocessing them with affine transformations. This process enables an approximate yet faster robustness evaluation, leveraging the transferability of adversarial perturbations.",https://paperswithcode.com/dataset/imagenet-patch,07/03/2022,,,,,,
+RENOIR,"A dataset of color images corrupted by natural noise due to low-light conditions, together with spatially and intensity-aligned low noise images of the same scenes.",https://paperswithcode.com/dataset/renoir,29/09/2014,,,,,,
+Fingerprint inpainting and denoising,"Synthetic training set: This set is constructed in the following two steps and will be used for estimation/training purposes. i) 84,000 275 pixel x 400 pixel ground-truth fingerprint images without any noise or scratches, but with random transformations (at most five pixels translation and +/-10 degrees rotation) were generated by using the software Anguli: Synthetic Fingerprint Generator. ii) 84,000 275 pixel x 400 pixel degraded fingerprint images were generated by applying random artifacts (blur, brightness, contrast, elastic transformation, occlusion, scratch, resolution, rotation) and backgrounds to the ground-truth fingerprint images. In total, it contains 168,000 fingerprint images (84,000 fingerprints, and two impressions - one ground-truth and one degraded - per fingerprint).
+
+Synthetic test set: This set is constructed similarly to the synthetic training set and will be used to evaluate the reconstruction performance. In total, it contains 16,800 fingerprint images (8,400 fingerprints and two impressions - one ground-truth and one degraded - per fingerprint). Since this set will be used for the purpose of evaluating the reconstruction performance, only the degraded and not the ground-truth fingerprint images will be provided to participants.
+
+Real test set: This set is constructed by systematically drawing fingerprint images with varying sizes from publicly available datasets. In total, it contains 1680 fingerprint images (140 fingerprints and 12 impressions - high-quality scans under operational conditions - per fingerprint).
+
+Description from: [Fingerprint inpainting and denoising (WCCI'18, ECCV'18)](https://chalearnlap.cvc.uab.cat/dataset/32/description/)",https://paperswithcode.com/dataset/fingerprint-inpainting-and-denoising,,,,,,,
+Cross-View Time Dataset,"The appearance of the world varies dramatically not only from place to place but also from hour to hour and month to month. Every day billions of images capture this complex relationship, many of which are associated with precise time and location metadata. We propose to use these images to construct a global-scale, dynamic map of visual appearance attributes. Such a map enables fine-grained understanding of the expected appearance at any geographic location and time. Our approach integrates dense overhead imagery with location and time metadata into a general framework capable of mapping a wide variety of visual attributes. A key feature of our approach is that it requires no manual data annotation. We demonstrate how this approach can support various applications, including image-driven mapping, image geolocalization, and metadata verification.",https://paperswithcode.com/dataset/cross-view-time-dataset,29/12/2020,,,,,,
+Cross-View Time Dataset (Cross-Camera Split),"The standard evaluation protocol of Cross-View Time dataset allows for certain cameras to be shared between training and testing sets. This protocol can emulate scenarios in which we need to verify the authenticity of images from a particular set of devices and locations. Considering the ubiquity of surveillance systems (CCTV) nowadays, this is a common scenario, especially for big cities and high visibility events (e.g., protests, musical concerts, terrorist attempts, sports events). In such cases, we can leverage the availability of historical photographs of that device and collect additional images from previous days, months, and years. This would allow the model to better capture the particularities of how time influences the appearance of that specific place, probably leading to a better verification accuracy. However, there might be cases in which data is originated from heterogeneous sources, such as social media. In this sense, it is essential that models are optimized on camera-disjoint sets to avoid learning sensor-specific characteristics that might not generalize accordingly for new imagery during inference.
+
+With this in mind, we propose a novel organization for CVT dataset. We split available data into training and testing sets, ensuring that all images from a single camera are assigned to the same set. During this division, we aimed to keep the size of each set roughly similar to the original splits, allowing models to be optimized with similar amounts of data.",https://paperswithcode.com/dataset/cross-view-time-dataset-cross-camera-split,30/03/2022,,,,,,
+MVTEC 3D-AD,MVTec 3D Anomaly Detection Dataset (MVTec 3D-AD) is a comprehensive 3D dataset for the task of unsupervised anomaly detection and localization. It contains over 4000 high-resolution scans acquired by an industrial 3D sensor. Each of the 10 different object categories comprises a set of defect-free training and validation samples and a test set of samples with various kinds of defects. Precise ground-truth annotations are provided for each anomalous test sample.,https://paperswithcode.com/dataset/mvtec-3d-ad,16/12/2021,THE MVTEC 3D ANOMALY DETECTION DATASET,,,,,
+BODMAS,"We collaborate with Blue Hexagon to release a dataset containing timestamped malware samples and well-curated family information for research purposes. 
+The BODMAS dataset contains 57,293 malware samples and 77,142 benign samples collected from August 2019 to September 2020,  with carefully curated family information (581 families).
+We also provide preprocessed feature vectors and metadata available to everyone.
+The malware binaries can be obtained per request.
+
+Source: [BODMAS: An Open Dataset for Learning based Temporal Analysis of PE Malware](https://liminyang.web.illinois.edu/data/DLS21_BODMAS.pdf)",https://paperswithcode.com/dataset/bodmas,,Blue Hexagon Open Dataset for Malware AnalysiS,,,,,
+StepGame,A Benchmark for Robust Multi-Hop Spatial Reasoning in Texts,https://paperswithcode.com/dataset/stepgame,22/02/2022,StepGame,,,,,
+NASA Perseverance,Samples from NASA Perseverance and set of GAN generated synthetic images from Neural Mars.,https://paperswithcode.com/dataset/nasa-perseverance,04/01/2022,,,,,,
+Moroccan Monay dataset,A dataset of all Moroccan money,https://paperswithcode.com/dataset/moroccan-monay-dataset,,,,,,,
+CANDOR Corpus,"The CANDOR corpus is a large, novel, multimodal corpus of 1,656 recorded conversations in spoken English. This 7+ million word, 850 hour corpus totals over 1TB of audio, video, and transcripts, with moment-to-moment measures of vocal, facial, and semantic expression, along with an extensive survey of speaker post conversation reflections.",https://paperswithcode.com/dataset/candor-corpus-1,01/03/2022,CANDOR = Conversation: A Naturalistic Dataset of Online Recordings,,,,,
+ML guided Logic synthesis,"Logic synthesis is a challenging and widely-researched combinatorial optimization problem during integrated circuit (IC) design. It transforms a high-level description of hardware in a programming language like Verilog into an optimized digital circuit netlist, a network of interconnected Boolean logic gates, that implements the function. Spurred by the success of ML in solving combinatorial and graph problems in other domains, there is growing interest in the design of ML-guided logic synthesis tools. Yet, there are no standard datasets or prototypical learning tasks defined for this problem domain. Here, we describe OpenABC-D,a large-scale, labeled dataset produced by synthesizing open source designs with a leading open-source logic synthesis tool and illustrate its use in developing, evaluating and benchmarking ML-guided logic synthesis. OpenABC-D has intermediate and final outputs in the form of 870,000 And-Inverter-Graphs (AIGs) produced from 1500 synthesis runs plus labels such as the optimized node counts, and de-lay. We define a generic learning problem on this dataset and benchmark existing solutions for it. The codes related to dataset creation and benchmark models are available athttps://github.com/NYU-MLDA/OpenABC.git.",https://paperswithcode.com/dataset/ml-guided-logic-synthesis,21/10/2021,,,,,,
+NELA-GT-2021,"**NELA-GT-2021** is the fourth installment of the NELA-GT datasets, NELA-GT-2021. The dataset contains 1.8M articles from 367 outlets between January 1st, 2021 and December 31st, 2021. Just as in past releases of the dataset, NELA-GT-2021 includes outlet-level veracity labels from Media Bias/Fact Check and tweets embedded in collected news articles.",https://paperswithcode.com/dataset/nela-gt-2021,10/03/2022,,,,,,
+K-SportsSum,"K-SportsSum is a sports game summarization dataset with two characteristics: (1) K-SportsSum collects a large amount of data from massive games. It has 7,854 commentary-news pairs. To improve the quality, K-SportsSum employs a manual cleaning process; (2) Different from existing datasets, to narrow the knowledge gap, K-SportsSum further provides a large-scale knowledge corpus that contains the information of 523 sports teams and 14,724 sports players.",https://paperswithcode.com/dataset/k-sportssum,24/11/2021,,,,,,
+SportsSum,"SportsSum is a Chinese sports game summarization dataset that contains 5,428 soccer games of live commentaries and the corresponding news articles.",https://paperswithcode.com/dataset/sportssum,,,,,,,
+SKM-TEA,"The **SKM-TEA** dataset pairs raw quantitative knee MRI (qMRI) data, image data, and dense labels of tissues and pathology for end-to-end exploration and evaluation of the MR imaging pipeline.  This 1.6TB dataset consists of raw-data measurements of ~25,000 slices (155 patients) of anonymized patient knee MRI scans, the corresponding scanner-generated DICOM images, manual segmentations of four tissues, and bounding box annotations for sixteen clinically relevant pathologies.
+
+## Challenge Tracks
+**DICOM Track**: The DICOM benchmarking track uses scanner-generated DICOM images as the input for image segmentation and detection tasks.
+
+**Raw Data Track**: The Raw Data benchmarking track uses raw MRI data (i.e. k-space) as the input for image reconstruction, segmentation and detection tasks.",https://paperswithcode.com/dataset/skm-tea,14/03/2022,Stanford Knee MRI with Multi-Task Evaluation,,,,,
+ILPC22-Small,"A small dataset from the Inductive Link Prediction Challenge 2022. 
+Training graph contains 10K entities, 96 relations, 78K triples. 
+Inference graph contains 7K entities, 96 relations, 21K triples.
+Validation and test triples to predict belong to the inference graph.",https://paperswithcode.com/dataset/ilpc22-small,03/03/2022,ILPC22-Small,,,,,
+ILPC22-Large,"A large dataset from the Inductive Link Prediction Challenge 2022. 
+Training graph contains 46K entities, 130 relations, 202K triples. 
+Inference graph contains 30K entities, 130 relations, 77K triples.
+Validation and test triples to predict belong to the inference graph.",https://paperswithcode.com/dataset/ilpc22-large,03/03/2022,ILPC22-Large,,,,,
+PRIME,"This dataset contains both infeasible and feasible data points as described in [PRIME](https://arxiv.org/abs/2110.11346). The descriptors of the collected data are presented in the table below.
+
+|                  | # of Infeasible | # of Feasible | Max Runtime (ms) | Min Runtime (ms) | Average Runtime (ms) |
+|------------------|-----------------|---------------|------------------|------------------|----------------------|
+| MobileNetEdgeTPU |          384355 |        115711 |         16352.26 |           252.22 |               529.13 |
+| MobilenetV2      |          744718 |        255414 |          7398.13 |           191.35 |               375.05 |
+| MobilenetV3      |          797460 |        202672 |          7001.46 |           405.19 |               993.75 |
+| M4               |          791984 |        208148 |         35881.35 |           335.59 |               794.33 |
+| M5               |          698618 |        301514 |         35363.55 |           202.55 |               440.52 |
+| M6               |          756468 |        243664 |          4236.90 |           127.79 |               301.74 |
+| UNet             |          449578 |         51128 |        124987.51 |           610.96 |              3681.75 |
+| T-RNN Dec        |          405607 |         94459 |          4447.74 |           128.05 |               662.44 |
+| T-RNN Enc        |          410933 |         88880 |          5112.82 |           127.97 |               731.20 |",https://paperswithcode.com/dataset/prime,17/03/2022,,,,,,
+BBAI Dataset,"This dataset is for evaluating the task of Black-box Multi-agent Integration which focuses on combining the capabilities of multiple black-box conversational agents at scale. It provides data to explore two main frameworks of exploration: question agent pairing and question response pairing.
+
+Overall this dataset contains 5550 utterances with 19 question-response pairs per question (one from each of the 19 agents), 105,450 in total across 37 domains. The utterances are split into 3700 utterances (100 examples per domain) for the training set and 1850 (50 per domain) for the test set. The train and test sets respectively contain 2399 and 1186 utterances with at least one positive question-response pair. In the remaining examples, none of the agents were able to achieve annotator agreement (>= 3).",https://paperswithcode.com/dataset/bbai-dataset,15/03/2022,Black-box Agent Integration,,,,,
+MSP-Podcast,"The MSP-Podcast corpus contains speech segments from podcast recordings which are perceptually annotated using crowdsourcing. The collection of this corpus is an ongoing process. Version 1.7 of the corpus has 62,140 speaking turns (100hrs).
+
+Key features of this corpus:
+
+* We download available audio recordings with common license. We only use the podcasts that have less restrictive licenses, so we can modify, sell and distribute the corpus (you can use it for commercial product!). 
+* Most of the segments in a regular podcasts are neutral. We use machine learning techniques trained with available data to retrieve candidate segments. These segments are emotionally annotated with crowdsourcing. This approach allows us to spend our resources on speech segments that are likely to convey emotions.
+* We annotate categorical emotions and attribute based labels at the speaking turn label
+* This is an ongoing effort, where we currently have 62,140 speaking turns (100h). We collect approximately 10,000-13,000 new speaking turns per year. Our goal is to reach 400 hours.",https://paperswithcode.com/dataset/msp-podcast,,A large naturalistic speech emotional dataset,,,,,
+Thermal focus image database,"The database was acquired using a thermographic camera TESTO 880-3. This camera is equipped with an uncooled detector and has a spectral sensitivity range from 8 to 14 μm. It has a removable German optic lens. It provides the following main features:
+
+Image resolution: 160 × 120 pixels.
+Optical field/min. focus distance: 32° × 24°/0.1 m.
+Thermal sensitivity (NETD) <0.1 °C at 30 °C.
+Geometric resolution: 3.5 mrad.
+Detector type: FPA 160 × 120 pixels, temperature-stabilized.
+The database consists of several image sets. In each set, the camera acquires one image of the scene at each lens position. In our case we have manually moved the lens in 1 mm steps which provides a total of 96 positions. Thus, each set consists of 96 different images of the one scene. For this purpose, we have attached a millimeter tape to the objective, and used a stable tripod in order to acquire the same scene for each scene position. to add a brief description of the dataset (Markdown and LaTeX enabled).
+
+Provide:
+
+* a high-level explanation of the dataset characteristics
+* explain motivations and summary of its content
+* potential use cases of the dataset
+We acquire different kinds of images according to their information content and depth of focus. It should be easier to focus an image with large amount of detail, because blurring in such an image will generally be more evident. As in visible images, it should be more difficult to completely focus an image with several objects, when each object is located at a different focal distance. We analyzed only static scenes, because of the need for comparability (same position and temperature).
+We have constructed 10 different databases, as follows.
+
+Telematic equipment (TE): this consists of four sets of images of the same scene (an item of telematic equipment). Set one (TE1) is acquired at one meter distance from the scene to the camera, set two (TE2) is acquired at two meters, set three (TE3) at three meters and set four (TE4) at 4 m. Obviously, when moving the camera away from the scene, more objects appear in the image. On the other hand, these four databases contain a scene that can be considered to be contained in a flat plane. Thus, it is acquiring mainly a two dimensional object with a single point of focus.
+Electronic circuit (EC): this consists of a single set of images of the same scene (an electronic circuit with components at different temperatures and distances from the camera). It is important to emphasize that, in this case, we are acquiring a very near object, in which there is a range of depth. Thus, it is not possible to focus the whole image simultaneously.
+Laptop transformer (LT): this consists of a single set of images of the same scene (the transformer of a laptop computer).
+Corridor and fluorescents (CF): this consists of a single set of images of a single scene (a corridor at the university, illuminated by several ceiling fluorescents).
+Heater (H): this consists of a single set of images of a heater. This scene contains a large amount of detail because the metallic parts are warmer than the spaces between.
+Face (F): this consists of a single set of images of a human face. This sequence contains a scene that is not fully static because of involuntary physical movement (eyes, breathing, etc.).
+Hand (Ha): this consists of a single set of images of a hand. The hand rests on a black surface.
+The database consists of 10 × 96 = 960 images.",https://paperswithcode.com/dataset/thermal-focus-image-database,02/11/2011,,,,,,
+TR-News,"This dataset is collected from various global and local news sources. Toponyms are manually annotated in the articles with the corresponding entries from GeoNames. In total, the dataset
+consists of 118 articles.",https://paperswithcode.com/dataset/tr-news,04/05/2018,,,,,,
+Reddit Conversation Corpus,"Reddit Conversation Corpus (RCC) consists of conversations, scraped from Reddit, for a 20 month period from November 2016 until August 2018. To ensure the quality and diversity of topics, 95 subreddits are selected from which conversations are collected. In total, RCC contains 9.2 million 3-turn conversations.",https://paperswithcode.com/dataset/reddit-conversation-corpus,,,,,,,
+IEEE-CIS Fraud Detection,"#### Can you detect fraud from customer transactions?
+
+Imagine standing at the check-out counter at the grocery store with a long line behind you and the cashier not-so-quietly announces that your card has been declined. In this moment, you probably aren’t thinking about the data science that determined your fate.
+
+Embarrassed, and certain you have the funds to cover everything needed for an epic nacho party for 50 of your closest friends, you try your card again. Same result. As you step aside and allow the cashier to tend to the next customer, you receive a text message from your bank. “Press 1 if you really tried to spend $500 on cheddar cheese.”
+
+While perhaps cumbersome (and often embarrassing) in the moment, this fraud prevention system is actually saving consumers millions of dollars per year. Researchers from the IEEE Computational Intelligence Society (IEEE-CIS) want to improve this figure, while also improving the customer experience. With higher accuracy fraud detection, you can get on with your chips without the hassle.
+
+IEEE-CIS works across a variety of AI and machine learning areas, including deep neural networks, fuzzy systems, evolutionary computation, and swarm intelligence. Today they’re partnering with the world’s leading payment service company, Vesta Corporation, seeking the best solutions for fraud prevention industry, and now you are invited to join the challenge.
+
+In this competition, you’ll benchmark machine learning models on a challenging large-scale dataset. The data comes from Vesta's real-world e-commerce transactions and contains a wide range of features from device type to product features. You also have the opportunity to create new features to improve your results.
+
+If successful, you’ll improve the efficacy of fraudulent transaction alerts for millions of people around the world, helping hundreds of thousands of businesses reduce their fraud loss and increase their revenue. And of course, you will save party people just like you the hassle of false positives.
+
+Acknowledgements:
+Vesta Corporation provided the dataset for this competition. Vesta Corporation is the forerunner in guaranteed e-commerce payment solutions. Founded in 1995, Vesta pioneered the process of fully guaranteed card-not-present (CNP) payment transactions for the telecommunications industry. Since then, Vesta has firmly expanded data science and machine learning capabilities across the globe and solidified its position as the leader in guaranteed ecommerce payments. Today, Vesta guarantees more than $18B in transactions annually.",https://paperswithcode.com/dataset/ieee-cis-fraud-detection,15/07/2019,,,,,,
+Kinetics-100,"Kinetics-100 is a dataset split created from the Kinetics dataset to evaluate the performance of few-shot action recognition models. 100 classes are randomly selected from a total of 400 categories, each composed of 100 examples. The 100 classes are further split into 64, 12, and 24 non-overlapping classes to use as the meta-training set, meta-validation set, and meta-testing set, respectively.  Link to the selected samples can be found here: https://github.com/ffmpbgrnn/CMN/tree/master/kinetics-100",https://paperswithcode.com/dataset/kinetics-100,,,,,,,
+Something-Something-100,"Something-Something-100 is a dataset split created from Something-Something V2. A total of 100 classes are selected and each comprises 100 samples. The 100 classes were split into 64, 12, and 24 non-overlapping classes to use as the meta-training set, meta-validation set, and meta-testing set, respectively. Link to exactly selected samples can be found here: https://github.com/ffmpbgrnn/CMN/tree/master/smsm-100",https://paperswithcode.com/dataset/something-something-100,,,,,,,
+Slovenian Twitter dataset 2018-2020,"A comprehensive set of all Slovenian tweets posted in the 2018-2020 period,
+with retweet links and assigned hate speech classes.
+Available at a public language resource repository CLARIN.SI.",https://paperswithcode.com/dataset/slovenian-twitter-dataset-2018-2020,31/05/2021,,,,,,
+AIT-LDSv2.0,"Synthetic log data suitable for evaluation of intrusion detection systems, federated learning, and alert aggregation.  Each of the 8 datasets corresponds to a testbed representing a small enterprise network including mail server, file share, WordPress server, VPN, firewall, etc. Normal user behavior is simulated to generate background noise over a time span of 4-6 days. At some point, a sequence of attack steps are launched against the network. Log data is collected from all hosts and includes Apache access and error logs, authentication logs, DNS logs, VPN logs, audit logs, Suricata logs, network traffic packet captures, horde logs, exim logs, syslog, and system monitoring logs. Attacks include scans (nmap, WPScan, dirb), webshell upload, password cracking, privilege escalation, remote command execution, and data exfiltration.",https://paperswithcode.com/dataset/ait-ldsv2-0,24/02/2022,AIT Log Data Set V2.0,,,,,
+eVED,"**Extended Vehicle Energy Dataset** (**eVED**) is an extended version of the Vehicle Energy Dataset (VED), which is a large-scale dataset for vehicle energy consumption analysis. Compared with its original version, the extended VED (eVED) dataset is enhanced with accurate vehicle trip GPS coordinates, serving as a reliable basis to associate the VED trip records with external information e.g., road speed limit and intersections, from accessible map services to accumulate attributes that is relevant and essential in analyzing vehicle energy consumption.",https://paperswithcode.com/dataset/eved,16/03/2022,Extended Vehicle Energy Dataset,,,,,
+Multi-focus thermal database,"The database was acquired using a thermographic camera TESTO 882-3 equipped with an uncooled detector and a spectral sensitivity range from 8 to 14 μm. It has a removable German optic lens with these main features:
+
+image resolution: 320 × 240 px,
+spectral sensitivity: 8 to 14 μm,
+thermal sensitivity (NETD)<0.06 °C at 30 °C,
+geometric resolution (IFOV): 1.7 mrad,
+detector type: silicon microbolometer uncooled, temperature stabilized,
+FOV: 32° × 23°; focal distance: 15 mm; fixed aperture: f/0.95.
+
+The database consists of six image sets. In each set, the camera acquires one image of the scene at each lens position. In our case we have manually moved the lens in 1 mm steps, which provides a total of 96 positions. Thus, each set consists of 96 different images of the one scene. For this purpose, we have attached a millimeter tape to the objective. We also used a stable tripod in order to acquire the same scene for each scene position and a dimmer to fix the bulb current.
+
+We have acquired six image sets:
+
+Image set 1: scene is made up of mobile phone and RS-232 interface in different distances and homogenous heat absorbing background. Distance between camera and the first object is 35 cm and its temperature is 41.2 °C. The distance between objects is 40 cm for all images sets. The maximum temperature of the second object is 32.9 °C.
+Image set 2: scene is made up of mobile phone and RS-232 interface in different distances and homogenous heat absorbing background. Distance between camera and the first object is only 15 cm and its temperature is 39.4 °C. The maximum temperature of the second object is 55.9 °C.
+Image set 3: scene is made up of two bulbs in different distances and non-homogenous background (partially black and partially white). The bulbs are acquired with a view to the holders. Distance between camera and the first object is 30 cm as in all bulb image sets. The temperature of 1st bulb is 51.7 °C and 2nd is 50.4 °C.
+Image set 4: scene is made up of two bulbs in different distances and homogenous white background. The bulbs are acquired with a view to the holders. The temperature of the first bulb is 43.3 °C and 2nd is 41.3 °C.
+Image set 5: scene is made up of two bulbs in different distances and homogenous white background. The bulbs are acquired without a view to the holders. The temperature of the first bulb is 57.0 °C and 2nd is 53.6 °C.
+Image set 6: scene is made up of two bulbs in different distances and homogenous heat absorbing black background. The bulbs are acquired with a view to the holders. The temperature of the first bulb is 57.9 °C and 2nd is 54.7 °C.
+The reference images, where both objects are sharp, were created very easily using this command in MATLAB: img = [img1(:,1:thr) img2(:,thr+1:end)]; where img1 and img2 is the image with a perfectly sharp object 1 and 2 respectively. Variable thr determines the border between these two objects.",https://paperswithcode.com/dataset/multi-focus-thermal-database,15/05/2013,,,,,,
+i3DMM Test Dataset,A new dataset consisting of 64 people with different expressions and hairstyles.,https://paperswithcode.com/dataset/i3dmm-test-dataset,28/11/2020,,,,,,
+NOAA Atmospheric Temperature Dataset,"This dataset contains meteorological observations (temperature) at the
+land-based weather stations located in the United States, collected from the Online Climate
+Data Directory of the National Oceanic and Atmospheric Administration (NOAA). The weather
+stations are sampled from the Western and Southeastern states that have actively measured
+meteorological observations during 2015. The 1-year sequential data of hourly temperature
+records are divided into small sequences of 24 hours. For training, validation, and test a sequential
+8-2-2 (months) split is used.",https://paperswithcode.com/dataset/noaa-atmospheric-temperature-dataset,01/01/2020,,,,,,
+NEMO Sea Surface Temperature Dataset,"This dataset contains spatiotemporal sequences of SST generated by the
+NEMO ocean engine.  The observations correspond to 250 randomly selected data sites
+within a [0, 550] × [100, 650] square cropped from the area between 50 deg N − 65 deg N and 75W deg −
+10W deg starting from 01-01-2016 to 12-31-2017. The data is divided into 24 sequences, each
+lasting 30 days (extra days in each month are truncated). Data corresponding to 2016 are used for
+training and the rest is used for validation and testing, in the equal sequential split.",https://paperswithcode.com/dataset/nemo-sea-surface-temperature-dataset,16/03/2022,,,,,,
+JaNLI,"The Japanese Adversarial NLI (JaNLI) dataset is designed to require understanding of Japanese linguistic phenomena and illuminate the vulnerabilities of models.
+Please see the paper [Assessing the Generalization Capacity of Pre-trained Language Models through Japanese Adversarial Natural Language Inference](https://aclanthology.org/2021.blackboxnlp-1.26.pdf) for details.",https://paperswithcode.com/dataset/janli,01/11/2021,Japanese Adversarial Natural Language Inference,,,,,
+Sachs,"Sachs dataset measures the expression level of different proteins and phospholipids in human cells. It includes the simultaneous measurements of 11 phosphorylated proteins and phospholipids derived from thousands of individual primary immune system cells, subjected to both general and specific molecular interventions.",https://paperswithcode.com/dataset/sachs,16/03/2022,Sachs Protein Dataset,,,,,
+Full-Spectral Autofluorescence Lifetime Microscopic Images,"- The dataset contains full-spectral autofluorescence lifetime microscopic images (FS-FLIM) acquired on unstained ex-vivo human lung tissue, where 100 4D hypercubes of 256x256 (spatial resolution) x 32 (time bins) x 512 (spectral channels from 500nm to 780nm). This dataset associates with our paper ""Deep Learning-Assisted Co-registration of Full-Spectral Autofluorescence Lifetime Microscopic Images with H&E-Stained Histology Images"" (https://arxiv.org/abs/2202.07755) and ""Full spectrum fluorescence lifetime imaging with 0.5 nm spectral and 50 ps temporal resolution"" (https://doi.org/10.1038/s41467-021-26837-0). 
+- The FS-FLIM images provide transformative insights into human lung cancer with extra-dimensional information. This will enable visual and precise detection of early lung cancer. With the methodology in our co-registration paper, FS-FLIM images can be registered with H&E-stained histology images, allowing characterisation of tumour and surrounding cells at a celluar level with absolute autofluorescence lifetime.
+- The dataset can be used for various purposes, including signal processing for optimal lifetime reconstruction, advanced image analysis for automatic feature extraction of lung cancer, and cellular-level characterisation of lung cancer with absolute label-free autofluorescence lifetime values.
+- The dataset is available on the University of Edinburgh's DataShare (https://doi.org/10.7488/ds/3099 and https://doi.org/10.7488/ds/3421)",https://paperswithcode.com/dataset/full-spectral-autofluorescence-lifetime,15/02/2022,,,,,,
+XLING,"The XLING BLI Dataset contains bilingual dictionaries for 28 language pairs. For each of the language pairs, there are 5 dictionary files: 4 training dictionaries of varying sizes (500, 1K, 3K, and 5K translation pairs) and one testing dictionary containing 2K test word pairs. All results reported in the above paper have been obtained on test dictionaries of respective language pairs.",https://paperswithcode.com/dataset/xling,,XLING BLI Dataset,,,,,
+DATASET,Dataset used in research submitted to ICPC ERA 2022,https://paperswithcode.com/dataset/dataset,16/03/2022,,,,,,
+Nations,"The Nations dataset is a small knowledge graph with 14 entities, 55 relations, and 1992 triples describing countries and their political relationships. This dataset is available for download from https://github.com/ZhenfengLei/KGDatasets.",https://paperswithcode.com/dataset/nations,,,,,,,
+PanLex-BLI,PanLex-based bilingual lexicons for 210 language pairs,https://paperswithcode.com/dataset/panlex-bli,,PanLex-based bilingual lexicons for 210 language pairs,,,,,
+FE108,"Large-scale single-object tracking dataset, containing 108 sequences with a total length of 1.5 hours. 
+FE108 provides ground truth annotations on both the frame and event domain. 
+The annotation frequency is up to 40Hz and 240Hz for the frame and event domains, respectively. 
+FE108 is the largest event-frame-based dataset for single object tracking, and also offers the highest annotation frequency in the event domain.",https://paperswithcode.com/dataset/fe108,19/09/2021,,,,,,
+IntHarmony,"This newly curated synthetic dataset specifies an additional reference region to guide image harmonization. There are 118,287 training images and 959 test images.  The dataset consists of objects, backgrounds, and people.
+
+IntHarmony has the following information for each data instance: composite image, ground truth, foreground mask of the composite foreground, and a guide mask that provides information about the reference region to guide harmonization. 
+
+IntHarmony is built on top of the MS-COCO dataset, and makes use of the instance masks provided in MS-COCO to simulate foreground and reference regions. First, a random instance mask is selected to pick the foreground region. The selected foreground region is then augmented using a wide set of meaningful augmentations focusing on luminance, contrast and color. Another random instance mask is used to get the reference guide mask. The original image is considered the ground truth. The instance masks and the augmentations are chosen at random to induce more generalizability to the network.",https://paperswithcode.com/dataset/intharmony,15/03/2022,,,,,,
+ToxiGen,"A large-scale and machine-generated dataset of 274,186 toxic and benign statements about 13 minority groups. 
+
+This dataset uses a demonstration-based prompting framework and an adversarial classifier-in-the-loop decoding method to generate subtly toxic and
+benign text with a massive pre-trained language model (GPT-3). Controlling machine generation in this way allows TOXIGEN to cover implicitly toxic text at a larger scale,
+and about more demographic groups, than previous resources of human-written text. TOXIGEN can be used to fight human-written and machine-generated
+toxicity.",https://paperswithcode.com/dataset/toxigen,17/03/2022,,,,,,
+PET,"The dataset contains 45 documents containing narrative description of business process and their annotations.  Annotated with activities, gateways, actors, and flow information. 
+
+Each document is composed of three files:
+
+Doc_name.txt (Process description in CONLL format)
+
+Doc_name.process-elements.IOB2.txt (Process elements annotated with IOB2 Schema in CONLL format)
+
+Doc_name.relations.tsv (Process relations between process elements. Each line is a triplette (source, relation tag, target). Source and target are in the form: n_sent_x words range.)",https://paperswithcode.com/dataset/pet,09/03/2022,PET: A new Dataset for Process Extraction from Natural Language Text,,,,,
+PET: A new Dataset for Process Extraction from Natural Language Text,"The dataset contains 45 documents containing narrative description of business process and their annotations.  Annotated with activities, gateways, actors, and flow information. 
+
+Each document is composed of three files:
+
+Doc_name.txt (Process description in CONLL format)
+
+Doc_name.process-elements.IOB2.txt (Process elements annotated with IOB2 Schema in CONLL format)
+
+Doc_name.relations.tsv (Process relations between process elements. Each line is a triplette (source, relation tag, target). Source and target are in the form: n_sent_x words range.)",https://paperswithcode.com/dataset/pet-a-new-dataset-for-process-extraction-from,09/03/2022,,,,,,
+EGDB,"This dataset contains transcriptions of the electric guitar performance of 240 tablatures, rendered with different tones. The goal is to contribute to automatic music transcription (AMT) of guitar music, a technically challenging task. 
+
+Activity signals were captured by attaching a special hexaphonic pickup to each string of an electric guitar and using a JUCE program to control a digital audio workstation (DAW) to automatically re-render the audio recordings of the “Direct Input” (DI) using different amplifiers (Amps), including low-gain amps and high-gain ones. A new collecting pipeline was employed to reduce the effort of manual inspection. The final dataset contains six copies of 118 minutes of guitar playing, each copy being associated with a different timbre. The new dataset, named “EGDB,” is constructed in this way to account for the diverse timbre associated with electric guitar. Having multiple guitar tones makes it possible to test a trained model
+on held-out unseen tones for generalizability. 
+
+<span style=""color:grey; opacity: 0.6"">( Image Source: [Frame Harirak](https://unsplash.com/s/photos/guitar-electric?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText) )</span>",https://paperswithcode.com/dataset/egdb,20/02/2022,,,,,,
+DanceTrack,"A large-scale multi-object tracking dataset for human tracking in occlusion, frequent crossover, uniform appearance and diverse body gestures. It is proposed to emphasize the importance of motion analysis in multi-object tracking instead of mainly appearance-matching-based diagram.",https://paperswithcode.com/dataset/dancetrack,29/11/2021,,,,,,
+ChildCIdb,"A large-scale, first-of-its-kind database aimed at generating a better understanding of the way children interact with mobile devices during their development process. ChildCIdbv1 comprises data collected from 438 children, from 18 months to 8 years old, encompassing the first three development stages of Piaget's theory. Data collected spans interaction with screens using both finger and pen stylus, information regarding the previous experience of the child with mobile devices, the child’s grade level, and whether attention-deficit/hyperactivity disorder (ADHD) is present.
+
+Use cases: 
+
+Child age detection based on device interaction.",https://paperswithcode.com/dataset/childcidb,02/02/2021,ChildCIdbv1,,,,,
+VidHarm,"**VidHarm** is a professionally annotated dataset for detection of harmful content in video. Include 3589 annotate video clips from a variety of film trailers. In contrast to previous approaches which mostly use meta data from long sequences, it uses the raw video and focus on short clips.",https://paperswithcode.com/dataset/vidharm,15/06/2021,,,,,,
+Spatial Commonsense Graph Dataset,"Dataset built from partial reconstructions of real-world indoor scenes using RGB-D sequences from ScanNet, aimed at estimating the unknown position of an object (e.g. where is the bag?) given a partial 3D scan of a scene. The dataset mostly consists of bedrooms, bathrooms, and living rooms. Some room types like closet and gym only have a few instances.",https://paperswithcode.com/dataset/spatial-commonsense-graph-dataset,10/03/2022,Spatial Commonsense Graph for Object Localisation in Partial Scenes,,,,,
+HOPE-Image,"The NVIDIA HOPE datasets consist of RGBD images and video sequences with labeled 6-DoF poses for 28 toy grocery objects. The toy grocery objects are readily available for purchase and have ideal size and weight for robotic manipulation. 3D textured meshes for generating synthetic training data are provided.
+
+The HOPE-Image dataset shows the objects in 50 scenes from 10 household/office environments, and contains 188 test images taken in 8 environments, with a total of 40 scenes (unique camera and object poses). Up to 5 lighting variations are captured for each scene, including backlighting and angled direct lighting with cast shadows. Scenes are cluttered with varying levels of occlusion.
+
+An additional 50 validation images are included from 2 environments in 10 scene arrangements.
+
+Within each scene, up to 5 lighting variations are captured with the same camera and object poses. For example, the captures in `valid/scene_0000/*.json` all depict the same camera pose and arrangement of objects, but each individual capture (0000.json, 0001.json, ...) has a different lighting condition. For this reason, each image should be treated independently for purposes of pose prediction. The most favorable lighting condition for each scene is found in `image 0000.json`.
+
+Images were captured using a RealSense D415 RGBD camera. Systematic errors were observed in the depth values relative to the estimated distance of a calibration grid. To correct for this, depth frames are scaled by a factor of 0.98042517 before registering to RGB. Annotations were made manually using these corrected RGBD frames.
+
+NOTE: Only validation set annotations are included. Test annotations are managed by the BOP challenge.",https://paperswithcode.com/dataset/hope-image,11/03/2022,Household Objects for Pose Estimation,,,,,
+HOPE-Video,"The HOPE-Video dataset contains 10 video sequences (2038 frames) with 5-20 objects on a tabletop scene captured by a robot arm-mounted RealSense D415 RGBD camera. In each sequence, the camera is moved to capture multiple views of a set of objects in the robotic workspace. First COLMAP was applied to refine the camera poses (keyframes at 6~fps) provided by forward kinematics and RGB calibration from RealSense to Baxter's wrist camera. 3D dense point cloud was then generated via CascadeStereo (included for each sequence in 'scene.ply'). Ground truth poses for the HOPE objects models in the world coordinate system were annotated manually using the CascadeStereo point clouds. The following are provided for each frame:
+
+*Camera intrinsics/extrinsics
+*RGB images of 640x480
+*Depth images of 640x480
+*3D scene reconstruction from CascadeStereo
+*Object pose annotation in the camera frame
+
+Objects consist of a set of 28 toy grocery items selected for compatibility with robot manipulation and widespread availability. Textured models were generated by an EinScan-SE 3D Scanner, units were converted to centimeters, and the centers/rotations of the meshes were aligned to a canonical pose.",https://paperswithcode.com/dataset/hope-video,11/03/2022,Household Objects for Pose Estimation,,,,,
+Heritage Health Prize,"Heritage Provider Network is providing Competition Entrants with deidentified member data collected during a forty-eight month period that is allocated among three data sets (the ""Data Sets""). Competition Entrants will use the Data Sets to develop and test their algorithms for accurately predicting the number of days that the members will spend in a hospital (inpatient or emergency room visit) during the 12-month period following the Data Set cut-off date.
+
+HHP_release3.zip contains the latest files, so you can ignore HHP_release2.zip. SampleEntry.CSV shows you how an entry should look.
+
+Data Sets will be released to Entrants after registration on the Website according to the following schedule:
+
+April 4, 2011	Claims Table - Y1 and DaysInHospital Table - Y2
+May 4, 2011	All other Data Sets except Labs Table and Rx Table
+June 4, 2011	Labs Table and Rx Table
+Entrants are welcome to use other data to develop and test their algorithms and entries until 11:59:59 UTC on April 4, 2012 if the data are (i) freely available to all other Entrants and (i) published (or a link provided) to the data in the External Data portion of the Forum within one (1) week of an entry submission using the other data. Entrants may not use any data other than the Data Sets after 11:59:59 UTC on April 4, 2012 without prior approval.
+
+Tables
+Each of the Data Sets will be comprised of tables as follows:
+
+a. Members Table, which will include:
+i. MemberID (a unique member ID)
+ii. AgeAtFirstClaim (member's age when first claim was made in the Data Set period)
+iii. Sex
+b. Claims Table, which will include:
+i. MemberID
+ii. ProviderID (the ID of the doctor or specialist providing the service)
+iii. Vendor (the company that issues the bill)
+iv. PCP (member's primary care physician)
+v. Year (the year of the claim, Y1, Y2, Y3)
+vi. Specialty
+vii. PlaceSvc (place where the member was treated)
+viii. PayDelay (the delay between the claim and the day the claim was paid for)
+ix. LengthOfStay
+x. DSFS (days since first service that year)
+xi. PrimaryConditionGroup (a generalization of the primary diagnosis codes)
+xii. CharlsonIndex (a generalization of the diagnosis codes in the form of a categorized comorbidity score)
+xiii. ProcedureGroup (a generalization of the CPT code or treatment code)
+xiv. SupLOS (a flag that indicates if LengthOfStay is null because it has been suppressed)
+c. Labs Table, which will contain certain details of lab tests provided to members.
+d. RX Table, which will contain certain details of prescriptions filled by members.
+e. DaysInHospital Tables - Y2 and Y3, which will contain the number of days of hospitalization for each eligible member during Y2 and Y3 and will include:
+i. MemberID;
+ii. ClaimsTruncated (a flag for members who have had claims suppressed. If the flag is 1 for member xxx in DaysInHospital_Y2, some claims for member xxx will have been suppressed in Y1).
+iii. DaysInHospital (the number of days in hospital Y2 or Y3, as applicable).
+These two Tables are intended for use by Entrants to train and validate their algorithms. DaysInHospital Tables are based on the Claims Table with admissions in Y2 or Y3, as applicable. As a privacy measure, any member who spent more than two weeks in hospital is grouped; they are treated as though they spent 15 days in hospital.
+f. Target - is ""DaysInHospital_Y4"" but doesn't include DaysInHospital. DaysInHospital data for Y4 are to be filled in by Entrants to produce entries. Seem SampleEntry.csv as an example.",https://paperswithcode.com/dataset/heritage-health-prize,,,,,,,
+Chest x-ray landmark dataset,"Set of landmark annotations for JSRT, Montgomery, Shenzhen and a subset of Padchest datasets",https://paperswithcode.com/dataset/chest-x-ray-landmark-dataset,21/03/2022,,,,,,
+Montgomery County X-ray Set,"X-ray images in this data set have been acquired from the tuberculosis control program of the Department of Health andHuman Services of Montgomery County, MD, USA. This set contains 138 posterior-anterior x-rays, of which 80 x-rays are normal and 58 x-rays areabnormal with manifestations of tuberculosis. All images are de-identified and available in DICOM format. The set covers a wide range of abnormalities,including effusions and miliary patterns. The data set includes radiology readings available as a text files and summary of its content",https://paperswithcode.com/dataset/montgomery-county-x-ray-set,,,,,,,
+Shenzhen Hospital X-ray Set,"X-ray images in this data set have been collected by Shenzhen No.3 Hospital in Shenzhen, Guangdong providence,China. The x-rays were acquired as part of the routine care at Shenzhen Hospital. The set contains images in JPEG format. There are 326 normal x-raysand 336 abnormal x-rays showing various manifestations of tuberculosis.",https://paperswithcode.com/dataset/shenzhen-hospital-x-ray-set,,,,,,,
+ARQMath2 - Task 1,"The goal of ARQMath is to advance techniques for mathematical information retrieval, in particular, retrieving answers to mathematical questions (Task 1), and formula retrieval (Task 2).
+Using the question posts from Math Stack Exchange, participating systems are given a question or a formula from a question and asked to return a ranked list of either potential answers to the question or potentially useful formulae (in the case of a formula query). Relevance is determined by the expected utility of each returned item. These tasks allow participating teams to explore leveraging math notation together with text to improve the quality of retrieval results.",https://paperswithcode.com/dataset/arqmath2,,The second Answer Retrieval for Questions on Math lab - Task 1,,,,,
+ACDC (Adverse Conditions Dataset with Correspondences),"We introduce ACDC, the Adverse Conditions Dataset with Correspondences for training and testing semantic segmentation methods on adverse visual conditions. It comprises a large set of 4006 images which are evenly distributed between fog, nighttime, rain, and snow. Each adverse-condition image comes with a high-quality fine pixel-level semantic annotation, a corresponding image of the same scene taken under normal conditions and a binary mask that distinguishes between intra-image regions of clear and uncertain semantic content.
+
+ACDC supports two tasks:
+1. standard semantic segmentation
+2. uncertainty-aware semantic segmentation",https://paperswithcode.com/dataset/acdc-adverse-conditions-dataset-with,,Adverse Conditions Dataset with Correspondences,,,,,
+RR,Review-Rebuttal (RR) dataset is introduced to facilitate the study of argument pair extraction in the peer review and rebuttal domain.,https://paperswithcode.com/dataset/rr,01/11/2020,Review-Rebuttal,,,,,
+XYSquares,"Synthetic dataset intended for benchmarking disentanglement frameworks.
+
+XYSquares is adversarial in nature; the distance between any two observations in the dataset is constant when measured using a pixel-wise distance function. It is usually impossible for VAE frameworks that use pixel-wise losses to disentangle this dataset.
+
+The dataset is constructed from 3 non-overlapping red, green and blue squares that are each $8\times8$ pixels in size. Each square can move along the $x$ and $y$ coordinates of an $8\times8$ grid. The resulting images are $64\times64$ pixels in size. With this construction the dataset has a total of 8 ground-truth factors for a total of $8^6 = 262144$ observations.",https://paperswithcode.com/dataset/xysquares,01/01/2022,,,,,,
+OpenLane,"**OpenLane** is the first real-world and the largest scaled 3D lane dataset to date. The dataset collects valuable contents from public perception dataset [Waymo Open Dataset](/dataset/waymo-open-dataset) and provides lane&closest-in-path object(CIPO) annotation for 1000 segments. In short, OpenLane owns 200K frames and over 880K carefully annotated lanes. The OpenLane Dataset is publicly released to aid the research community in making advancements in 3D perception and autonomous driving technology.",https://paperswithcode.com/dataset/openlane,21/03/2022,,,,,,
+3D Cars,"Car CAD models from ""3d object detection and viewpoint estimation with a deformable
+3d cuboid model"" were used to generate the dataset. For each of the 199 car models, the authors generated $64\times64$ color renderings from 24 rotation angles each offset by 15 degrees, as well as from 4 different camera elevations.",https://paperswithcode.com/dataset/3d-cars,01/12/2015,,,,,,
+Physical Audiovisual CommonSense,"**PACS** (**Physical Audiovisual CommonSense**) is the first audiovisual benchmark annotated for physical commonsense attributes. PACS contains a total of 13,400 question-answer pairs, involving 1,377 unique physical commonsense questions and 1,526 videos. The dataset provides new opportunities to advance the research field of physical reasoning by bringing audio as a core component of this multimodal problem.",https://paperswithcode.com/dataset/pacs-commonsense,21/03/2022,,,,,,
+EgoMon,"EgoMon Gaze & Video Dataset is an Egocentric (first person) Dataset that consists of 7 videos of 30 minutes, more or less, each one of them.
+- 7 videos with the gaze information plotted on them.
+- The same videos (without the gaze information plotted on them).
+- A total of 13428 images, more or less, that corresponds to each frame per second of all these videos.
+- 7 text files with the gaze data extracted from each video.",https://paperswithcode.com/dataset/egomon,28/08/2018,Egomon Gaze & Video dataset,,,,,
+ChangeIt,ChangeIt dataset with more than 2600 hours of video with state-changing actions published at CVPR 2022.,https://paperswithcode.com/dataset/changeit,22/03/2022,,,,,,
+SynLiDAR,"SynLiDAR is a large-scale synthetic LiDAR sequential point cloud dataset with point-wise annotations. 13 sequences of LiDAR point cloud with around 20k scans (over 19 billion points and 32 semantic classes) are collected from virtual urban cities, suburban towns, neighborhood, and harbor.",https://paperswithcode.com/dataset/synlidar,,,,,,,
+CUHK-SYSU-TBPS,"Click to add a brief description of the dataset (Markdown and LaTeX enabled).
+
+Provide:
+
+* a high-level explanation of the dataset characteristics
+* explain motivations and summary of its content
+* potential use cases of the dataset",https://paperswithcode.com/dataset/cuhk-sysu-tbps,27/09/2021,,,,,,
+PRW-TBPS,"Click to add a brief description of the dataset (Markdown and LaTeX enabled).
+
+Provide:
+
+* a high-level explanation of the dataset characteristics
+* explain motivations and summary of its content
+* potential use cases of the dataset",https://paperswithcode.com/dataset/prw-tbps,27/09/2021,,,,,,
+VinDr-CXR,"**VinDr-CXR** is an open large-scale dataset of chest X-rays with radiologist’s annotations. It's bult from more than 100,000 raw images in DICOM format that were retrospectively collected from the Hospital 108 and the Hanoi Medical University Hospital, two of the largest hospitals in Vietnam. The published dataset consists of 18,000 postero-anterior (PA) view CXR scans that come with both the localization of critical findings and the classification of common thoracic diseases. These images were annotated by a group of 17 radiologists with at least 8 years of experience for the presence of 22 critical findings (local labels) and 6 diagnoses (global labels); each finding is localized with a bounding box. The local and global labels correspond to the “Findings” and “Impressions” sections, respectively, of a standard radiology report.  
+
+The dataset is divided into two parts: the training set of 15,000 scans and the test set of 3,000 scans. Each image in the training set was independently labeled by 3 radiologists, while the annotation of each image in the test set was even more carefully treated and obtained from the consensus of 5 radiologists.
+
+Description adopted from [here](https://vindr.ai/datasets/cxr).",https://paperswithcode.com/dataset/vindr-cx,20/03/2022,,,,,,
+VinDr-PCXR,"**VinDr-PCXR** is an open, large-scale pediatric chest X-ray dataset for interpretation of common thoracic diseases in children. The dataset contains 9,125 CXR scans retrospectively collected from a major pediatric hospital in Vietnam between 2020 and 2021. Each scan was manually annotated by a pediatric radiologist who has more than ten years of experience. The dataset was labeled for the presence of 36 critical findings and 15 diseases. It aims to aid research in the detection of multiple findings and diseases.",https://paperswithcode.com/dataset/vindr-pcxr,20/03/2022,,,,,,

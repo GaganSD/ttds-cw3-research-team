@@ -10,7 +10,7 @@ import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import Options from './components/options'
 import Box from '@mui/material/Box';
-import research_logo from './logos/Re-Search-logos_transparent.png';
+import research_logo from './logos/researchlogomain.png';
 import PageButton from './components/pagebutton';
 import Switch from '@mui/material/Switch';
 import Link from '@mui/material/Link';
@@ -32,8 +32,27 @@ import { useEffect, useState } from "react";
 import { ThemeProvider } from 'styled-components';
 import { lightTheme, darkTheme } from './components/theme';
 import { GlobalStyles } from './components/global';
+import { useNavigate } from 'react-router-dom';
 //TODO: Remove latex & markdown formatting 
 function App() {
+
+  let navigate = useNavigate();
+  const routeChange = () => {
+    if(search === ''|| !/^(?!\s+$).+/.test(search)){
+      console.log(search);
+      console.log("empty query");
+    }
+    else if( !/^[0-9a-zA-Z\s]*$/.test(search) ){
+      console.log("badquery");
+      setBadQuery(true);
+
+    }
+    else{
+      let path = create_url(search, values.current);
+      console.log(path);
+      navigate(path);
+    }
+  }
   const [theme, setTheme] = useState('light');
   const toggleTheme = () => {
     console.log("switch");
@@ -55,8 +74,8 @@ function App() {
   const [json_query_expansion, setJsonQE] = React.useState({QEResults:[]});
   const label = { inputProps: { 'aria-label': 'Switch demo' } };
   const values = React.useRef({
-    algorithm: "Featured",
-    searchtype: "Default",
+    algorithm: "FEATURED",
+    searchtype: "DEFAULT",
     range_from:null,
     range_to: null,
     datasets: false,
@@ -77,6 +96,7 @@ function App() {
   function getOptions(type,optval){
     if (type === "algorithms"){
       values.current.algorithm = optval;
+
     }
     else if (type === "searchtype"){
       values.current.searchtype = optval;
@@ -140,7 +160,28 @@ function App() {
   }
 
   const create_url = (searchq, vals) =>{
-    let url = "search?q=";
+    let url = "search/q=";
+    url += SanitizeSearch(searchq).split(" ").join("+");
+    url += "/df=";
+    url += date_formatter(vals.range_from);
+    url += "/dt=";
+    url += date_formatter(vals.range_to);
+    url += "/alg=";
+    url += vals.algorithm.split(" ").join("_");
+    url += "/srchtyp=";
+    url += vals.searchtype.split(" ").join("_");
+    url += "/ds=";
+    url += vals.datasets + "";
+    url += "/pn=";
+    url += vals.pagenum + "";
+    url += "/";
+
+    return url
+
+  }
+
+    const create_route_url = (searchq, vals) =>{
+    let url = "search/q=";
     url += SanitizeSearch(searchq).split(" ").join("+");
     url += "/df=";
     url += date_formatter(vals.range_from);
@@ -201,7 +242,7 @@ function App() {
       console.log("EMPTY SEARCH")
 
     }
-    else if( !/^[0-9a-zA-Z\s]*$/.test(search)){
+    else if( !/^[0-9a-zA-Z\s]*$/.test(search) || !/^(?!\s+$).+/.test(search)){
       console.log("badquery");
       setJsonResults({"Results": []})
       showPageButton.current = false;
@@ -210,12 +251,12 @@ function App() {
     }
     else{
       return fetch('http://localhost:5000/' + create_url(search, values.current)).then(response => response.json()).then(data => {
-        if(data.Results.length === 0){
+        if(data.Results.length === 0) {
             console.log("empty");
             setEmptyResults(true);
             console.log(emptyresults)
         }
-        else{
+        else {
           console.log("search complete");
           console.log(create_url(search, values.current));
           setBadQuery(false);
@@ -230,7 +271,7 @@ function App() {
   function QueryExpansion() {
     
     console.log(create_url(search, values.current));
-    return fetch('http://34.142.71.148:5000/QE/' + search).then(response => response.json()).then(data => {
+    return fetch('http://localhost:5000/QE/' + search).then(response => response.json()).then(data => {
       setJsonQE(data);
     });
   }
@@ -269,6 +310,10 @@ function App() {
       "July", "August", "September", "October", "November", "December"];
     let formatted = monthNames[d.getMonth()] + ", " +  d.getFullYear();
 
+    if (formatted == "undefined, NaN"){
+      return "";
+    }
+
     return formatted;
   }
 
@@ -292,10 +337,11 @@ function App() {
   function authorlist(authors){
     var lower=authors.toLowerCase()
     if (authors.includes(",")){
-      return authors;
-    } else if (!(lower == "n/a" || lower == "na" || lower == "NA"
-                 || lower == "n-a" || lower == "" || lower == " ")){
-      return authors;
+      return "-" + authors;
+    } 
+    else if (!(lower == "n/a" || lower == "na" || lower == "NA"
+                 || lower == "n-a" || lower == "" || lower == " " || lower == "nan" || lower == "n.a.")){
+      return "- " + authors;
     }
   }
 
@@ -343,7 +389,7 @@ function App() {
 
 
 
-    <img src={research_logo} width="300em" height="150em"/>
+    <img src={research_logo} flex="1" height="350em" width="350em" resizeMode="contain"/>
     <button onClick={toggleTheme}>Lights</button>
 
       <div className='Search' style={{
@@ -353,7 +399,7 @@ function App() {
           style={{ maxWidth: '80%' }}
           parentCallback={TextEntered}
           error={true}
-          text = {"Bad Query Was Received"}
+          text = {"Bad Query Was Received - Please remove special characters from your query and try again!"}
         />
         : emptyresults ? <SearchField
             style = {{maxWidth:'80%'}}
@@ -383,13 +429,9 @@ function App() {
         flexDirection : "row"        
       }}>
         <ButtonGroup variant="contained" aria-label="outlined primary button group">
-          <SearchButton parentCallback={() =>{
-            console.log("yes");
-            setPageNum(1);
-            setGoBackButtonDisabled(true);
-            console.log(pagenum);
-            SearchFunc();
-          }} />
+          <Button onClick={routeChange} variant="contained" style={{display: 'flex', justifyContent:'center'}}>
+          Search
+          </Button>
           <QEButton parentCallback={QueryExpansion} />
         </ButtonGroup>
 
@@ -413,7 +455,7 @@ function App() {
           {/* TODO: Enable latex formatting in author title
           TODO: Remove latex & markdown formatting in description */}
           <a href={curr_elem.url}><font size="5">{curr_elem.title}</font></a><br/> 
-          <font color="#595F6A" size="2" face="Tahoma">{fix_url(curr_elem.url)} - {std_date} - {authorlist(curr_elem.authors)}</font><br/> 
+          <font color="#595F6A" size="2" face="Tahoma">{fix_url(curr_elem.url)}  {std_date}  {authorlist(curr_elem.authors)}</font><br/> 
           {/* <font color="#595F6A" face="Tahoma"></font><br/> */}
           <font color="#595F6A">ㅤ{abstractgenerator(curr_elem.abstract)}</font><br/>
         </p></Box>;

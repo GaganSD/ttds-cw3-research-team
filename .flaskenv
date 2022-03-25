@@ -1,4 +1,2 @@
-FLASK_APP=app-playground.py
+FLASK_APP=app
 FLASK_DEBUG=True
-
-

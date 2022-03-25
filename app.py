@@ -7,18 +7,17 @@
 
 from flask import Flask, request
 from flask_cors import CORS
-from sentence_transformers import SentenceTransformer
 from infra.LRUCache import LRUCache
 from datetime import datetime
 
-from infra.helpers import curr_day, min_day, deserialize, filter_dates
+from infra.helpers import curr_day, min_day, deserialize, filter_dates, Formatting
 
 from core_algorithms.ir_eval.ranking_paper import ranking_query_BM25 as ranking_query_bm25_paper
 from core_algorithms.ir_eval.ranking_paper import ranking_query_tfidf_cosine as ranking_query_tfidf_paper
 from core_algorithms.ir_eval.ranking_paper import phrase_search as phrase_search_paper
 from core_algorithms.ir_eval.ranking_paper import proximity_search as proximity_search_paper
 
-from core_algorithms.ir_eval.ranking import ranking_query_tfidf as ranking_query_tfidf_dataset
+from core_algorithms.ir_eval.ranking import ranking_query_tfidf as ranking_query_tfidf_dataset # this will give you an error for python 3.8
 from core_algorithms.ir_eval.ranking import phrase_search as phrase_search_dataset
 from core_algorithms.ir_eval.ranking import proximity_search as proximity_search_dataset
 from core_algorithms.ir_eval.ranking import ranking_query_BM25 as ranking_query_bm25_dataset
@@ -27,45 +26,41 @@ from core_algorithms.mongoDB_API import MongoDBClient
 from core_algorithms.ir_eval.preprocessing import preprocess, author_preprocess
 from core_algorithms.adv_query_options import query_spell_check, get_query_expansion
 
-print(0.1)
 import json
-import scann ## NOTE: Only works on linux machines #NOTE:DL
 import pandas as pd
 import threading
 import datetime
 import time
 import heapq
+import requests
 
 
+curr_formatter = Formatting()
 
 # Create Flask app
 app = Flask(__name__)
 CORS(app)
 
-print(0.2)
-# Load paper & dataset index. 
-searcher = scann.scann_ops_pybind.load_searcher('/home/stylianosc/scann/papers/') #NOTE:DL
-searcher_dataset = scann.scann_ops_pybind.load_searcher('core_algorithms/ir_eval/datasets/')
-print(0.3)
-# Load transformer encoder
-model = SentenceTransformer('all-MiniLM-L6-v2') #NOTE:DL
-print(0.4)
-# Load paper indices
-df_papers = pd.read_csv("/home/stylianosc/scann/papers/df.csv") #NOTE:DL
-# Load dataset indices
+print("completed.. your server will be up in less than 5 seconds..")
 df_datasets = pd.read_csv("core_algorithms/ir_eval/datasets/indices_dataset.csv")
 df_datasets.rename(columns={"description": "abstract"}, inplace=True)
 
-print(0.5)
 
 # Load datasets for inverted index
 kaggle_df = pd.read_csv('core_algorithms/ir_eval/kaggle_dataset_df_page500.csv')
 kaggle_df['Source'] = 'Kaggle'
 paperwithcode_df = pd.read_csv('core_algorithms/ir_eval/paperwithcode_df.csv')
+paperwithcode_df.rename(columns={"owner":"ownerUser"}, inplace=True)
 paperwithcode_df['Source'] = 'Paper_with_code'
-
-df = pd.concat([kaggle_df, paperwithcode_df])
+uci_df = pd.read_csv("core_algorithms/ir_eval/uci_dataset_test.csv")
+uci_df.rename(columns={"Name":"title", "Abstract":"description", "Datapage URL":"ownerUser"}, inplace=True)
+uci_df['Source'] = 'uci'
+edi_df = pd.read_csv("core_algorithms/ir_eval/edinburgh_research_datasets_info.csv")
+edi_df.rename(columns={"Name":"title", "URL":"ownerUser"}, inplace=True)
+edi_df['Source'] = 'Edi'
+df = pd.concat([kaggle_df, paperwithcode_df, uci_df, edi_df], axis=0)
 df = df.reset_index(drop=True)
+
 df.rename(columns={"description": "abstract"}, inplace=True)
 
 client = MongoDBClient("34.142.18.57")
@@ -75,6 +70,7 @@ _results_cache = LRUCache(200)
 
 def call_top_n(N, parameters):
     results = {"Results":[]}
+    print(parameters)
     if parameters["search_type"] == "AUTHOR":
 
         if parameters["datasets"]:
@@ -85,22 +81,24 @@ def call_top_n(N, parameters):
                 top_n=N)
 
     elif parameters["algorithm"] == "APPROX_NN":
-        if parameters["datasets"]:
-            results = get_approx_nn_datasets_results(query=parameters['query'], top_n=N)
-        else:
-            results = get_approx_nn_papers_results(query=parameters['query'], 
-                start_date=parameters["start_date"], end_date=parameters["end_date"], top_n=N)
+        try:
+            if parameters["datasets"]:
+                results = requests.get('http://34.83.49.212:5000/datasets/' + parameters['query'] + "/" + str(N) + "/" + parameters["start_date_str"] + "/" + parameters["end_date_str"])
+            else:
+                results = requests.get('http://34.83.49.212:5000/papers/' + parameters['query'] + "/" + str(N) + "/" + parameters["start_date_str"] + "/" + parameters["end_date_str"])
+        except:
+            print("Failed to get a valid response from the microservice. Is it on?")
 
     elif parameters["datasets"]:
         results = get_datasets_results(query=parameters['query'],
-                            type = parameters["search_type"], 
+                            input_type = parameters["search_type"], 
                             ranking = parameters["algorithm"], top_n=N)
 
     else:
         results = get_papers_results(query=parameters['query'],
-                            type = parameters["search_type"],
-                            ranking = parameters["algorithm"],  
-                            start_date=parameters["start_date"], 
+                            input_type = parameters["search_type"],
+                            ranking = parameters["algorithm"],
+                            start_date=parameters["start_date"],
                             end_date=parameters["end_date"], top_n=N)
 
     return results
@@ -110,10 +108,13 @@ def get_full_result(parameters, id):
     _results_cache.put(id, result)
     return result
 
+@app.route("/favicon.ico")
+def favicon():
+    return ""
+
 @app.route("/<search_query>", methods = ['POST', 'GET'])
 def search_state_machine(search_query):
     results = {"Results":[{}]}
-
     parameters = deserialize(request.args['q'])
     id = request.args['q'].rpartition("/pn=")[0]
     # {
@@ -135,8 +136,7 @@ def search_state_machine(search_query):
         content = _results_cache.get(id)
         if content is None:
             content = get_full_result(parameters, id)
-
-        return {"Results" : content['Results'][ (pn-1)*25 : pn*25 ]}
+        results = {"Results" : content['Results'][ (pn-1)*25 : pn*25 ]}
     else:
         content = _results_cache.get(id)
         if not content is None:
@@ -146,47 +146,50 @@ def search_state_machine(search_query):
         thread = threading.Thread(target=get_full_result, args=(parameters, id))
         _results_cache.put(id+'_thread', thread)
         thread.start()
-        return results
+    
+    return results
 
 @app.route("/")
 def direct_access_to_backend():
     return "Change PORT to 3000 to access the React frontend!"
-print(0.6)
 
 ######################### Search Functions ########################
 def get_datasets_results(query: str, top_n: int=10, spell_check=False, qe=False, 
-    type :str = "DEFAULT", ranking: str = "TF_IDF",) -> dict:
-
+    input_type :str = "DEFAULT", ranking: str = "TF_IDF",) -> dict:
     if spell_check:
         query = ' '.join(query_spell_check(query))
     if qe:
         query = query + ' ' + ' '.join(get_query_expansion(query))
     query_params = _preprocess_query(query,True, True) # stemming, removing stopwords
 
-    if type == "DEFAULT":
+    if input_type == "DEFAULT":
         if ranking == "TF_IDF":
             scores = ranking_query_tfidf_dataset(query_params)
         else:
             scores = ranking_query_bm25_dataset(query_params)
         outputs = [i[0] for i in scores[:top_n]]
 
-    elif type == "PHRASE":
+    elif input_type == "PHRASE":
         outputs = phrase_search_dataset(query_params, start_time=time.time()) # return: list of ids of paper
-    elif type == "PROXIMITY":
+    elif input_type == "PROXIMITY":
         outputs = proximity_search_dataset(query_params,  proximity=10) # return: list of ids of paper
 
     output_dict = {"Results":[]}
-
+    columns = ['title','subtitle','abstract', 'ownerUser', 'dataset_slug', 'keyword']
     for result in outputs[:top_n]:
-
-        output = df.iloc[result]['title','subtitle','abstract'].to_dict()
-        output["abstract"] = output["description"]
+        output = df.iloc[result][columns].to_dict()
+        # output["abstract"] = output["description"]
+        for key, value in output.items():
+            output[key] = str(value)
+        output["date"] = ""
+        output["authors"] = output["ownerUser"]
+        output["abstract"] = curr_formatter.remove_markdown(output['abstract']) #TODO:YUTO
+        output["url"] = "https://kaggle.com/" + output["ownerUser"] + "/" + output['dataset_slug']
         output_dict["Results"].append(output)
-
     return output_dict
 
 def get_papers_results(query: str, top_n: int=10, spell_check=True, qe=False, 
-    type :str = "DEFAULT", ranking: str = "TF_IDF", 
+    input_type :str = "DEFAULT", ranking: str = "TF_IDF", 
     start_date:datetime = min_day, end_date:datetime = curr_day) -> dict:
 
     # if spell_check:
@@ -197,15 +200,15 @@ def get_papers_results(query: str, top_n: int=10, spell_check=True, qe=False,
     query_params = _preprocess_query(query, True, True) # stemming, removing stopwords
 
 
-    if type == "DEFAULT":
+    if input_type == "DEFAULT":
         if ranking == "TF_IDF":
             scores = ranking_query_tfidf_paper(query_params, client)
         else:
             scores = ranking_query_bm25_paper(query_params, client)
         outputs = [i[0] for i in scores]
-    elif type == "PHRASE":
+    elif input_type == "PHRASE":
         outputs = phrase_search_paper(query_params, client, start_time=time.time()) # return: list of ids of paper
-    elif type == "PROXIMITY":
+    elif input_type == "PROXIMITY":
         outputs = proximity_search_paper(query_params, client, proximity=10)
 
     output_dict = {}
@@ -282,49 +285,6 @@ def authors_extensions(query: str, top_n: int=100, docs_searched: int=10, author
     return results
 
 
-#NOTE:DL
-def get_approx_nn_datasets_results(query: str, top_n: int=100) -> dict:
-    """
-    Input: query (type: string)
-    Output: search results (dict)
-    """
-    query = model.encode(query, convert_to_tensor=True)
-    neighbors, distances = searcher_dataset.search(query, final_num_neighbors=1000)
-
-    output_dict = {}
-
-    columns = ['title','subtitle','abstract', 'url']
-    output_dict["Results"] = [df_datasets.iloc[i][columns].to_dict() for i in neighbors[:top_n]]
-    #output_dict["abstract"] = output_dict["Results"]["description"]
-
-    return output_dict
-
-
-#NOTE:DL
-def get_approx_nn_papers_results(query: str, top_n: int=10, start_date:datetime = min_day, end_date:datetime = curr_day) -> dict:
-    """
-    Input: query (type: string)
-    Output: Dictionary (HashMap)
-    """
-    query = model.encode(query, convert_to_tensor=True)
-    neighbors, _ = searcher.search(query, final_num_neighbors=1000)
-
-    output_dict = {}
-    outputs = [str(df_papers.iloc[i]._id) for i in neighbors]
-    
-    temp_result = list(client.order_preserved_get_data(id_list= outputs,
-                                                       start_date=start_date, end_date=end_date,
-                                                       fields=['title', 'abstract','authors', 'url', 'date'],
-                                                       limit=top_n
-                                                      )
-                      )   
-    for result in temp_result:
-        result["date"] = result["date"].strftime("%d/%m/%Y")
-
-    output_dict["Results"] = temp_result
-    return output_dict
-
-
 @app.route("/QE/<query>", methods=['GET', 'POST'])
 def query_expansion(query: str):
     """
@@ -355,4 +315,4 @@ def _preprocess_query(query: str, stemming=True, remove_stopwords=True) -> dict:
 
     return query_params
 
-
+print("eee")
