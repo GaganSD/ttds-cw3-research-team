@@ -18,6 +18,7 @@ import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
+
 export default function ResultsPage(props) {
 
     const theme = createTheme({
@@ -327,8 +328,12 @@ export default function ResultsPage(props) {
                     <div style={{
                             marginTop: '-0.8em',
                             marginRight: '2em'
-                        }}><img src={research_logo_side} height="100em" width="250em"/></div>
-                        <div className='Options' style={{
+                    }}> 
+                    <a href="http://localhost:3000">
+                        <img  src={research_logo_side} height="100em" width="250em"/>
+                    </a>
+                    </div>
+                    <div className='Options' style={{
                             marginRight: '3em',
                             marginTop: '1.5em'
                         }}>
@@ -384,8 +389,8 @@ export default function ResultsPage(props) {
                 </Box>
                 {/* <p>moneybag yo</p> */}
                 <div className='results' style={{
-                    marginLeft: '20em',
-                    marginRight: '20em'
+                    marginLeft: '10em',
+                    marginRight: '45em'
                 }}>
 
                     {json_results.Results.map(curr_elem => {

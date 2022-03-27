@@ -76,13 +76,15 @@ export default function HelpDialog(props){
                         For research papers, you can also choose between Proximity, Phrase, and Author search types. For datasets, we provide the same 
                         options with an exception of Author Search since this field is missing in many open-source datasets.
 
-                        Other than this, you can filter your results with from and to dates in both datasets and papers.
+                        Other than this, you can filter your results with 'from' and 'to' dates in both datasets and papers or use the "Expand Query" option to get
+                        synonyms through WordNet.
+
+                        Other than this, you can filter your results 
                         <br/>
                         <br/>
-                        Note: Please note that the authors name in the paper might vary.
+                        NOTE: Please note that the same author's name in the paper might vary.
                         For example, some papers list John A. Zoidberg's name as "J. Zoidberg" while others
                         can list them as "J. Zoidberg" or even just "Zoidberg". We recommend searching by lastname to deal with this.
-
                     </DialogContentText>
                 </DialogContent>
 

@@ -52,9 +52,27 @@ export default function SwipeableTemporaryDrawer(props) {
   //   range_from:null,                                                                                     
   //   range_to: null
   // };
-  // const [theme, setTheme] = useState('light');
-  // <button onClick={toggleTheme}>Lights</button>
 
+  const theme = createTheme({
+    components: {
+      MuiTypography: {
+        defaultProps: {
+          variantMapping: {
+            h1: 'h2',
+            h2: 'h2',
+            h3: 'h2',
+            h4: 'h2',
+            h5: 'h2',
+            h6: 'h2',
+            subtitle1: 'h2',
+            subtitle2: 'h2',
+            body1: 'span',
+            body2: 'span',
+          },
+        },
+      },
+    },
+  });
 
 
   const [fromDate, setFromDate] = React.useState(null);
@@ -271,9 +289,8 @@ export default function SwipeableTemporaryDrawer(props) {
   return (
 
     <div>
-    {/* <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
-    <>
-      <GlobalStyles /> */}
+        <ThemeProvider theme={theme}>
+
       {['Advanced Options'].map((anchor) => (
         <React.Fragment key={"left"}>
           <Button onClick={toggleDrawer("left", true)}>{anchor}</Button>
@@ -288,6 +305,7 @@ export default function SwipeableTemporaryDrawer(props) {
         </React.Fragment>
       ))}
 
+    </ThemeProvider>
     </div>
   );
 }
