@@ -6,7 +6,7 @@ export default function FilterButton(){
     return(
         <ButtonGroup variant="contained" aria-label="outlined primary button group">
             <Button>Papers</Button>
-            <Button>Data Set</Button>
+            <Button>Datasets</Button>
         </ButtonGroup>
     )
 }

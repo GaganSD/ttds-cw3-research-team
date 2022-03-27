@@ -6,7 +6,6 @@ import SearchButton from './components/SearchButton';
 import QEButton from './components/QueryExpansionButton';
 import SearchField from './components/search';
 import UseSwitchesCustom from './components/toggle';
-import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import Options from './components/options'
 import Box from '@mui/material/Box';
@@ -28,13 +27,39 @@ import TabList from '@mui/lab/TabList';
 import HelpDialog from "./components/helpdialog";
 
 import { useEffect, useState } from "react";
-
-import { ThemeProvider } from 'styled-components';
 import { lightTheme, darkTheme } from './components/theme';
 import { GlobalStyles } from './components/global';
 import { useNavigate } from 'react-router-dom';
-//TODO: Remove latex & markdown formatting 
+
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
+import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
+
 function App() {
+
+  const theme = createTheme({
+    components: {
+      MuiTypography: {
+        defaultProps: {
+          variantMapping: {
+            h1: 'h2',
+            h2: 'h2',
+            h3: 'h2',
+            h4: 'h2',
+            h5: 'h2',
+            h6: 'h2',
+            subtitle1: 'h2',
+            subtitle2: 'h2',
+            body1: 'span',
+            body2: 'span',
+            p: 'span',
+          },
+        },
+      },
+    },
+  });
 
   let navigate = useNavigate();
   const routeChange = () => {
@@ -53,15 +78,15 @@ function App() {
       navigate(path);
     }
   }
-  const [theme, setTheme] = useState('light');
-  const toggleTheme = () => {
-    console.log("switch");
-    if (theme === 'light') {
-      setTheme('dark');
-    } else {
-      setTheme('light');
-    }
-}
+//   const [theme, setTheme] = useState('light');
+//   const toggleTheme = () => {
+//     console.log("switch");
+//     if (theme === 'light') {
+//       setTheme('dark');
+//     } else {
+//       setTheme('light');
+//     }
+// }
 
   const [search, setSearch] = React.useState('');
   const showPageButton = React.useRef(false);
@@ -383,14 +408,12 @@ function App() {
       marginLeft: '6em',
       marginRight: '6em'
     }}>
-    <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
-      <>
-        <GlobalStyles />
+
 
 
 
     <img src={research_logo} flex="1" height="350em" width="350em" resizeMode="contain"/>
-    <button onClick={toggleTheme}>Lights</button>
+    {/* <button onClick={toggleTheme}>Lights</button> */}
 
       <div className='Search' style={{
         width:'50%'
@@ -454,8 +477,8 @@ function App() {
           </Breadcrumbs> */}
           {/* TODO: Enable latex formatting in author title
           TODO: Remove latex & markdown formatting in description */}
-          <a href={curr_elem.url}><font size="5">{curr_elem.title}</font></a><br/> 
-          <font color="#595F6A" size="2" face="Tahoma">{fix_url(curr_elem.url)}  {std_date}  {authorlist(curr_elem.authors)}</font><br/> 
+          <a href={curr_elem.url}> {curr_elem.title}</a><br/> 
+          <font color="#595F6A" size="2">{fix_url(curr_elem.url)}  {std_date}  {authorlist(curr_elem.authors)}</font><br/> 
           {/* <font color="#595F6A" face="Tahoma"></font><br/> */}
           <font color="#595F6A">ㅤ{abstractgenerator(curr_elem.abstract)}</font><br/>
         </p></Box>;
@@ -474,8 +497,7 @@ function App() {
       {badquery ? <Alert severity="warning">Bad Search Query</Alert> : null}
     </div>
    */}
-           </>
-    </ThemeProvider>
+
     </div>
   )}
 

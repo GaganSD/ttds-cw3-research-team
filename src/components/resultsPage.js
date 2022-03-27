@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Box } from '@mui/system';
 import { useParams } from 'react-router-dom'
-import research_logo from '../logos/re-search-logos_transparent.png';
 import SearchField from './search';
 import SearchButton from './SearchButton';
 import SettingsSuggestIcon from '@mui/icons-material/SettingsSuggest';
@@ -13,14 +12,40 @@ import ButtonGroup from '@mui/material/ButtonGroup';
 import QEButton from './QueryExpansionButton';
 import PageButton from './pagebutton';
 import research_logo_side from '../logos/researchlogoside.png';
-
+import 'typeface-roboto';
+import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
 export default function ResultsPage(props) {
+
+    const theme = createTheme({
+        components: {
+          MuiTypography: {
+            defaultProps: {
+              variantMapping: {
+                h1: 'h2',
+                h2: 'h2',
+                h3: 'h2',
+                h4: 'h2',
+                h5: 'h2',
+                h6: 'h2',
+                subtitle1: 'h2',
+                subtitle2: 'h2',
+                body1: 'span',
+                body2: 'span',
+              },
+            },
+          },
+        },
+      });
+
+      
     React.useEffect(() => {
-        console.log("reeeeeee");
         let search_query = "search?" + (window.location.pathname).slice(8)
         console.log(search_query);
         return fetch('http://34.83.49.212:5000/' + search_query).then(response => response.json()).then(data => {
-            console.log("search complete");
             console.log(create_url(search, values.current));
             setBadQuery(false);
             setEmptyResults(false);
@@ -58,7 +83,6 @@ export default function ResultsPage(props) {
         else {
             setGoBackButtonDisabled(false);
         }
-        console.log("CHANGINGGG");
         values.current.pagenum = pagenum;
         SearchFunc();
 
@@ -102,7 +126,7 @@ export default function ResultsPage(props) {
             return "";
         }
 
-        return formatted;
+        return " • " + formatted;
     }
 
     var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
@@ -125,10 +149,10 @@ export default function ResultsPage(props) {
     function authorlist(authors) {
         var lower = authors.toLowerCase()
         if (authors.includes(",")) {
-            return "- " + authors;
+            return " • " + authors;
         } else if (!(lower == "n/a" || lower == "na" || lower == "NA"
             || lower == "n-a" || lower == "" || lower == " ")) {
-            return "- " + authors;
+            return " • " + authors;
         }
     }
     function fix_url(raw_url) {
@@ -217,8 +241,6 @@ export default function ResultsPage(props) {
     }
 
     const date_formatter = (date) => {
-        // console.log("HERE GOES THE DATE");
-        console.log(date);
         if (date == null) {
             return "inf"
         }
@@ -226,10 +248,8 @@ export default function ResultsPage(props) {
             let day = date.getDate() + "-";
             let month = (date.getMonth() + 1) + "-";
             let year = date.getFullYear() + "";
-            // console.log("HERE GOES THE DATE AGAINNNNNNN");
-            console.log(day + month + year);
-            // console.log("date over");
-            return "- " + day + month + year;
+
+            return day + month + year;
         }
 
     }
@@ -289,6 +309,8 @@ export default function ResultsPage(props) {
 
 
     return (
+        <ThemeProvider theme={theme}>
+
         <div className='ResultsPage'>
             <div className='searchBar'>
                 <Box
@@ -372,14 +394,8 @@ export default function ResultsPage(props) {
 
                         return <Box padding={0.2}>
                             <p>
-
-                                {/* <Breadcrumbs color="grey" size="2" face="Tahoma" separator="›" href="/" aria-label="breadcrumb">
-                        {curr_elem.url}
-                    </Breadcrumbs> */}
-                                {/* TODO: Enable latex formatting in author title
-                    TODO: Remove latex & markdown formatting in description */}
                                 <a href={curr_elem.url}><font size="5">{curr_elem.title}</font></a><br />
-                                <font color="#595F6A" size="2" face="Tahoma">{fix_url(curr_elem.url)} - {std_date} - {authorlist(curr_elem.authors)}</font><br />
+                                <font color="#595F6A" size="2">{fix_url(curr_elem.url)} {std_date} {authorlist(curr_elem.authors)}</font><br />
                                 {/* <font color="#595F6A" face="Tahoma"></font><br/> */}
                                 <font color="#595F6A">ㅤ{abstractgenerator(curr_elem.abstract)}</font><br />
                             </p></Box>;
@@ -392,5 +408,6 @@ export default function ResultsPage(props) {
                 </div>
             </div>
         </div>
+</ThemeProvider>
     )
 }
