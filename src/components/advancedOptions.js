@@ -26,10 +26,15 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import HelpDialog from "./helpdialog";
 
 import { useEffect, useState } from "react";
-
-import { ThemeProvider } from 'styled-components';
-import { lightTheme, darkTheme } from './theme';
 import { GlobalStyles } from './global';
+
+
+import 'typeface-roboto';
+import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
 
 export default function SwipeableTemporaryDrawer(props) {
 
@@ -181,7 +186,7 @@ export default function SwipeableTemporaryDrawer(props) {
               name = "searchtypebuttons"
               onChange={handleChange}>
 
-                <FormControlLabel control={<Radio/>}  label="Default (Transformers)" value="DEFAULT" />
+                <FormControlLabel control={<Radio/>}  label="Default" value="DEFAULT" />
                 <FormControlLabel control={<Radio/>} label="Proximity Search" value="PROXIMITY"/>
                 <FormControlLabel control={<Radio/>}  label="Phrase Search" value="PHRASE"/>
                 <FormControlLabel control={<Radio/>} label="Author Search (By Last Name)" value="AUTHOR" disabled={props.datasets}/>
