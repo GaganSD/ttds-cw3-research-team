@@ -7,18 +7,62 @@ import SearchButton from './SearchButton';
 import SettingsSuggestIcon from '@mui/icons-material/SettingsSuggest';
 import IconButton from '@mui/material/IconButton';
 import { Button } from '@mui/material';
-import SwipeableTemporaryDrawer from './advancedOptions';
+import SwipeableTemporaryDrawer from './advancedOptionsResultsPage';
 import PaperOrDS from './datasetorpaper';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import QEButton from './QueryExpansionButton';
 import PageButton from './pagebutton';
+import { useNavigate } from 'react-router-dom';
+import { CompareSharp } from '@mui/icons-material';
+
 
 export default function ResultsPage(props) {
+    let navigate = useNavigate();
+    const routeChange = () => {
+        console.log("heeeeeeyooo")
+        console.log(values.current);
+        if (search === '' || !/^(?!\s+$).+/.test(search)) {
+            console.log(search);
+            console.log("empty query");
+        }
+        else if (!/^[0-9a-zA-Z\s]*$/.test(search)) {
+            console.log("badquery");
+            setBadQuery(true);
+
+        }
+        else {
+
+            let path = create_url(search, values.current);
+            console.log(path);
+            window.location=(window.location.origin + '/' +path);
+        }
+    }
+    const { query, df, dt, alg, srchtyp, ds, pn } = useParams();
     React.useEffect(() => {
         console.log("reeeeeee");
+        console.log(query.slice(2));
+        console.log(df.slice(3));
+        if(df.slice(3) === "inf"){
+            values.current.range_from = null;
+        }
+        else{
+            values.current.range_from= Date(df.slice(3))
+        }
+        console.log(dt.slice(3));
+        if(dt.slice(3) === "inf"){
+            values.current.range_to = null;
+        }
+        else{
+            values.current.range_from= Date(dt.slice(3))
+        }
+        console.log(alg.slice(4));
+        console.log(srchtyp.slice(8));
+        console.log(ds.slice(3));
+        console.log(pn.slice(3));
+        console.log("huh?");
         let search_query = "search?" + (window.location.pathname).slice(8)
         console.log(search_query);
-        return fetch('http://34.142.71.148:5000/' + search_query).then(response => response.json()).then(data => {
+        return fetch('http://localhost:5000/' + search_query).then(response => response.json()).then(data => {
             console.log("search complete");
             console.log(create_url(search, values.current));
             setBadQuery(false);
@@ -27,13 +71,10 @@ export default function ResultsPage(props) {
             setJsonResults(data);
         });
     }, [])
-    const { query, df, dt, alg, srchtyp, ds, pn } = useParams();
-    console.log(query);
-    console.log(df);
-    console.log(df);
-    const [search, setSearch] = React.useState('');
+
+    const [search, setSearch] = React.useState(query.slice(2));
     const showPageButton = React.useRef(false);
-    const [pagenum, setPageNum] = React.useState(1);
+    const [pagenum, setPageNum] = React.useState(pn.slice(3));
     const [datasets, setDatasets] = React.useState(false);
     const [badquery, setBadQuery] = React.useState(false);
     const [emptyresults, setEmptyResults] = React.useState(false);
@@ -42,12 +83,12 @@ export default function ResultsPage(props) {
     const [json_query_expansion, setJsonQE] = React.useState({ QEResults: [] });
     const label = { inputProps: { 'aria-label': 'Switch demo' } };
     const values = React.useRef({
-        algorithm: "Featured",
-        searchtype: "Default",
+        algorithm: alg.slice(4),
+        searchtype: srchtyp.slice(8),
         range_from: null,
         range_to: null,
-        datasets: false,
-        pagenum: 1
+        datasets: ds.slice(3),
+        pagenum: pn.slice(3)
     });
 
     React.useEffect(() => {
@@ -59,7 +100,7 @@ export default function ResultsPage(props) {
         }
         console.log("CHANGINGGG");
         values.current.pagenum = pagenum;
-        SearchFunc();
+        // SearchFunc();
 
     }, [pagenum]);
 
@@ -142,6 +183,14 @@ export default function ResultsPage(props) {
         return domain;
     }
 
+    function QueryExpansion() {
+
+        console.log(create_url(search, values.current));
+        return fetch('http://34.142.71.148:5000/QE/' + search).then(response => response.json()).then(data => {
+            setJsonQE(data);
+        });
+    }
+
     function extractHostname(raw_url) {
 
         var hostname;
@@ -157,47 +206,6 @@ export default function ResultsPage(props) {
         return hostname;
     }
 
-    function SearchFunc() {
-        if (search === "") {
-            console.log("EMPTY SEARCH")
-
-        }
-        else if (!/^[0-9a-zA-Z\s]*$/.test(search)) {
-            console.log("badquery");
-            setJsonResults({ "Results": [] })
-            showPageButton.current = false;
-            setBadQuery(true);
-
-        }
-        else {
-            return fetch('http://34.142.71.148:5000/' + create_url(search, values.current)).then(response => response.json()).then(data => {
-                console.log(create_url(search, values.current));
-                if (data.Results.length === 0) {
-                    console.log("empty");
-                    setEmptyResults(true);
-                    console.log(emptyresults)
-                }
-                else {
-                    console.log("search complete");
-                    console.log(create_url(search, values.current));
-                    setBadQuery(false);
-                    setEmptyResults(false);
-                    showPageButton.current = true;
-                    setJsonResults(data);
-                }
-            });
-        }
-    }
-
-    function QueryExpansion() {
-
-        console.log(create_url(search, values.current));
-        return fetch('http://34.142.71.148:5000/QE/' + search).then(response => response.json()).then(data => {
-            setJsonQE(data);
-        });
-    }
-
-
 
     const getPoDS = (podval) => {
         if (podval === "Papers") {
@@ -212,7 +220,7 @@ export default function ResultsPage(props) {
     }
 
     const date_formatter = (date) => {
-        // console.log("HERE GOES THE DATE");
+        console.log("HERE GOES THE DATE");
         console.log(date);
         if (date == null) {
             return "inf"
@@ -236,7 +244,7 @@ export default function ResultsPage(props) {
 
 
     const create_url = (searchq, vals) => {
-        let url = "search?q=";
+        let url = "search/q=";
         url += SanitizeSearch(searchq).split(" ").join("+");
         url += "/df=";
         url += date_formatter(vals.range_from);
@@ -278,7 +286,7 @@ export default function ResultsPage(props) {
         }
 
         console.log(values);
-        console.log(date_formatter(values.current.range_from));
+        console.log()
     }
 
 
@@ -304,24 +312,28 @@ export default function ResultsPage(props) {
                             <SwipeableTemporaryDrawer hysteresis="0.52" parentCallback={getOptions} datasets={datasets} />
                         </div>
                         <h1>Re-Search</h1>
-                        <div className='SearchField' style={{
+                        <div className='SearchField' 
+                        style={{
                             width: '30%',
                             marginTop: '1.5em',
                             marginLeft: '1em'
                         }}>
                             {badquery ? <SearchField
+                                initialvalue = {query.slice(2)}    
                                 style={{ maxWidth: '80%' }}
                                 parentCallback={TextEntered}
                                 error={true}
                                 text={"Bad Query Was Received"}
                             />
                                 : emptyresults ? <SearchField
+                                    initialvalue = {query.slice(2)}    
                                     style={{ maxWidth: '80%' }}
                                     parentCallback={TextEntered}
                                     error={true}
                                     text={"No Results were shown"}
                                 />
                                     : <SearchField
+                                        initialvalue = {query.slice(2)}    
                                         style={{ maxWidth: '80%' }}
                                         parentCallback={TextEntered}
                                         error={false}
@@ -334,13 +346,9 @@ export default function ResultsPage(props) {
                             marginLeft: '1em'
                         }}>
                             <ButtonGroup variant="contained" aria-label="outlined primary button group">
-                                <SearchButton parentCallback={() => {
-                                    console.log("yes");
-                                    setPageNum(1);
-                                    setGoBackButtonDisabled(true);
-                                    console.log(pagenum);
-                                    SearchFunc();
-                                }} />
+                                <Button onClick={routeChange} variant="contained" style={{ display: 'flex', justifyContent: 'center' }}>
+                                    Search
+                                </Button>
                                 <QEButton parentCallback={QueryExpansion} />
                             </ButtonGroup>
                         </div>

@@ -3,20 +3,23 @@ import Button from '@mui/material/Button';
 import LoadingButton from '@mui/lab/LoadingButton';
 
 export default function SearchButton(props){
+    console.log("rerenderinnggg");
 
-const [process, setProcess] = React.useState({label: 'Search Query'})
-async function task() {
-    return new Promise(() => {
-        props.parentCallback();
-      })
-  }
+    const handleClick = () =>{
+        console.log(props.link)
+    }
+
+
+    if (props.homepage === true){
+        return(
+            <Button variant="contained" style={{display: 'flex', justifyContent:'center'}} onClick={handleClick}>
+                Search
+            </Button>
+        )
+    }
     return(
         <Button variant="contained" style={{display: 'flex', justifyContent: 'center'}} onClick = { async () => {
             
-            
-            setProcess({label: 'Loading...' });
-            const promises = await task();
-            promises.then(setProcess({label: 'Search Query'}));
 
 
            //another attempt that doesnt work:
@@ -24,7 +27,7 @@ async function task() {
                 
         }
         }>
-            {process.label}
+            Search
         </Button>
 
     );
