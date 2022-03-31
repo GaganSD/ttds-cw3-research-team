@@ -77,7 +77,7 @@ export default function SwipeableTemporaryDrawer(props) {
 
   const [fromDate, setFromDate] = React.useState(null);
   const [toDate, setToDate] = React.useState(null);
-  const [radio_choice_algorithm, setRadioChoiceAlgorithm] = React.useState("APPROX_NN");
+  const [radio_choice_algorithm, setRadioChoiceAlgorithm] = React.useState("TF_IDF");
   const [radio_choice_searchtype, setRadioChoiceSearchType] = React.useState("DEFAULT"); 
 
 

@@ -70,7 +70,7 @@ function App() {
     else if( !/^[0-9a-zA-Z\s]*$/.test(search) ){
       console.log("badquery");
       setBadQuery(true);
-
+ 
     }
     else{
       let path = create_url(search, values.current);
@@ -86,9 +86,8 @@ function App() {
 //     } else {
 //       setTheme('light');
 //     }
-// }
-
-  const [search, setSearch] = React.useState('');
+// } useState('');
+  const [search, setSearch] = React.useState("");
   const showPageButton = React.useRef(false);
   const [pagenum, setPageNum] = React.useState(1);
   const [datasets, setDatasets] = React.useState(false);
@@ -173,52 +172,31 @@ function App() {
       return "inf"
     }
     else{
-      let day = date.getDate() + "-";
+      let day = date.getDate() + "";
       let month = (date.getMonth()+1) + "-";
-      let year = date.getFullYear() + "";
+      let year = date.getFullYear() + "-";
       // console.log("HERE GOES THE DATE AGAINNNNNNN");
       console.log(day+month+year);
       // console.log("date over");
-      return day+month+year;
+      return year+month+day;
     }
 
   }
 
   const create_url = (searchq, vals) =>{
-    let url = "search/q=";
+    let url = "search/";
     url += SanitizeSearch(searchq).split(" ").join("+");
-    url += "/df=";
-    url += date_formatter(vals.range_from);
-    url += "/dt=";
-    url += date_formatter(vals.range_to);
-    url += "/alg=";
-    url += vals.algorithm.split(" ").join("_");
-    url += "/srchtyp=";
-    url += vals.searchtype.split(" ").join("_");
-    url += "/ds=";
-    url += vals.datasets + "";
-    url += "/pn=";
-    url += vals.pagenum + "";
     url += "/";
-
-    return url
-
-  }
-
-    const create_route_url = (searchq, vals) =>{
-    let url = "search/q=";
-    url += SanitizeSearch(searchq).split(" ").join("+");
-    url += "/df=";
     url += date_formatter(vals.range_from);
-    url += "/dt=";
+    url += "/";
     url += date_formatter(vals.range_to);
-    url += "/alg=";
+    url += "/";
     url += vals.algorithm.split(" ").join("_");
-    url += "/srchtyp=";
+    url += "/";
     url += vals.searchtype.split(" ").join("_");
-    url += "/ds=";
+    url += "/";
     url += vals.datasets + "";
-    url += "/pn=";
+    url += "/";
     url += vals.pagenum + "";
     url += "/";
 

@@ -20,6 +20,7 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import { CompareSharp } from '@mui/icons-material';
+import Options from './options';
 
 
 export default function ResultsPage(props) {
@@ -46,32 +47,41 @@ export default function ResultsPage(props) {
     const { query, df, dt, alg, srchtyp, ds, pn } = useParams();
     React.useEffect(() => {
         console.log("reeeeeee");
-        console.log(query.slice(2));
-        console.log(df.slice(3));
-        if(df.slice(3) === "inf"){
+        console.log(query);
+        if(df.slice === "inf"){
             values.current.range_from = null;
         }
         else{
-            values.current.range_from= Date(df.slice(3))
+            values.current.range_from= new Date(df)
         }
-        console.log(dt.slice(3));
-        if(dt.slice(3) === "inf"){
+        console.log(dt);
+        if(dt === "inf"){
             values.current.range_to = null;
         }
         else{
-            values.current.range_from= Date(dt.slice(3))
+            values.current.range_from= new Date(dt)
         }
-        console.log(alg.slice(4));
-        console.log(srchtyp.slice(8));
-        console.log(ds.slice(3));
-        console.log(pn.slice(3));
+        console.log(alg);
+        console.log(srchtyp);
+        console.log(ds);
+        console.log(pn);
         console.log("huh?");
-        let search_query = "search?" + (window.location.pathname).slice(8)
+        let search_query = formaturl(window.location.pathname);
         console.log(search_query);
-        return fetch('http://localhost:5000/' + search_query).then(response => response.json()).then(data => {
-            console.log("search complete");
-        })
-    },[]);
+        return fetch('http://34.145.122.190:5000/' + search_query).then(response => response.json()).then(data => {
+            if (data.Results.length === 0) {
+                console.log("empty");
+                setEmptyResults(true);
+                console.log(emptyresults);
+            }
+            else {
+                console.log("search complete");
+                setBadQuery(false);
+                setEmptyResults(false);
+                showPageButton.current = true;
+                setJsonResults(data);
+            }
+    })},[]);
 
 
     const theme = createTheme({
@@ -119,12 +129,12 @@ export default function ResultsPage(props) {
     const [json_query_expansion, setJsonQE] = React.useState({ QEResults: [] });
     const label = { inputProps: { 'aria-label': 'Switch demo' } };
     const values = React.useRef({
-        algorithm: alg.slice(4),
-        searchtype: srchtyp.slice(8),
+        algorithm: alg,
+        searchtype: srchtyp,
         range_from: null,
         range_to: null,
-        datasets: ds.slice(3),
-        pagenum: pn.slice(3)
+        datasets: ds,
+        pagenum: pn
     });
 
     React.useEffect(() => {
@@ -138,6 +148,22 @@ export default function ResultsPage(props) {
         // SearchFunc();
 
     }, [pagenum]);
+
+    const formaturl = (unformatted_url) => {
+        let options = unformatted_url.split("/");
+        let formatted_url = "";
+        formatted_url += options[1] + "?q=";
+        formatted_url += options[2] + "/df=";
+        formatted_url += options[3] + "/dt=";
+        formatted_url += options[4] + "/alg=";
+        formatted_url += options[5] + "/srchtyp=";
+        formatted_url += options[6] + "/ds=";
+        formatted_url += options[7] + "/pn=";
+        formatted_url += options[8] + "/";
+
+        return formatted_url;
+        
+    };
 
     function standardize_dates(string_date) {
 
@@ -363,21 +389,21 @@ export default function ResultsPage(props) {
                             marginLeft: '1em'
                         }}>
                             {badquery ? <SearchField
-                                initialvalue = {query.slice(2)}    
+                                initialvalue = {query}    
                                 style={{ maxWidth: '80%' }}
                                 parentCallback={TextEntered}
                                 error={true}
                                 text={"Bad Query Was Received"}
                             />
                                 : emptyresults ? <SearchField
-                                    initialvalue = {query.slice(2)}    
+                                    initialvalue = {query}    
                                     style={{ maxWidth: '80%' }}
                                     parentCallback={TextEntered}
                                     error={true}
                                     text={"No Results were shown"}
                                 />
                                     : <SearchField
-                                        initialvalue = {query.slice(2)}    
+                                        initialvalue = {query}    
                                         style={{ maxWidth: '80%' }}
                                         parentCallback={TextEntered}
                                         error={false}
