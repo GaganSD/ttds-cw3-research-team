@@ -68,7 +68,7 @@ def ranking_query_BM25(query_params, index_path = 'core_algorithms/ir_eval/last'
         for dataset_id, relevant_dataset in list_of_datasets.items():
             term_freq = len(relevant_dataset['pos'])
             dl = relevant_dataset['len']
-            score = score_BM25(doc_nums, doc_nums_term, term_freq, k1 = 1.5, dl = dl, avgdl=4.82)
+            score = score_BM25(doc_nums, doc_nums_term, term_freq, k1 = 1.5, dl = dl, avgdl=58)
             scores[dataset_id] += score
     return sorted(dict(scores).items(), key = lambda x : x[1], reverse=True)
 

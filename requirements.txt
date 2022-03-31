@@ -7,7 +7,7 @@ jupyter
 flask
 flask_cors
 textblob
-spellchecker
+pyspellchecker
 nltk
 tqdm
 scann

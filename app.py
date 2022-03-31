@@ -81,10 +81,13 @@ def call_top_n(N, parameters):
                 top_n=N)
 
     elif parameters["algorithm"] == "APPROX_NN":
-        if parameters["datasets"]:
-            results = requests.get('https://34.142.71.148:5000/datasets/' + parameters['query'] + "/" + str(N) + "/" + parameters["start_date_str"] + "/" + parameters["end_date_str"])
-        else:
-            results = requests.get('https://34.142.71.148:5000/papers/' + parameters['query'] + "/" + str(N) + "/" + parameters["start_date_str"] + "/" + parameters["end_date_str"])
+        try:
+            if parameters["datasets"]:
+                results = requests.get('http://34.83.49.212:5000/datasets/' + parameters['query'] + "/" + str(N) + "/" + parameters["start_date_str"] + "/" + parameters["end_date_str"])
+            else:
+                results = requests.get('http://34.83.49.212:5000/papers/' + parameters['query'] + "/" + str(N) + "/" + parameters["start_date_str"] + "/" + parameters["end_date_str"])
+        except:
+            print("Failed to get a valid response from the microservice. Is it on?")
 
     elif parameters["datasets"]:
         results = get_datasets_results(query=parameters['query'],
