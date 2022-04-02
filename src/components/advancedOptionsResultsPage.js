@@ -28,6 +28,7 @@ import HelpDialog from "./helpdialog";
 
 import { useEffect, useState } from "react";
 import { GlobalStyles } from './global';
+import { useParams } from 'react-router-dom'
 
 
 import 'typeface-roboto';
@@ -39,241 +40,241 @@ import '@fontsource/roboto/700.css';
 
 export default function SwipeableTemporaryDrawer(props) {
 
-  const [state, setState] = React.useState({
-    top: false,
-    left: false,
-    bottom: false,
-    right: false,
-  });
+    const [state, setState] = React.useState({
+        top: false,
+        left: false,
+        bottom: false,
+        right: false,
+    });
 
-  // let valcopy = {
-  //   sort_by: "Featured",
-  //   authors: true,
-  //   author_text:'',
-  //   range_from:null,                                                                                     
-  //   range_to: null
-  // };
-
-  const theme = createTheme({
-    components: {
-      MuiTypography: {
-        defaultProps: {
-          variantMapping: {
-            h1: 'h2',
-            h2: 'h2',
-            h3: 'h2',
-            h4: 'h2',
-            h5: 'h2',
-            h6: 'h2',
-            subtitle1: 'h2',
-            subtitle2: 'h2',
-            body1: 'span',
-            body2: 'span',
-          },
+    // let valcopy = {
+    //   sort_by: "Featured",
+    //   authors: true,
+    //   author_text:'',
+    //   range_from:null,                                                                                     
+    //   range_to: null
+    // };
+    const { query, df, dt, alg, srchtyp, ds, pn } = useParams();
+    const theme = createTheme({
+        components: {
+            MuiTypography: {
+                defaultProps: {
+                    variantMapping: {
+                        h1: 'h2',
+                        h2: 'h2',
+                        h3: 'h2',
+                        h4: 'h2',
+                        h5: 'h2',
+                        h6: 'h2',
+                        subtitle1: 'h2',
+                        subtitle2: 'h2',
+                        body1: 'span',
+                        body2: 'span',
+                    },
+                },
+            },
         },
-      },
-    },
-  });
+    });
 
 
-  const [fromDate, setFromDate] = React.useState(null);
-  const [toDate, setToDate] = React.useState(null);
-  const [radio_choice_algorithm, setRadioChoiceAlgorithm] = React.useState("APPROX_NN");
-  const [radio_choice_searchtype, setRadioChoiceSearchType] = React.useState("DEFAULT"); 
+    const [fromDate, setFromDate] = React.useState(new Date(df));
+    const [toDate, setToDate] = React.useState(new Date(dt));
+    const [radio_choice_algorithm, setRadioChoiceAlgorithm] = React.useState(alg);
+    const [radio_choice_searchtype, setRadioChoiceSearchType] = React.useState(srchtyp);
 
 
-  React.useEffect(() => {
-    console.log(fromDate);
-    props.parentCallback("date_from", fromDate);
-  }, [fromDate]);
+    React.useEffect(() => {
+        console.log(fromDate);
+        props.parentCallback("date_from", fromDate);
+    }, [fromDate]);
 
 
-  React.useEffect(() => {
-    console.log(toDate);
-    props.parentCallback("date_to", toDate);
-  }, [toDate]);
+    React.useEffect(() => {
+        console.log(toDate);
+        props.parentCallback("date_to", toDate);
+    }, [toDate]);
 
 
 
-  React.useEffect(() => {
-    console.log(radio_choice_algorithm);
-    props.parentCallback("algorithms", radio_choice_algorithm);
-  }, [radio_choice_algorithm]);
+    React.useEffect(() => {
+        console.log(radio_choice_algorithm);
+        props.parentCallback("algorithms", radio_choice_algorithm);
+    }, [radio_choice_algorithm]);
 
-  React.useEffect(() => {
-    console.log(radio_choice_searchtype)
-    props.parentCallback("searchtype", radio_choice_searchtype)
-  }, [radio_choice_searchtype]);
+    React.useEffect(() => {
+        console.log(radio_choice_searchtype)
+        props.parentCallback("searchtype", radio_choice_searchtype)
+    }, [radio_choice_searchtype]);
 
-  const handleChange = (e) => {
-    let eventtype;
-    try{
-      eventtype = e.target.type;
-    }
-    catch{
-      eventtype = "date";
-    }
-    if(eventtype === "radio"){
-      console.log(props.datasets);
-      if(e.target.name === "algorithmbuttons"){
-        setRadioChoiceAlgorithm(e.target.value);
-      }
-      else{
-        setRadioChoiceSearchType(e.target.value);
-      }
-      // setRadioChoiceAlgorithm(e.target.value);
-    }
-
-
-    
-    // console.log(radio_choice_algorithm);
-    // console.log(toDate);
-  };
-
-  const toggleDrawer = (anchor, open) => (event) => {
-    if (
-      event &&
-      event.type === 'keydown' &&
-      (event.key === 'Tab' || event.key === 'Shift')
-    ) {
-      return;
-    }
-
-    setState({ ...state, [anchor]: open });
-  };
-  // const toggleTheme = () => {
-  //   console.log("switch");
-  //   if (theme === 'light') {
-  //     setTheme('dark');
-  //   } else {
-  //     setTheme('light');
-  //   }
-  // }
-  const list = (anchor) => (
-    <Box
-      sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 400}}
-      role="presentation"
-      // onClick={toggleDrawer(anchor, false)}
-      // onKeyDown={toggleDrawer(anchor, false)}
-    >
-      <div style = {{
-        display : "flex",
-        justifyContent: "center"
-      }}>
-        <h2><b> Advanced Options</b></h2>
-        <div style ={{
-          marginTop : "1em",
-          marginLeft : "1em"
-        }}>
-          <HelpDialog/>
-        </div>
-      </div>
-      <Divider />
-
-      <List>
+    const handleChange = (e) => {
+        let eventtype;
+        try {
+            eventtype = e.target.type;
+        }
+        catch {
+            eventtype = "date";
+        }
+        if (eventtype === "radio") {
+            console.log(props.datasets);
+            if (e.target.name === "algorithmbuttons") {
+                setRadioChoiceAlgorithm(e.target.value);
+            }
+            else {
+                setRadioChoiceSearchType(e.target.value);
+            }
+            // setRadioChoiceAlgorithm(e.target.value);
+        }
 
 
-        <FormControl sx = {{
-          margin:2
-        }}>
-            <FormLabel id="sortby">Retrieval Algorithm:</FormLabel>
-            <RadioGroup
-              aria-labelledby='algorithmbuttons'
-              defaultValue= {radio_choice_algorithm}
-              name = "algorithmbuttons"
-              onChange={handleChange}>
 
-                <FormControlLabel control={<Radio/>}  label="Transformers & Nearest Neighbors" value="APPROX_NN" />
-                <FormControlLabel control={<Radio/>} label="BM25" value="BM25"/>
-                <FormControlLabel control={<Radio/>}  label="TF-IDF" value="TF_IDF"/>
+        // console.log(radio_choice_algorithm);
+        // console.log(toDate);
+    };
 
-              </RadioGroup>
-        </FormControl>
+    const toggleDrawer = (anchor, open) => (event) => {
+        if (
+            event &&
+            event.type === 'keydown' &&
+            (event.key === 'Tab' || event.key === 'Shift')
+        ) {
+            return;
+        }
 
-      </List>
+        setState({ ...state, [anchor]: open });
+    };
+    // const toggleTheme = () => {
+    //   console.log("switch");
+    //   if (theme === 'light') {
+    //     setTheme('dark');
+    //   } else {
+    //     setTheme('light');
+    //   }
+    // }
+    const list = (anchor) => (
+        <Box
+            sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 400 }}
+            role="presentation"
+        // onClick={toggleDrawer(anchor, false)}
+        // onKeyDown={toggleDrawer(anchor, false)}
+        >
+            <div style={{
+                display: "flex",
+                justifyContent: "center"
+            }}>
+                <h2><b> Advanced Options</b></h2>
+                <div style={{
+                    marginTop: "1em",
+                    marginLeft: "1em"
+                }}>
+                    <HelpDialog />
+                </div>
+            </div>
+            <Divider />
 
-      <Divider/>
-
-      <List>
-        <FormControl sx = {{
-          margin:2
-        }}>
-            <FormLabel id="sortby">Search Type:</FormLabel>
-            <RadioGroup
-              aria-labelledby='searchtype options'
-              defaultValue= {radio_choice_searchtype}
-              name = "searchtypebuttons"
-              onChange={handleChange}>
-
-                <FormControlLabel control={<Radio/>}  label="Default" value="DEFAULT" />
-                <FormControlLabel control={<Radio/>} label="Proximity Search" value="PROXIMITY"/>
-                <FormControlLabel control={<Radio/>}  label="Phrase Search" value="PHRASE"/>
-                <FormControlLabel control={<Radio/>} label="Author Search (By Last Name)" value="AUTHOR" disabled={props.datasets}/>
-              
-
-              </RadioGroup>
-        </FormControl>
-      </List>
-
-
-      <Divider />
-      <List>
-        <div style = {{
-          display : "flex",
-          flexDirection: "row"
-        }}>
-          <CalendarMonthIcon sx={{
-            marginTop:".5em",
-            marginRight: ".5em",
-            marginLeft:".5em"
-          }}
-          style = {{
-            color: 'grey'
-          }}
-          />
-          <p style ={{
-            color: "grey"
-          }}> Date Range:</p>
-        </div>
-        <div style={{
-
-        marginRight: "5em",
-        marginLeft: "1em"
-      
-        }}>
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
-              <Stack spacing={3}>
-                <DesktopDatePicker
-                label="From"
-                inputFormat="dd/MM/yyyy"
-                value={fromDate}
-                onChange={(newfromvalue) => {
-                  setFromDate(newfromvalue);
-                  handleChange();
-                  // console.log(fromDate);
-                }}
-                renderInput={(params) => <TextField {...params} />}
-                />
-                <DesktopDatePicker
-                label="To"
-                inputFormat="dd/MM/yyyy"
-                value={toDate}
-                onChange={(newtovalue) => {
-                  setToDate(newtovalue);
-                  handleChange();
-                  // console.log(toDate);
-                }}
-                renderInput={(params) => <TextField {...params} />}
-                /> 
-              </Stack>
-            </LocalizationProvider>
-        </div>
-      </List>
+            <List>
 
 
-      <Divider />
+                <FormControl sx={{
+                    margin: 2
+                }}>
+                    <FormLabel id="sortby">Retrieval Algorithm:</FormLabel>
+                    <RadioGroup
+                        aria-labelledby='algorithmbuttons'
+                        defaultValue={radio_choice_algorithm}
+                        name="algorithmbuttons"
+                        onChange={handleChange}>
 
-{/* 
+                        <FormControlLabel control={<Radio />} label="Transformers & Nearest Neighbors" value="APPROX_NN" />
+                        <FormControlLabel control={<Radio />} label="BM25" value="BM25" />
+                        <FormControlLabel control={<Radio />} label="TF-IDF" value="TF_IDF" />
+
+                    </RadioGroup>
+                </FormControl>
+
+            </List>
+
+            <Divider />
+
+            <List>
+                <FormControl sx={{
+                    margin: 2
+                }}>
+                    <FormLabel id="sortby">Search Type:</FormLabel>
+                    <RadioGroup
+                        aria-labelledby='searchtype options'
+                        defaultValue={radio_choice_searchtype}
+                        name="searchtypebuttons"
+                        onChange={handleChange}>
+
+                        <FormControlLabel control={<Radio />} label="Default" value="DEFAULT" />
+                        <FormControlLabel control={<Radio />} label="Proximity Search" value="PROXIMITY" />
+                        <FormControlLabel control={<Radio />} label="Phrase Search" value="PHRASE" />
+                        <FormControlLabel control={<Radio />} label="Author Search (By Last Name)" value="AUTHOR" disabled={props.datasets} />
+
+
+                    </RadioGroup>
+                </FormControl>
+            </List>
+
+
+            <Divider />
+            <List>
+                <div style={{
+                    display: "flex",
+                    flexDirection: "row"
+                }}>
+                    <CalendarMonthIcon sx={{
+                        marginTop: ".5em",
+                        marginRight: ".5em",
+                        marginLeft: ".5em"
+                    }}
+                        style={{
+                            color: 'grey'
+                        }}
+                    />
+                    <p style={{
+                        color: "grey"
+                    }}> Date Range:</p>
+                </div>
+                <div style={{
+
+                    marginRight: "5em",
+                    marginLeft: "1em"
+
+                }}>
+                    <LocalizationProvider dateAdapter={AdapterDateFns}>
+                        <Stack spacing={3}>
+                            <DesktopDatePicker
+                                label="From"
+                                inputFormat="dd/MM/yyyy"
+                                value={fromDate}
+                                onChange={(newfromvalue) => {
+                                    setFromDate(newfromvalue);
+                                    handleChange();
+                                    // console.log(fromDate);
+                                }}
+                                renderInput={(params) => <TextField {...params} />}
+                            />
+                            <DesktopDatePicker
+                                label="To"
+                                inputFormat="dd/MM/yyyy"
+                                value={toDate}
+                                onChange={(newtovalue) => {
+                                    setToDate(newtovalue);
+                                    handleChange();
+                                    // console.log(toDate);
+                                }}
+                                renderInput={(params) => <TextField {...params} />}
+                            />
+                        </Stack>
+                    </LocalizationProvider>
+                </div>
+            </List>
+
+
+            <Divider />
+
+            {/* 
       <List>
         {['Sort By:', 'Trash', 'Spam'].map((text, index) => (
           <ListItem button key={text}>
@@ -284,29 +285,29 @@ export default function SwipeableTemporaryDrawer(props) {
           </ListItem>
         ))}
       </List> */}
-    </Box>
-  );
+        </Box>
+    );
 
-  return (
+    return (
 
-    <div>
-        <ThemeProvider theme={theme}>
+        <div>
+            <ThemeProvider theme={theme}>
 
-      {['Advanced Options'].map((anchor) => (
-        <React.Fragment key={"left"}>
-          <Button onClick={toggleDrawer("left", true)}>{anchor}</Button>
-          <SwipeableDrawer
-            anchor={"left"}
-            open={state["left"]}
-            onClose={toggleDrawer("left", false)}
-            onOpen={toggleDrawer("left", true)}
-          >
-            {list("left")}
-          </SwipeableDrawer>
-        </React.Fragment>
-      ))}
+                {['Advanced Options'].map((anchor) => (
+                    <React.Fragment key={"left"}>
+                        <Button onClick={toggleDrawer("left", true)}>{anchor}</Button>
+                        <SwipeableDrawer
+                            anchor={"left"}
+                            open={state["left"]}
+                            onClose={toggleDrawer("left", false)}
+                            onOpen={toggleDrawer("left", true)}
+                        >
+                            {list("left")}
+                        </SwipeableDrawer>
+                    </React.Fragment>
+                ))}
 
-    </ThemeProvider>
-    </div>
-  );
+            </ThemeProvider>
+        </div>
+    );
 }
