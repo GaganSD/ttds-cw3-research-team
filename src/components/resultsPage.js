@@ -52,14 +52,14 @@ export default function ResultsPage(props) {
             values.current.range_from = null;
         }
         else {
-            values.current.range_from = null;
+            values.current.range_from = new Date(df)
         }
         console.log(dt);
         if (dt === "inf") {
             values.current.range_to = null;
         }
         else {
-            values.current.range_from = null;
+            values.current.range_from = new Date(dt)
         }
         console.log(alg);
         console.log(srchtyp);
@@ -133,8 +133,8 @@ export default function ResultsPage(props) {
     const values = React.useRef({
         algorithm: alg,
         searchtype: srchtyp,
-        range_from: null,
-        range_to: null,
+        range_from: new Date(df),
+        range_to: new Date(df),
         datasets: ds,
         pagenum: pn
     });
@@ -147,6 +147,8 @@ export default function ResultsPage(props) {
             setGoBackButtonDisabled(false);
         }
         values.current.pagenum = pagenum;
+        // SearchFunc();
+
     }, [pagenum]);
 
     const formaturl = (unformatted_url) => {
@@ -307,21 +309,12 @@ export default function ResultsPage(props) {
         return searchval;
     }
 
-    const sleep = (milliseconds) => {
-        return new Promise(resolve => setTimeout(resolve, milliseconds))
-      }
 
     const create_url = (searchq, vals) => {
         let url = "search/";
         url += SanitizeSearch(searchq).split(" ").join("+");
         url += "/";
-        var curr_date = date_formatter(vals.range_from);
-        console.log("---------------------------------");
-        console.log(vals.range_from);
-        console.log(curr_date);
-        console.log("sleeeping now");
-        // sleep(10000);
-        url += curr_date;
+        url += date_formatter(vals.range_from);
         url += "/";
         url += date_formatter(vals.range_to);
         url += "/";
@@ -337,7 +330,6 @@ export default function ResultsPage(props) {
         return url
 
     }
-
     function TextEntered(searchval) {
 
         setSearch(searchval);
