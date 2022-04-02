@@ -45,14 +45,6 @@ export default function SwipeableTemporaryDrawer(props) {
     right: false,
   });
 
-  // let valcopy = {
-  //   sort_by: "Featured",
-  //   authors: true,
-  //   author_text:'',
-  //   range_from:null,                                                                                     
-  //   range_to: null
-  // };
-
   const theme = createTheme({
     components: {
       MuiTypography: {
@@ -175,16 +167,16 @@ export default function SwipeableTemporaryDrawer(props) {
         <FormControl sx = {{
           margin:2
         }}>
-            <FormLabel id="sortby">Retrieval Algorithm:</FormLabel>
+            <FormLabel id="sortby">✨ Ranking Algorithm:</FormLabel>
             <RadioGroup
               aria-labelledby='algorithmbuttons'
               defaultValue= {radio_choice_algorithm}
               name = "algorithmbuttons"
               onChange={handleChange}>
 
-                <FormControlLabel control={<Radio/>}  label="Transformers & Nearest Neighbors" value="APPROX_NN" />
-                <FormControlLabel control={<Radio/>} label="BM25" value="BM25"/>
                 <FormControlLabel control={<Radio/>}  label="TF-IDF" value="TF_IDF"/>
+                <FormControlLabel control={<Radio/>} label="BM25" value="BM25"/>
+                <FormControlLabel control={<Radio/>}  label="Transformers & Nearest Neighbors" value="APPROX_NN" />
 
               </RadioGroup>
         </FormControl>
@@ -197,7 +189,7 @@ export default function SwipeableTemporaryDrawer(props) {
         <FormControl sx = {{
           margin:2
         }}>
-            <FormLabel id="sortby">Search Type:</FormLabel>
+            <FormLabel id="sortby">🔎 Search Type:</FormLabel>
             <RadioGroup
               aria-labelledby='searchtype options'
               defaultValue= {radio_choice_searchtype}
@@ -208,7 +200,7 @@ export default function SwipeableTemporaryDrawer(props) {
                 <FormControlLabel control={<Radio/>} label="Proximity Search" value="PROXIMITY"/>
                 <FormControlLabel control={<Radio/>}  label="Phrase Search" value="PHRASE"/>
                 <FormControlLabel control={<Radio/>} label="Author Search (By Last Name)" value="AUTHOR" disabled={props.datasets}/>
-              
+
 
               </RadioGroup>
         </FormControl>
@@ -217,50 +209,44 @@ export default function SwipeableTemporaryDrawer(props) {
 
       <Divider />
       <List>
+      <FormControl sx = {{
+          margin:2
+        }}>
         <div style = {{
           display : "flex",
           flexDirection: "row"
         }}>
-          <CalendarMonthIcon sx={{
-            marginTop:".5em",
-            marginRight: ".5em",
-            marginLeft:".5em"
-          }}
-          style = {{
-            color: 'grey'
-          }}
-          />
           <p style ={{
             color: "grey"
-          }}> Date Range:</p>
+          }}>📅 Date Range:</p>
         </div>
+        </FormControl>
         <div style={{
-
-        marginRight: "5em",
+        marginTop: "-1em",
+        marginRight: "2em",
         marginLeft: "1em"
-      
         }}>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <Stack spacing={3}>
                 <DesktopDatePicker
                 label="From"
                 inputFormat="dd/MM/yyyy"
+                // defaultValue={new Date().getDate()+"-"+(new Date().getMonth()+1)+"-"+new Date().getFullYear()}
                 value={fromDate}
                 onChange={(newfromvalue) => {
                   setFromDate(newfromvalue);
                   handleChange();
-                  // console.log(fromDate);
                 }}
                 renderInput={(params) => <TextField {...params} />}
                 />
                 <DesktopDatePicker
                 label="To"
                 inputFormat="dd/MM/yyyy"
+                // defaultValue={new Date().getDate()+"-"+(new Date().getMonth()+1)+"-"+new Date().getFullYear()}
                 value={toDate}
                 onChange={(newtovalue) => {
                   setToDate(newtovalue);
                   handleChange();
-                  // console.log(toDate);
                 }}
                 renderInput={(params) => <TextField {...params} />}
                 /> 
