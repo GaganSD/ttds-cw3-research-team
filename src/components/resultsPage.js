@@ -7,7 +7,7 @@ import SettingsSuggestIcon from '@mui/icons-material/SettingsSuggest';
 import IconButton from '@mui/material/IconButton';
 import { Button } from '@mui/material';
 import SwipeableTemporaryDrawer from './advancedOptionsResultsPage';
-import PaperOrDS from './datasetorpaper';
+import PaperOrDS from './datasetorpaperresultspage';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import QEButton from './QueryExpansionButton';
 import PageButton from './pagebutton';
@@ -118,21 +118,22 @@ export default function ResultsPage(props) {
     //     });
     // }, [])
 
-    const [search, setSearch] = React.useState(query.slice(2));
+    const [search, setSearch] = React.useState(query);
     const showPageButton = React.useRef(false);
-    const [pagenum, setPageNum] = React.useState(pn.slice(3));
-    const [datasets, setDatasets] = React.useState(false);
+    const [pagenum, setPageNum] = React.useState(pn);
+    const [datasets, setDatasets] = React.useState((ds === "true"));
     const [badquery, setBadQuery] = React.useState(false);
     const [emptyresults, setEmptyResults] = React.useState(false);
     const [gobackbuttondisabled, setGoBackButtonDisabled] = React.useState(true);
     const [json_results, setJsonResults] = React.useState({ "Results": [] });
     const [json_query_expansion, setJsonQE] = React.useState({ QEResults: [] });
+    const [pods_text, setpodsText] = React.useState((ds == "true") ? "DataSets" : "Papers");
     const label = { inputProps: { 'aria-label': 'Switch demo' } };
     const values = React.useRef({
         algorithm: alg,
         searchtype: srchtyp,
-        range_from: null,
-        range_to: null,
+        range_from: new Date(df),
+        range_to: new Date(df),
         datasets: ds,
         pagenum: pn
     });
@@ -274,15 +275,18 @@ export default function ResultsPage(props) {
     const getPoDS = (podval) => {
         if (podval === "Papers") {
             values.current.datasets = false;
+            setpodsText("Papers");
             setDatasets(false);
         }
         else {
 
             values.current.datasets = true;
+            setpodsText("DataSets");
             setDatasets(true);
         }
     }
 
+    
     const date_formatter = (date) => {
         console.log("HERE GOES THE DATE");
         console.log(date);
@@ -426,7 +430,7 @@ export default function ResultsPage(props) {
                             marginTop: "1em",
                             marginLeft: "1em"
                         }}>
-                            <PaperOrDS parentCallback={getPoDS} />
+                            <PaperOrDS parentCallback={getPoDS} dv={pods_text} />
                         </div>
                     </div>
                 </Box>
