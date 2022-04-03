@@ -81,10 +81,9 @@ class Formatting:
         # Part of this method is derived from: 
         # https://stackoverflow.com/questions/761824/python-how-to-convert-markdown-formatted-text-to-text
 #         if type(corpus) != type("a"):
-#             print("not float")
 #             return ""
-        else:
-            return self._md.convert(corpus)
+#        else:
+        return self._md.convert(corpus)
 
     def remove_latex(self, corpus: str) -> str:
 
