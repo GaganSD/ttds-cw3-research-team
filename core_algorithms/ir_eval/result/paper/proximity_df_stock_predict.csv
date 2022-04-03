@@ -1,0 +1,521 @@
+title,abstract,id
+"HATS: A Hierarchical Graph Attention Network for Stock Movement
+  Prediction","  Many researchers both in academia and industry have long been interested in
+the stock market. Numerous approaches were developed to accurately predict
+future trends in stock prices. Recently, there has been a growing interest in
+utilizing graph-structured data in computer science research communities.
+Methods that use relational data for stock market prediction have been recently
+proposed, but they are still in their infancy. First, the quality of collected
+information from different types of relations can vary considerably. No
+existing work has focused on the effect of using different types of relations
+on stock market prediction or finding an effective way to selectively aggregate
+information on different relation types. Furthermore, existing works have
+focused on only individual stock prediction which is similar to the node
+classification task. To address this, we propose a hierarchical attention
+network for stock prediction (HATS) which uses relational data for stock market
+prediction. Our HATS method selectively aggregates information on different
+relation types and adds the information to the representations of each company.
+Specifically, node representations are initialized with features extracted from
+a feature extraction module. HATS is used as a relational modeling module with
+initialized node representations. Then, node representations with the added
+information are fed into a task-specific layer. Our method is used for
+predicting not only individual stock prices but also market index movements,
+which is similar to the graph classification task. The experimental results
+show that performance can change depending on the relational data used. HATS
+which can automatically select information outperformed all the existing
+methods.
+",a
+"HATS: A Hierarchical Graph Attention Network for Stock Movement
+  Prediction","  Many researchers both in academia and industry have long been interested in
+the stock market. Numerous approaches were developed to accurately predict
+future trends in stock prices. Recently, there has been a growing interest in
+utilizing graph-structured data in computer science research communities.
+Methods that use relational data for stock market prediction have been recently
+proposed, but they are still in their infancy. First, the quality of collected
+information from different types of relations can vary considerably. No
+existing work has focused on the effect of using different types of relations
+on stock market prediction or finding an effective way to selectively aggregate
+information on different relation types. Furthermore, existing works have
+focused on only individual stock prediction which is similar to the node
+classification task. To address this, we propose a hierarchical attention
+network for stock prediction (HATS) which uses relational data for stock market
+prediction. Our HATS method selectively aggregates information on different
+relation types and adds the information to the representations of each company.
+Specifically, node representations are initialized with features extracted from
+a feature extraction module. HATS is used as a relational modeling module with
+initialized node representations. Then, node representations with the added
+information are fed into a task-specific layer. Our method is used for
+predicting not only individual stock prices but also market index movements,
+which is similar to the graph classification task. The experimental results
+show that performance can change depending on the relational data used. HATS
+which can automatically select information outperformed all the existing
+methods.
+",a
+"HATS: A Hierarchical Graph Attention Network for Stock Movement
+  Prediction","  Many researchers both in academia and industry have long been interested in
+the stock market. Numerous approaches were developed to accurately predict
+future trends in stock prices. Recently, there has been a growing interest in
+utilizing graph-structured data in computer science research communities.
+Methods that use relational data for stock market prediction have been recently
+proposed, but they are still in their infancy. First, the quality of collected
+information from different types of relations can vary considerably. No
+existing work has focused on the effect of using different types of relations
+on stock market prediction or finding an effective way to selectively aggregate
+information on different relation types. Furthermore, existing works have
+focused on only individual stock prediction which is similar to the node
+classification task. To address this, we propose a hierarchical attention
+network for stock prediction (HATS) which uses relational data for stock market
+prediction. Our HATS method selectively aggregates information on different
+relation types and adds the information to the representations of each company.
+Specifically, node representations are initialized with features extracted from
+a feature extraction module. HATS is used as a relational modeling module with
+initialized node representations. Then, node representations with the added
+information are fed into a task-specific layer. Our method is used for
+predicting not only individual stock prices but also market index movements,
+which is similar to the graph classification task. The experimental results
+show that performance can change depending on the relational data used. HATS
+which can automatically select information outperformed all the existing
+methods.
+",a
+"HATS: A Hierarchical Graph Attention Network for Stock Movement
+  Prediction","  Many researchers both in academia and industry have long been interested in
+the stock market. Numerous approaches were developed to accurately predict
+future trends in stock prices. Recently, there has been a growing interest in
+utilizing graph-structured data in computer science research communities.
+Methods that use relational data for stock market prediction have been recently
+proposed, but they are still in their infancy. First, the quality of collected
+information from different types of relations can vary considerably. No
+existing work has focused on the effect of using different types of relations
+on stock market prediction or finding an effective way to selectively aggregate
+information on different relation types. Furthermore, existing works have
+focused on only individual stock prediction which is similar to the node
+classification task. To address this, we propose a hierarchical attention
+network for stock prediction (HATS) which uses relational data for stock market
+prediction. Our HATS method selectively aggregates information on different
+relation types and adds the information to the representations of each company.
+Specifically, node representations are initialized with features extracted from
+a feature extraction module. HATS is used as a relational modeling module with
+initialized node representations. Then, node representations with the added
+information are fed into a task-specific layer. Our method is used for
+predicting not only individual stock prices but also market index movements,
+which is similar to the graph classification task. The experimental results
+show that performance can change depending on the relational data used. HATS
+which can automatically select information outperformed all the existing
+methods.
+",a
+"HATS: A Hierarchical Graph Attention Network for Stock Movement
+  Prediction","  Many researchers both in academia and industry have long been interested in
+the stock market. Numerous approaches were developed to accurately predict
+future trends in stock prices. Recently, there has been a growing interest in
+utilizing graph-structured data in computer science research communities.
+Methods that use relational data for stock market prediction have been recently
+proposed, but they are still in their infancy. First, the quality of collected
+information from different types of relations can vary considerably. No
+existing work has focused on the effect of using different types of relations
+on stock market prediction or finding an effective way to selectively aggregate
+information on different relation types. Furthermore, existing works have
+focused on only individual stock prediction which is similar to the node
+classification task. To address this, we propose a hierarchical attention
+network for stock prediction (HATS) which uses relational data for stock market
+prediction. Our HATS method selectively aggregates information on different
+relation types and adds the information to the representations of each company.
+Specifically, node representations are initialized with features extracted from
+a feature extraction module. HATS is used as a relational modeling module with
+initialized node representations. Then, node representations with the added
+information are fed into a task-specific layer. Our method is used for
+predicting not only individual stock prices but also market index movements,
+which is similar to the graph classification task. The experimental results
+show that performance can change depending on the relational data used. HATS
+which can automatically select information outperformed all the existing
+methods.
+",a
+"HATS: A Hierarchical Graph Attention Network for Stock Movement
+  Prediction","  Many researchers both in academia and industry have long been interested in
+the stock market. Numerous approaches were developed to accurately predict
+future trends in stock prices. Recently, there has been a growing interest in
+utilizing graph-structured data in computer science research communities.
+Methods that use relational data for stock market prediction have been recently
+proposed, but they are still in their infancy. First, the quality of collected
+information from different types of relations can vary considerably. No
+existing work has focused on the effect of using different types of relations
+on stock market prediction or finding an effective way to selectively aggregate
+information on different relation types. Furthermore, existing works have
+focused on only individual stock prediction which is similar to the node
+classification task. To address this, we propose a hierarchical attention
+network for stock prediction (HATS) which uses relational data for stock market
+prediction. Our HATS method selectively aggregates information on different
+relation types and adds the information to the representations of each company.
+Specifically, node representations are initialized with features extracted from
+a feature extraction module. HATS is used as a relational modeling module with
+initialized node representations. Then, node representations with the added
+information are fed into a task-specific layer. Our method is used for
+predicting not only individual stock prices but also market index movements,
+which is similar to the graph classification task. The experimental results
+show that performance can change depending on the relational data used. HATS
+which can automatically select information outperformed all the existing
+methods.
+",a
+"HATS: A Hierarchical Graph Attention Network for Stock Movement
+  Prediction","  Many researchers both in academia and industry have long been interested in
+the stock market. Numerous approaches were developed to accurately predict
+future trends in stock prices. Recently, there has been a growing interest in
+utilizing graph-structured data in computer science research communities.
+Methods that use relational data for stock market prediction have been recently
+proposed, but they are still in their infancy. First, the quality of collected
+information from different types of relations can vary considerably. No
+existing work has focused on the effect of using different types of relations
+on stock market prediction or finding an effective way to selectively aggregate
+information on different relation types. Furthermore, existing works have
+focused on only individual stock prediction which is similar to the node
+classification task. To address this, we propose a hierarchical attention
+network for stock prediction (HATS) which uses relational data for stock market
+prediction. Our HATS method selectively aggregates information on different
+relation types and adds the information to the representations of each company.
+Specifically, node representations are initialized with features extracted from
+a feature extraction module. HATS is used as a relational modeling module with
+initialized node representations. Then, node representations with the added
+information are fed into a task-specific layer. Our method is used for
+predicting not only individual stock prices but also market index movements,
+which is similar to the graph classification task. The experimental results
+show that performance can change depending on the relational data used. HATS
+which can automatically select information outperformed all the existing
+methods.
+",a
+"HATS: A Hierarchical Graph Attention Network for Stock Movement
+  Prediction","  Many researchers both in academia and industry have long been interested in
+the stock market. Numerous approaches were developed to accurately predict
+future trends in stock prices. Recently, there has been a growing interest in
+utilizing graph-structured data in computer science research communities.
+Methods that use relational data for stock market prediction have been recently
+proposed, but they are still in their infancy. First, the quality of collected
+information from different types of relations can vary considerably. No
+existing work has focused on the effect of using different types of relations
+on stock market prediction or finding an effective way to selectively aggregate
+information on different relation types. Furthermore, existing works have
+focused on only individual stock prediction which is similar to the node
+classification task. To address this, we propose a hierarchical attention
+network for stock prediction (HATS) which uses relational data for stock market
+prediction. Our HATS method selectively aggregates information on different
+relation types and adds the information to the representations of each company.
+Specifically, node representations are initialized with features extracted from
+a feature extraction module. HATS is used as a relational modeling module with
+initialized node representations. Then, node representations with the added
+information are fed into a task-specific layer. Our method is used for
+predicting not only individual stock prices but also market index movements,
+which is similar to the graph classification task. The experimental results
+show that performance can change depending on the relational data used. HATS
+which can automatically select information outperformed all the existing
+methods.
+",a
+Temporal Relational Ranking for Stock Prediction,"  Stock prediction aims to predict the future trends of a stock in order to
+help investors to make good investment decisions. Traditional solutions for
+stock prediction are based on time-series models. With the recent success of
+deep neural networks in modeling sequential data, deep learning has become a
+promising choice for stock prediction. However, most existing deep learning
+solutions are not optimized towards the target of investment, i.e., selecting
+the best stock with the highest expected revenue. Specifically, they typically
+formulate stock prediction as a classification (to predict stock trend) or a
+regression problem (to predict stock price). More importantly, they largely
+treat the stocks as independent of each other. The valuable signal in the rich
+relations between stocks (or companies), such as two stocks are in the same
+sector and two companies have a supplier-customer relation, is not considered.
+In this work, we contribute a new deep learning solution, named Relational
+Stock Ranking (RSR), for stock prediction. Our RSR method advances existing
+solutions in two major aspects: 1) tailoring the deep learning models for stock
+ranking, and 2) capturing the stock relations in a time-sensitive manner. The
+key novelty of our work is the proposal of a new component in neural network
+modeling, named Temporal Graph Convolution, which jointly models the temporal
+evolution and relation network of stocks. To validate our method, we perform
+back-testing on the historical data of two stock markets, NYSE and NASDAQ.
+Extensive experiments demonstrate the superiority of our RSR method. It
+outperforms state-of-the-art stock prediction solutions achieving an average
+return ratio of 98% and 71% on NYSE and NASDAQ, respectively.
+",a
+Temporal Relational Ranking for Stock Prediction,"  Stock prediction aims to predict the future trends of a stock in order to
+help investors to make good investment decisions. Traditional solutions for
+stock prediction are based on time-series models. With the recent success of
+deep neural networks in modeling sequential data, deep learning has become a
+promising choice for stock prediction. However, most existing deep learning
+solutions are not optimized towards the target of investment, i.e., selecting
+the best stock with the highest expected revenue. Specifically, they typically
+formulate stock prediction as a classification (to predict stock trend) or a
+regression problem (to predict stock price). More importantly, they largely
+treat the stocks as independent of each other. The valuable signal in the rich
+relations between stocks (or companies), such as two stocks are in the same
+sector and two companies have a supplier-customer relation, is not considered.
+In this work, we contribute a new deep learning solution, named Relational
+Stock Ranking (RSR), for stock prediction. Our RSR method advances existing
+solutions in two major aspects: 1) tailoring the deep learning models for stock
+ranking, and 2) capturing the stock relations in a time-sensitive manner. The
+key novelty of our work is the proposal of a new component in neural network
+modeling, named Temporal Graph Convolution, which jointly models the temporal
+evolution and relation network of stocks. To validate our method, we perform
+back-testing on the historical data of two stock markets, NYSE and NASDAQ.
+Extensive experiments demonstrate the superiority of our RSR method. It
+outperforms state-of-the-art stock prediction solutions achieving an average
+return ratio of 98% and 71% on NYSE and NASDAQ, respectively.
+",a
+Temporal Relational Ranking for Stock Prediction,"  Stock prediction aims to predict the future trends of a stock in order to
+help investors to make good investment decisions. Traditional solutions for
+stock prediction are based on time-series models. With the recent success of
+deep neural networks in modeling sequential data, deep learning has become a
+promising choice for stock prediction. However, most existing deep learning
+solutions are not optimized towards the target of investment, i.e., selecting
+the best stock with the highest expected revenue. Specifically, they typically
+formulate stock prediction as a classification (to predict stock trend) or a
+regression problem (to predict stock price). More importantly, they largely
+treat the stocks as independent of each other. The valuable signal in the rich
+relations between stocks (or companies), such as two stocks are in the same
+sector and two companies have a supplier-customer relation, is not considered.
+In this work, we contribute a new deep learning solution, named Relational
+Stock Ranking (RSR), for stock prediction. Our RSR method advances existing
+solutions in two major aspects: 1) tailoring the deep learning models for stock
+ranking, and 2) capturing the stock relations in a time-sensitive manner. The
+key novelty of our work is the proposal of a new component in neural network
+modeling, named Temporal Graph Convolution, which jointly models the temporal
+evolution and relation network of stocks. To validate our method, we perform
+back-testing on the historical data of two stock markets, NYSE and NASDAQ.
+Extensive experiments demonstrate the superiority of our RSR method. It
+outperforms state-of-the-art stock prediction solutions achieving an average
+return ratio of 98% and 71% on NYSE and NASDAQ, respectively.
+",a
+Temporal Relational Ranking for Stock Prediction,"  Stock prediction aims to predict the future trends of a stock in order to
+help investors to make good investment decisions. Traditional solutions for
+stock prediction are based on time-series models. With the recent success of
+deep neural networks in modeling sequential data, deep learning has become a
+promising choice for stock prediction. However, most existing deep learning
+solutions are not optimized towards the target of investment, i.e., selecting
+the best stock with the highest expected revenue. Specifically, they typically
+formulate stock prediction as a classification (to predict stock trend) or a
+regression problem (to predict stock price). More importantly, they largely
+treat the stocks as independent of each other. The valuable signal in the rich
+relations between stocks (or companies), such as two stocks are in the same
+sector and two companies have a supplier-customer relation, is not considered.
+In this work, we contribute a new deep learning solution, named Relational
+Stock Ranking (RSR), for stock prediction. Our RSR method advances existing
+solutions in two major aspects: 1) tailoring the deep learning models for stock
+ranking, and 2) capturing the stock relations in a time-sensitive manner. The
+key novelty of our work is the proposal of a new component in neural network
+modeling, named Temporal Graph Convolution, which jointly models the temporal
+evolution and relation network of stocks. To validate our method, we perform
+back-testing on the historical data of two stock markets, NYSE and NASDAQ.
+Extensive experiments demonstrate the superiority of our RSR method. It
+outperforms state-of-the-art stock prediction solutions achieving an average
+return ratio of 98% and 71% on NYSE and NASDAQ, respectively.
+",a
+Temporal Relational Ranking for Stock Prediction,"  Stock prediction aims to predict the future trends of a stock in order to
+help investors to make good investment decisions. Traditional solutions for
+stock prediction are based on time-series models. With the recent success of
+deep neural networks in modeling sequential data, deep learning has become a
+promising choice for stock prediction. However, most existing deep learning
+solutions are not optimized towards the target of investment, i.e., selecting
+the best stock with the highest expected revenue. Specifically, they typically
+formulate stock prediction as a classification (to predict stock trend) or a
+regression problem (to predict stock price). More importantly, they largely
+treat the stocks as independent of each other. The valuable signal in the rich
+relations between stocks (or companies), such as two stocks are in the same
+sector and two companies have a supplier-customer relation, is not considered.
+In this work, we contribute a new deep learning solution, named Relational
+Stock Ranking (RSR), for stock prediction. Our RSR method advances existing
+solutions in two major aspects: 1) tailoring the deep learning models for stock
+ranking, and 2) capturing the stock relations in a time-sensitive manner. The
+key novelty of our work is the proposal of a new component in neural network
+modeling, named Temporal Graph Convolution, which jointly models the temporal
+evolution and relation network of stocks. To validate our method, we perform
+back-testing on the historical data of two stock markets, NYSE and NASDAQ.
+Extensive experiments demonstrate the superiority of our RSR method. It
+outperforms state-of-the-art stock prediction solutions achieving an average
+return ratio of 98% and 71% on NYSE and NASDAQ, respectively.
+",a
+Temporal Relational Ranking for Stock Prediction,"  Stock prediction aims to predict the future trends of a stock in order to
+help investors to make good investment decisions. Traditional solutions for
+stock prediction are based on time-series models. With the recent success of
+deep neural networks in modeling sequential data, deep learning has become a
+promising choice for stock prediction. However, most existing deep learning
+solutions are not optimized towards the target of investment, i.e., selecting
+the best stock with the highest expected revenue. Specifically, they typically
+formulate stock prediction as a classification (to predict stock trend) or a
+regression problem (to predict stock price). More importantly, they largely
+treat the stocks as independent of each other. The valuable signal in the rich
+relations between stocks (or companies), such as two stocks are in the same
+sector and two companies have a supplier-customer relation, is not considered.
+In this work, we contribute a new deep learning solution, named Relational
+Stock Ranking (RSR), for stock prediction. Our RSR method advances existing
+solutions in two major aspects: 1) tailoring the deep learning models for stock
+ranking, and 2) capturing the stock relations in a time-sensitive manner. The
+key novelty of our work is the proposal of a new component in neural network
+modeling, named Temporal Graph Convolution, which jointly models the temporal
+evolution and relation network of stocks. To validate our method, we perform
+back-testing on the historical data of two stock markets, NYSE and NASDAQ.
+Extensive experiments demonstrate the superiority of our RSR method. It
+outperforms state-of-the-art stock prediction solutions achieving an average
+return ratio of 98% and 71% on NYSE and NASDAQ, respectively.
+",a
+Temporal Relational Ranking for Stock Prediction,"  Stock prediction aims to predict the future trends of a stock in order to
+help investors to make good investment decisions. Traditional solutions for
+stock prediction are based on time-series models. With the recent success of
+deep neural networks in modeling sequential data, deep learning has become a
+promising choice for stock prediction. However, most existing deep learning
+solutions are not optimized towards the target of investment, i.e., selecting
+the best stock with the highest expected revenue. Specifically, they typically
+formulate stock prediction as a classification (to predict stock trend) or a
+regression problem (to predict stock price). More importantly, they largely
+treat the stocks as independent of each other. The valuable signal in the rich
+relations between stocks (or companies), such as two stocks are in the same
+sector and two companies have a supplier-customer relation, is not considered.
+In this work, we contribute a new deep learning solution, named Relational
+Stock Ranking (RSR), for stock prediction. Our RSR method advances existing
+solutions in two major aspects: 1) tailoring the deep learning models for stock
+ranking, and 2) capturing the stock relations in a time-sensitive manner. The
+key novelty of our work is the proposal of a new component in neural network
+modeling, named Temporal Graph Convolution, which jointly models the temporal
+evolution and relation network of stocks. To validate our method, we perform
+back-testing on the historical data of two stock markets, NYSE and NASDAQ.
+Extensive experiments demonstrate the superiority of our RSR method. It
+outperforms state-of-the-art stock prediction solutions achieving an average
+return ratio of 98% and 71% on NYSE and NASDAQ, respectively.
+",a
+Temporal Relational Ranking for Stock Prediction,"  Stock prediction aims to predict the future trends of a stock in order to
+help investors to make good investment decisions. Traditional solutions for
+stock prediction are based on time-series models. With the recent success of
+deep neural networks in modeling sequential data, deep learning has become a
+promising choice for stock prediction. However, most existing deep learning
+solutions are not optimized towards the target of investment, i.e., selecting
+the best stock with the highest expected revenue. Specifically, they typically
+formulate stock prediction as a classification (to predict stock trend) or a
+regression problem (to predict stock price). More importantly, they largely
+treat the stocks as independent of each other. The valuable signal in the rich
+relations between stocks (or companies), such as two stocks are in the same
+sector and two companies have a supplier-customer relation, is not considered.
+In this work, we contribute a new deep learning solution, named Relational
+Stock Ranking (RSR), for stock prediction. Our RSR method advances existing
+solutions in two major aspects: 1) tailoring the deep learning models for stock
+ranking, and 2) capturing the stock relations in a time-sensitive manner. The
+key novelty of our work is the proposal of a new component in neural network
+modeling, named Temporal Graph Convolution, which jointly models the temporal
+evolution and relation network of stocks. To validate our method, we perform
+back-testing on the historical data of two stock markets, NYSE and NASDAQ.
+Extensive experiments demonstrate the superiority of our RSR method. It
+outperforms state-of-the-art stock prediction solutions achieving an average
+return ratio of 98% and 71% on NYSE and NASDAQ, respectively.
+",a
+Temporal Relational Ranking for Stock Prediction,"  Stock prediction aims to predict the future trends of a stock in order to
+help investors to make good investment decisions. Traditional solutions for
+stock prediction are based on time-series models. With the recent success of
+deep neural networks in modeling sequential data, deep learning has become a
+promising choice for stock prediction. However, most existing deep learning
+solutions are not optimized towards the target of investment, i.e., selecting
+the best stock with the highest expected revenue. Specifically, they typically
+formulate stock prediction as a classification (to predict stock trend) or a
+regression problem (to predict stock price). More importantly, they largely
+treat the stocks as independent of each other. The valuable signal in the rich
+relations between stocks (or companies), such as two stocks are in the same
+sector and two companies have a supplier-customer relation, is not considered.
+In this work, we contribute a new deep learning solution, named Relational
+Stock Ranking (RSR), for stock prediction. Our RSR method advances existing
+solutions in two major aspects: 1) tailoring the deep learning models for stock
+ranking, and 2) capturing the stock relations in a time-sensitive manner. The
+key novelty of our work is the proposal of a new component in neural network
+modeling, named Temporal Graph Convolution, which jointly models the temporal
+evolution and relation network of stocks. To validate our method, we perform
+back-testing on the historical data of two stock markets, NYSE and NASDAQ.
+Extensive experiments demonstrate the superiority of our RSR method. It
+outperforms state-of-the-art stock prediction solutions achieving an average
+return ratio of 98% and 71% on NYSE and NASDAQ, respectively.
+",a
+Temporal Relational Ranking for Stock Prediction,"  Stock prediction aims to predict the future trends of a stock in order to
+help investors to make good investment decisions. Traditional solutions for
+stock prediction are based on time-series models. With the recent success of
+deep neural networks in modeling sequential data, deep learning has become a
+promising choice for stock prediction. However, most existing deep learning
+solutions are not optimized towards the target of investment, i.e., selecting
+the best stock with the highest expected revenue. Specifically, they typically
+formulate stock prediction as a classification (to predict stock trend) or a
+regression problem (to predict stock price). More importantly, they largely
+treat the stocks as independent of each other. The valuable signal in the rich
+relations between stocks (or companies), such as two stocks are in the same
+sector and two companies have a supplier-customer relation, is not considered.
+In this work, we contribute a new deep learning solution, named Relational
+Stock Ranking (RSR), for stock prediction. Our RSR method advances existing
+solutions in two major aspects: 1) tailoring the deep learning models for stock
+ranking, and 2) capturing the stock relations in a time-sensitive manner. The
+key novelty of our work is the proposal of a new component in neural network
+modeling, named Temporal Graph Convolution, which jointly models the temporal
+evolution and relation network of stocks. To validate our method, we perform
+back-testing on the historical data of two stock markets, NYSE and NASDAQ.
+Extensive experiments demonstrate the superiority of our RSR method. It
+outperforms state-of-the-art stock prediction solutions achieving an average
+return ratio of 98% and 71% on NYSE and NASDAQ, respectively.
+",a
+Temporal Relational Ranking for Stock Prediction,"  Stock prediction aims to predict the future trends of a stock in order to
+help investors to make good investment decisions. Traditional solutions for
+stock prediction are based on time-series models. With the recent success of
+deep neural networks in modeling sequential data, deep learning has become a
+promising choice for stock prediction. However, most existing deep learning
+solutions are not optimized towards the target of investment, i.e., selecting
+the best stock with the highest expected revenue. Specifically, they typically
+formulate stock prediction as a classification (to predict stock trend) or a
+regression problem (to predict stock price). More importantly, they largely
+treat the stocks as independent of each other. The valuable signal in the rich
+relations between stocks (or companies), such as two stocks are in the same
+sector and two companies have a supplier-customer relation, is not considered.
+In this work, we contribute a new deep learning solution, named Relational
+Stock Ranking (RSR), for stock prediction. Our RSR method advances existing
+solutions in two major aspects: 1) tailoring the deep learning models for stock
+ranking, and 2) capturing the stock relations in a time-sensitive manner. The
+key novelty of our work is the proposal of a new component in neural network
+modeling, named Temporal Graph Convolution, which jointly models the temporal
+evolution and relation network of stocks. To validate our method, we perform
+back-testing on the historical data of two stock markets, NYSE and NASDAQ.
+Extensive experiments demonstrate the superiority of our RSR method. It
+outperforms state-of-the-art stock prediction solutions achieving an average
+return ratio of 98% and 71% on NYSE and NASDAQ, respectively.
+",a
+Temporal Relational Ranking for Stock Prediction,"  Stock prediction aims to predict the future trends of a stock in order to
+help investors to make good investment decisions. Traditional solutions for
+stock prediction are based on time-series models. With the recent success of
+deep neural networks in modeling sequential data, deep learning has become a
+promising choice for stock prediction. However, most existing deep learning
+solutions are not optimized towards the target of investment, i.e., selecting
+the best stock with the highest expected revenue. Specifically, they typically
+formulate stock prediction as a classification (to predict stock trend) or a
+regression problem (to predict stock price). More importantly, they largely
+treat the stocks as independent of each other. The valuable signal in the rich
+relations between stocks (or companies), such as two stocks are in the same
+sector and two companies have a supplier-customer relation, is not considered.
+In this work, we contribute a new deep learning solution, named Relational
+Stock Ranking (RSR), for stock prediction. Our RSR method advances existing
+solutions in two major aspects: 1) tailoring the deep learning models for stock
+ranking, and 2) capturing the stock relations in a time-sensitive manner. The
+key novelty of our work is the proposal of a new component in neural network
+modeling, named Temporal Graph Convolution, which jointly models the temporal
+evolution and relation network of stocks. To validate our method, we perform
+back-testing on the historical data of two stock markets, NYSE and NASDAQ.
+Extensive experiments demonstrate the superiority of our RSR method. It
+outperforms state-of-the-art stock prediction solutions achieving an average
+return ratio of 98% and 71% on NYSE and NASDAQ, respectively.
+",a
+Temporal Relational Ranking for Stock Prediction,"  Stock prediction aims to predict the future trends of a stock in order to
+help investors to make good investment decisions. Traditional solutions for
+stock prediction are based on time-series models. With the recent success of
+deep neural networks in modeling sequential data, deep learning has become a
+promising choice for stock prediction. However, most existing deep learning
+solutions are not optimized towards the target of investment, i.e., selecting
+the best stock with the highest expected revenue. Specifically, they typically
+formulate stock prediction as a classification (to predict stock trend) or a
+regression problem (to predict stock price). More importantly, they largely
+treat the stocks as independent of each other. The valuable signal in the rich
+relations between stocks (or companies), such as two stocks are in the same
+sector and two companies have a supplier-customer relation, is not considered.
+In this work, we contribute a new deep learning solution, named Relational
+Stock Ranking (RSR), for stock prediction. Our RSR method advances existing
+solutions in two major aspects: 1) tailoring the deep learning models for stock
+ranking, and 2) capturing the stock relations in a time-sensitive manner. The
+key novelty of our work is the proposal of a new component in neural network
+modeling, named Temporal Graph Convolution, which jointly models the temporal
+evolution and relation network of stocks. To validate our method, we perform
+back-testing on the historical data of two stock markets, NYSE and NASDAQ.
+Extensive experiments demonstrate the superiority of our RSR method. It
+outperforms state-of-the-art stock prediction solutions achieving an average
+return ratio of 98% and 71% on NYSE and NASDAQ, respectively.
+",a

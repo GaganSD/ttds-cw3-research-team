@@ -1,0 +1,12 @@
+title,subtitle,description,Source
+EDT,,"The EDT dataset is designed for corporate event detection and text-based stock prediction (trading strategy) benchmark.
+
+1. Corporate Event Detection
+It includes 9721​ news articles with token-level event labels. Including 11 event types:
+Acquisitions, Clinical Trials, Guidance Changes, New Contracts, Stock Repurchases, Stock Split, Reverse Stock Split/ADS Ratio Change, Regular Dividend, Special Dividend, Dividend Cut, Dividend Increase
+
+2. Text-Based Stock Prediction Benchmark
+It includes 303893​ first-hand news articles from high-quality sources. Each news article is assigned a minute-level timestamp and comprehensive stock price labels.
+
+Please see this [Github Link](https://github.com/Zhihan1996/TradeTheEvent/tree/main/data) and [paper](https://aclanthology.org/2021.findings-acl.186.pdf) for more details.",Paper_with_code
+DSE and CSE datasets,DSE and CSE Dataset for Stock Prediction,,Kaggle

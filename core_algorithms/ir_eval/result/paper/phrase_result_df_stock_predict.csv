@@ -1,0 +1,318 @@
+title,abstract,id
+"HATS: A Hierarchical Graph Attention Network for Stock Movement
+  Prediction","  Many researchers both in academia and industry have long been interested in
+the stock market. Numerous approaches were developed to accurately predict
+future trends in stock prices. Recently, there has been a growing interest in
+utilizing graph-structured data in computer science research communities.
+Methods that use relational data for stock market prediction have been recently
+proposed, but they are still in their infancy. First, the quality of collected
+information from different types of relations can vary considerably. No
+existing work has focused on the effect of using different types of relations
+on stock market prediction or finding an effective way to selectively aggregate
+information on different relation types. Furthermore, existing works have
+focused on only individual stock prediction which is similar to the node
+classification task. To address this, we propose a hierarchical attention
+network for stock prediction (HATS) which uses relational data for stock market
+prediction. Our HATS method selectively aggregates information on different
+relation types and adds the information to the representations of each company.
+Specifically, node representations are initialized with features extracted from
+a feature extraction module. HATS is used as a relational modeling module with
+initialized node representations. Then, node representations with the added
+information are fed into a task-specific layer. Our method is used for
+predicting not only individual stock prices but also market index movements,
+which is similar to the graph classification task. The experimental results
+show that performance can change depending on the relational data used. HATS
+which can automatically select information outperformed all the existing
+methods.
+",a
+"DP-LSTM: Differential Privacy-inspired LSTM for Stock Prediction Using
+  Financial News","  Stock price prediction is important for value investments in the stock
+market. In particular, short-term prediction that exploits financial news
+articles is promising in recent years. In this paper, we propose a novel deep
+neural network DP-LSTM for stock price prediction, which incorporates the news
+articles as hidden information and integrates difference news sources through
+the differential privacy mechanism. First, based on the autoregressive moving
+average model (ARMA), a sentiment-ARMA is formulated by taking into
+consideration the information of financial news articles in the model. Then, an
+LSTM-based deep neural network is designed, which consists of three components:
+LSTM, VADER model and differential privacy (DP) mechanism. The proposed DP-LSTM
+scheme can reduce prediction errors and increase the robustness. Extensive
+experiments on S&P 500 stocks show that (i) the proposed DP-LSTM achieves 0.32%
+improvement in mean MPA of prediction result, and (ii) for the prediction of
+the market index S&P 500, we achieve up to 65.79% improvement in MSE.
+",a
+Temporal Relational Ranking for Stock Prediction,"  Stock prediction aims to predict the future trends of a stock in order to
+help investors to make good investment decisions. Traditional solutions for
+stock prediction are based on time-series models. With the recent success of
+deep neural networks in modeling sequential data, deep learning has become a
+promising choice for stock prediction. However, most existing deep learning
+solutions are not optimized towards the target of investment, i.e., selecting
+the best stock with the highest expected revenue. Specifically, they typically
+formulate stock prediction as a classification (to predict stock trend) or a
+regression problem (to predict stock price). More importantly, they largely
+treat the stocks as independent of each other. The valuable signal in the rich
+relations between stocks (or companies), such as two stocks are in the same
+sector and two companies have a supplier-customer relation, is not considered.
+In this work, we contribute a new deep learning solution, named Relational
+Stock Ranking (RSR), for stock prediction. Our RSR method advances existing
+solutions in two major aspects: 1) tailoring the deep learning models for stock
+ranking, and 2) capturing the stock relations in a time-sensitive manner. The
+key novelty of our work is the proposal of a new component in neural network
+modeling, named Temporal Graph Convolution, which jointly models the temporal
+evolution and relation network of stocks. To validate our method, we perform
+back-testing on the historical data of two stock markets, NYSE and NASDAQ.
+Extensive experiments demonstrate the superiority of our RSR method. It
+outperforms state-of-the-art stock prediction solutions achieving an average
+return ratio of 98% and 71% on NYSE and NASDAQ, respectively.
+",a
+A Rational Finance Explanation of the Stock Predictability Puzzle,"  In this paper, we address one of the main puzzles in finance observed in the
+stock market by proponents of behavioral finance: the stock predictability
+puzzle. We offer a statistical model within the context of rational finance
+which can be used without relying on behavioral finance assumptions to model
+the predictability of stock returns. We incorporate the predictability of stock
+returns into the well-known Black-Scholes option pricing formula. Empirically,
+we analyze the option and spot trader's market predictability of stock prices
+by defining a forward-looking measure which we call ""implied excess
+predictability"". The empirical results indicate the effect of option trader's
+predictability of stock returns on the price of stock options is an increasing
+function of moneyness, while this effect is decreasing for spot traders. These
+empirical results indicate potential asymmetric predictability of stock prices
+by spot and option traders. We show in pricing options with the strike price
+significantly higher or lower than the stock price, the predictability of the
+underlying stock's return should be incorporated into the option pricing
+formula. In pricing options that have moneyness close to one, stock return
+predictability is not incorporated into the option pricing model because stock
+return predictability is the same for both types of traders. In other words,
+spot traders and option traders are equally informed about the future value of
+the stock market in this case. Comparing different volatility measures, we find
+that the difference between implied and realized variances or variance risk
+premium can potentially be used as a stock return predictor.
+",a
+"A PDE Approach to the Prediction of a Binary Sequence with Advice from
+  Two History-Dependent Experts","  The prediction of a binary sequence is a classic example of online machine
+learning. We like to call it the 'stock prediction problem,' viewing the
+sequence as the price history of a stock that goes up or down one unit at each
+time step. In this problem, an investor has access to the predictions of two or
+more 'experts,' and strives to minimize her final-time regret with respect to
+the best-performing expert. Probability plays no role; rather, the market is
+assumed to be adversarial. We consider the case when there are two
+history-dependent experts, whose predictions are determined by the d most
+recent stock moves. Focusing on an appropriate continuum limit and using
+methods from optimal control, graph theory, and partial differential equations,
+we discuss strategies for the investor and the adversarial market, and we
+determine associated upper and lower bounds for the investor's final-time
+regret. When d is less than 4 our upper and lower bounds coalesce, so the
+proposed strategies are asymptotically optimal. Compared to other recent
+applications of partial differential equations to prediction, ours has a new
+element: there are two timescales, since the recent history changes at every
+step whereas regret accumulates more slowly.
+",a
+"Risk Management via Anomaly Circumvent: Mnemonic Deep Learning for
+  Midterm Stock Prediction","  Midterm stock price prediction is crucial for value investments in the stock
+market. However, most deep learning models are essentially short-term and
+applying them to midterm predictions encounters large cumulative errors because
+they cannot avoid anomalies. In this paper, we propose a novel deep neural
+network Mid-LSTM for midterm stock prediction, which incorporates the market
+trend as hidden states. First, based on the autoregressive moving average model
+(ARMA), a midterm ARMA is formulated by taking into consideration both hidden
+states and the capital asset pricing model. Then, a midterm LSTM-based deep
+neural network is designed, which consists of three components: LSTM, hidden
+Markov model and linear regression networks. The proposed Mid-LSTM can avoid
+anomalies to reduce large prediction errors, and has good explanatory effects
+on the factors affecting stock prices. Extensive experiments on S&P 500 stocks
+show that (i) the proposed Mid-LSTM achieves 2-4% improvement in prediction
+accuracy, and (ii) in portfolio allocation investment, we achieve up to 120.16%
+annual return and 2.99 average Sharpe ratio.
+",a
+Online Prediction With History-Dependent Experts: The General Case,"  We study the problem of prediction of binary sequences with expert advice in
+the online setting, which is a classic example of online machine learning. We
+interpret the binary sequence as the price history of a stock, and view the
+predictor as an investor, which converts the problem into a stock prediction
+problem. In this framework, an investor, who predicts the daily movements of a
+stock, and an adversarial market, who controls the stock, play against each
+other over $N$ turns. The investor combines the predictions of $n\geq 2$
+experts in order to make a decision about how much to invest at each turn, and
+aims to minimize their regret with respect to the best-performing expert at the
+end of the game. We consider the problem with history-dependent experts, in
+which each expert uses the previous $d$ days of history of the market in making
+their predictions. We prove that the value function for this game, rescaled
+appropriately, converges as $N\to \infty$ at a rate of $O(N^{-1/6})$ to the
+viscosity solution of a nonlinear degenerate elliptic PDE, which can be
+understood as the Hamilton-Jacobi-Issacs equation for the two-person game. As a
+result, we are able to deduce asymptotically optimal strategies for the
+investor. Our results extend those established by the first author and R.V.Kohn
+[13] for $n=2$ experts and $d\leq 4$ days of history. To appear in
+Communications on Pure and Applied Mathematics.
+",a
+Improving Stock Market Prediction via Heterogeneous Information Fusion,"  Traditional stock market prediction approaches commonly utilize the
+historical price-related data of the stocks to forecast their future trends. As
+the Web information grows, recently some works try to explore financial news to
+improve the prediction. Effective indicators, e.g., the events related to the
+stocks and the people's sentiments towards the market and stocks, have been
+proved to play important roles in the stocks' volatility, and are extracted to
+feed into the prediction models for improving the prediction accuracy. However,
+a major limitation of previous methods is that the indicators are obtained from
+only a single source whose reliability might be low, or from several data
+sources but their interactions and correlations among the multi-sourced data
+are largely ignored.
+  In this work, we extract the events from Web news and the users' sentiments
+from social media, and investigate their joint impacts on the stock price
+movements via a coupled matrix and tensor factorization framework.
+Specifically, a tensor is firstly constructed to fuse heterogeneous data and
+capture the intrinsic relations among the events and the investors' sentiments.
+Due to the sparsity of the tensor, two auxiliary matrices, the stock
+quantitative feature matrix and the stock correlation matrix, are constructed
+and incorporated to assist the tensor decomposition. The intuition behind is
+that stocks that are highly correlated with each other tend to be affected by
+the same event. Thus, instead of conducting each stock prediction task
+separately and independently, we predict multiple correlated stocks
+simultaneously through their commonalities, which are enabled via sharing the
+collaboratively factorized low rank matrices between matrices and the tensor.
+Evaluations on the China A-share stock data and the HK stock data in the year
+2015 demonstrate the effectiveness of the proposed model.
+",a
+Machine Learning for Stock Prediction Based on Fundamental Analysis,"  Application of machine learning for stock prediction is attracting a lot of
+attention in recent years. A large amount of research has been conducted in
+this area and multiple existing results have shown that machine learning
+methods could be successfully used toward stock predicting using stocks
+historical data. Most of these existing approaches have focused on short term
+prediction using stocks historical price and technical indicators. In this
+paper, we prepared 22 years worth of stock quarterly financial data and
+investigated three machine learning algorithms: Feed-forward Neural Network
+(FNN), Random Forest (RF) and Adaptive Neural Fuzzy Inference System (ANFIS)
+for stock prediction based on fundamental analysis. In addition, we applied RF
+based feature selection and bootstrap aggregation in order to improve model
+performance and aggregate predictions from different models. Our results show
+that RF model achieves the best prediction results, and feature selection is
+able to improve test performance of FNN and ANFIS. Moreover, the aggregated
+model outperforms all baseline models as well as the benchmark DJIA index by an
+acceptable margin for the test period. Our findings demonstrate that machine
+learning models could be used to aid fundamental analysts with decision-making
+regarding stock investment.
+",a
+"Share Price Prediction of Aerospace Relevant Companies with Recurrent
+  Neural Networks based on PCA","  The capital market plays a vital role in marketing operations for aerospace
+industry. However, due to the uncertainty and complexity of the stock market
+and many cyclical factors, the stock prices of listed aerospace companies
+fluctuate significantly. This makes the share price prediction challengeable.
+To improve the prediction of share price for aerospace industry sector and well
+understand the impact of various indicators on stock prices, we provided a
+hybrid prediction model by the combination of Principal Component Analysis
+(PCA) and Recurrent Neural Networks. We investigated two types of aerospace
+industries (manufacturer and operator). The experimental results show that PCA
+could improve both accuracy and efficiency of prediction. Various factors could
+influence the performance of prediction models, such as finance data, extracted
+features, optimisation algorithms, and parameters of the prediction model. The
+selection of features may depend on the stability of historical data: technical
+features could be the first option when the share price is stable, whereas
+fundamental features could be better when the share price has high fluctuation.
+The delays of RNN also depend on the stability of historical data for different
+types of companies. It would be more accurate through using short-term
+historical data for aerospace manufacturers, whereas using long-term historical
+data for aerospace operating airlines. The developed model could be an
+intelligent agent in an automatic stock prediction system, with which, the
+financial industry could make a prompt decision for their economic strategies
+and business activities in terms of predicted future share price, thus
+improving the return on investment. Currently, COVID-19 severely influences
+aerospace industries. The developed approach can be used to predict the share
+price of aerospace industries at post COVID-19 time.
+",a
+"Predicting Future Shanghai Stock Market Price using ANN in the Period
+  21-Sep-2016 to 11-Oct-2016","  Predicting the prices of stocks at any stock market remains a quest for many
+investors and researchers. Those who trade at the stock market tend to use
+technical, fundamental or time series analysis in their predictions. These
+methods usually guide on trends and not the exact likely prices. It is for this
+reason that Artificial Intelligence systems, such as Artificial Neural Network,
+that is feedforward multi-layer perceptron with error backpropagation, can be
+used for such predictions. A difficulty in neural network application is the
+determination of suitable network parameters. A previous research by the author
+already determined the network parameters as 5:21:21:1 with 80% training data
+or 4-year of training data as a good enough model for stock prediction. This
+model has been put to the test in predicting selected Shanghai Stock Exchange
+stocks in the future period of 21-Sep-2016 to 11-Oct-2016, about one week after
+the publication of these predictions. The research aims at confirming that
+simple neural network systems can be quite powerful in typical stock market
+predictions.
+",a
+A Tensor-Based Sub-Mode Coordinate Algorithm for Stock Prediction,"  The investment on the stock market is prone to be affected by the Internet.
+For the purpose of improving the prediction accuracy, we propose a multi-task
+stock prediction model that not only considers the stock correlations but also
+supports multi-source data fusion. Our proposed model first utilizes tensor to
+integrate the multi-sourced data, including financial Web news, investors'
+sentiments extracted from the social network and some quantitative data on
+stocks. In this way, the intrinsic relationships among different information
+sources can be captured, and meanwhile, multi-sourced information can be
+complemented to solve the data sparsity problem. Secondly, we propose an
+improved sub-mode coordinate algorithm (SMC). SMC is based on the stock
+similarity, aiming to reduce the variance of their subspace in each dimension
+produced by the tensor decomposition. The algorithm is able to improve the
+quality of the input features, and thus improves the prediction accuracy. And
+the paper utilizes the Long Short-Term Memory (LSTM) neural network model to
+predict the stock fluctuation trends. Finally, the experiments on 78 A-share
+stocks in CSI 100 and thirteen popular HK stocks in the year 2015 and 2016 are
+conducted. The results demonstrate the improvement on the prediction accuracy
+and the effectiveness of the proposed model.
+",a
+"Convolutional Feature Extraction and Neural Arithmetic Logic Units for
+  Stock Prediction","  Stock prediction is a topic undergoing intense study for many years. Finance
+experts and mathematicians have been working on a way to predict the future
+stock price so as to decide to buy the stock or sell it to make profit. Stock
+experts or economists, usually analyze on the previous stock values using
+technical indicators, sentiment analysis etc to predict the future stock price.
+In recent years, many researches have extensively used machine learning for
+predicting the stock behaviour. In this paper we propose data driven deep
+learning approach to predict the future stock value with the previous price
+with the feature extraction property of convolutional neural network and to use
+Neural Arithmetic Logic Units with it.
+",a
+"Evaluating the Performance of ANN Prediction System at Shanghai Stock
+  Market in the Period 21-Sep-2016 to 11-Oct-2016","  This research evaluates the performance of an Artificial Neural Network based
+prediction system that was employed on the Shanghai Stock Exchange for the
+period 21-Sep-2016 to 11-Oct-2016. It is a follow-up to a previous paper in
+which the prices were predicted and published before September 21. Stock market
+price prediction remains an important quest for investors and researchers. This
+research used an Artificial Intelligence system, being an Artificial Neural
+Network that is feedforward multi-layer perceptron with error backpropagation
+for prediction, unlike other methods such as technical, fundamental or time
+series analysis. While these alternative methods tend to guide on trends and
+not the exact likely prices, neural networks on the other hand have the ability
+to predict the real value prices, as was done on this research. Nonetheless,
+determination of suitable network parameters remains a challenge in neural
+network design, with this research settling on a configuration of 5:21:21:1
+with 80% training data or 4-year of training data as a good enough model for
+stock prediction, as already determined in a previous research by the author.
+The comparative results indicate that neural network can predict typical stock
+market prices with mean absolute percentage errors that are as low as 1.95%
+over the ten prediction instances that was studied in this research.
+",a
+"Stock price direction prediction by directly using prices data: an
+  empirical study on the KOSPI and HSI","  The prediction of a stock market direction may serve as an early
+recommendation system for short-term investors and as an early financial
+distress warning system for long-term shareholders. Many stock prediction
+studies focus on using macroeconomic indicators, such as CPI and GDP, to train
+the prediction model. However, daily data of the macroeconomic indicators are
+almost impossible to obtain. Thus, those methods are difficult to be employed
+in practice. In this paper, we propose a method that directly uses prices data
+to predict market index direction and stock price direction. An extensive
+empirical study of the proposed method is presented on the Korean Composite
+Stock Price Index (KOSPI) and Hang Seng Index (HSI), as well as the individual
+constituents included in the indices. The experimental results show notably
+high hit ratios in predicting the movements of the individual constituents in
+the KOSPI and HIS.
+",a
+Enhancing Stock Movement Prediction with Adversarial Training,"  This paper contributes a new machine learning solution for stock movement
+prediction, which aims to predict whether the price of a stock will be up or
+down in the near future. The key novelty is that we propose to employ
+adversarial training to improve the generalization of a neural network
+prediction model. The rationality of adversarial training here is that the
+input features to stock prediction are typically based on stock price, which is
+essentially a stochastic variable and continuously changed with time by nature.
+As such, normal training with static price-based features (e.g. the close
+price) can easily overfit the data, being insufficient to obtain reliable
+models. To address this problem, we propose to add perturbations to simulate
+the stochasticity of price variable, and train the model to work well under
+small yet intentional perturbations. Extensive experiments on two real-world
+stock data show that our method outperforms the state-of-the-art solution with
+3.11% relative improvements on average w.r.t. accuracy, validating the
+usefulness of adversarial training for stock prediction task.
+",a

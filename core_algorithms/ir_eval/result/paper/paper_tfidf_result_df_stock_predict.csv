@@ -1,0 +1,118 @@
+title,abstract,id
+The 'COVID' Crash of the 2020 U.S. Stock Market,"  We employed the log-periodic power law singularity (LPPLS) methodology to
+systematically investigate the 2020 stock market crash in the U.S. equities
+sectors with different levels of total market capitalizations through four
+major U.S. stock market indexes, including the Wilshire 5000 Total Market
+index, the S&P 500 index, the S&P MidCap 400 index, and the Russell 2000 index,
+representing the stocks overall, the large capitalization stocks, the middle
+capitalization stocks and the small capitalization stocks, respectively. During
+the 2020 U.S. stock market crash, all four indexes lost more than a third of
+their values within five weeks, while both the middle capitalization stocks and
+the small capitalization stocks have suffered much greater losses than the
+large capitalization stocks and stocks overall. Our results indicate that the
+price trajectories of these four stock market indexes prior to the 2020 stock
+market crash have clearly featured the obvious LPPLS bubble pattern and were
+indeed in a positive bubble regime. Contrary to the popular belief that the
+COVID-19 led to the 2020 stock market crash, the 2020 U.S. stock market crash
+was endogenous, stemming from the increasingly systemic instability of the
+stock market itself. We also performed the complementary post-mortem analysis
+of the 2020 U.S. stock market crash. Our analyses indicate that the 2020 U.S.
+stock market crash originated from a bubble which began to form as early as
+September 2018; and the bubbles in stocks with different levels of total market
+capitalizations have significantly different starting time profiles. This study
+not only sheds new light on the making of the 2020 U.S. stock market crash but
+also creates a novel pipeline for future real-time crash detection and
+mechanism dissection of any financial market and/or economic index.
+",arxiv-2101.03625
+"FinGAT: Financial Graph Attention Networks for Recommending Top-K
+  Profitable Stocks","  Financial technology (FinTech) has drawn much attention among investors and
+companies. While conventional stock analysis in FinTech targets at predicting
+stock prices, less effort is made for profitable stock recommendation. Besides,
+in existing approaches on modeling time series of stock prices, the
+relationships among stocks and sectors (i.e., categories of stocks) are either
+neglected or pre-defined. Ignoring stock relationships will miss the
+information shared between stocks while using pre-defined relationships cannot
+depict the latent interactions or influence of stock prices between stocks. In
+this work, we aim at recommending the top-K profitable stocks in terms of
+return ratio using time series of stock prices and sector information. We
+propose a novel deep learning-based model, Financial Graph Attention Networks
+(FinGAT), to tackle the task under the setting that no pre-defined
+relationships between stocks are given. The idea of FinGAT is three-fold.
+First, we devise a hierarchical learning component to learn short-term and
+long-term sequential patterns from stock time series. Second, a fully-connected
+graph between stocks and a fully-connected graph between sectors are
+constructed, along with graph attention networks, to learn the latent
+interactions among stocks and sectors. Third, a multi-task objective is devised
+to jointly recommend the profitable stocks and predict the stock movement.
+Experiments conducted on Taiwan Stock, S&P 500, and NASDAQ datasets exhibit
+remarkable recommendation performance of our FinGAT, comparing to
+state-of-the-art methods.
+",arxiv-2106.10159
+Temporal Relational Ranking for Stock Prediction,"  Stock prediction aims to predict the future trends of a stock in order to
+help investors to make good investment decisions. Traditional solutions for
+stock prediction are based on time-series models. With the recent success of
+deep neural networks in modeling sequential data, deep learning has become a
+promising choice for stock prediction. However, most existing deep learning
+solutions are not optimized towards the target of investment, i.e., selecting
+the best stock with the highest expected revenue. Specifically, they typically
+formulate stock prediction as a classification (to predict stock trend) or a
+regression problem (to predict stock price). More importantly, they largely
+treat the stocks as independent of each other. The valuable signal in the rich
+relations between stocks (or companies), such as two stocks are in the same
+sector and two companies have a supplier-customer relation, is not considered.
+In this work, we contribute a new deep learning solution, named Relational
+Stock Ranking (RSR), for stock prediction. Our RSR method advances existing
+solutions in two major aspects: 1) tailoring the deep learning models for stock
+ranking, and 2) capturing the stock relations in a time-sensitive manner. The
+key novelty of our work is the proposal of a new component in neural network
+modeling, named Temporal Graph Convolution, which jointly models the temporal
+evolution and relation network of stocks. To validate our method, we perform
+back-testing on the historical data of two stock markets, NYSE and NASDAQ.
+Extensive experiments demonstrate the superiority of our RSR method. It
+outperforms state-of-the-art stock prediction solutions achieving an average
+return ratio of 98% and 71% on NYSE and NASDAQ, respectively.
+",arxiv-1809.09441
+Graph-Based Stock Recommendation by Time-Aware Relational Attention Network,"The stock market investors aim at maximizing their investment returns. Stock recommendation task is to recommend stocks with higher return ratios for the investors. Most stock prediction methods study the historical sequence patterns to predict stock trend or price in the near future. In fact, the future price of a stock is correlated not only with its historical price, but also with other stocks. In this article, we take into account the relationships between stocks (corporations) by stock relation graph. Furthermore, we propose a Time-aware Relational Attention Network (TRAN) for graph-based stock recommendation according to return ratio ranking. In TRAN, the time-aware relational attention mechanism is designed to capture time-varying correlation strengths between stocks by the interaction of historical sequences and stock description documents. With the dynamic strengths, the nodes of the stock relation graph aggregate the features of neighbor stock nodes by graph convolution operation. For a given group of stocks, the proposed TRAN model can output the ranking results of stocks according to their return ratios. The experimental results on several real-world datasets demonstrate the effectiveness of our TRAN for stock recommendation.",paperswithcode-https://dl.acm.org/doi/10.1145/3451397
+The effect of medical elastic compression stockings with different slope values on edema. Measurements underneath three different types of stockings.,"BACKGROUND
+Medical elastic compression stockings are widely used in venous diseases. Their effects on the venous system have been shown in the past. Up to now, little is known about the slope or stiffness factor of stockings.
+
+
+OBJECTIVE
+To evaluate the effect of different slope and stiffness factors of medical elastic compression stockings on the venous system.
+
+
+METHODS
+Examinations were carried out in 29 legs of 25 different patients (12 men, 13 women) with a mean age of 66.0 years. All patients were known with chronic venous insufficiency. On all these patients three different elastic medical compression stockings were tested; one with a low slope, one with a high slope, and one with a low slope but a higher pressure at the ankle. The tests were carried out by determining capillary filtration rate (CFR) with air-plethysmography (APG) while wearing the stockings.
+
+
+RESULTS
+The mean value of the CFR without wearing a stocking was 4.65 ml/min (SD = 1.68), with Compriform (low slope, 30 mmHg) the mean CFR was 3.54 ml/min (SD = 1.22), with Bellavar (high slope, 30 mmHg) a mean CFR of 3.15 ml/min (SD = 1.17) was found, and the mean CFR related to Fast-fit (low slope, 34.5 mmHg) was 3.02 ml/min (SD = 1.12). There is a highly statistically significant difference in CFR between no stockings and wearing a stocking (paired Student's t-test; P < 0.01). Regarding the individual stocking, there is a highly statistically significant difference in CFR between the Compriform and the other two stockings (paired Student's t-test; P < 0.01). Between Bellavar and the Fast-fit the difference was not statistically significant.
+
+
+CONCLUSIONS
+There is a statistically significant difference in CFR, and consequently in the development of edema, between not wearing an elastic compression stocking and wearing an elastic compression stocking. There is also a statistically significant difference in CFR between elastic compression stockings with the same compression, but a low slope profile and a high slope profile. Stockings with a low slope, but a higher compression may perform as well as stockings with a higher slope but a lower compression in reducing the CFR. In patients with a strong tendency to develop edema it may be advisable to prescribe stockings with a high slope profile.",pubmed-10759802
+What stock market returns to expect for the future?,"In evaluating proposals for reforming Social Security that involve stock investments, the Office of the Chief Actuary (OCACT) has generally used a 7.0 percent real return for stocks. The 1994-96 Advisory Council specified that OCACT should use that return in making its 75-year projections of investment-based reform proposals. The assumed ultimate real return on Treasury bonds of 3.0 percent implies a long-run equity premium of 4.0 percent. There are two equity-premium concepts: the realized equity premium, which is measured by the actual rates of return; and the required equity premium, which investors expect to receive for being willing to hold available stocks and bonds. Over the past two centuries, the realized premium was 3.5 percent on average, but 5.2 percent for 1926 to 1998. Some critics argue that the 7.0 percent projected stock returns are too high. They base their arguments on recent developments in the capital market, the current high value of the stock market, and the expectation of slower economic growth. Increased use of mutual funds and the decline in their costs suggest a lower required premium, as does the rising fraction of the American public investing in stocks. The size of the decrease is limited, however, because the largest cost savings do not apply to the very wealthy and to large institutional investors, who hold a much larger share of the stock market's total value than do new investors. These trends suggest a lower equity premium for projections than the 5.2 percent of the past 75 years. Also, a declining required premium is likely to imply a temporary increase in the realized premium because a rising willingness to hold stocks tends to increase their price. Therefore, it would be a mistake during a transition period to extrapolate what may be a temporarily high realized return. In the standard (Solow) economic growth model, an assumption of slower long-run growth lowers the marginal product of capital if the savings rate is constant. But lower savings as growth slows should partially or fully offset that effect. The present high stock prices, together with projected slow economic growth, are not consistent with a 7.0 percent return. With a plausible level of adjusted dividends (dividends plus net share repurchases), the ratio of stock value to gross domestic product (GDP) would rise more than 20-fold over 75 years. Similarly, the steady-state Gordon formula--that stock returns equal the adjusted dividend yield plus the growth rate of stock prices (equal to that of GDP)--suggests a return of roughly 4.0 percent to 4.5 percent. Moreover, when relative stock values have been high, returns over the following decade have tended to be low. To eliminate the inconsistency posed by the assumed 7.0 percent return, one could assume higher GDP growth, a lower long-run stock return, or a lower short-run stock return with a 7.0 percent return on a lower base thereafter. For example, with an adjusted dividend yield of 2.5 percent to 3.0 percent, the market would have to decline about 35 percent to 45 percent in real terms over the next decade to reach steady state. In short, either the stock market is overvalued and requires a correction to justify a 7.0 percent return thereafter, or it is correctly valued and the long-run return is substantially lower than 7.0 percent (or some combination). This article argues that the ""overvalued"" view is more convincing, since the ""correctly valued"" hypothesis implies an implausibly small equity premium. Although OCACT could adopt a lower rate for the entire 75-year period, a better approach would be to assume lower returns over the next decade and a 7.0 percent return thereafter.",pubmed-11131980
+"Molecular profiles of Trypanosoma brucei, T. evansi and T. equiperdum stocks revealed by the random amplified polymorphic DNA method.","A total of 20 random primers (10-mers) were used to amplify RAPD markers from the genomic DNA of four Trypanosoma brucei stocks from East and West Africa, four T. evansi stocks from Africa, Asia and South America and one T. equiperdum stock from Asia. Between 65 and 88 reproducible fragments ranging from 0.25 to 2.15 kb were generated from these stocks depending on the stock/primer combination. The similarity coefficient (SC) among the stocks of T. brucei from Kenya, Nigeria, Tanzania and Zambia ranged from 62.9% to 74.0% (average: 67.6%). The SC among the stocks of T. evansi from Kenya, China and Brazil was 76.4%-95.5% (average: 86.4%), while the SC between T. evansi stock from China and Brazil was 95.5%. For T. evansi and T. equiperdum, the SC among the stocks ranged from 81.2% to 94.4% (average: 87.6%). As for the SC among the stocks of T. brucei and T. evansi, it was found to be from 54.7% to 80.3% (average: 68.0%) and the SC among stocks of T. brucei and T. equiperdum was from 59.4% to 76.9% (average: 68.1%). Our results indicate that the stocks of T. evansi from China and from Brazil are more closely related to the stock of T. equiperdum from China than to the stocks of T. evansi isolated from Kenya and to the stocks of T. brucei. In addition, our results further support the hypothesis that T. evansi stocks from China and Brazil could have arisen from a single lineage. The possible evolution of T. evansi and T. equiperdum is also discussed.",pubmed-14727188
+"Braided and Knotted Stocks in the Stock Market: Anticipating the flash
+  crashes","  A simple and elegant arrangement of stock components of a portfolio (market
+index-DJIA) in a recent paper [1], has led to the construction of crossing of
+stocks diagram. The crossing stocks method revealed hidden remarkable algebraic
+and geometrical aspects of stock market. The present paper continues to uncover
+new mathematical structures residing from crossings of stocks diagram by
+introducing topological properties stock market is endowed with. The crossings
+of stocks are categorized as overcrossings and undercrossings and interpreted
+as generators of braid that stocks form in the process of prices quotations in
+the market. Topological structure of the stock market is even richer if the
+closure of stocks braid is considered, such that it forms a knot. To
+distinguish the kind of knot that stock market forms, Alexander-Conway
+polynomial and the Jones polynomials are calculated for some knotted stocks.
+These invariants of knots are important for the future practical applications
+topological stock market might have. Such application may account of the
+relation between Jones polynomial and phase transition statistical models to
+provide a clear way to anticipate the transition of financial markets to the
+phase that leads to crisis. The resemblance between braided stocks and logic
+gates of topological quantum computers could quantum encode the stock market
+behavior.
+",arxiv-1404.6637
+Effect of graduated compression stockings on limb oxygenation and venous function during exercise in patients with venous insufficiency.,"Despite the established role of compression as the basis for nonoperative treatment of chronic venous insufficiency (CVI), its mechanism of action remains unclear. Near-infrared spectroscopy (NIRS) provides continuous noninvasive monitoring of changes in tissue oxyhemoglobin (HbO2) and deoxyhemoglobin (Hb). We applied NIRS to evaluate the effect of graded stockings on venous function and calf muscle oxygenation during exercise in patients with CVI. Ten patients (age 56 +/- 5 years) with CVI were rested in supine posture for 20 minutes. NIRS optodes were attached to the calf. Venous function was assessed in each patient with and without graded compression stockings (classes I to III) at rest in the supine position, standing, with 10 tiptoe exercises, and on standard walking at 1.6 km/h for 5 minutes. Venous function was assessed by measuring changes in Hb and total hemoglobin (HbT) during the test, and muscle oxygenation was assessed by the oxygenation index (HbD), which is the difference between HbO2 and Hb. Standing without stockings caused a significant increase in Hb concentration by 10.75 +/- 2.24 micromol/L compared with the supine position (p < .001). This value was reduced when stockings were applied to 6.38 +/- 2.75 micromol/L with class III stockings (p = .005). During tiptoe exercise, the residual Hb concentration value without stockings was 7.62 +/- 2.12 micromol/L compared with 5.88 +/- 2.87, 3.77 +/- 3.37, and 3.46 +/- 2.73 micromol/L for class I, II, and III stockings, respectively. The reduction in Hb concentration reached significance with class II and III stockings compared to without stockings (p = .04). The HbT concentration was also reduced during tiptoe exercise, with increasing compression from 15.46 +/- 5.31 micromol/L without compression to 11.52 +/- 4.26 pmol/L with class III stockings (p = .048). During walking, the Hb concentration was 11.40 +/- 3.10 pmol/L without stockings, decreasing significantly (p < .001) and progressively to 8.49 +/- 3.24, 7.71 +/- 3.51, and 6.89 +/- 3.16 micromol/L with class I, II, and III stockings, respectively. Limb oxygenation (as measured by HbO2 concentration) during walking exercise, however, increased with higher-compression stockings and reached significance with class III stockings only (p = .03). In patients with venous insufficiency, graduated compression stockings may achieve their beneficial effects by reducing venous pooling and improving deeper tissue oxygenation.",pubmed-15127858
+Electrophoretically detectable genetic variation in natural and hatchery stocks of Atlantic salmon in Finland.,"To survey the genetic resources of Atlantic salmon (Salmo salar L.) stocks in Finland, an electrophoretic study was made of natural and hatchery stocks. The stocks were compared with the nearest stocks in the USSR, and the effects of hatchery rearing were evaluated. The genetic variation within and between stocks was measured from 20 samples, of which three (Kola, Neva and Onega) were from the USSR. Twenty-five enzyme loci were examined, of which six were polymorphic: AAT-4, IDH-3, ME-3, MDH-3, PGM-1, and SDH-1. The mean heterozygosity of all the populations was 4.2% (1.0-7.2). For the natural salmon stocks of the Arctic Ocean, the mean heterozygosity was 6.3%, for the natural stocks of Atlantic salmon in the Baltic 4.8%, for the hatchery stocks 3.6%, and for the lake salmon (Salmo salar m. sebago Girard) 1.8%. The results are in agreement with the hypothesis that the amount of variation depends on the effective population size and that culture diminishes variation by decreasing the effective population size. All the stocks originating from different rivers differed from each other with statistical significance. The most unique stocks were the River Kola stock and the lake salmon stock from Lake Saimaa. The genetic distances were consistent with the geographic distance between the rivers from which the stocks originated. Stress is laid on the importance in fish culture of maintaining separate stocks and using larger brood stocks.",pubmed-2777627

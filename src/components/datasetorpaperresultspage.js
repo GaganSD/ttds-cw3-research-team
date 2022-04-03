@@ -1,0 +1,30 @@
+import * as React from 'react';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+
+export default function DsPaperRadio(props) {
+    // const Pods = React.useRef("Papers")
+    React.useEffect(() => {
+        console.log(props.dv);
+
+    },[]);
+    return (
+    <FormControl>
+      {/* <FormLabel id="dataset or paper">What do you want to search for?</FormLabel> */}
+      <RadioGroup
+        row
+        aria-labelledby="demo-radio-buttons-group-label"
+        defaultValue={props.dv}
+        name="ds or paper radio"
+        onChange = {(e) => {
+            props.parentCallback(e.target.value);
+        }}
+      >
+        <FormControlLabel value="Papers" control={<Radio />} label="Papers" />
+        <FormControlLabel value="DataSets" control={<Radio />} label="Datasets" />
+      </RadioGroup>
+    </FormControl>
+  );
+}
