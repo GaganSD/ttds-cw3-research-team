@@ -177,16 +177,16 @@ export default function SwipeableTemporaryDrawer(props) {
                 <FormControl sx={{
                     margin: 2
                 }}>
-                    <FormLabel id="sortby">Retrieval Algorithm:</FormLabel>
+                <FormLabel id="sortby">✨ Ranking Algorithm:</FormLabel>
                     <RadioGroup
                         aria-labelledby='algorithmbuttons'
                         defaultValue={radio_choice_algorithm}
                         name="algorithmbuttons"
                         onChange={handleChange}>
 
-                        <FormControlLabel control={<Radio />} label="Transformers & Nearest Neighbors" value="APPROX_NN" />
-                        <FormControlLabel control={<Radio />} label="BM25" value="BM25" />
                         <FormControlLabel control={<Radio />} label="TF-IDF" value="TF_IDF" />
+                        <FormControlLabel control={<Radio />} label="BM25" value="BM25" />
+                        <FormControlLabel control={<Radio />} label="Transformers & Nearest Neighbors" value="APPROX_NN" />
 
                     </RadioGroup>
                 </FormControl>
@@ -199,7 +199,7 @@ export default function SwipeableTemporaryDrawer(props) {
                 <FormControl sx={{
                     margin: 2
                 }}>
-                    <FormLabel id="sortby">Search Type:</FormLabel>
+            <FormLabel id="sortby">🔎 Search Type:</FormLabel>
                     <RadioGroup
                         aria-labelledby='searchtype options'
                         defaultValue={radio_choice_searchtype}
@@ -219,23 +219,18 @@ export default function SwipeableTemporaryDrawer(props) {
 
             <Divider />
             <List>
-                <div style={{
-                    display: "flex",
-                    flexDirection: "row"
-                }}>
-                    <CalendarMonthIcon sx={{
-                        marginTop: ".5em",
-                        marginRight: ".5em",
-                        marginLeft: ".5em"
-                    }}
-                        style={{
-                            color: 'grey'
-                        }}
-                    />
-                    <p style={{
-                        color: "grey"
-                    }}> Date Range:</p>
-                </div>
+            <FormControl sx = {{
+          margin:2
+        }}>
+        <div style = {{
+          display : "flex",
+          flexDirection: "row"
+        }}>
+          <p style ={{
+            color: "grey"
+        }}>📅 Date Range:</p>
+        </div>
+        </FormControl>
                 <div style={{
 
                     marginRight: "5em",
@@ -273,18 +268,6 @@ export default function SwipeableTemporaryDrawer(props) {
 
 
             <Divider />
-
-            {/* 
-      <List>
-        {['Sort By:', 'Trash', 'Spam'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List> */}
         </Box>
     );
 

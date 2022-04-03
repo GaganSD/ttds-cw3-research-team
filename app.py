@@ -302,5 +302,3 @@ def _preprocess_query(query: str, stemming=True, remove_stopwords=True) -> dict:
         _preprocessing_cache.put(query, query_params)
 
     return query_params
-
-print("eee")

@@ -438,7 +438,7 @@ export default function ResultsPage(props) {
                     {/* <p>moneybag yo</p> */}
                     <div className='results' style={{
                         marginLeft: '10em',
-                        marginRight: '45em'
+                        marginRight: '10em'
                     }}>
 
                         {json_results.Results.map(curr_elem => {
@@ -449,7 +449,6 @@ export default function ResultsPage(props) {
                                 <p>
                                     <a href={curr_elem.url}><font size="5">{curr_elem.title}</font></a><br />
                                     <font color="#595F6A" size="2">{fix_url(curr_elem.url)} {std_date} {authorlist(curr_elem.authors)}</font><br />
-                                    {/* <font color="#595F6A" face="Tahoma"></font><br/> */}
                                     <font color="#595F6A">ㅤ{abstractgenerator(curr_elem.abstract)}</font><br />
                                 </p></Box>;
                         })}

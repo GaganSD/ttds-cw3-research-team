@@ -61,7 +61,7 @@ def ranking_query_BM25(query_params, client = None):
         term_start_time = time.time()
         list_of_papers = client.get_topk_doc_from_index(term)
         term_end_time = time.time()
-        print(term, ':', term_end_time-term_start_time)
+        #print(term, ':', term_end_time-term_start_time)
         doc_nums_term = client.get_df(term)#len(list_of_papers)
         seen_ids = set()
         for relevant_paper in list_of_papers:
@@ -96,7 +96,7 @@ def ranking_query_tfidf_cosine(query_params, client = None):
         doc_nums_term = client.get_df(term)#len(list_of_papers)
         if doc_nums_term == 0:
             doc_nums_term = 1
-        print(term, ':', term_end_time-term_start_time)
+        #print(term, ':', term_end_time-term_start_time)
         query_score = score_tfidf(doc_nums,doc_nums_term, tf_dict[term])
         query_length += query_score ** 2
         query_vector[term] = query_score
@@ -126,7 +126,7 @@ def ranking_query_tfidf(query_params, client = None):
         term_start_time = time.time()
         list_of_papers = client.get_topk_doc_from_index(term)
         term_end_time = time.time()
-        print(term, ':', term_end_time-term_start_time)
+        #print(term, ':', term_end_time-term_start_time)
         doc_nums_term = client.get_df(term)#len(list_of_papers)
         seen_ids = set()
         for relevant_paper in list_of_papers:
@@ -169,7 +169,7 @@ def proximity_search(query_params, client = None, proximity=2):
         term = terms[i]
         term_start_time = time.time()
         list_of_papers = client.get_topk_doc_from_index(term)
-        print(term, time.time()-term_start_time)
+        #print(term, time.time()-term_start_time)
         list_of_docs = [doc['id'] for doc in list_of_papers]
         term1_dict = dict()
         for paper in list_of_papers:
@@ -178,7 +178,7 @@ def proximity_search(query_params, client = None, proximity=2):
             tmp_term = terms[j]
             term_start_time = time.time()
             tmp_list_of_papers = client.get_topk_doc_from_index(tmp_term)
-            print(tmp_term, time.time()-term_start_time)
+            #print(tmp_term, time.time()-term_start_time)
             tmp_list_of_docs = [doc['id'] for doc in tmp_list_of_papers]
             term2_dict = dict()
             for paper in tmp_list_of_papers:
@@ -232,7 +232,7 @@ def phrase_search(query_params, client = None, topk = 2000, start_time=time.time
         # if total processing time is over max_sec, it returns fewer results (< 10)
         output_ids = tmp_result
     else:
-        print('topk = ',topk)
+        #print('topk = ',topk)
         if len(terms) == 1:
             list_of_papers1 = client.get_topk_doc_from_index(terms[0],k=topk)
             ids_of_papers = [paper['id'] for paper in list_of_papers1]
@@ -243,7 +243,7 @@ def phrase_search(query_params, client = None, topk = 2000, start_time=time.time
             if i == 0:
                 term_start_time = time.time()
                 list_of_papers1 = client.get_topk_doc_from_index(term1, k=topk)
-                # print(term1, time.time()-term_start_time)
+                # #print(term1, time.time()-term_start_time)
                 term1_dict = dict()
                 for paper in list_of_papers1:
                     term1_dict[paper['id']] = paper['pos']
@@ -253,22 +253,22 @@ def phrase_search(query_params, client = None, topk = 2000, start_time=time.time
             term2_dict = dict()
             term_start_time = time.time()
             list_of_papers2 = client.get_topk_doc_from_index(term2, k=topk)
-            # print(term2, time.time()-term_start_time)
+            # #print(term2, time.time()-term_start_time)
             for paper in list_of_papers2:
                 term2_dict[paper['id']] = paper['pos']
             shared_papers = list(set(term1_dict.keys()).intersection(set(term2_dict.keys())))
             output_dict = check_adjacent_words(shared_papers, term1_dict, term2_dict)
         output_ids = list(output_dict.keys())
-        # print(len(output_ids))
+        # #print(len(output_ids))
         if len(output_ids) < 10:
             new_topk = topk * 3
             output_ids = phrase_search(query_params, client, topk=new_topk, start_time=start_time, tmp_result=output_ids)
-    print(time.time()-start_time)
+    #print(time.time()-start_time)
     return output_ids
 
 
 if __name__ == '__main__':
-    print('Paper search')
+    #print('Paper search')
     client = MongoDBClient("34.142.18.57")
     output_file = 'core_algorithms/ir_eval/result/paper/'
     # query_params1 = {'query': ["walid","magdy"]}
@@ -280,16 +280,16 @@ if __name__ == '__main__':
     for query_params in query_params_list_old:
         output_terms = preprocess(' '.join(query_params['query']),True, True)
         query_params_list.append({'query':output_terms})
-    print(query_params_list)
+    #print(query_params_list)
     #---------------------------------------------------
-    print('1.Phrase search')
+    #print('1.Phrase search')
     for query_params in query_params_list:
-        print(query_params['query'])
+        #print(query_params['query'])
         phrase_result_df = pd.DataFrame(columns=['title','abstract'])
         start = time.time()
         outputs = phrase_search(query_params, client)
         end = time.time()
-        print('result nums:', len(outputs))
+        #print('result nums:', len(outputs))
         for idx, result in enumerate(outputs):
             if idx > 20:
                 break
@@ -299,20 +299,20 @@ if __name__ == '__main__':
                 tmp_df['id'] = result[0]
                 phrase_result_df = phrase_result_df.append(tmp_df[['id','title','abstract']])
             except:
-                print('No such paper in database')
-        print(end - start)
+                #print('No such paper in database')
+        #print(end - start)
         phrase_result_df.to_csv(output_file + '/phrase_result_df_' + '_'.join(query_params['query']) + '.csv', index=False)
-    print()
+    #print()
     #---------------------------------------------------
-    print('2.Proximity search')
+    #print('2.Proximity search')
     # 1. covid, 2021
     for query_params in query_params_list:
-        print(query_params['query'])
+        #print(query_params['query'])
         proximity_result_df = pd.DataFrame(columns=['title','abstract'])
         start = time.time()
         outputs = proximity_search(query_params, client, 3)
         end = time.time()
-        print('result nums:', len(outputs))
+        #print('result nums:', len(outputs))
         for idx, result in enumerate(outputs):
             if idx > 20:
                 break
@@ -322,50 +322,50 @@ if __name__ == '__main__':
                 tmp_df['id'] = result[0]
                 proximity_result_df = proximity_result_df.append(tmp_df[['id','title','abstract']])
             except:
-                print('No such paper in database')
-        print(end - start)
+                #print('No such paper in database')
+        #print(end - start)
         proximity_result_df.to_csv(output_file + 'proximity_df_' + '_'.join(query_params['query']) + '.csv', index=False)
-    print()
+    #print()
     #---------------------------------------------------
-    print('3.Ranking algorithm')
-    print('1. BM25')
+    #print('3.Ranking algorithm')
+    #print('1. BM25')
     for idx, query_params in enumerate(query_params_list):
-        print(query_params['query'])
+        #print(query_params['query'])
         bm25_result_df = pd.DataFrame(columns=['title','abstract'])
         start = time.time()
         bm25_scores = ranking_query_BM25(query_params, client = client)
         end = time.time()
-        print(bm25_scores[:10])
+        #print(bm25_scores[:10])
         for result in bm25_scores[:10]:
             cursor = client.get_one(data_type='paper', filter={'_id':result[0]}, fields=['title', 'abstract'])
             try:
                 tmp_df = pd.DataFrame.from_dict(cursor, orient='index').T
                 tmp_df['id'] = result[0]
                 bm25_result_df = bm25_result_df.append(tmp_df[['id','title','abstract']])
-                print(tmp_df['title'].values)
+                #print(tmp_df['title'].values)
             except:
-                print('No such paper in database')
-        print(end-start)
+                #print('No such paper in database')
+        #print(end-start)
         bm25_result_df.to_csv(output_file + 'paper_bm_25_result_df_' + '_'.join(query_params['query']) + '.csv',index=False)
-    print()
+    #print()
     
-    print('2. Tfidf')
+    #print('2. Tfidf')
     for idx, query_params in enumerate(query_params_list):
-        print(query_params['query'])
+        #print(query_params['query'])
         tfidf_result_df = pd.DataFrame(columns=['title','abstract'])
         start = time.time()
         tfidf_scores = ranking_query_tfidf(query_params, client = client)
         end = time.time()
-        print(tfidf_scores[:10])
+        #print(tfidf_scores[:10])
         for result in tfidf_scores[:10]:
             cursor = client.get_one(data_type='paper', filter={'_id':result[0]}, fields=['title', 'abstract'])
             try:
                 tmp_df = pd.DataFrame.from_dict(cursor, orient='index').T
                 tmp_df['id'] = result[0]
                 tfidf_result_df = tfidf_result_df.append(tmp_df[['id','title','abstract']])
-                print(tmp_df['title'].values)
+                #print(tmp_df['title'].values)
             except:
-                print('No such paper in db')
-        print(end-start)
+                #print('No such paper in db')
+        #print(end-start)
         tfidf_result_df.to_csv(output_file + 'paper_tfidf_result_df_' + '_'.join(query_params['query']) + '.csv',index=False)
     
