@@ -24,6 +24,8 @@ import Options from './options';
 
 
 export default function ResultsPage(props) {
+    const backend_server_ip = "http://34.145.122.190:5000/";
+
     let navigate = useNavigate();
     const routeChange = () => {
         console.log("heeeeeeyooo")
@@ -46,8 +48,6 @@ export default function ResultsPage(props) {
     }
     const { query, df, dt, alg, srchtyp, ds, pn } = useParams();
     React.useEffect(() => {
-        console.log("reeeeeee");
-        console.log(query);
         if (df.slice === "inf") {
             values.current.range_from = null;
         }
@@ -68,7 +68,7 @@ export default function ResultsPage(props) {
         console.log("huh?");
         let search_query = formaturl(window.location.pathname);
         console.log(search_query);
-        return fetch('http://34.145.122.190:5000/' + search_query).then(response => response.json()).then(data => {
+        return fetch(backend_server_ip + search_query).then(response => response.json()).then(data => {
             if (data.Results.length === 0) {
                 console.log("empty");
                 setEmptyResults(true);
@@ -253,7 +253,7 @@ export default function ResultsPage(props) {
     function QueryExpansion() {
 
         console.log(create_url(search, values.current));
-        return fetch('http://34.142.71.148:5000/QE/' + search).then(response => response.json()).then(data => {
+        return fetch(backend_server_ip + 'QE/' + search).then(response => response.json()).then(data => {
             setJsonQE(data);
         });
     }

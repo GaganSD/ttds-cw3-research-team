@@ -26,7 +26,6 @@ from core_algorithms.mongoDB_API import MongoDBClient
 from core_algorithms.ir_eval.preprocessing import preprocess, author_preprocess
 from core_algorithms.adv_query_options import query_spell_check, get_query_expansion
 
-import json
 import pandas as pd
 import threading
 import datetime
@@ -42,24 +41,10 @@ app = Flask(__name__)
 CORS(app)
 
 print("completed.. your server will be up in less than 5 seconds..")
-df_datasets = pd.read_csv("core_algorithms/ir_eval/datasets/indices_dataset.csv")
-df_datasets.rename(columns={"description": "abstract"}, inplace=True)
 
 
 # Load datasets for inverted index
-kaggle_df = pd.read_csv('core_algorithms/ir_eval/kaggle_dataset_df_page500.csv')
-kaggle_df['Source'] = 'Kaggle'
-paperwithcode_df = pd.read_csv('core_algorithms/ir_eval/paperwithcode_df.csv')
-paperwithcode_df.rename(columns={"owner":"ownerUser"}, inplace=True)
-paperwithcode_df['Source'] = 'Paper_with_code'
-uci_df = pd.read_csv("core_algorithms/ir_eval/uci_dataset_test.csv")
-uci_df.rename(columns={"Name":"title", "Abstract":"description", "Datapage URL":"ownerUser"}, inplace=True)
-uci_df['Source'] = 'uci'
-edi_df = pd.read_csv("core_algorithms/ir_eval/edinburgh_research_datasets_info.csv")
-edi_df.rename(columns={"Name":"title", "URL":"ownerUser"}, inplace=True)
-edi_df['Source'] = 'Edi'
-df = pd.concat([kaggle_df, paperwithcode_df, uci_df, edi_df], axis=0)
-df = df.reset_index(drop=True)
+df = pd.read_csv("core_algorithms/ir_eval/Datasets_dataset.csv", sep='\t')
 
 df.rename(columns={"description": "abstract"}, inplace=True)
 
@@ -183,17 +168,20 @@ def get_datasets_results(query: str, top_n: int=10, spell_check=False, qe=False,
             output[key] = str(value)
         output["date"] = ""
         output["authors"] = output["ownerUser"]
-        output["abstract"] = curr_formatter.remove_markdown(output['abstract']) #TODO:YUTO
-        output["url"] = "https://kaggle.com/" + output["ownerUser"] + "/" + output['dataset_slug']
+        # output["abstract"] = curr_formatter.remove_markdown(output['abstract'])
+        if output["source"] == "Kaggle":
+            output["url"] = "https://kaggle.com/" + output["ownerUser"] + "/" + output['dataset_slug']
+        else:
+            output["url"] = output["ownerUser"]
         output_dict["Results"].append(output)
     return output_dict
 
-def get_papers_results(query: str, top_n: int=10, spell_check=True, qe=False, 
+def get_papers_results(query: str, top_n: int=10, spell_check=False, qe=False, 
     input_type :str = "DEFAULT", ranking: str = "TF_IDF", 
     start_date:datetime = min_day, end_date:datetime = curr_day) -> dict:
 
-    # if spell_check:
-    #     query = ' '.join(query_spell_check(query))
+    if spell_check:
+        query = ' '.join(query_spell_check(query))
     if qe:
         query = query + ' ' + ' '.join(get_query_expansion(query))
 
