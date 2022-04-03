@@ -167,7 +167,7 @@ def proximity_search(query_params, client = None, proximity=2):
         return ids_of_papers
     for i in range(len(terms)-1):
         term = terms[i]
-        term_start_time = time.time()
+        # term_start_time = time.time()
         list_of_papers = client.get_topk_doc_from_index(term)
         #print(term, time.time()-term_start_time)
         list_of_docs = [doc['id'] for doc in list_of_papers]
@@ -223,10 +223,11 @@ def check_adjacent_words(shared_papers, former_pos_dict, later_pos_dict):
                     continue
     return dict(output_dict)
         
-def phrase_search(query_params, client = None, topk = 2000, start_time=time.time(),tmp_result = []):
+def phrase_search(query_params, client = None, topk = 2000,tmp_result = []):
+    start_time = time.time()
     terms = query_params['query']
-    scores = defaultdict(float)
-    doc_nums = TOTAL_NUMBER_OF_SENTENCES
+    # scores = defaultdict(float)
+    # doc_nums = TOTAL_NUMBER_OF_SENTENCES
     max_sec = 7
     if time.time()-start_time > max_sec:
         # if total processing time is over max_sec, it returns fewer results (< 10)
@@ -299,7 +300,7 @@ if __name__ == '__main__':
                 tmp_df['id'] = result[0]
                 phrase_result_df = phrase_result_df.append(tmp_df[['id','title','abstract']])
             except:
-                #print('No such paper in database')
+                print('No such paper in database')
         #print(end - start)
         phrase_result_df.to_csv(output_file + '/phrase_result_df_' + '_'.join(query_params['query']) + '.csv', index=False)
     #print()
@@ -322,7 +323,7 @@ if __name__ == '__main__':
                 tmp_df['id'] = result[0]
                 proximity_result_df = proximity_result_df.append(tmp_df[['id','title','abstract']])
             except:
-                #print('No such paper in database')
+                print('No such paper in database')
         #print(end - start)
         proximity_result_df.to_csv(output_file + 'proximity_df_' + '_'.join(query_params['query']) + '.csv', index=False)
     #print()
@@ -344,7 +345,7 @@ if __name__ == '__main__':
                 bm25_result_df = bm25_result_df.append(tmp_df[['id','title','abstract']])
                 #print(tmp_df['title'].values)
             except:
-                #print('No such paper in database')
+                print('No such paper in database')
         #print(end-start)
         bm25_result_df.to_csv(output_file + 'paper_bm_25_result_df_' + '_'.join(query_params['query']) + '.csv',index=False)
     #print()
@@ -365,7 +366,7 @@ if __name__ == '__main__':
                 tfidf_result_df = tfidf_result_df.append(tmp_df[['id','title','abstract']])
                 #print(tmp_df['title'].values)
             except:
-                #print('No such paper in db')
+                print('No such paper in db')
         #print(end-start)
         tfidf_result_df.to_csv(output_file + 'paper_tfidf_result_df_' + '_'.join(query_params['query']) + '.csv',index=False)
     

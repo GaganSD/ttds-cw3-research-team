@@ -36,6 +36,7 @@ def stem(tokens):
     return [ps.stem(token) for token in tokens]
 
 
+
 def preprocess(string, stemming=True, stop=True):
     '''This functioon takes a string of text as an argument, calls the "tokenize" function,
     removes the stop words, then calls the "stem" function to stem the filtered text
@@ -47,28 +48,4 @@ def preprocess(string, stemming=True, stop=True):
         filtered = stem(filtered)
     return list(filter(lambda x: x.isalnum(), filtered))
 
-def author_preprocess(string):
-    ''' preprocess function for author text '''
-    #string = html.unescape(string)
-    string = string.replace("\n", " ").replace("\t", " ").replace("\\", "").replace("\'", "").replace("-", " ").replace(";", ",")
-    string = re.sub("[\(].*?[\)]", "", string)
-    string = re.sub("[\<].*?[\>]", "", string)
-    string = re.sub("[\{].*?[\}]", "", string)
-
-    tokenized = string.split(",")
-
-    ans = []
-    for term in tokenized:
-        term = term.rstrip().lstrip()
-        ans.append(term)
-        names = term.split(' ')
-        filtered = filter(lambda x: len(x) > 0 and not x[-1] == '.', names)
-        ans.extend(filtered)
-
-    et_al = ['et', 'al']
-    
-    ans = [term.lower() for term in ans]
-    ans = [i for i in ans if i not in et_al]
-    ans = list(dict.fromkeys(ans))
-    
-    return ans
+print(preprocess("anime dataset"))

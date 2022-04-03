@@ -155,7 +155,7 @@ def get_datasets_results(query: str, top_n: int=10, spell_check=False, qe=False,
         outputs = [i[0] for i in scores[:top_n]]
 
     elif input_type == "PHRASE":
-        outputs = phrase_search_dataset(query_params, start_time=time.time()) # return: list of ids of paper
+        outputs = phrase_search_dataset(query_params) # return: list of ids of paper
     elif input_type == "PROXIMITY":
         outputs = proximity_search_dataset(query_params,  proximity=10) # return: list of ids of paper
 
@@ -195,7 +195,7 @@ def get_papers_results(query: str, top_n: int=10, spell_check=False, qe=False,
             scores = ranking_query_bm25_paper(query_params, client)
         outputs = [i[0] for i in scores]
     elif input_type == "PHRASE":
-        outputs = phrase_search_paper(query_params, client, start_time=time.time()) # return: list of ids of paper
+        outputs = phrase_search_paper(query_params, client) # return: list of ids of paper
     elif input_type == "PROXIMITY":
         outputs = proximity_search_paper(query_params, client, proximity=10)
 

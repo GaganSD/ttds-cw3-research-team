@@ -1,13 +1,10 @@
-from audioop import avg
-from cmath import nan
 import json
 import pickle #note: for python 3.8+ use "import pickle" instead. 
 
-import sys
 # from db.DB import get_db_instance
-from pathlib import Path
+# from pathlib import Path
 import math
-import time
+# import time
 import pandas as pd
 import numpy as np
 
@@ -16,7 +13,7 @@ import tqdm
 from core_algorithms.ir_eval.preprocessing import preprocess
 
 
-class TimeLimitTerm(Exception): pass
+# class TimeLimitTerm(Exception): pass
 TOTAL_NUMBER_OF_SENTENCES = 9498
 
 
@@ -55,9 +52,9 @@ def ranking_query_BM25(query_params, index_path = 'core_algorithms/ir_eval/last'
     scores = defaultdict(float)
     #query_result_score = dict()
     doc_nums = TOTAL_NUMBER_OF_SENTENCES
-    total_start_time = time.time()
+#    total_start_time = time.time()
     for term in terms:
-        term_start_time = time.time()
+#        term_start_time = time.time()
         term_list = [index[i]['term'] for i in range(len(index))]
         if term not in term_list:
             continue
@@ -78,9 +75,9 @@ def ranking_query_tfidf(query_params, index_path = 'core_algorithms/ir_eval/last
     scores = defaultdict(float)
     #query_result_score = dict()
     doc_nums = TOTAL_NUMBER_OF_SENTENCES
-    total_start_time = time.time()
+#    total_start_time = time.time()
     for term in terms:
-        term_start_time = time.time()
+#        term_start_time = time.time()
         term_list = [index[i]['term'] for i in range(len(index))]
         if term not in term_list:
             continue
@@ -114,9 +111,9 @@ def proximity_search(query_params, proximity=2, index_path = 'core_algorithms/ir
     terms = query_params['query']
     scores = defaultdict(float)
     doc_nums = TOTAL_NUMBER_OF_SENTENCES
-    total_start_time = time.time()
+    # total_start_time = time.time()
     output_ids = list()
-    start = time.time()
+    # start = time.time()
     term_list = [inverted_index[i]['term'] for i in range(len(inverted_index))]
     if len(terms) == 1:
         if terms[0] not in term_list:
@@ -125,7 +122,7 @@ def proximity_search(query_params, proximity=2, index_path = 'core_algorithms/ir
             return list(inverted_index[term_list.index(terms[0])]['dataset'].keys())
     for i in range(len(terms)-1):
         term = terms[i]
-        term_start_time = time.time()
+#        term_start_time = time.time()
         if term not in term_list:
             continue
         list_of_datasets = inverted_index[term_list.index(term)]['dataset'].keys() # list of dataset ids
@@ -134,7 +131,7 @@ def proximity_search(query_params, proximity=2, index_path = 'core_algorithms/ir
             tmp_term = terms[j]
             if tmp_term not in term_list:
                 continue
-            term_start_time = time.time()
+#            term_start_time = time.time()
             tmp_list_of_datasets = inverted_index[term_list.index(tmp_term)]['dataset'].keys() # list of dataset ids
             # # print(tmp_term, time.time()-term_start_time)
             shared_papers = list(set(list_of_datasets).intersection(set(tmp_list_of_datasets)))
@@ -192,7 +189,7 @@ def phrase_search(query_params, index_path = 'core_algorithms/ir_eval/last'):
         if (term1 not in term_list)|(term2 not in term_list):
             return list()
         if i == 0:
-            term_start_time = time.time()
+#            term_start_time = time.time()
             list_of_dataset1 = inverted_index[term_list.index(term1)]['dataset'].keys()
             # print(term1, time.time()-term_start_time)
             term1_dict = inverted_index[term_list.index(term1)]['dataset']
@@ -208,7 +205,7 @@ def phrase_search(query_params, index_path = 'core_algorithms/ir_eval/last'):
 
 
 if __name__ == '__main__':
-    start = time.time()
+#    start = time.time()
     output_path = 'core_algorithms/ir_eval/result/dataset/'
     kaggle_df = pd.read_csv('core_algorithms/ir_eval/kaggle_dataset_df_page500.csv')
     kaggle_df['Source'] = 'Kaggle'
@@ -236,10 +233,10 @@ if __name__ == '__main__':
     # print('1.BM25')
     for query_params in query_params_list:
         # print(query_params['query'])
-        start = time.time()
+#        start = time.time()
         bm25_result_df = pd.DataFrame(columns=['title','subtitle','description'])
         bm25_scores = ranking_query_BM25(query_params)
-        end = time.time()
+ #       end = time.time()
         # print(end-start)
         for result in bm25_scores[:10]:
             tmp_df = df.iloc[result[0]]
@@ -252,10 +249,11 @@ if __name__ == '__main__':
     # print('2. Tfidf')
     for query_params in query_params_list:
         # print(query_params['query'])
-        start = time.time()
+    #    start = time.time()
         tfidf_result_df = pd.DataFrame(columns=['title','subtitle','description'])
         tfidf_scores = ranking_query_tfidf(query_params)
-        end = time.time()
+     
+     #   end = time.time()
         # print(end-start)
         # # print(scores[:10])
         for result in tfidf_scores[:10]:
@@ -271,7 +269,7 @@ if __name__ == '__main__':
         # print(query_params['query'])
         phrase_result_df = pd.DataFrame(columns=['title','subtitle','description'])
         phrase_outputs = phrase_search(query_params)
-        end = time.time()
+#        end = time.time()
         # print(end-start)
         for result in phrase_outputs[:30]:
             tmp_df = df.iloc[result]
