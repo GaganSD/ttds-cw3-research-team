@@ -10,8 +10,16 @@ textblob
 pyspellchecker
 nltk
 tqdm
-scann
 torch
 sentence-transformers
 python-dotenv
 pickle5
+markdown
+flask_cors
+pandas
+tpdm
+nltk
+pyspellchecker
+pymongo
+requests
+scann

@@ -128,7 +128,7 @@ def search_state_machine(search_query):
     # page_num: int
     # }
     pn = parameters["page_num"]
-
+    num_of_results = 10
     if parameters["page_num"] > 1:
         thread = _results_cache.get(id+'_thread')
         if not thread is None:
@@ -136,17 +136,17 @@ def search_state_machine(search_query):
         content = _results_cache.get(id)
         if content is None:
             content = get_full_result(parameters, id)
-        results = {"Results" : content['Results'][ (pn-1)*25 : pn*25 ]}
+        results = {"Results" : content['Results'][ (pn-1)*num_of_results : pn*num_of_results ]}
     else:
         content = _results_cache.get(id)
         if not content is None:
-            return {"Results" : content['Results'][ (pn-1)*25 : pn*25 ]}
+            return {"Results" : content['Results'][ (pn-1)*num_of_results : pn*num_of_results ]}
 
-        results = call_top_n(25, parameters)
+        results = call_top_n(num_of_results, parameters)
         thread = threading.Thread(target=get_full_result, args=(parameters, id))
         _results_cache.put(id+'_thread', thread)
         thread.start()
-    
+
     return results
 
 @app.route("/")
