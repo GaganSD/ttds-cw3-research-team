@@ -4,33 +4,20 @@ import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import Button from '@mui/material/Button';
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
-import ListItem from '@mui/material/ListItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
-import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox'
 import TextField from '@mui/material/TextField';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import Stack from '@mui/material/Stack';
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
-import { SliderValueLabelUnstyled } from '@mui/base';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import HelpDialog from "./helpdialog";
 
-import { useEffect, useState } from "react";
-import { GlobalStyles } from './global';
-
-
 import 'typeface-roboto';
-import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
@@ -112,13 +99,8 @@ export default function SwipeableTemporaryDrawer(props) {
       else{
         setRadioChoiceSearchType(e.target.value);
       }
-      // setRadioChoiceAlgorithm(e.target.value);
     }
 
-
-    
-    // console.log(radio_choice_algorithm);
-    // console.log(toDate);
   };
 
   const toggleDrawer = (anchor, open) => (event) => {
@@ -132,20 +114,10 @@ export default function SwipeableTemporaryDrawer(props) {
 
     setState({ ...state, [anchor]: open });
   };
-  // const toggleTheme = () => {
-  //   console.log("switch");
-  //   if (theme === 'light') {
-  //     setTheme('dark');
-  //   } else {
-  //     setTheme('light');
-  //   }
-  // }
   const list = (anchor) => (
     <Box
       sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 400}}
       role="presentation"
-      // onClick={toggleDrawer(anchor, false)}
-      // onKeyDown={toggleDrawer(anchor, false)}
     >
       <div style = {{
         display : "flex",

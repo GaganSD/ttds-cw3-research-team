@@ -128,7 +128,7 @@ export default function ResultsPage(props) {
     const [gobackbuttondisabled, setGoBackButtonDisabled] = React.useState(true);
     const [json_results, setJsonResults] = React.useState({ "Results": [] });
     const [json_query_expansion, setJsonQE] = React.useState({ QEResults: [] });
-    const [pods_text, setpodsText] = React.useState((ds == "true") ? "DataSets" : "Papers");
+    const [pods_text, setpodsText] = React.useState((ds === "true") ? "DataSets" : "Papers");
     const label = { inputProps: { 'aria-label': 'Switch demo' } };
     const values = React.useRef({
         algorithm: alg,
@@ -201,18 +201,18 @@ export default function ResultsPage(props) {
             "July", "August", "September", "October", "November", "December"];
         let formatted = monthNames[d.getMonth()] + ", " + d.getFullYear();
 
-        if (formatted == "undefined, NaN") {
+        if (formatted === "undefined, NaN") {
             return "";
         }
 
         return " • " + formatted;
     }
-
+    // check if this works or else remove this.
     var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
     function abstractgenerator(text) {
 
-        if (text != "") {
+        if (text !== "") {
             if (isMobile) {
                 if (text.length > 100) {
                     return text.substring(0, 100) + "...";
