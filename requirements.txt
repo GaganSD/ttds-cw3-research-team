@@ -22,4 +22,6 @@ nltk
 pyspellchecker
 pymongo
 requests
+html5lib
+beautifulsoup4
 scann
