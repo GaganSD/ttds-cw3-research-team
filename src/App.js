@@ -409,7 +409,6 @@ function App() {
   
           <a href={curr_elem.url}> {curr_elem.title}</a><br/> 
           <font color="#595F6A" size="2">{fix_url(curr_elem.url)}  {std_date}  {authorlist(curr_elem.authors)}</font><br/> 
-          {/* <font color="#595F6A" face="Tahoma"></font><br/> */}
           <font color="#595F6A">{abstractgenerator(curr_elem.abstract)}</font><br/>
         </p></Box>;
     })}
