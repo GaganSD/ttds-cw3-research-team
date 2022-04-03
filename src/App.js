@@ -2,39 +2,46 @@ import './App.css';
 import * as React from 'react';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
-import SearchButton from './components/SearchButton';
 import QEButton from './components/QueryExpansionButton';
 import SearchField from './components/search';
-import UseSwitchesCustom from './components/toggle';
-import { styled } from '@mui/material/styles';
-import Typography from '@mui/material/Typography';
-import Options from './components/options'
+
 import Box from '@mui/material/Box';
 import research_logo from './logos/researchlogomain.png';
 import PageButton from './components/pagebutton';
 import Switch from '@mui/material/Switch';
-import Link from '@mui/material/Link';
 import SwipeableTemporaryDrawer from './components/advancedOptions';
 import PaperOrDS from './components/datasetorpaper';
-import Alert from '@mui/material/Alert';
-
-import HelpButton from './components/HelpButton';
-import Modal from '@mui/base/ModalUnstyled';
-
-import Tab from '@mui/material/Tab';
-import TabPanel from '@mui/lab/TabPanel';
-import TabContext from '@mui/lab/TabContext';
-import TabList from '@mui/lab/TabList';
-import HelpDialog from "./components/helpdialog";
-
-import { useEffect, useState } from "react";
-
-import { ThemeProvider } from 'styled-components';
-import { lightTheme, darkTheme } from './components/theme';
-import { GlobalStyles } from './components/global';
 import { useNavigate } from 'react-router-dom';
-//TODO: Remove latex & markdown formatting 
+
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
+import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
+
 function App() {
+
+  const theme = createTheme({
+    components: {
+      MuiTypography: {
+        defaultProps: {
+          variantMapping: {
+            h1: 'h2',
+            h2: 'h2',
+            h3: 'h2',
+            h4: 'h2',
+            h5: 'h2',
+            h6: 'h2',
+            subtitle1: 'h2',
+            subtitle2: 'h2',
+            body1: 'span',
+            body2: 'span',
+            p: 'span',
+          },
+        },
+      },
+    },
+  });
 
   let navigate = useNavigate();
   const routeChange = () => {
@@ -45,7 +52,7 @@ function App() {
     else if( !/^[0-9a-zA-Z\s]*$/.test(search) ){
       console.log("badquery");
       setBadQuery(true);
-
+ 
     }
     else{
       let path = create_url(search, values.current);
@@ -53,17 +60,8 @@ function App() {
       navigate(path);
     }
   }
-  const [theme, setTheme] = useState('light');
-  const toggleTheme = () => {
-    console.log("switch");
-    if (theme === 'light') {
-      setTheme('dark');
-    } else {
-      setTheme('light');
-    }
-}
 
-  const [search, setSearch] = React.useState('');
+  const [search, setSearch] = React.useState("");
   const showPageButton = React.useRef(false);
   const [pagenum, setPageNum] = React.useState(1);
   const [datasets, setDatasets] = React.useState(false);
@@ -148,52 +146,31 @@ function App() {
       return "inf"
     }
     else{
-      let day = date.getDate() + "-";
+      let day = date.getDate() + "";
       let month = (date.getMonth()+1) + "-";
-      let year = date.getFullYear() + "";
+      let year = date.getFullYear() + "-";
       // console.log("HERE GOES THE DATE AGAINNNNNNN");
       console.log(day+month+year);
       // console.log("date over");
-      return day+month+year;
+      return year+month+day;
     }
 
   }
 
   const create_url = (searchq, vals) =>{
-    let url = "search/q=";
+    let url = "search/";
     url += SanitizeSearch(searchq).split(" ").join("+");
-    url += "/df=";
-    url += date_formatter(vals.range_from);
-    url += "/dt=";
-    url += date_formatter(vals.range_to);
-    url += "/alg=";
-    url += vals.algorithm.split(" ").join("_");
-    url += "/srchtyp=";
-    url += vals.searchtype.split(" ").join("_");
-    url += "/ds=";
-    url += vals.datasets + "";
-    url += "/pn=";
-    url += vals.pagenum + "";
     url += "/";
-
-    return url
-
-  }
-
-    const create_route_url = (searchq, vals) =>{
-    let url = "search/q=";
-    url += SanitizeSearch(searchq).split(" ").join("+");
-    url += "/df=";
     url += date_formatter(vals.range_from);
-    url += "/dt=";
+    url += "/";
     url += date_formatter(vals.range_to);
-    url += "/alg=";
+    url += "/";
     url += vals.algorithm.split(" ").join("_");
-    url += "/srchtyp=";
+    url += "/";
     url += vals.searchtype.split(" ").join("_");
-    url += "/ds=";
+    url += "/";
     url += vals.datasets + "";
-    url += "/pn=";
+    url += "/";
     url += vals.pagenum + "";
     url += "/";
 
@@ -344,17 +321,6 @@ function App() {
       return "- " + authors;
     }
   }
-
-  function BasicSwitches() {
-    return (
-      <div>
-        <Switch {...label} defaultChecked />
-        <Switch {...label} />
-        <Switch {...label} disabled defaultChecked />
-        <Switch {...label} disabled />
-      </div>
-    );
-  }
   
   function TextEntered(searchval) {
 
@@ -373,9 +339,6 @@ function App() {
 
   const [value2, setValue2] = React.useState('1');
 
-  const handleTabChange = (event, newValue) => {
-    setValue2(newValue);
-  };
 
 
   return (
@@ -383,14 +346,9 @@ function App() {
       marginLeft: '6em',
       marginRight: '6em'
     }}>
-    <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
-      <>
-        <GlobalStyles />
-
 
 
     <img src={research_logo} flex="1" height="350em" width="350em" resizeMode="contain"/>
-    <button onClick={toggleTheme}>Lights</button>
 
       <div className='Search' style={{
         width:'50%'
@@ -449,15 +407,9 @@ function App() {
       return <Box padding={0.2}>
         <p>
   
-          {/* <Breadcrumbs color="grey" size="2" face="Tahoma" separator="›" href="/" aria-label="breadcrumb">
-            {curr_elem.url}
-          </Breadcrumbs> */}
-          {/* TODO: Enable latex formatting in author title
-          TODO: Remove latex & markdown formatting in description */}
-          <a href={curr_elem.url}><font size="5">{curr_elem.title}</font></a><br/> 
-          <font color="#595F6A" size="2" face="Tahoma">{fix_url(curr_elem.url)}  {std_date}  {authorlist(curr_elem.authors)}</font><br/> 
-          {/* <font color="#595F6A" face="Tahoma"></font><br/> */}
-          <font color="#595F6A">ㅤ{abstractgenerator(curr_elem.abstract)}</font><br/>
+          <a href={curr_elem.url}> {curr_elem.title}</a><br/> 
+          <font color="#595F6A" size="2">{fix_url(curr_elem.url)}  {std_date}  {authorlist(curr_elem.authors)}</font><br/> 
+          <font color="#595F6A">{abstractgenerator(curr_elem.abstract)}</font><br/>
         </p></Box>;
     })}
     </div>
@@ -474,8 +426,7 @@ function App() {
       {badquery ? <Alert severity="warning">Bad Search Query</Alert> : null}
     </div>
    */}
-           </>
-    </ThemeProvider>
+
     </div>
   )}
 
