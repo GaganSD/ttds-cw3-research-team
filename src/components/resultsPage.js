@@ -30,6 +30,7 @@ export default function ResultsPage(props) {
     const routeChange = () => {
         console.log("heeeeeeyooo")
         console.log(values.current);
+        console.log(search);
         if (search === '' || !/^(?!\s+$).+/.test(search)) {
             console.log(search);
             console.log("empty query");
@@ -47,7 +48,7 @@ export default function ResultsPage(props) {
         }
     }
     const { query, df, dt, alg, srchtyp, ds, pn } = useParams();
-    const query_spaced = query.replace('_', ' ');
+    const query_spaced = query.replace('+', ' ');
     React.useEffect(() => {
         if (df === "inf") {
             values.current.range_from = null;
@@ -87,6 +88,18 @@ export default function ResultsPage(props) {
 
 
     const theme = createTheme({
+        // React.useEffect(() => {
+        //     let search_query = "search?" + (window.location.pathname).slice(8)
+        //     console.log(search_query);
+        //     return fetch('http://34.83.49.212:5000/' + search_query).then(response => response.json()).then(data => {
+        //         console.log(create_url(search, values.current));
+        //         setBadQuery(false);
+        //         setEmptyResults(false);
+        //         showPageButton.current = true;
+        //         setJsonResults(data);
+        //     });
+        // }, [])
+    
         components: {
             MuiTypography: {
                 defaultProps: {
@@ -120,7 +133,7 @@ export default function ResultsPage(props) {
     //     });
     // }, [])
 
-    const [search, setSearch] = React.useState(query);
+    const [search, setSearch] = React.useState(query_spaced);
     const showPageButton = React.useRef(false);
     const [pagenum, setPageNum] = React.useState(pn);
     const [datasets, setDatasets] = React.useState((ds === "true"));
@@ -313,7 +326,7 @@ export default function ResultsPage(props) {
 
     const create_url = (searchq, vals) => {
         let url = "search/";
-        url += SanitizeSearch(searchq).split(" ").join("_");
+        url += SanitizeSearch(searchq).split(" ").join("+");
         url += "/";
         url += date_formatter(vals.range_from);
         url += "/";
