@@ -477,6 +477,14 @@ export default function ResultsPage(props) {
                             </div>
                         </div>
                     </Box>
+                    <div style={{
+                        display: 'flex',
+                        justifyContent: 'center'
+                    }}>
+                        {json_query_expansion.QEResults.map(curr_elem => {
+                            return <Box>{curr_elem}</Box>;
+                        })}
+                    </div>
                     {/* <p>moneybag yo</p> */}
                     <div className='results' style={{
                         marginLeft: '10em',
