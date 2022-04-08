@@ -159,7 +159,7 @@ function App() {
 
   const create_url = (searchq, vals) =>{
     let url = "search/";
-    url += SanitizeSearch(searchq).split(" ").join("+");
+    url += SanitizeSearch(searchq).split(" ").join("_");
     url += "/";
     url += date_formatter(vals.range_from);
     url += "/";

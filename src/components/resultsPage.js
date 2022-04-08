@@ -24,7 +24,7 @@ import Options from './options';
 
 
 export default function ResultsPage(props) {
-    const backend_server_ip = "http://34.145.122.190:5000/";
+    const backend_server_ip = "http://34.82.59.103:5000/";
 
     let navigate = useNavigate();
     const routeChange = () => {
@@ -47,14 +47,15 @@ export default function ResultsPage(props) {
         }
     }
     const { query, df, dt, alg, srchtyp, ds, pn } = useParams();
+    const query_spaced = query.replace('_', ' ');
     React.useEffect(() => {
-        if (df.slice === "inf") {
+        if (df === "inf") {
             values.current.range_from = null;
         }
         else {
             values.current.range_from = new Date(df)
         }
-        console.log(dt);
+        console.log(query_spaced);
         if (dt === "inf") {
             values.current.range_to = null;
         }
@@ -312,7 +313,7 @@ export default function ResultsPage(props) {
 
     const create_url = (searchq, vals) => {
         let url = "search/";
-        url += SanitizeSearch(searchq).split(" ").join("+");
+        url += SanitizeSearch(searchq).split(" ").join("_");
         url += "/";
         url += date_formatter(vals.range_from);
         url += "/";
@@ -408,7 +409,7 @@ export default function ResultsPage(props) {
                                         text={"No Results were shown"}
                                     />
                                         : <SearchField
-                                            initialvalue={query}
+                                            initialvalue={query_spaced}
                                             style={{ maxWidth: '80%' }}
                                             parentCallback={TextEntered}
                                             error={false}
