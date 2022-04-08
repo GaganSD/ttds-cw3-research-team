@@ -35,6 +35,10 @@ export default function ResultsPage(props) {
             console.log(search);
             console.log("empty query");
         }
+        else if (search.length >16){
+            console.log("Long Query");
+            setLongQuery(true);
+        }
         else if (!/^[0-9a-zA-Z\s]*$/.test(search)) {
             console.log("badquery");
             setBadQuery(true);
@@ -48,7 +52,7 @@ export default function ResultsPage(props) {
         }
     }
     const { query, df, dt, alg, srchtyp, ds, pn } = useParams();
-    const query_spaced = query.replace('+', ' ');
+    const query_spaced = query.replaceAll('+', ' ');
     React.useEffect(() => {
         if (df === "inf") {
             values.current.range_from = null;
@@ -112,7 +116,19 @@ export default function ResultsPage(props) {
                         h6: 'h2',
                         subtitle1: 'h2',
                         subtitle2: 'h2',
-                        body1: 'span',
+                        body1: 'span'
+                        // React.useEffect(() => {
+                        //     let search_query = "search?" + (window.location.pathname).slice(8)
+                        //     console.log(search_query);
+                        //     return fetch('http://34.83.49.212:5000/' + search_query).then(response => response.json()).then(data => {
+                        //         console.log(create_url(search, values.current));
+                        //         setBadQuery(false);
+                        //         setEmptyResults(false);
+                        //         showPageButton.current = true;
+                        //         setJsonResults(data);
+                        //     });
+                        // }, [])
+                    ,
                         body2: 'span',
                     },
                 },
@@ -135,11 +151,13 @@ export default function ResultsPage(props) {
 
     const [search, setSearch] = React.useState(query_spaced);
     const showPageButton = React.useRef(false);
-    const [pagenum, setPageNum] = React.useState(pn);
+    const [pagenum, setPageNum] = React.useState(parseInt(pn));
     const [datasets, setDatasets] = React.useState((ds === "true"));
     const [badquery, setBadQuery] = React.useState(false);
     const [emptyresults, setEmptyResults] = React.useState(false);
-    const [gobackbuttondisabled, setGoBackButtonDisabled] = React.useState(true);
+    const [longquery, setLongQuery] = React.useState(false);
+    // const [gobackbuttondisabled, setGoBackButtonDisabled] = React.useState((pn===1) ? true : false);
+    const gobackbuttondisabled = (pn==="1") ? true: false;
     const [json_results, setJsonResults] = React.useState({ "Results": [] });
     const [json_query_expansion, setJsonQE] = React.useState({ QEResults: [] });
     const [pods_text, setpodsText] = React.useState((ds === "true") ? "DataSets" : "Papers");
@@ -150,20 +168,23 @@ export default function ResultsPage(props) {
         range_from: new Date(df),
         range_to: new Date(df),
         datasets: ds,
-        pagenum: pn
+        pagenum: parseInt(pn)
     });
 
-    React.useEffect(() => {
-        if (pagenum === 1) {
-            setGoBackButtonDisabled(true);
-        }
-        else {
-            setGoBackButtonDisabled(false);
-        }
-        values.current.pagenum = pagenum;
-        // SearchFunc();
+    // React.useEffect(() => {
+    //     console.log("weird shit is hapenning");
+    //     console.log(pagenum);
+    //     if (pagenum === 1) {
+    //         setGoBackButtonDisabled(true);
+    //         console.log(gobackbuttondisabled);
+    //     }
+    //     else {
+    //         setGoBackButtonDisabled(false);
+    //     }
+    //     values.current.pagenum = pagenum;
+    //     // SearchFunc();
 
-    }, [pagenum]);
+    // }, [pagenum]);
 
     const formaturl = (unformatted_url) => {
         let options = unformatted_url.split("/");
@@ -309,11 +330,11 @@ export default function ResultsPage(props) {
             return "inf"
         }
         else {
-            let day = date.getDate() + "-";
+            let day = date.getDate();
             let month = (date.getMonth() + 1) + "-";
-            let year = date.getFullYear() + "";
+            let year = date.getFullYear() + "-";
 
-            return day + month + year;
+            return year + month + day;
         }
 
     }
@@ -421,13 +442,20 @@ export default function ResultsPage(props) {
                                         error={true}
                                         text={"No Results were shown"}
                                     />
-                                        : <SearchField
-                                            initialvalue={query_spaced}
-                                            style={{ maxWidth: '80%' }}
-                                            parentCallback={TextEntered}
-                                            error={false}
-                                            text={"Query"}
+                                        : longquery ? <SearchField
+                                            initialvalue={query}
+                                            style = {{maxWidth : '80%'}}
+                                            parentCallback = {TextEntered}
+                                            error={true}
+                                            text={"Query too long, 16 characters or less please"}
                                         />
+                                            : <SearchField
+                                                initialvalue={query_spaced}
+                                                style={{ maxWidth: '80%' }}
+                                                parentCallback={TextEntered}
+                                                error={false}
+                                                text={"Query"}
+                                            />
                                 }
                             </div>
                             <div className='SearchButton' style={{
@@ -468,9 +496,15 @@ export default function ResultsPage(props) {
                         })}
                     </div>
                     <div style={{
-                        marginBottom: ".5em"
+                        marginBottom: ".5em",
+                        display: "flex",
+                        justifyContent: "center"
                     }}>
-                        <PageButton pagenum={pagenum} disableback={gobackbuttondisabled} show={showPageButton.current} sexyProp={setPageNum} />
+                        <PageButton pagenum={pagenum} disableback={gobackbuttondisabled} show={showPageButton.current} sexyProp={(n) => {
+                            // setPageNum(n);
+                            values.current.pagenum = n;
+                            routeChange();
+                        }} />
                     </div>
                 </div>
             </div>

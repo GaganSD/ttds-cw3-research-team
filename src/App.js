@@ -66,6 +66,7 @@ function App() {
   const [pagenum, setPageNum] = React.useState(1);
   const [datasets, setDatasets] = React.useState(false);
   const [badquery, setBadQuery] = React.useState(false);
+  const [longquery, setLongQuery] = React.useState(false);
   const [emptyresults, setEmptyResults] = React.useState(false);
   const [gobackbuttondisabled, setGoBackButtonDisabled] = React.useState(true);
   const [json_results, setJsonResults] = React.useState({"Results":[]});
@@ -214,10 +215,15 @@ function App() {
     return domain;
   }
 
+
   function SearchFunc() {
     if(search === ""){
       console.log("EMPTY SEARCH")
 
+    }
+    else if(search.length > 16){
+      console.log("Long query");
+      setLongQuery(true);
     }
     else if( !/^[0-9a-zA-Z\s]*$/.test(search) || !/^(?!\s+$).+/.test(search)){
       console.log("badquery");
@@ -360,6 +366,12 @@ function App() {
           text = {"Bad Query Was Received - Please remove special characters from your query and try again!"}
         />
         : emptyresults ? <SearchField
+            style = {{maxWidth:'80%'}}
+            parentCallback={TextEntered}
+            error={true}
+            text = {"No Results were shown"}
+            />
+        : longquery ? <SearchField
             style = {{maxWidth:'80%'}}
             parentCallback={TextEntered}
             error={true}
