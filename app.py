@@ -201,7 +201,7 @@ def get_papers_results(query: str, top_n: int=10, spell_check=False, qe=False,
 
     output_dict = {}
 
-    temp_result = list(client.order_preserved_get_data(id_list= outputs,
+    temp_result = list(client.order_preserved_get_data(id_list= outputs[:top_n],
                                                        start_date=start_date, end_date=end_date,
                                                        fields=['title', 'abstract','authors', 'url', 'date'],
                                                        limit=top_n
@@ -245,7 +245,7 @@ def get_author_papers_results(query: str, top_n: int=100, preprocess: bool=True,
 
     output_dict = {}
 
-    temp_result = list(client.order_preserved_get_data(id_list= outputs,
+    temp_result = list(client.order_preserved_get_data(id_list= outputs[:top_n],
                                                        start_date=start_date, end_date=end_date,
                                                        fields=['title', 'abstract','authors', 'url', 'date'],
                                                        limit=top_n
