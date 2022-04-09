@@ -2,7 +2,7 @@
 # ML microservice
 ########
 
-from infra.helpers import curr_day, min_day, deserialize, filter_dates, Formatting
+from infra.helpers import curr_day, min_day
 
 import scann ## NOTE: Only works on linux machines #NOTE:DL
 from flask import Flask, request
@@ -34,7 +34,7 @@ df = pd.read_csv("core_algorithms/ir_eval/Datasets_dataset.csv", sep='\t')
 df.rename(columns={"description":"abstract"}, inplace=True)
 
 
-print("This will take some time..")
+print("Loading completed! Ready to serve!")
 
 
 df_papers = pd.read_csv("/home/stylianosc/scann/papers/df.csv") #NOTE:DL
@@ -99,12 +99,14 @@ def serve_datasets(query, top_n, from_date, to_date):
     top_n = int(top_n)
     from_date = datetime.strptime(from_date, '%d-%m-%Y')
     to_date = datetime.strptime(to_date, '%d-%m-%Y')
+
     return get_approx_nn_datasets_results(query, top_n, from_date, to_date)
 
 
 @app.route("/papers/<query>/<top_n>/<from_date>/<to_date>", methods=['GET', 'POST'])
 def serve_papers(query, top_n, from_date, to_date):
     top_n = int(top_n)
+
     from_date = datetime.strptime(from_date, '%d-%m-%Y')
     to_date = datetime.strptime(to_date, '%d-%m-%Y')
 
