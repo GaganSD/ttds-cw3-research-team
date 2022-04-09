@@ -2,7 +2,7 @@ Functional:
 - When there is no description, add a small description saying "This content has no description."
 - Add caching for top content of the results page through react as this slows down.
 - Clean unnecessary code from react.
-- Remove ALL useless debug logs that slows down the system.
+- [DONE] Remove ALL useless debug logs that slows down the system.
 - [DONE:Gagan] Add description for sty's dataset code. 
 - Don't show page button if the page number is 1 and the number of results is less than 10.
 - Fix bug with sarah's end date and end date.

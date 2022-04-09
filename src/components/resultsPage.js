@@ -32,7 +32,7 @@ export default function ResultsPage(props) {
 
         }
         else {
-
+            values.current.pagenum = 1;
             let path = create_url(search, values.current);
             window.location = (window.location.origin + '/' + path);
         }
@@ -62,6 +62,7 @@ export default function ResultsPage(props) {
             else {
                 setBadQuery(false);
                 setEmptyResults(false);
+                setNumResults(data['Results'].length);
                 showPageButton.current = true;
                 setJsonResults(data);
             }
@@ -104,6 +105,7 @@ export default function ResultsPage(props) {
     const [longquery, setLongQuery] = React.useState(false);
     const gobackbuttondisabled = (pn==="1") ? true: false;
     const [json_results, setJsonResults] = React.useState({ "Results": [] });
+    const [numresults, setNumResults] = React.useState(0)
     const [json_query_expansion, setJsonQE] = React.useState({ QEResults: [] });
     const [pods_text, setpodsText] = React.useState((ds === "true") ? "DataSets" : "Papers");
     const values = React.useRef({
@@ -144,7 +146,7 @@ export default function ResultsPage(props) {
         var yearIndex = formatItems.indexOf("y");
 
         var yr = parseInt(dateItems[yearIndex]);
-
+        var year;
         if (yr < 100 && yr <= 21) { //handling 2 digit years
             year = "20" + yr;
         } else if (yr < 100) {
@@ -436,10 +438,11 @@ export default function ResultsPage(props) {
                         display: "flex",
                         justifyContent: "center"
                     }}>
-                        <PageButton pagenum={pagenum} disableback={gobackbuttondisabled} show={showPageButton.current} sexyProp={(n) => {
+                        <PageButton pagenum={pagenum} disableback={gobackbuttondisabled} show={showPageButton.current} numResults = {numresults} sexyProp={(n) => {
                             // setPageNum(n);
                             values.current.pagenum = n;
-                            routeChange();
+                            let path = create_url(query_spaced, values.current);
+                            window.location = (window.location.origin + '/' + path);
                         }} />
                     </div>
                 </div>
