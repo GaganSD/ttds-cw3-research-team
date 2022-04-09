@@ -97,8 +97,8 @@ def get_approx_nn_papers_results(query: str="", top_n: int=10, start_date:dateti
 @app.route("/datasets/<query>/<top_n>/<from_date>/<to_date>", methods=['GET', 'POST'])
 def serve_datasets(query, top_n, from_date, to_date):
     top_n = int(top_n)
-    from_date = datetime.strptime(from_date, '%d-%m-%Y')
-    to_date = datetime.strptime(to_date, '%d-%m-%Y')
+    from_date = datetime.strptime(from_date, '%Y-%m-%d')
+    to_date = datetime.strptime(to_date, '%Y-%m-%d')
 
     return get_approx_nn_datasets_results(query, top_n, from_date, to_date)
 
@@ -107,8 +107,8 @@ def serve_datasets(query, top_n, from_date, to_date):
 def serve_papers(query, top_n, from_date, to_date):
     top_n = int(top_n)
 
-    from_date = datetime.strptime(from_date, '%d-%m-%Y')
-    to_date = datetime.strptime(to_date, '%d-%m-%Y')
+    from_date = datetime.strptime(from_date, '%Y-%m-%d')
+    to_date = datetime.strptime(to_date, '%Y-%m-%d')
 
     return get_approx_nn_papers_results(query, top_n, from_date, to_date)
 
@@ -117,5 +117,6 @@ def say_hello():
      print("Hello, world!")
 
 print("should start now")
-if __name__ == "__main__":
-  app.run(host='0.0.0.0', port=5002,use_reloader=False,  debug=True, threaded=True)
+
+#if __name__ == "__main__":
+#  app.run(host='0.0.0.0', port=5002,use_reloader=False,  debug=True, threaded=True)
