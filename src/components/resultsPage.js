@@ -106,7 +106,6 @@ export default function ResultsPage(props) {
     const [json_results, setJsonResults] = React.useState({ "Results": [] });
     const [json_query_expansion, setJsonQE] = React.useState({ QEResults: [] });
     const [pods_text, setpodsText] = React.useState((ds === "true") ? "DataSets" : "Papers");
-    const label = { inputProps: { 'aria-label': 'Switch demo' } };
     const values = React.useRef({
         algorithm: alg,
         searchtype: srchtyp,
@@ -145,12 +144,13 @@ export default function ResultsPage(props) {
         var yearIndex = formatItems.indexOf("y");
 
         var yr = parseInt(dateItems[yearIndex]);
+
         if (yr < 100 && yr <= 21) { //handling 2 digit years
-            var year = "20" + yr;
+            year = "20" + yr;
         } else if (yr < 100) {
-            var year = "19" + yr;
+             year = "19" + yr;
         } else {
-            var year = yr;
+            year = yr;
         }
 
         if (isNaN(dateItems[monthIndex])) { //in case the month is written as a word
@@ -162,6 +162,7 @@ export default function ResultsPage(props) {
 
             var d = new Date(year, month, dateItems[dayIndex]);
         }
+
         const monthNames = ["January", "February", "March", "April", "May", "June",
             "July", "August", "September", "October", "November", "December"];
         let formatted = monthNames[d.getMonth()] + ", " + d.getFullYear();
