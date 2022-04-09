@@ -57,6 +57,8 @@ def call_top_n(N, parameters):
     N = int(N)
     results = {"Results":[]}
     print(parameters)
+    server_fail = False
+    
     if parameters["search_type"] == "AUTHOR":
 
         if parameters["datasets"]:
@@ -80,6 +82,7 @@ def call_top_n(N, parameters):
                 print(f"ERROR WITH CODE: {results.status_code}")
         except:
             print("Failed to get a valid response from the microservice. Is it on?")
+            server_fail = True
 
     elif parameters["datasets"]:
         results = get_datasets_results(query=parameters['query'],
@@ -93,11 +96,11 @@ def call_top_n(N, parameters):
                             start_date=parameters["start_date"],
                             end_date=parameters["end_date"], top_n=N)
 
-    return results
+    return results, server_fail
 
 def get_full_result(parameters, id):
-    result = call_top_n(1000, parameters)
-    _results_cache.put(id, result)
+    result, server_fail = call_top_n(1000, parameters)
+    if not server_fail: _results_cache.put(id, result)
     return result
 
 @app.route("/favicon.ico")
@@ -134,7 +137,7 @@ def search_state_machine(search_query):
         if not content is None:
             return {"Results" : content['Results'][ (pn-1)*num_of_results : pn*num_of_results ]}
 
-        results = call_top_n(num_of_results, parameters)
+        results, server_failure = call_top_n(num_of_results, parameters)
         thread = threading.Thread(target=get_full_result, args=(parameters, id))
         _results_cache.put(id+'_thread', thread)
         thread.start()
