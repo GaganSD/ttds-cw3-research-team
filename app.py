@@ -67,19 +67,21 @@ def call_top_n(N, parameters):
                 top_n=N)
 
     elif parameters["algorithm"] == "APPROX_NN":
-        try:
+            c_response = None
             if parameters["datasets"]:
+                print("122222222222222222222222222222222222222222")
                 c_response = requests.get('http://10.138.0.7:5002/datasets/' + parameters['query'] + "/" + str(N) + "/" + parameters["start_date_str"] + "/" + parameters["end_date_str"])
             else:
-                c_respone = requests.get('http://10.138.0.7:5002/papers/' + parameters['query'] + "/" + str(N) + "/" + parameters["start_date_str"] + "/" + parameters["end_date_str"])
+                print("4444444444444444444444444444444444444444444444")
+                c_response = requests.get('http://10.138.0.7:5002/papers/' + parameters['query'] + "/" + str(N) + "/" + parameters["start_date_str"] + "/" + parameters["end_date_str"])
             print(c_response)
-            if results.status_code == 200:
+            if c_response and c_response.status_code == 200:
                 print(results)
                 results = c_response.json()
             else:
-                print(f"ERROR WITH CODE: {results.status_code}")
-        except:
-            print("Failed to get a valid response from the microservice. Is it on?")
+                print(f"ERROR WITH CODE: {c_response.status_code}")
+
+            #print("Failed to get a valid response from the microservice. Is it on?")
 
     elif parameters["datasets"]:
         results = get_datasets_results(query=parameters['query'],
