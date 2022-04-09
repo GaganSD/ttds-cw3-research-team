@@ -22,7 +22,6 @@ export default function HelpDialog(props){
 
     const [open, setOpen] = React.useState(false);
     const handleClickOpen = () => {
-        console.log("open")
         setOpen(true);
     };
     const handleClose = () => {

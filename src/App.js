@@ -46,17 +46,13 @@ function App() {
   let navigate = useNavigate();
   const routeChange = () => {
     if(search === ''|| !/^(?!\s+$).+/.test(search)){
-      console.log(search);
-      console.log("empty query");
     }
     else if( !/^[0-9a-zA-Z\s]*$/.test(search) ){
-      console.log("badquery");
       setBadQuery(true);
  
     }
     else{
       let path = create_url(search, values.current);
-      console.log(path);
       navigate(path);
     }
   }
@@ -87,7 +83,6 @@ function App() {
       else{
           setGoBackButtonDisabled(false);
       }
-      console.log("CHANGINGGG");
       values.current.pagenum = pagenum;
       SearchFunc();
 
@@ -110,8 +105,6 @@ function App() {
       values.current.range_to = optval;
     }
 
-    console.log(values);
-    console.log(date_formatter(values.current.range_from));
 
 
   }
@@ -130,19 +123,16 @@ function App() {
       setDatasets(true);
     }
 
-    // console.log(values.current.datasets);
   }
 
   const getPageNum = (pageNum) => {
     values.current.pagenum = pageNum;
-    console.log(values.current.pagenum);
     SearchFunc();
 
   }
 
   const date_formatter = (date) =>{
-    // console.log("HERE GOES THE DATE");
-    console.log(date);
+
     if (date == null){
       return "inf"
     }
@@ -150,9 +140,7 @@ function App() {
       let day = date.getDate() + "";
       let month = (date.getMonth()+1) + "-";
       let year = date.getFullYear() + "-";
-      // console.log("HERE GOES THE DATE AGAINNNNNNN");
-      console.log(day+month+year);
-      // console.log("date over");
+
       return year+month+day;
     }
 
@@ -218,15 +206,14 @@ function App() {
 
   function SearchFunc() {
     if(search === ""){
-      console.log("EMPTY SEARCH")
+      // console.log("EMPTY SEARCH")
 
     }
     else if(search.length > 16){
-      console.log("Long query");
+      // console.log("Long query");
       setLongQuery(true);
     }
     else if( !/^[0-9a-zA-Z\s]*$/.test(search) || !/^(?!\s+$).+/.test(search)){
-      console.log("badquery");
       setJsonResults({"Results": []})
       showPageButton.current = false;
       setBadQuery(true);
@@ -235,13 +222,9 @@ function App() {
     else{
       return fetch('http://34.145.46.81:5000/' + create_url(search, values.current)).then(response => response.json()).then(data => {
         if(data.Results.length === 0) {
-            console.log("empty");
             setEmptyResults(true);
-            console.log(emptyresults)
         }
         else {
-          console.log("search complete");
-          console.log(create_url(search, values.current));
           setBadQuery(false);
           setEmptyResults(false);
           showPageButton.current = true;
@@ -253,7 +236,6 @@ function App() {
 
   function QueryExpansion() {
     
-    console.log(create_url(search, values.current));
     return fetch('http://34.145.46.81t:5000/QE/' + search).then(response => response.json()).then(data => {
       setJsonQE(data);
     });
@@ -430,15 +412,6 @@ function App() {
     }}> 
       <PageButton pagenum = {pagenum} disableback = {gobackbuttondisabled} show = {showPageButton.current} sexyProp={setPageNum} />
     </div>
-    {/* <div style={{
-      position: 'fixed',
-      bottom: 0,
-    }}>
-      { emptyresults ? <Alert severity="warning">No results were found</Alert> : null}
-      {badquery ? <Alert severity="warning">Bad Search Query</Alert> : null}
-    </div>
-   */}
-
     </div>
   )}
 

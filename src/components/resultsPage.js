@@ -2,52 +2,38 @@ import * as React from 'react';
 import { Box } from '@mui/system';
 import { useParams } from 'react-router-dom'
 import SearchField from './search';
-import SearchButton from './SearchButton';
-import SettingsSuggestIcon from '@mui/icons-material/SettingsSuggest';
-import IconButton from '@mui/material/IconButton';
 import { Button } from '@mui/material';
 import SwipeableTemporaryDrawer from './advancedOptionsResultsPage';
 import PaperOrDS from './datasetorpaperresultspage';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import QEButton from './QueryExpansionButton';
 import PageButton from './pagebutton';
-import { useNavigate } from 'react-router-dom';
 import research_logo_side from '../logos/researchlogoside.png';
 import 'typeface-roboto';
-import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
-import { CompareSharp } from '@mui/icons-material';
-import Options from './options';
 
 
 export default function ResultsPage(props) {
     const backend_server_ip = "http://34.145.46.81:5000/";
 
-    let navigate = useNavigate();
     const routeChange = () => {
-        console.log("heeeeeeyooo")
-        console.log(values.current);
-        console.log(search);
+
         if (search === '' || !/^(?!\s+$).+/.test(search)) {
-            console.log(search);
-            console.log("empty query");
         }
         else if (search.length >16){
-            console.log("Long Query");
             setLongQuery(true);
         }
         else if (!/^[0-9a-zA-Z\s]*$/.test(search)) {
-            console.log("badquery");
             setBadQuery(true);
 
         }
         else {
 
             let path = create_url(search, values.current);
-            console.log(path);
             window.location = (window.location.origin + '/' + path);
         }
     }
@@ -60,28 +46,20 @@ export default function ResultsPage(props) {
         else {
             values.current.range_from = new Date(df)
         }
-        console.log(query_spaced);
         if (dt === "inf") {
             values.current.range_to = null;
         }
         else {
             values.current.range_from = new Date(dt)
         }
-        console.log(alg);
-        console.log(srchtyp);
-        console.log(ds);
-        console.log(pn);
-        console.log("huh?");
+
         let search_query = formaturl(window.location.pathname);
-        console.log(search_query);
+
         return fetch(backend_server_ip + search_query).then(response => response.json()).then(data => {
             if (data.Results.length === 0) {
-                console.log("empty");
                 setEmptyResults(true);
-                console.log(emptyresults);
             }
             else {
-                console.log("search complete");
                 setBadQuery(false);
                 setEmptyResults(false);
                 showPageButton.current = true;
@@ -92,18 +70,7 @@ export default function ResultsPage(props) {
 
 
     const theme = createTheme({
-        // React.useEffect(() => {
-        //     let search_query = "search?" + (window.location.pathname).slice(8)
-        //     console.log(search_query);
-        //     return fetch('http://34.83.49.212:5000/' + search_query).then(response => response.json()).then(data => {
-        //         console.log(create_url(search, values.current));
-        //         setBadQuery(false);
-        //         setEmptyResults(false);
-        //         showPageButton.current = true;
-        //         setJsonResults(data);
-        //     });
-        // }, [])
-    
+
         components: {
             MuiTypography: {
                 defaultProps: {
@@ -117,17 +84,7 @@ export default function ResultsPage(props) {
                         subtitle1: 'h2',
                         subtitle2: 'h2',
                         body1: 'span'
-                        // React.useEffect(() => {
-                        //     let search_query = "search?" + (window.location.pathname).slice(8)
-                        //     console.log(search_query);
-                        //     return fetch('http://34.83.49.212:5000/' + search_query).then(response => response.json()).then(data => {
-                        //         console.log(create_url(search, values.current));
-                        //         setBadQuery(false);
-                        //         setEmptyResults(false);
-                        //         showPageButton.current = true;
-                        //         setJsonResults(data);
-                        //     });
-                        // }, [])
+
                     ,
                         body2: 'span',
                     },
@@ -137,17 +94,6 @@ export default function ResultsPage(props) {
     });
 
 
-    // React.useEffect(() => {
-    //     let search_query = "search?" + (window.location.pathname).slice(8)
-    //     console.log(search_query);
-    //     return fetch('http://34.83.49.212:5000/' + search_query).then(response => response.json()).then(data => {
-    //         console.log(create_url(search, values.current));
-    //         setBadQuery(false);
-    //         setEmptyResults(false);
-    //         showPageButton.current = true;
-    //         setJsonResults(data);
-    //     });
-    // }, [])
 
     const [search, setSearch] = React.useState(query_spaced);
     const showPageButton = React.useRef(false);
@@ -156,12 +102,10 @@ export default function ResultsPage(props) {
     const [badquery, setBadQuery] = React.useState(false);
     const [emptyresults, setEmptyResults] = React.useState(false);
     const [longquery, setLongQuery] = React.useState(false);
-    // const [gobackbuttondisabled, setGoBackButtonDisabled] = React.useState((pn===1) ? true : false);
     const gobackbuttondisabled = (pn==="1") ? true: false;
     const [json_results, setJsonResults] = React.useState({ "Results": [] });
     const [json_query_expansion, setJsonQE] = React.useState({ QEResults: [] });
     const [pods_text, setpodsText] = React.useState((ds === "true") ? "DataSets" : "Papers");
-    const label = { inputProps: { 'aria-label': 'Switch demo' } };
     const values = React.useRef({
         algorithm: alg,
         searchtype: srchtyp,
@@ -170,21 +114,6 @@ export default function ResultsPage(props) {
         datasets: ds,
         pagenum: parseInt(pn)
     });
-
-    // React.useEffect(() => {
-    //     console.log("weird shit is hapenning");
-    //     console.log(pagenum);
-    //     if (pagenum === 1) {
-    //         setGoBackButtonDisabled(true);
-    //         console.log(gobackbuttondisabled);
-    //     }
-    //     else {
-    //         setGoBackButtonDisabled(false);
-    //     }
-    //     values.current.pagenum = pagenum;
-    //     // SearchFunc();
-
-    // }, [pagenum]);
 
     const formaturl = (unformatted_url) => {
         let options = unformatted_url.split("/");
@@ -215,12 +144,13 @@ export default function ResultsPage(props) {
         var yearIndex = formatItems.indexOf("y");
 
         var yr = parseInt(dateItems[yearIndex]);
+
         if (yr < 100 && yr <= 21) { //handling 2 digit years
-            var year = "20" + yr;
+            year = "20" + yr;
         } else if (yr < 100) {
-            var year = "19" + yr;
+             year = "19" + yr;
         } else {
-            var year = yr;
+            year = yr;
         }
 
         if (isNaN(dateItems[monthIndex])) { //in case the month is written as a word
@@ -232,6 +162,7 @@ export default function ResultsPage(props) {
 
             var d = new Date(year, month, dateItems[dayIndex]);
         }
+
         const monthNames = ["January", "February", "March", "April", "May", "June",
             "July", "August", "September", "October", "November", "December"];
         let formatted = monthNames[d.getMonth()] + ", " + d.getFullYear();
@@ -287,7 +218,6 @@ export default function ResultsPage(props) {
 
     function QueryExpansion() {
 
-        console.log(create_url(search, values.current));
         return fetch(backend_server_ip + 'QE/' + search).then(response => response.json()).then(data => {
             setJsonQE(data);
         });
@@ -387,8 +317,6 @@ export default function ResultsPage(props) {
             values.current.range_to = optval;
         }
 
-        console.log(values);
-        console.log()
     }
 
 

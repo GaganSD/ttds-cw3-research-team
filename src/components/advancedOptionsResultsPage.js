@@ -35,13 +35,6 @@ export default function SwipeableTemporaryDrawer(props) {
         right: false,
     });
 
-    // let valcopy = {
-    //   sort_by: "Featured",
-    //   authors: true,
-    //   author_text:'',
-    //   range_from:null,                                                                                     
-    //   range_to: null
-    // };
     const { query, df, dt, alg, srchtyp, ds, pn } = useParams();
     const theme = createTheme({
         components: {

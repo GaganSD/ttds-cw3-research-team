@@ -4,7 +4,6 @@ import ButtonGroup from '@mui/material/ButtonGroup';
 
 
 export default function PageButton(props){
-    console.log(props.disableback);
 
     if (!props.show){
         return null
