@@ -54,6 +54,7 @@ _results_cache = LRUCache(200)
 
 
 def call_top_n(N, parameters):
+    N = int(N)
     results = {"Results":[]}
     print(parameters)
     if parameters["search_type"] == "AUTHOR":
@@ -61,18 +62,20 @@ def call_top_n(N, parameters):
         if parameters["datasets"]:
             print("no Author search for datasets")
         else:
-            results = get_author_papers_results(query=parameters['query'], 
+            results = get_author_papers_results(query=parameters['query'],
                 start_date=parameters["start_date"], end_date=parameters["end_date"],
                 top_n=N)
 
     elif parameters["algorithm"] == "APPROX_NN":
         try:
             if parameters["datasets"]:
-                results = requests.get('http://10.138.0.7:5002/datasets/' + parameters['query'] + "/" + str(N) + "/" + parameters["start_date_str"] + "/" + parameters["end_date_str"])
+                c_response = requests.get('http://10.138.0.7:5002/datasets/' + parameters['query'] + "/" + str(N) + "/" + parameters["start_date_str"] + "/" + parameters["end_date_str"])
             else:
-                results = requests.get('http://10.138.0.7:5002/papers/' + parameters['query'] + "/" + str(N) + "/" + parameters["start_date_str"] + "/" + parameters["end_date_str"])
-            if results.status_code == '200': 
-                return results.json()
+                c_respone = requests.get('http://10.138.0.7:5002/papers/' + parameters['query'] + "/" + str(N) + "/" + parameters["start_date_str"] + "/" + parameters["end_date_str"])
+            print(c_response)
+            if results.status_code == 200:
+                print(results)
+                results = c_response.json()
             else:
                 print(f"ERROR WITH CODE: {results.status_code}")
         except:
@@ -108,8 +111,8 @@ def search_state_machine(search_query):
     id = request.args['q'].rpartition("/pn=")[0]
     # {
     # query: search_query : DOME
-    # from_date: DD-MM-YYYY (last) : 
-    # to_date: DD-MM-YYYY :  
+    # from_date: DD-MM-YYYY (last) :
+    # to_date: DD-MM-YYYY :
     # Authors: [str1, str2] : DONE
     # search_type: str (default, proximity, phrase, author) : DONE
     # algorithm: str (approx_nn, bm25, tf-idf) : DONE
