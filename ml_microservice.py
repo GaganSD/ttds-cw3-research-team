@@ -40,7 +40,7 @@ print("This will take some time..")
 
 df_papers = pd.read_csv("/home/stylianosc/scann/papers/df.csv") #NOTE:DL
 
-def get_approx_nn_datasets_results(query: str="", top_n: int=100) -> dict:
+def get_approx_nn_datasets_results(query: str="", top_n: int=10, start_date:datetime = min_day, end_date:datetime = curr_day) -> dict:
     """
     Input: query (input_type: string)
     Output: search results (dict)
@@ -80,17 +80,18 @@ def get_approx_nn_papers_results(query: str="", top_n: int=10, start_date:dateti
     return output_dict
 
 
-@app.route("/datasets/<query>/<top_n>/from_date/to_date", methods=['GET', 'POST'])
+@app.route("/datasets/<query>/<top_n>/<from_date>/<to_date>", methods=['GET', 'POST'])
 def serve_datasets(query, top_n, from_date, to_date):
     from_date = datetime.strptime(from_date, '%d-%m-%Y')
     to_date = datetime.strptime(to_date, '%d-%m-%Y')
     return get_approx_nn_datasets_results(query, top_n, from_date, to_date)
 
 
-@app.route("/papers/<query>/<top_n>", methods=['GET', 'POST'])
+@app.route("/papers/<query>/<top_n>/<from_date>/<to_date>", methods=['GET', 'POST'])
 def serve_papers(query, top_n, from_date, to_date):
+
     from_date = datetime.strptime(from_date, '%d-%m-%Y')
-    to_date = datetime.strptime(from_date, '%d-%m-%Y')
+    to_date = datetime.strptime(to_date, '%d-%m-%Y')
 
     return get_approx_nn_papers_results(query, top_n, from_date, to_date)
 

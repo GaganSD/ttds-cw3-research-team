@@ -413,7 +413,7 @@ export default function ResultsPage(props) {
                                 marginTop: '-0.8em',
                                 marginRight: '2em'
                             }}>
-                                <a href="http://localhost:3000">
+                                <a href="http://34.145.46.81:3000/">
                                     <img src={research_logo_side} height="100em" width="250em" />
                                 </a>
                             </div>
