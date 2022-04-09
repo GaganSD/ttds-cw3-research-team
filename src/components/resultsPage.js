@@ -395,14 +395,14 @@ export default function ResultsPage(props) {
                                         style={{ maxWidth: '50%' }}
                                         parentCallback={TextEntered}
                                         error={true}
-                                        text={"No Results were shown"}
+                                        text={"No Results Found! Are advanced options configured properly?"}
                                     />
                                         : longquery ? <SearchField
                                             initialvalue={query}
                                             style = {{maxWidth : '50%'}}
                                             parentCallback = {TextEntered}
                                             error={true}
-                                            text={"Query too long, 16 characters or less please"}
+                                            text={"Query too long, 16 characters or less please."}
                                         />
                                             : <SearchField
                                                 initialvalue={query_spaced}

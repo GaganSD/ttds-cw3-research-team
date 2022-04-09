@@ -167,12 +167,13 @@ export default function SwipeableTemporaryDrawer(props) {
                         aria-labelledby='searchtype options'
                         defaultValue={radio_choice_searchtype}
                         name="searchtypebuttons"
-                        onChange={handleChange}>
+                        onChange={handleChange}
+                        >
 
-                        <FormControlLabel control={<Radio />} label="Default" value="DEFAULT" />
-                        <FormControlLabel control={<Radio />} label="Proximity Search" value="PROXIMITY" />
-                        <FormControlLabel control={<Radio />} label="Phrase Search" value="PHRASE" />
-                        <FormControlLabel control={<Radio />} label="Author Search (By Last Name)" value="AUTHOR" disabled={props.datasets} />
+                        <FormControlLabel control={<Radio />} label="Default" value="DEFAULT" disabled={(radio_choice_algorithm === "BM25" || radio_choice_algorithm === "APPROX_NN")}/>
+                        <FormControlLabel control={<Radio />} label="Proximity Search" value="PROXIMITY" disabled={(radio_choice_algorithm === "BM25" || radio_choice_algorithm === "APPROX_NN")}/>
+                        <FormControlLabel control={<Radio />} label="Phrase Search" value="PHRASE" disabled={(radio_choice_algorithm === "BM25" || radio_choice_algorithm === "APPROX_NN")}/>
+                        <FormControlLabel control={<Radio />} label="Author Search (By Last Name)" value="AUTHOR" disabled={(props.datasets || radio_choice_algorithm === "BM25" || radio_choice_algorithm === "APPROX_NN")}/>
 
 
                     </RadioGroup>
