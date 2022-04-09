@@ -35,7 +35,7 @@ export default function SwipeableTemporaryDrawer(props) {
         right: false,
     });
 
-    const { query, df, dt, alg, srchtyp, ds, pn } = useParams();
+    const { df, dt, alg, srchtyp } = useParams();
     const theme = createTheme({
         components: {
             MuiTypography: {
@@ -144,7 +144,7 @@ export default function SwipeableTemporaryDrawer(props) {
                 <FormControl sx={{
                     margin: 2
                 }}>
-                <FormLabel id="sortby">✨ Ranking Algorithm:</FormLabel>
+                <FormLabel id="sortby"><span role="img" aria-label="Ranking Emoji">✨</span> Ranking Algorithm:</FormLabel>
                     <RadioGroup
                         aria-labelledby='algorithmbuttons'
                         defaultValue={radio_choice_algorithm}
@@ -166,7 +166,7 @@ export default function SwipeableTemporaryDrawer(props) {
                 <FormControl sx={{
                     margin: 2
                 }}>
-            <FormLabel id="sortby">🔎 Search Type:</FormLabel>
+            <FormLabel id="sortby"><span role="img" aria-label="Search Emoji">🔎</span> Search Type:</FormLabel>
                     <RadioGroup
                         aria-labelledby='searchtype options'
                         defaultValue={radio_choice_searchtype}
@@ -195,7 +195,7 @@ export default function SwipeableTemporaryDrawer(props) {
         }}>
           <p style ={{
             color: "grey"
-        }}>📅 Date Range:</p>
+        }}><span role="img" aria-label="Calandar logo">📅</span>Date Range:</p>
         </div>
         </FormControl>
                 <div style={{

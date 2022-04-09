@@ -99,7 +99,7 @@ export default function ResultsPage(props) {
 
     const [search, setSearch] = React.useState(query_spaced);
     const showPageButton = React.useRef(false);
-    const [pagenum, setPageNum] = React.useState(parseInt(pn));
+    const [pagenum] = React.useState(parseInt(pn));
     const [datasets, setDatasets] = React.useState((ds === "true"));
     const [badquery, setBadQuery] = React.useState(false);
     const [emptyresults, setEmptyResults] = React.useState(false);
@@ -163,7 +163,7 @@ export default function ResultsPage(props) {
             var month = parseInt(dateItems[monthIndex]);
             month -= 1;
 
-            var d = new Date(year, month, dateItems[dayIndex]);
+            d = new Date(year, month, dateItems[dayIndex]);
         }
 
         const monthNames = ["January", "February", "March", "April", "May", "June",
@@ -198,8 +198,8 @@ export default function ResultsPage(props) {
         var lower = authors.toLowerCase()
         if (authors.includes(",")) {
             return " • " + authors;
-        } else if (!(lower == "n/a" || lower == "na" || lower == "NA"
-            || lower == "n-a" || lower == "" || lower == " ")) {
+        } else if (!(lower === "n/a" || lower === "na" || lower === "NA"
+            || lower === "n-a" || lower === "" || lower === " ")) {
             return " • " + authors;
         }
     }
@@ -211,7 +211,7 @@ export default function ResultsPage(props) {
         if (arr_len > 2) {
             domain = splitArr[arr_len - 2] + '.' + splitArr[arr_len - 1];
             //check to see if it's using a Country Code Top Level Domain (ccTLD) (i.e. ".me.uk")
-            if (splitArr[arr_len - 2].length == 2 && splitArr[arr_len - 1].length == 2) {
+            if (splitArr[arr_len - 2].length === 2 && splitArr[arr_len - 1].length === 2) {
                 //this is using a ccTLD
                 domain = splitArr[arr_len - 3] + '.' + domain;
             }
@@ -345,7 +345,7 @@ export default function ResultsPage(props) {
                                 marginRight: '2em'
                             }}>
                                 <a href="http://34.145.46.81:3000/">
-                                    <img src={research_logo_side} height="100em" width="250em" />
+                                    <img src={research_logo_side} height="100em" width="250em" alt="Re-Search Branch Logo"/>
                                 </a>
                             </div>
                             <div className='Options' style={{
