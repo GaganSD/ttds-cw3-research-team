@@ -357,7 +357,8 @@ export default function ResultsPage(props) {
                             <div className='SearchField' style={{
                                 width: '30%',
                                 marginTop: '1.5em',
-                                marginLeft: '1em'
+                                marginLeft: '1em',
+                                marginRight:'3em'
                             }}>
                                 {badquery ? <SearchField
                                     initialvalue={query}
@@ -391,7 +392,8 @@ export default function ResultsPage(props) {
                             </div>
                             <div className='SearchButton' style={{
                                 marginTop: '1.5em',
-                                marginLeft: '1em'
+                                marginLeft: '1em',
+                                marginBottom : '1.5em'
                             }}>
                                 <ButtonGroup variant="contained" aria-label="outlined primary button group">
                                     <Button onClick={routeChange} variant="contained" style={{ display: 'flex', justifyContent: 'center' }}>
@@ -402,7 +404,8 @@ export default function ResultsPage(props) {
                             </div>
                             <div style={{
                                 marginTop: "1em",
-                                marginLeft: "1em"
+                                marginLeft: "1em",
+                                marginBottom: "1.5em"
                             }}>
                                 <PaperOrDS parentCallback={getPoDS} dv={pods_text} />
                             </div>
