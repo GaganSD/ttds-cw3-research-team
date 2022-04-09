@@ -5,7 +5,6 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 
 export default function DsPaperRadio(props) {
-    // const Pods = React.useRef("Papers")
   
     return (
     <FormControl>
