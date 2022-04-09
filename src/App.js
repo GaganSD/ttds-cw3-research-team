@@ -4,6 +4,7 @@ import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import QEButton from './components/QueryExpansionButton';
 import SearchField from './components/search';
+import { useParams } from 'react-router-dom'
 
 import Box from '@mui/material/Box';
 import research_logo from './logos/researchlogomain.png';
@@ -111,6 +112,8 @@ function App() {
 
   }
 
+  const { query } = useParams();
+  //const query_spaced = query.replaceAll('+', ' ');
 
   const getPoDS = (podval) => {
     if(podval === "Papers"){
