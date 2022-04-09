@@ -86,7 +86,7 @@ def call_top_n(N, parameters):
 
             #print("Failed to get a valid response from the microservice. Is it on?")
 #=======
-                print(f"ERROR WITH CODE: {results.status_code}")
+                print(f"ERROR WITH CODE: {c_response.status_code}")
                 server_fail = True
 #        except:
 #            print("Failed to get a valid response from the microservice. Is it on?")

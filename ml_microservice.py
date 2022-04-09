@@ -26,13 +26,12 @@ client = MongoDBClient("34.142.18.57")
 
 
 print("This will take some time..")
-# Load paper & dataset index. 
+# Load paper & dataset index.
 searcher = scann.scann_ops_pybind.load_searcher('/home/stylianosc/scann/papers/') #NOTE:DL
 searcher_dataset = scann.scann_ops_pybind.load_searcher('/home/stylianosc/scann/datasets/')
 
 df = pd.read_csv("core_algorithms/ir_eval/Datasets_dataset.csv", sep='\t')
-df.rename(columns={"description": "abstract"}, inplace=True)
-
+df.rename(columns={"description":"abstract"}, inplace=True)
 
 
 print("This will take some time..")
@@ -58,13 +57,16 @@ def get_approx_nn_datasets_results(query: str="", top_n: int=10, start_date:date
             output[key] = str(value)
         output["date"] = ""
         output["authors"] = output["ownerUser"]
-        output["abstract"] = output["subtitle"] + " " + output["abstract"]
+#    output["abstract"] = output["description"]
+#    output["abstract"] = output["subtitle"] + " " + output["abstract"]
 
         if not (output["ownerUser"].startswith("http") or output["ownerUser"].startswith("https")):
             output["url"] = "https://kaggle.com/" + output["ownerUser"] + "/" + output['dataset_slug']
         else:
             output["url"] = output["ownerUser"]
+
         output_dict["Results"].append(output)
+
     return output_dict
 
 def get_approx_nn_papers_results(query: str="", top_n: int=10, start_date:datetime = min_day, end_date:datetime = curr_day) -> dict:
@@ -114,5 +116,4 @@ def say_hello():
 
 print("should start now")
 if __name__ == "__main__":
-  app.run(host='0.0.0.0', port=5002,use_reloader=False,  debug=True)
-  print("yoo! like for real. try it now!")
+  app.run(host='0.0.0.0', port=5002,use_reloader=False,  debug=True, threaded=True)
