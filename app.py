@@ -33,7 +33,6 @@ import time
 import heapq
 import requests
 
-
 curr_formatter = Formatting()
 
 # Create Flask app

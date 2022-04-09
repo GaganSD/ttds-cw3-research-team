@@ -144,7 +144,7 @@ export default function ResultsPage(props) {
         var yearIndex = formatItems.indexOf("y");
 
         var yr = parseInt(dateItems[yearIndex]);
-
+        var year;
         if (yr < 100 && yr <= 21) { //handling 2 digit years
             year = "20" + yr;
         } else if (yr < 100) {
