@@ -242,7 +242,7 @@ def phrase_search(query_params, client = None, topk = 2000,tmp_result = []):
             term1 = terms[i]
             term2 = terms[i+1]
             if i == 0:
-                term_start_time = time.time()
+                # term_start_time = time.time()
                 list_of_papers1 = client.get_topk_doc_from_index(term1, k=topk)
                 # #print(term1, time.time()-term_start_time)
                 term1_dict = dict()
@@ -252,7 +252,7 @@ def phrase_search(query_params, client = None, topk = 2000,tmp_result = []):
                 list_of_papers1 = list_of_papers2
                 term1_dict = output_dict
             term2_dict = dict()
-            term_start_time = time.time()
+            # term_start_time = time.time()
             list_of_papers2 = client.get_topk_doc_from_index(term2, k=topk)
             # #print(term2, time.time()-term_start_time)
             for paper in list_of_papers2:
@@ -263,7 +263,7 @@ def phrase_search(query_params, client = None, topk = 2000,tmp_result = []):
         # #print(len(output_ids))
         if len(output_ids) < 10:
             new_topk = topk * 3
-            output_ids = phrase_search(query_params, client, topk=new_topk, start_time=start_time, tmp_result=output_ids)
+            output_ids = phrase_search(query_params, client, topk=new_topk, tmp_result=output_ids)
     #print(time.time()-start_time)
     return output_ids
 

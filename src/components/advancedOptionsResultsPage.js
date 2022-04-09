@@ -100,8 +100,6 @@ export default function SwipeableTemporaryDrawer(props) {
                 setRadioChoiceSearchType(e.target.value);
             }
         }
-
-
     };
 
     const toggleDrawer = (anchor, open) => (event) => {
@@ -192,7 +190,7 @@ export default function SwipeableTemporaryDrawer(props) {
         }}>
           <p style ={{
             color: "grey"
-        }}><span role="img" aria-label="Calandar logo">📅</span>Date Range:</p>
+        }}><span role="img" aria-label="Calandar logo">📅 </span>Date Range:</p>
         </div>
         </FormControl>
                 <div style={{
