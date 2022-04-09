@@ -65,25 +65,21 @@ export default function SwipeableTemporaryDrawer(props) {
 
 
     React.useEffect(() => {
-        console.log(fromDate);
         props.parentCallback("date_from", fromDate);
     }, [fromDate]);
 
 
     React.useEffect(() => {
-        console.log(toDate);
         props.parentCallback("date_to", toDate);
     }, [toDate]);
 
 
 
     React.useEffect(() => {
-        console.log(radio_choice_algorithm);
         props.parentCallback("algorithms", radio_choice_algorithm);
     }, [radio_choice_algorithm]);
 
     React.useEffect(() => {
-        console.log(radio_choice_searchtype)
         props.parentCallback("searchtype", radio_choice_searchtype)
     }, [radio_choice_searchtype]);
 
@@ -213,7 +209,6 @@ export default function SwipeableTemporaryDrawer(props) {
                                 value={fromDate}
                                 onChange={(newfromvalue) => {
                                     setFromDate(newfromvalue);
-                                    console.log(newfromvalue);
                                     handleChange();
                                 }}
                                 allowSameDateSelection
