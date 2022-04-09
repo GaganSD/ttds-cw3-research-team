@@ -2,82 +2,68 @@ import * as React from 'react';
 import { Box } from '@mui/system';
 import { useParams } from 'react-router-dom'
 import SearchField from './search';
-import SearchButton from './SearchButton';
-import SettingsSuggestIcon from '@mui/icons-material/SettingsSuggest';
-import IconButton from '@mui/material/IconButton';
 import { Button } from '@mui/material';
 import SwipeableTemporaryDrawer from './advancedOptionsResultsPage';
 import PaperOrDS from './datasetorpaperresultspage';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import QEButton from './QueryExpansionButton';
 import PageButton from './pagebutton';
-import { useNavigate } from 'react-router-dom';
 import research_logo_side from '../logos/researchlogoside.png';
 import 'typeface-roboto';
-import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
-import { CompareSharp } from '@mui/icons-material';
-import Options from './options';
 
 
 export default function ResultsPage(props) {
-    const backend_server_ip = "http://34.145.122.190:5000/";
+    const backend_server_ip = "http://34.145.46.81:5000/";
 
-    let navigate = useNavigate();
     const routeChange = () => {
-        console.log("heeeeeeyooo")
-        console.log(values.current);
+
         if (search === '' || !/^(?!\s+$).+/.test(search)) {
-            console.log(search);
-            console.log("empty query");
+        }
+        else if (search.length > 25){
+            setLongQuery(true);
         }
         else if (!/^[0-9a-zA-Z\s]*$/.test(search)) {
-            console.log("badquery");
             setBadQuery(true);
 
         }
         else {
-
+            values.current.pagenum = 1;
+            console.log(values.current)
             let path = create_url(search, values.current);
-            console.log(path);
             window.location = (window.location.origin + '/' + path);
         }
     }
     const { query, df, dt, alg, srchtyp, ds, pn } = useParams();
+    const query_spaced = query.replaceAll('+', ' ');
     React.useEffect(() => {
-        if (df.slice === "inf") {
+        if (df === "inf") {
             values.current.range_from = null;
         }
         else {
             values.current.range_from = new Date(df)
         }
-        console.log(dt);
         if (dt === "inf") {
             values.current.range_to = null;
         }
         else {
-            values.current.range_from = new Date(dt)
+            values.current.range_to = new Date(dt)
         }
-        console.log(alg);
-        console.log(srchtyp);
-        console.log(ds);
-        console.log(pn);
-        console.log("huh?");
+
         let search_query = formaturl(window.location.pathname);
-        console.log(search_query);
+
         return fetch(backend_server_ip + search_query).then(response => response.json()).then(data => {
             if (data.Results.length === 0) {
-                console.log("empty");
                 setEmptyResults(true);
-                console.log(emptyresults);
             }
             else {
-                console.log("search complete");
                 setBadQuery(false);
                 setEmptyResults(false);
+                setNumResults(data['Results'].length);
                 showPageButton.current = true;
                 setJsonResults(data);
             }
@@ -86,6 +72,7 @@ export default function ResultsPage(props) {
 
 
     const theme = createTheme({
+
         components: {
             MuiTypography: {
                 defaultProps: {
@@ -98,7 +85,9 @@ export default function ResultsPage(props) {
                         h6: 'h2',
                         subtitle1: 'h2',
                         subtitle2: 'h2',
-                        body1: 'span',
+                        body1: 'span'
+
+                    ,
                         body2: 'span',
                     },
                 },
@@ -107,49 +96,27 @@ export default function ResultsPage(props) {
     });
 
 
-    // React.useEffect(() => {
-    //     let search_query = "search?" + (window.location.pathname).slice(8)
-    //     console.log(search_query);
-    //     return fetch('http://34.83.49.212:5000/' + search_query).then(response => response.json()).then(data => {
-    //         console.log(create_url(search, values.current));
-    //         setBadQuery(false);
-    //         setEmptyResults(false);
-    //         showPageButton.current = true;
-    //         setJsonResults(data);
-    //     });
-    // }, [])
 
-    const [search, setSearch] = React.useState(query);
+    const [search, setSearch] = React.useState(query_spaced);
     const showPageButton = React.useRef(false);
-    const [pagenum, setPageNum] = React.useState(pn);
+    const [pagenum] = React.useState(parseInt(pn));
     const [datasets, setDatasets] = React.useState((ds === "true"));
     const [badquery, setBadQuery] = React.useState(false);
     const [emptyresults, setEmptyResults] = React.useState(false);
-    const [gobackbuttondisabled, setGoBackButtonDisabled] = React.useState(true);
+    const [longquery, setLongQuery] = React.useState(false);
+    const gobackbuttondisabled = (pn==="1") ? true: false;
     const [json_results, setJsonResults] = React.useState({ "Results": [] });
+    const [numresults, setNumResults] = React.useState(0)
     const [json_query_expansion, setJsonQE] = React.useState({ QEResults: [] });
     const [pods_text, setpodsText] = React.useState((ds === "true") ? "DataSets" : "Papers");
-    const label = { inputProps: { 'aria-label': 'Switch demo' } };
     const values = React.useRef({
         algorithm: alg,
         searchtype: srchtyp,
         range_from: new Date(df),
         range_to: new Date(df),
         datasets: ds,
-        pagenum: pn
+        pagenum: parseInt(pn)
     });
-
-    React.useEffect(() => {
-        if (pagenum === 1) {
-            setGoBackButtonDisabled(true);
-        }
-        else {
-            setGoBackButtonDisabled(false);
-        }
-        values.current.pagenum = pagenum;
-        // SearchFunc();
-
-    }, [pagenum]);
 
     const formaturl = (unformatted_url) => {
         let options = unformatted_url.split("/");
@@ -180,12 +147,13 @@ export default function ResultsPage(props) {
         var yearIndex = formatItems.indexOf("y");
 
         var yr = parseInt(dateItems[yearIndex]);
+        var year;
         if (yr < 100 && yr <= 21) { //handling 2 digit years
-            var year = "20" + yr;
+            year = "20" + yr;
         } else if (yr < 100) {
-            var year = "19" + yr;
+             year = "19" + yr;
         } else {
-            var year = yr;
+            year = yr;
         }
 
         if (isNaN(dateItems[monthIndex])) { //in case the month is written as a word
@@ -195,8 +163,9 @@ export default function ResultsPage(props) {
             var month = parseInt(dateItems[monthIndex]);
             month -= 1;
 
-            var d = new Date(year, month, dateItems[dayIndex]);
+            d = new Date(year, month, dateItems[dayIndex]);
         }
+
         const monthNames = ["January", "February", "March", "April", "May", "June",
             "July", "August", "September", "October", "November", "December"];
         let formatted = monthNames[d.getMonth()] + ", " + d.getFullYear();
@@ -210,16 +179,39 @@ export default function ResultsPage(props) {
     // check if this works or else remove this.
     var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
+    function titlegenerator(text) {
+
+        if (text === "") {
+            return "Title Not Available";
+        }
+        else if (text.length > 175) {
+            return text.substring(0, 175) + "...";
+        }
+        // if last character is a period, remove it.
+        else if (text.charAt(text.length - 1) === ".") {
+            return text.substring(0, text.length - 1);
+        }
+        else {
+            return text;
+        }
+    }
+
     function abstractgenerator(text) {
 
-        if (text !== "") {
+        if (text === "") {
+            return "No description is available for this content.";
+        }
+        else {
             if (isMobile) {
                 if (text.length > 100) {
                     return text.substring(0, 100) + "...";
                 }
             } else {
-                if (text.length > 500) {
+                if (text.length > 300) {
                     return text.substring(0, 500) + "...";
+                }
+                else {
+                    return text;
                 }
             }
         }
@@ -229,8 +221,8 @@ export default function ResultsPage(props) {
         var lower = authors.toLowerCase()
         if (authors.includes(",")) {
             return " • " + authors;
-        } else if (!(lower == "n/a" || lower == "na" || lower == "NA"
-            || lower == "n-a" || lower == "" || lower == " ")) {
+        } else if (!(lower === "n/a" || lower === "na" || lower === "NA"
+            || lower === "n-a" || lower === "" || lower === " ")) {
             return " • " + authors;
         }
     }
@@ -242,7 +234,7 @@ export default function ResultsPage(props) {
         if (arr_len > 2) {
             domain = splitArr[arr_len - 2] + '.' + splitArr[arr_len - 1];
             //check to see if it's using a Country Code Top Level Domain (ccTLD) (i.e. ".me.uk")
-            if (splitArr[arr_len - 2].length == 2 && splitArr[arr_len - 1].length == 2) {
+            if (splitArr[arr_len - 2].length === 2 && splitArr[arr_len - 1].length === 2) {
                 //this is using a ccTLD
                 domain = splitArr[arr_len - 3] + '.' + domain;
             }
@@ -252,7 +244,6 @@ export default function ResultsPage(props) {
 
     function QueryExpansion() {
 
-        console.log(create_url(search, values.current));
         return fetch(backend_server_ip + 'QE/' + search).then(response => response.json()).then(data => {
             setJsonQE(data);
         });
@@ -295,11 +286,11 @@ export default function ResultsPage(props) {
             return "inf"
         }
         else {
-            let day = date.getDate() + "-";
+            let day = date.getDate();
             let month = (date.getMonth() + 1) + "-";
-            let year = date.getFullYear() + "";
+            let year = date.getFullYear() + "-";
 
-            return day + month + year;
+            return year + month + day;
         }
 
     }
@@ -352,8 +343,6 @@ export default function ResultsPage(props) {
             values.current.range_to = optval;
         }
 
-        console.log(values);
-        console.log()
     }
 
 
@@ -366,7 +355,7 @@ export default function ResultsPage(props) {
                     <Box
                         sx={{
                             width: '100%',
-                            height: "5em",
+                            height: "6em",
                             backgroundColor: '#f5f5f5'
                         }}>
                         <div style={{
@@ -375,50 +364,59 @@ export default function ResultsPage(props) {
                             justifyContent: 'center'
                         }}>
                             <div style={{
-                                marginTop: '-0.8em',
-                                marginRight: '2em'
+                                marginTop: '-0.8%',
+                                marginRight: '1%'
                             }}>
-                                <a href="http://localhost:3000">
-                                    <img src={research_logo_side} height="100em" width="250em" />
+                                <a href="http://34.145.46.81:3000/">
+                                    <img src={research_logo_side} height="100em" width="250em" alt="Re-Search Branch Logo"/>
                                 </a>
                             </div>
                             <div className='Options' style={{
-                                marginRight: '3em',
-                                marginTop: '1.5em'
+                                marginRight: '0.5%',
+                                marginTop: '1.5%'
                             }}>
                                 <SwipeableTemporaryDrawer hysteresis="0.52" parentCallback={getOptions} datasets={datasets} />
                             </div>
                             <div className='SearchField' style={{
-                                width: '30%',
-                                marginTop: '1.5em',
-                                marginLeft: '1em'
+                                width: '50%',
+                                marginTop: '1.5%',
+                                marginLeft: '1%',
+                                marginRight:'1%'
                             }}>
                                 {badquery ? <SearchField
                                     initialvalue={query}
-                                    style={{ maxWidth: '80%' }}
+                                    style={{ maxWidth: '50%' }}
                                     parentCallback={TextEntered}
                                     error={true}
-                                    text={"Bad Query Was Received"}
+                                    text={"Bad Query Was Received. We only allow english alphabets and whitespace!"}
                                 />
-                                    : emptyresults ? <SearchField
-                                        initialvalue={query}
-                                        style={{ maxWidth: '80%' }}
-                                        parentCallback={TextEntered}
-                                        error={true}
-                                        text={"No Results were shown"}
-                                    />
-                                        : <SearchField
-                                            initialvalue={query}
-                                            style={{ maxWidth: '80%' }}
-                                            parentCallback={TextEntered}
-                                            error={false}
-                                            text={"Query"}
-                                        />
+                                : emptyresults ? <SearchField
+                                    initialvalue={query}
+                                    style={{ maxWidth: '50%' }}
+                                    parentCallback={TextEntered}
+                                    error={true}
+                                    text={"No Results Found for this query & configurations."}
+                                />
+                                : longquery ? <SearchField
+                                    initialvalue={query}
+                                    style = {{maxWidth : '50%'}}
+                                    parentCallback = {TextEntered}
+                                    error={true}
+                                    text={"Query too long, 20 characters or less please."}
+                                />
+                                : <SearchField
+                                    initialvalue={query_spaced}
+                                    style={{ maxWidth: '50%' }}
+                                    parentCallback={TextEntered}
+                                    error={false}
+                                    text={"Query"}
+                                />
                                 }
                             </div>
                             <div className='SearchButton' style={{
-                                marginTop: '1.5em',
-                                marginLeft: '1em'
+                                marginTop: '1.5%',
+                                marginLeft: '1%',
+                                marginBottom : '5%'
                             }}>
                                 <ButtonGroup variant="contained" aria-label="outlined primary button group">
                                     <Button onClick={routeChange} variant="contained" style={{ display: 'flex', justifyContent: 'center' }}>
@@ -428,39 +426,53 @@ export default function ResultsPage(props) {
                                 </ButtonGroup>
                             </div>
                             <div style={{
-                                marginTop: "1em",
-                                marginLeft: "1em"
+                                marginTop: "1.%",
+                                marginLeft: "1%",
                             }}>
                                 <PaperOrDS parentCallback={getPoDS} dv={pods_text} />
                             </div>
-                        </div>
+                        </div> 
                     </Box>
-                    {/* <p>moneybag yo</p> */}
+                    <div style={{
+                        display: 'flex',
+                        justifyContent: 'center'
+                    }}>
+                        {json_query_expansion.QEResults.map((curr_qe, curr_key) => {
+                            return <Box key={curr_key}>{curr_qe}</Box>;
+                        })}
+                    </div>
+                        
                     <div className='results' style={{
-                        marginLeft: '10em',
-                        marginRight: '10em'
+                        marginLeft: '10%',//'10em',
+                        marginRight: '10%'
                     }}>
 
-                        {json_results.Results.map(curr_elem => {
+                        {json_results.Results.map((curr_elem, curr_key) => {
 
                             let std_date = standardize_dates(curr_elem.date);
 
-                            return <Box padding={0.2}>
+                            return <Box key={curr_key} padding={0.2}>
                                 <p>
-                                    <a href={curr_elem.url}><font size="5">{curr_elem.title}</font></a><br />
+                                    <a href={curr_elem.url}><font size="4.99">{titlegenerator(curr_elem.title)}</font></a><br />
                                     <font color="#595F6A" size="2">{fix_url(curr_elem.url)} {std_date} {authorlist(curr_elem.authors)}</font><br />
                                     <font color="#595F6A">ㅤ{abstractgenerator(curr_elem.abstract)}</font><br />
                                 </p></Box>;
                         })}
                     </div>
                     <div style={{
-                        marginBottom: ".5em"
+                        marginBottom: "1em",
+                        display: "flex",
+                        justifyContent: "center"
                     }}>
-                        <PageButton pagenum={pagenum} disableback={gobackbuttondisabled} show={showPageButton.current} sexyProp={setPageNum} />
+                        <PageButton pagenum={pagenum} disableback={gobackbuttondisabled} show={showPageButton.current} numResults = {numresults} sexyProp={(n) => {
+                            values.current.pagenum = n;
+                            let path = create_url(query_spaced, values.current);
+                            window.location = (window.location.origin + '/' + path);
+                        }} />
                     </div>
+                    <br/> <br/>
                 </div>
             </div>
         </ThemeProvider>
     )
 }
-

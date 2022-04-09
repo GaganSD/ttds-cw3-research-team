@@ -139,7 +139,7 @@ export default function SwipeableTemporaryDrawer(props) {
         <FormControl sx = {{
           margin:2
         }}>
-            <FormLabel id="sortby">✨ Ranking Algorithm:</FormLabel>
+            <FormLabel id="sortby"><span role="img" aria-label="Ranking Emoji">✨</span> Ranking Algorithm:</FormLabel>
             <RadioGroup
               aria-labelledby='algorithmbuttons'
               defaultValue= {radio_choice_algorithm}
@@ -161,17 +161,17 @@ export default function SwipeableTemporaryDrawer(props) {
         <FormControl sx = {{
           margin:2
         }}>
-            <FormLabel id="sortby">🔎 Search Type:</FormLabel>
+            <FormLabel id="sortby"><span role="img" aria-label="Search Emoji">🔎</span> Search Type:</FormLabel>
             <RadioGroup
               aria-labelledby='searchtype options'
               defaultValue= {radio_choice_searchtype}
               name = "searchtypebuttons"
               onChange={handleChange}>
 
-                <FormControlLabel control={<Radio/>}  label="Default" value="DEFAULT" />
-                <FormControlLabel control={<Radio/>} label="Proximity Search" value="PROXIMITY"/>
-                <FormControlLabel control={<Radio/>}  label="Phrase Search" value="PHRASE"/>
-                <FormControlLabel control={<Radio/>} label="Author Search (By Last Name)" value="AUTHOR" disabled={props.datasets}/>
+                <FormControlLabel control={<Radio/>}  label="Default" value="DEFAULT" disabled={(radio_choice_algorithm === "BM25" || radio_choice_algorithm === "APPROX_NN")}/>
+                <FormControlLabel control={<Radio/>} label="Proximity Search" value="PROXIMITY" disabled={(radio_choice_algorithm === "BM25" || radio_choice_algorithm === "APPROX_NN")}/>
+                <FormControlLabel control={<Radio/>}  label="Phrase Search" value="PHRASE" disabled={(radio_choice_algorithm === "BM25" || radio_choice_algorithm === "APPROX_NN")}/>
+                <FormControlLabel control={<Radio/>} label="Author Search (By Last Name)" value="AUTHOR" disabled={(props.datasets || radio_choice_algorithm === "BM25" || radio_choice_algorithm === "APPROX_NN")}/>
 
 
               </RadioGroup>
@@ -190,7 +190,7 @@ export default function SwipeableTemporaryDrawer(props) {
         }}>
           <p style ={{
             color: "grey"
-          }}>📅 Date Range:</p>
+          }}><span role="img" aria-label="Calandar logo">📅</span>Date Range:</p>
         </div>
         </FormControl>
         <div style={{
@@ -203,23 +203,23 @@ export default function SwipeableTemporaryDrawer(props) {
                 <DesktopDatePicker
                 label="From"
                 inputFormat="dd/MM/yyyy"
-                // defaultValue={new Date().getDate()+"-"+(new Date().getMonth()+1)+"-"+new Date().getFullYear()}
                 value={fromDate}
                 onChange={(newfromvalue) => {
                   setFromDate(newfromvalue);
                   handleChange();
                 }}
+                allowSameDateSelection
                 renderInput={(params) => <TextField {...params} />}
                 />
                 <DesktopDatePicker
                 label="To"
                 inputFormat="dd/MM/yyyy"
-                // defaultValue={new Date().getDate()+"-"+(new Date().getMonth()+1)+"-"+new Date().getFullYear()}
                 value={toDate}
                 onChange={(newtovalue) => {
                   setToDate(newtovalue);
                   handleChange();
                 }}
+                allowSameDateSelection
                 renderInput={(params) => <TextField {...params} />}
                 /> 
               </Stack>

@@ -7,12 +7,10 @@ import FormControl from '@mui/material/FormControl';
 export default function DsPaperRadio(props) {
     // const Pods = React.useRef("Papers")
     React.useEffect(() => {
-        console.log(props.dv);
 
     },[]);
     return (
     <FormControl>
-      {/* <FormLabel id="dataset or paper">What do you want to search for?</FormLabel> */}
       <RadioGroup
         row
         aria-labelledby="demo-radio-buttons-group-label"

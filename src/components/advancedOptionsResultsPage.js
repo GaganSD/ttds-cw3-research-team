@@ -35,14 +35,7 @@ export default function SwipeableTemporaryDrawer(props) {
         right: false,
     });
 
-    // let valcopy = {
-    //   sort_by: "Featured",
-    //   authors: true,
-    //   author_text:'',
-    //   range_from:null,                                                                                     
-    //   range_to: null
-    // };
-    const { query, df, dt, alg, srchtyp, ds, pn } = useParams();
+    const { df, dt, alg, srchtyp } = useParams();
     const theme = createTheme({
         components: {
             MuiTypography: {
@@ -72,25 +65,21 @@ export default function SwipeableTemporaryDrawer(props) {
 
 
     React.useEffect(() => {
-        console.log(fromDate);
         props.parentCallback("date_from", fromDate);
     }, [fromDate]);
 
 
     React.useEffect(() => {
-        console.log(toDate);
         props.parentCallback("date_to", toDate);
     }, [toDate]);
 
 
 
     React.useEffect(() => {
-        console.log(radio_choice_algorithm);
         props.parentCallback("algorithms", radio_choice_algorithm);
     }, [radio_choice_algorithm]);
 
     React.useEffect(() => {
-        console.log(radio_choice_searchtype)
         props.parentCallback("searchtype", radio_choice_searchtype)
     }, [radio_choice_searchtype]);
 
@@ -111,8 +100,6 @@ export default function SwipeableTemporaryDrawer(props) {
                 setRadioChoiceSearchType(e.target.value);
             }
         }
-
-
     };
 
     const toggleDrawer = (anchor, open) => (event) => {
@@ -151,7 +138,7 @@ export default function SwipeableTemporaryDrawer(props) {
                 <FormControl sx={{
                     margin: 2
                 }}>
-                <FormLabel id="sortby">✨ Ranking Algorithm:</FormLabel>
+                <FormLabel id="sortby"><span role="img" aria-label="Ranking Emoji">✨</span> Ranking Algorithm:</FormLabel>
                     <RadioGroup
                         aria-labelledby='algorithmbuttons'
                         defaultValue={radio_choice_algorithm}
@@ -173,17 +160,18 @@ export default function SwipeableTemporaryDrawer(props) {
                 <FormControl sx={{
                     margin: 2
                 }}>
-            <FormLabel id="sortby">🔎 Search Type:</FormLabel>
+            <FormLabel id="sortby"><span role="img" aria-label="Search Emoji">🔎</span> Search Type:</FormLabel>
                     <RadioGroup
                         aria-labelledby='searchtype options'
                         defaultValue={radio_choice_searchtype}
                         name="searchtypebuttons"
-                        onChange={handleChange}>
+                        onChange={handleChange}
+                        >
 
-                        <FormControlLabel control={<Radio />} label="Default" value="DEFAULT" />
-                        <FormControlLabel control={<Radio />} label="Proximity Search" value="PROXIMITY" />
-                        <FormControlLabel control={<Radio />} label="Phrase Search" value="PHRASE" />
-                        <FormControlLabel control={<Radio />} label="Author Search (By Last Name)" value="AUTHOR" disabled={props.datasets} />
+                        <FormControlLabel control={<Radio />} label="Default" value="DEFAULT" disabled={(radio_choice_algorithm === "BM25" || radio_choice_algorithm === "APPROX_NN")}/>
+                        <FormControlLabel control={<Radio />} label="Proximity Search" value="PROXIMITY" disabled={(radio_choice_algorithm === "BM25" || radio_choice_algorithm === "APPROX_NN")}/>
+                        <FormControlLabel control={<Radio />} label="Phrase Search" value="PHRASE" disabled={(radio_choice_algorithm === "BM25" || radio_choice_algorithm === "APPROX_NN")}/>
+                        <FormControlLabel control={<Radio />} label="Author Search (By Last Name)" value="AUTHOR" disabled={(props.datasets || radio_choice_algorithm === "BM25" || radio_choice_algorithm === "APPROX_NN")}/>
 
 
                     </RadioGroup>
@@ -202,7 +190,7 @@ export default function SwipeableTemporaryDrawer(props) {
         }}>
           <p style ={{
             color: "grey"
-        }}>📅 Date Range:</p>
+        }}><span role="img" aria-label="Calandar logo">📅 </span>Date Range:</p>
         </div>
         </FormControl>
                 <div style={{
@@ -221,6 +209,7 @@ export default function SwipeableTemporaryDrawer(props) {
                                     setFromDate(newfromvalue);
                                     handleChange();
                                 }}
+                                allowSameDateSelection
                                 renderInput={(params) => <TextField {...params} />}
                             />
                             <DesktopDatePicker
@@ -231,6 +220,7 @@ export default function SwipeableTemporaryDrawer(props) {
                                     setToDate(newtovalue);
                                     handleChange();
                                 }}
+                                allowSameDateSelection
                                 renderInput={(params) => <TextField {...params} />}
                             />
                         </Stack>

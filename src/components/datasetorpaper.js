@@ -5,11 +5,9 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 
 export default function DsPaperRadio(props) {
-    // const Pods = React.useRef("Papers")
   
     return (
     <FormControl>
-      {/* <FormLabel id="dataset or paper">What do you want to search for?</FormLabel> */}
       <RadioGroup
         row
         aria-labelledby="demo-radio-buttons-group-label"

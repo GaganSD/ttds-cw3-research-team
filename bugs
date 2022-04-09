@@ -1,0 +1,19 @@
+Functional:
+- [DONE] When there is no description, add a small description saying "This content has no description."
+- [DONE] Remove comments from backend.
+- [DONE] Remove ALL useless debug logs that slows down the system.
+- [DONE] Add description for sty's dataset code. 
+- [DONE] Don't show page button if the page number is 1 and the number of results is less than 10.
+- [DONE] Fix bug with sarah's end date and end date.
+- [DONE] Enable threading to Flask app.
+- [DONE] Fix all configs for Flask main server and ml microservice.
+- [DONE] Remove warnings from React
+- Enable production on react. 
+- Add caching for top content of the results page through react as this slows down.
+- Search bar disappears on small screens. Adjust it with screen more smoothly.
+
+Non functional:
+- [DONE] Disable search types for bm25 and scann
+- [DONE] Rewrite advanced options section.
+- [DONE] Add some space after the page changing button.
+- No highlighting for query expansion.

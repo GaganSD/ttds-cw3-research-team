@@ -5,10 +5,14 @@ import ButtonGroup from '@mui/material/ButtonGroup';
 import QEButton from './components/QueryExpansionButton';
 import SearchField from './components/search';
 
+//import { useParams } from 'react-router-dom'
+
+import { useParams } from 'react-router-dom';
+//>>>>>>> 8a10d7a19bd526b974cfed254b0322ec7bc41478
+
 import Box from '@mui/material/Box';
 import research_logo from './logos/researchlogomain.png';
 import PageButton from './components/pagebutton';
-import Switch from '@mui/material/Switch';
 import SwipeableTemporaryDrawer from './components/advancedOptions';
 import PaperOrDS from './components/datasetorpaper';
 import { useNavigate } from 'react-router-dom';
@@ -17,46 +21,45 @@ import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
-import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
+// import { createTheme } from '@mui/material/styles';
 
 function App() {
 
-  const theme = createTheme({
-    components: {
-      MuiTypography: {
-        defaultProps: {
-          variantMapping: {
-            h1: 'h2',
-            h2: 'h2',
-            h3: 'h2',
-            h4: 'h2',
-            h5: 'h2',
-            h6: 'h2',
-            subtitle1: 'h2',
-            subtitle2: 'h2',
-            body1: 'span',
-            body2: 'span',
-            p: 'span',
-          },
-        },
-      },
-    },
-  });
+  // const theme = createTheme({
+  //   components: {
+  //     MuiTypography: {
+  //       defaultProps: {
+  //         variantMapping: {
+  //           h1: 'h2',
+  //           h2: 'h2',
+  //           h3: 'h2',
+  //           h4: 'h2',
+  //           h5: 'h2',
+  //           h6: 'h2',
+  //           subtitle1: 'h2',
+  //           subtitle2: 'h2',
+  //           body1: 'span',
+  //           body2: 'span',
+  //           p: 'span',
+  //         },
+  //       },
+  //     },
+  //   },
+  // });
 
   let navigate = useNavigate();
   const routeChange = () => {
     if(search === ''|| !/^(?!\s+$).+/.test(search)){
-      console.log(search);
-      console.log("empty query");
+    }
+    else if (search.length > 25){
+      setLongQuery(true);
     }
     else if( !/^[0-9a-zA-Z\s]*$/.test(search) ){
-      console.log("badquery");
       setBadQuery(true);
  
     }
     else{
       let path = create_url(search, values.current);
-      console.log(path);
       navigate(path);
     }
   }
@@ -66,11 +69,12 @@ function App() {
   const [pagenum, setPageNum] = React.useState(1);
   const [datasets, setDatasets] = React.useState(false);
   const [badquery, setBadQuery] = React.useState(false);
+  const [longquery, setLongQuery] = React.useState(false);
   const [emptyresults, setEmptyResults] = React.useState(false);
   const [gobackbuttondisabled, setGoBackButtonDisabled] = React.useState(true);
   const [json_results, setJsonResults] = React.useState({"Results":[]});
   const [json_query_expansion, setJsonQE] = React.useState({QEResults:[]});
-  const label = { inputProps: { 'aria-label': 'Switch demo' } };
+
   const values = React.useRef({
     algorithm: "FEATURED",
     searchtype: "DEFAULT",
@@ -86,7 +90,6 @@ function App() {
       else{
           setGoBackButtonDisabled(false);
       }
-      console.log("CHANGINGGG");
       values.current.pagenum = pagenum;
       SearchFunc();
 
@@ -109,14 +112,12 @@ function App() {
       values.current.range_to = optval;
     }
 
-    console.log(values);
-    console.log(date_formatter(values.current.range_from));
 
 
   }
-  const changePageNum = (val) => {
-    setPageNum(pagenum + val);
-  }
+
+  const { query } = useParams();
+  //const query_spaced = query.replaceAll('+', ' ');
 
   const getPoDS = (podval) => {
     if(podval === "Papers"){
@@ -129,29 +130,18 @@ function App() {
       setDatasets(true);
     }
 
-    // console.log(values.current.datasets);
-  }
-
-  const getPageNum = (pageNum) => {
-    values.current.pagenum = pageNum;
-    console.log(values.current.pagenum);
-    SearchFunc();
-
   }
 
   const date_formatter = (date) =>{
-    // console.log("HERE GOES THE DATE");
-    console.log(date);
-    if (date == null){
+
+    if (date === null){
       return "inf"
     }
     else{
       let day = date.getDate() + "";
       let month = (date.getMonth()+1) + "-";
       let year = date.getFullYear() + "-";
-      // console.log("HERE GOES THE DATE AGAINNNNNNN");
-      console.log(day+month+year);
-      // console.log("date over");
+
       return year+month+day;
     }
 
@@ -206,7 +196,7 @@ function App() {
     if (arr_len > 2) {
       domain = splitArr[arr_len - 2] + '.' + splitArr[arr_len - 1];
       //check to see if it's using a Country Code Top Level Domain (ccTLD) (i.e. ".me.uk")
-      if (splitArr[arr_len - 2].length == 2 && splitArr[arr_len - 1].length == 2) {
+      if (splitArr[arr_len - 2].length === 2 && splitArr[arr_len - 1].length === 2) {
         //this is using a ccTLD
         domain = splitArr[arr_len - 3] + '.' + domain;
       }
@@ -214,28 +204,28 @@ function App() {
     return domain;
   }
 
+
   function SearchFunc() {
     if(search === ""){
-      console.log("EMPTY SEARCH")
+      // console.log("EMPTY SEARCH")
 
     }
+    else if(search.length > 20){
+      // console.log("Long query");
+      setLongQuery(true);
+    }
     else if( !/^[0-9a-zA-Z\s]*$/.test(search) || !/^(?!\s+$).+/.test(search)){
-      console.log("badquery");
       setJsonResults({"Results": []})
       showPageButton.current = false;
       setBadQuery(true);
 
     }
     else{
-      return fetch('http://localhost:5000/' + create_url(search, values.current)).then(response => response.json()).then(data => {
+      return fetch('http://34.145.46.81:5000/' + create_url(search, values.current)).then(response => response.json()).then(data => {
         if(data.Results.length === 0) {
-            console.log("empty");
             setEmptyResults(true);
-            console.log(emptyresults)
         }
         else {
-          console.log("search complete");
-          console.log(create_url(search, values.current));
           setBadQuery(false);
           setEmptyResults(false);
           showPageButton.current = true;
@@ -247,8 +237,7 @@ function App() {
 
   function QueryExpansion() {
     
-    console.log(create_url(search, values.current));
-    return fetch('http://localhost:5000/QE/' + search).then(response => response.json()).then(data => {
+    return fetch('http://34.145.46.81t:5000/QE/' + search).then(response => response.json()).then(data => {
       setJsonQE(data);
     });
   }
@@ -266,28 +255,29 @@ function App() {
     var yearIndex=formatItems.indexOf("y");
 
     var yr = parseInt(dateItems[yearIndex]);
+    var year;
     if (yr<100 && yr<=21){ //handling 2 digit years
-        var year="20"+yr;
+        year="20"+yr;
     } else if (yr < 100) {
-        var year="19"+yr;
+        year="19"+yr;
     } else {
-      var year = yr;
+      year = yr;
     }
-
+    var d;
     if (isNaN(dateItems[monthIndex])){ //in case the month is written as a word
-      var d = new Date(string_date);
+      d = new Date(string_date);
     } else {
 
       var month=parseInt(dateItems[monthIndex]);
       month-=1;
 
-      var d = new Date(year,month,dateItems[dayIndex]);
+      d = new Date(year,month,dateItems[dayIndex]);
     }
     const monthNames = ["January", "February", "March", "April", "May", "June",
       "July", "August", "September", "October", "November", "December"];
     let formatted = monthNames[d.getMonth()] + ", " +  d.getFullYear();
 
-    if (formatted == "undefined, NaN"){
+    if (formatted === "undefined, NaN"){
       return "";
     }
 
@@ -298,7 +288,7 @@ function App() {
 
   function abstractgenerator(text) {
 
-    if (text!=""){
+    if (text!==""){
       if (isMobile){ 
         if (text.length>100){
           return text.substring(0,100)+"...";
@@ -316,8 +306,8 @@ function App() {
     if (authors.includes(",")){
       return "-" + authors;
     } 
-    else if (!(lower == "n/a" || lower == "na" || lower == "NA"
-                 || lower == "n-a" || lower == "" || lower == " " || lower == "nan" || lower == "n.a.")){
+    else if (!(lower === "n/a" || lower === "na" || lower === "NA"
+                 || lower === "n-a" || lower === "" || lower === " " || lower === "nan" || lower === "n.a.")){
       return "- " + authors;
     }
   }
@@ -327,19 +317,6 @@ function App() {
     setSearch(searchval);
   }
 
-  const [open, setOpen] = React.useState(false);
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const [value2, setValue2] = React.useState('1');
-
-
 
   return (
     <div className="App" style={{
@@ -348,7 +325,7 @@ function App() {
     }}>
 
 
-    <img src={research_logo} flex="1" height="350em" width="350em" resizeMode="contain"/>
+    <img src={research_logo} flex="1" height="350em" width="350em" resizeMode="contain" alt="Re-Search Brand Logo"/>
 
       <div className='Search' style={{
         width:'50%'
@@ -357,14 +334,21 @@ function App() {
           style={{ maxWidth: '80%' }}
           parentCallback={TextEntered}
           error={true}
-          text = {"Bad Query Was Received - Please remove special characters from your query and try again!"}
+          text = {"Bad Query Was Received. We only allow english alphabets and whitespace!"}
         />
         : emptyresults ? <SearchField
-            style = {{maxWidth:'80%'}}
-            parentCallback={TextEntered}
+          style = {{maxWidth:'80%'}}
+          parentCallback={TextEntered}
+          error={true}
+          text = {"No matching records were found!"}
+          />
+          : longquery ? <SearchField
+            initialvalue={query}
+            style = {{maxWidth : '50%'}}
+            parentCallback = {TextEntered}
             error={true}
-            text = {"No Results were shown"}
-            />
+            text={"Query too long, 20 characters or less please."}
+        />
         : <SearchField
             style={{maxWidth : '80%'}}
             parentCallback={TextEntered}
@@ -418,15 +402,6 @@ function App() {
     }}> 
       <PageButton pagenum = {pagenum} disableback = {gobackbuttondisabled} show = {showPageButton.current} sexyProp={setPageNum} />
     </div>
-    {/* <div style={{
-      position: 'fixed',
-      bottom: 0,
-    }}>
-      { emptyresults ? <Alert severity="warning">No results were found</Alert> : null}
-      {badquery ? <Alert severity="warning">Bad Search Query</Alert> : null}
-    </div>
-   */}
-
     </div>
   )}
 
