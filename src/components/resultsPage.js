@@ -24,7 +24,7 @@ import Options from './options';
 
 
 export default function ResultsPage(props) {
-    const backend_server_ip = "http://34.82.59.103:5000/";
+    const backend_server_ip = "http://34.145.46.81:5000/";
 
     let navigate = useNavigate();
     const routeChange = () => {

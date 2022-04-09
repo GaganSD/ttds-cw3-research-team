@@ -40,7 +40,7 @@ print("This will take some time..")
 
 df_papers = pd.read_csv("/home/stylianosc/scann/papers/df.csv") #NOTE:DL
 
-def get_approx_nn_datasets_results(query: str, top_n: int=100) -> dict:
+def get_approx_nn_datasets_results(query: str="", top_n: int=100) -> dict:
     """
     Input: query (input_type: string)
     Output: search results (dict)
@@ -94,3 +94,11 @@ def serve_papers(query, top_n, from_date, to_date):
 
     return get_approx_nn_papers_results(query, top_n, from_date, to_date)
 
+@app.route("/hello", methods=['GET'])
+def say_hello():
+     print("Hello, world!")
+
+print("should start now")
+if __name__ == "__main__":
+  app.run(host='0.0.0.0', port=5002,use_reloader=False,  debug=True)
+  print("yoo! like for real. try it now!")

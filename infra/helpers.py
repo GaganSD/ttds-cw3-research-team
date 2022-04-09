@@ -28,12 +28,12 @@ def deserialize(query: str) -> dict:
         if i == 1:
             from_date = queries[i][3:]
             if from_date != "inf":
-                return_dict["start_date"] =   datetime.strptime(from_date, '%d-%m-%Y')
-                retrun_dict["start_date_str"] = from_date
+                return_dict["start_date"] =   datetime.strptime(from_date, '%Y-%m-%d')
+                return_dict["start_date_str"] = from_date
         if i == 2:
             to_date = queries[i][3:]
             if to_date != "inf":
-                return_dict["end_date"] =   datetime.strptime(to_date, '%d-%m-%Y')
+                return_dict["end_date"] =   datetime.strptime(to_date, '%Y-%m-%d')
                 return_dict["end_date_str"] = to_date
         if i ==3:
             st = queries[i][4:]
