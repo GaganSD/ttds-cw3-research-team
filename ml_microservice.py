@@ -58,6 +58,8 @@ def get_approx_nn_datasets_results(query: str="", top_n: int=10, start_date:date
             output[key] = str(value)
         output["date"] = ""
         output["authors"] = output["ownerUser"]
+        output["abstract"] = output["subtitle"] + " " + output["abstract"]
+
         if not (output["ownerUser"].startswith("http") or output["ownerUser"].startswith("https")):
             output["url"] = "https://kaggle.com/" + output["ownerUser"] + "/" + output['dataset_slug']
         else:
