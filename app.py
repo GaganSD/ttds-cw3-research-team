@@ -54,25 +54,43 @@ _results_cache = LRUCache(200)
 
 
 def call_top_n(N, parameters):
+    N = int(N)
     results = {"Results":[]}
     print(parameters)
+    server_fail = False
+    
     if parameters["search_type"] == "AUTHOR":
 
         if parameters["datasets"]:
             print("no Author search for datasets")
         else:
-            results = get_author_papers_results(query=parameters['query'], 
+            results = get_author_papers_results(query=parameters['query'],
                 start_date=parameters["start_date"], end_date=parameters["end_date"],
                 top_n=N)
 
     elif parameters["algorithm"] == "APPROX_NN":
-        try:
+            c_response = None
             if parameters["datasets"]:
-                results = requests.get('http://34.83.49.212:5000/datasets/' + parameters['query'] + "/" + str(N) + "/" + parameters["start_date_str"] + "/" + parameters["end_date_str"])
+                print("122222222222222222222222222222222222222222")
+                c_response = requests.get('http://10.138.0.7:5002/datasets/' + parameters['query'] + "/" + str(N) + "/" + parameters["start_date_str"] + "/" + parameters["end_date_str"])
             else:
-                results = requests.get('http://34.83.49.212:5000/papers/' + parameters['query'] + "/" + str(N) + "/" + parameters["start_date_str"] + "/" + parameters["end_date_str"])
-        except:
-            print("Failed to get a valid response from the microservice. Is it on?")
+                print("4444444444444444444444444444444444444444444444")
+                c_response = requests.get('http://10.138.0.7:5002/papers/' + parameters['query'] + "/" + str(N) + "/" + parameters["start_date_str"] + "/" + parameters["end_date_str"])
+            print(c_response)
+            if c_response and c_response.status_code == 200:
+                print(results)
+                results = c_response.json()
+            else:
+#<<<<<<< HEAD
+ #               print(f"ERROR WITH CODE: {c_response.status_code}")
+
+            #print("Failed to get a valid response from the microservice. Is it on?")
+#=======
+                print(f"ERROR WITH CODE: {results.status_code}")
+                server_fail = True
+#        except:
+#            print("Failed to get a valid response from the microservice. Is it on?")
+#>>>>>>> 475380a7ff18a4983b15a23e6a441e451df0552d
 
     elif parameters["datasets"]:
         results = get_datasets_results(query=parameters['query'],
@@ -86,11 +104,11 @@ def call_top_n(N, parameters):
                             start_date=parameters["start_date"],
                             end_date=parameters["end_date"], top_n=N)
 
-    return results
+    return results, server_fail
 
 def get_full_result(parameters, id):
-    result = call_top_n(1000, parameters)
-    _results_cache.put(id, result)
+    result, server_fail = call_top_n(1000, parameters)
+    if not server_fail: _results_cache.put(id, result)
     return result
 
 @app.route("/favicon.ico")
@@ -104,8 +122,8 @@ def search_state_machine(search_query):
     id = request.args['q'].rpartition("/pn=")[0]
     # {
     # query: search_query : DOME
-    # from_date: DD-MM-YYYY (last) : 
-    # to_date: DD-MM-YYYY :  
+    # from_date: DD-MM-YYYY (last) :
+    # to_date: DD-MM-YYYY :
     # Authors: [str1, str2] : DONE
     # search_type: str (default, proximity, phrase, author) : DONE
     # algorithm: str (approx_nn, bm25, tf-idf) : DONE
@@ -127,7 +145,7 @@ def search_state_machine(search_query):
         if not content is None:
             return {"Results" : content['Results'][ (pn-1)*num_of_results : pn*num_of_results ]}
 
-        results = call_top_n(num_of_results, parameters)
+        results, server_failure = call_top_n(num_of_results, parameters)
         thread = threading.Thread(target=get_full_result, args=(parameters, id))
         _results_cache.put(id+'_thread', thread)
         thread.start()
@@ -168,6 +186,8 @@ def get_datasets_results(query: str, top_n: int=10, spell_check=False, qe=False,
             output[key] = str(value)
         output["date"] = ""
         output["authors"] = output["ownerUser"]
+        output["abstract"] = output["subtitle"] + " " + output["abstract"]
+
         # output["abstract"] = curr_formatter.remove_markdown(output['abstract'])
         if not (output["ownerUser"].startswith("http") or output["ownerUser"].startswith("https")):
             output["url"] = "https://kaggle.com/" + output["ownerUser"] + "/" + output['dataset_slug']
@@ -201,7 +221,7 @@ def get_papers_results(query: str, top_n: int=10, spell_check=False, qe=False,
 
     output_dict = {}
 
-    temp_result = list(client.order_preserved_get_data(id_list= outputs,
+    temp_result = list(client.order_preserved_get_data(id_list= outputs[:top_n],
                                                        start_date=start_date, end_date=end_date,
                                                        fields=['title', 'abstract','authors', 'url', 'date'],
                                                        limit=top_n
@@ -245,7 +265,7 @@ def get_author_papers_results(query: str, top_n: int=100, preprocess: bool=True,
 
     output_dict = {}
 
-    temp_result = list(client.order_preserved_get_data(id_list= outputs,
+    temp_result = list(client.order_preserved_get_data(id_list= outputs[:top_n],
                                                        start_date=start_date, end_date=end_date,
                                                        fields=['title', 'abstract','authors', 'url', 'date'],
                                                        limit=top_n
