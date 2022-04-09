@@ -8,7 +8,6 @@ import SearchField from './components/search';
 import Box from '@mui/material/Box';
 import research_logo from './logos/researchlogomain.png';
 import PageButton from './components/pagebutton';
-import Switch from '@mui/material/Switch';
 import SwipeableTemporaryDrawer from './components/advancedOptions';
 import PaperOrDS from './components/datasetorpaper';
 import { useNavigate } from 'react-router-dom';
@@ -17,31 +16,31 @@ import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
-import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
+// import { createTheme } from '@mui/material/styles';
 
 function App() {
 
-  const theme = createTheme({
-    components: {
-      MuiTypography: {
-        defaultProps: {
-          variantMapping: {
-            h1: 'h2',
-            h2: 'h2',
-            h3: 'h2',
-            h4: 'h2',
-            h5: 'h2',
-            h6: 'h2',
-            subtitle1: 'h2',
-            subtitle2: 'h2',
-            body1: 'span',
-            body2: 'span',
-            p: 'span',
-          },
-        },
-      },
-    },
-  });
+  // const theme = createTheme({
+  //   components: {
+  //     MuiTypography: {
+  //       defaultProps: {
+  //         variantMapping: {
+  //           h1: 'h2',
+  //           h2: 'h2',
+  //           h3: 'h2',
+  //           h4: 'h2',
+  //           h5: 'h2',
+  //           h6: 'h2',
+  //           subtitle1: 'h2',
+  //           subtitle2: 'h2',
+  //           body1: 'span',
+  //           body2: 'span',
+  //           p: 'span',
+  //         },
+  //       },
+  //     },
+  //   },
+  // });
 
   let navigate = useNavigate();
   const routeChange = () => {
@@ -67,7 +66,7 @@ function App() {
   const [gobackbuttondisabled, setGoBackButtonDisabled] = React.useState(true);
   const [json_results, setJsonResults] = React.useState({"Results":[]});
   const [json_query_expansion, setJsonQE] = React.useState({QEResults:[]});
-  const label = { inputProps: { 'aria-label': 'Switch demo' } };
+
   const values = React.useRef({
     algorithm: "FEATURED",
     searchtype: "DEFAULT",
@@ -108,9 +107,7 @@ function App() {
 
 
   }
-  const changePageNum = (val) => {
-    setPageNum(pagenum + val);
-  }
+
 
   const getPoDS = (podval) => {
     if(podval === "Papers"){
@@ -125,15 +122,9 @@ function App() {
 
   }
 
-  const getPageNum = (pageNum) => {
-    values.current.pagenum = pageNum;
-    SearchFunc();
-
-  }
-
   const date_formatter = (date) =>{
 
-    if (date == null){
+    if (date === null){
       return "inf"
     }
     else{
@@ -195,7 +186,7 @@ function App() {
     if (arr_len > 2) {
       domain = splitArr[arr_len - 2] + '.' + splitArr[arr_len - 1];
       //check to see if it's using a Country Code Top Level Domain (ccTLD) (i.e. ".me.uk")
-      if (splitArr[arr_len - 2].length == 2 && splitArr[arr_len - 1].length == 2) {
+      if (splitArr[arr_len - 2].length === 2 && splitArr[arr_len - 1].length === 2) {
         //this is using a ccTLD
         domain = splitArr[arr_len - 3] + '.' + domain;
       }
@@ -254,28 +245,29 @@ function App() {
     var yearIndex=formatItems.indexOf("y");
 
     var yr = parseInt(dateItems[yearIndex]);
+    var year;
     if (yr<100 && yr<=21){ //handling 2 digit years
-        var year="20"+yr;
+        year="20"+yr;
     } else if (yr < 100) {
-        var year="19"+yr;
+        year="19"+yr;
     } else {
-      var year = yr;
+      year = yr;
     }
-
+    var d;
     if (isNaN(dateItems[monthIndex])){ //in case the month is written as a word
-      var d = new Date(string_date);
+      d = new Date(string_date);
     } else {
 
       var month=parseInt(dateItems[monthIndex]);
       month-=1;
 
-      var d = new Date(year,month,dateItems[dayIndex]);
+      d = new Date(year,month,dateItems[dayIndex]);
     }
     const monthNames = ["January", "February", "March", "April", "May", "June",
       "July", "August", "September", "October", "November", "December"];
     let formatted = monthNames[d.getMonth()] + ", " +  d.getFullYear();
 
-    if (formatted == "undefined, NaN"){
+    if (formatted === "undefined, NaN"){
       return "";
     }
 
@@ -286,7 +278,7 @@ function App() {
 
   function abstractgenerator(text) {
 
-    if (text!=""){
+    if (text!==""){
       if (isMobile){ 
         if (text.length>100){
           return text.substring(0,100)+"...";
@@ -304,8 +296,8 @@ function App() {
     if (authors.includes(",")){
       return "-" + authors;
     } 
-    else if (!(lower == "n/a" || lower == "na" || lower == "NA"
-                 || lower == "n-a" || lower == "" || lower == " " || lower == "nan" || lower == "n.a.")){
+    else if (!(lower === "n/a" || lower === "na" || lower === "NA"
+                 || lower === "n-a" || lower === "" || lower === " " || lower === "nan" || lower === "n.a.")){
       return "- " + authors;
     }
   }
@@ -315,19 +307,6 @@ function App() {
     setSearch(searchval);
   }
 
-  const [open, setOpen] = React.useState(false);
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const [value2, setValue2] = React.useState('1');
-
-
 
   return (
     <div className="App" style={{
@@ -336,7 +315,7 @@ function App() {
     }}>
 
 
-    <img src={research_logo} flex="1" height="350em" width="350em" resizeMode="contain"/>
+    <img src={research_logo} flex="1" height="350em" width="350em" resizeMode="contain" alt="Re-Search Brand Logo"/>
 
       <div className='Search' style={{
         width:'50%'

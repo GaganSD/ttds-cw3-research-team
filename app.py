@@ -304,7 +304,7 @@ def _preprocess_query(query: str, stemming=True, remove_stopwords=True) -> dict:
     if cached_data is not None:
         query_params = cached_data
     else:
-        query_params = preprocess(query, stemming, remove_stopwords) # stemming, removing stopwords
+        query_params = preprocess(query, stemming, remove_stopwords)
         query_params = {'query': query_params}
         _preprocessing_cache.put(query, query_params)
 

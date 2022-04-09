@@ -8,7 +8,7 @@ export default function PageButton(props){
     if (!props.show){
         return null
     }
-    if(props.numResults < 10 && props.pagenum == 1){
+    if(props.numResults < 10 && props.pagenum === 1){
         console.log("wacaoooo");
         return null;
     }

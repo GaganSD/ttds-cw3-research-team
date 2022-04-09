@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Button from '@mui/material/Button';
-import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
@@ -8,7 +7,7 @@ import Dialog from '@mui/material/Dialog';
 import Slide from '@mui/material/Slide';
 
 import 'typeface-roboto';
-import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
@@ -78,10 +77,9 @@ export default function HelpDialog(props){
                         Other than this, you can filter your results with 'from' and 'to' dates in both datasets and papers or use the "Expand Query" option to get
                         synonyms through WordNet.
 
-                        Other than this, you can filter your results 
                         <br/>
                         <br/>
-                        NOTE: Please note that the same author's name in the paper might vary.
+                        NOTE: Please note that the same author's name might vary in the paper.
                         For example, some papers list John A. Zoidberg's name as "J. Zoidberg" while others
                         can list them as "J. Zoidberg" or even just "Zoidberg". We recommend searching by lastname to deal with this.
                     </DialogContentText>
