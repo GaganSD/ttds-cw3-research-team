@@ -1,4 +1,4 @@
-############################
+#############################
 # Made for TTDS coursework 3
 # Please note this files uses 
 # dependencies that only works 
@@ -9,9 +9,8 @@ from flask import Flask, request
 from flask_cors import CORS
 from infra.LRUCache import LRUCache
 from datetime import datetime
-
 from infra.helpers import curr_day, min_day, deserialize, filter_dates, Formatting
-
+#from waitress import serve
 from core_algorithms.ir_eval.ranking_paper import ranking_query_BM25 as ranking_query_bm25_paper
 from core_algorithms.ir_eval.ranking_paper import ranking_query_tfidf_cosine as ranking_query_tfidf_paper
 from core_algorithms.ir_eval.ranking_paper import phrase_search as phrase_search_paper
@@ -36,6 +35,8 @@ import requests
 curr_formatter = Formatting()
 
 # Create Flask app
+#def create_app():
+
 app = Flask(__name__)
 CORS(app)
 
@@ -309,3 +310,9 @@ def _preprocess_query(query: str, stemming=True, remove_stopwords=True) -> dict:
         _preprocessing_cache.put(query, query_params)
 
     return query_params
+
+
+#if __name__ == "__main__":
+ #    serve(app, host='0.0.0.0', port=5000)
+ #    app = create_app()
+ #    app.run()
