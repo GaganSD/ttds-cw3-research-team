@@ -209,6 +209,7 @@ export default function SwipeableTemporaryDrawer(props) {
                   setFromDate(newfromvalue);
                   handleChange();
                 }}
+                allowSameDateSelection
                 renderInput={(params) => <TextField {...params} />}
                 />
                 <DesktopDatePicker
@@ -220,6 +221,7 @@ export default function SwipeableTemporaryDrawer(props) {
                   setToDate(newtovalue);
                   handleChange();
                 }}
+                allowSameDateSelection
                 renderInput={(params) => <TextField {...params} />}
                 /> 
               </Stack>

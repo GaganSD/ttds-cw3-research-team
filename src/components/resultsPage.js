@@ -33,6 +33,7 @@ export default function ResultsPage(props) {
         }
         else {
             values.current.pagenum = 1;
+            console.log(values.current)
             let path = create_url(search, values.current);
             window.location = (window.location.origin + '/' + path);
         }
@@ -50,7 +51,7 @@ export default function ResultsPage(props) {
             values.current.range_to = null;
         }
         else {
-            values.current.range_from = new Date(dt)
+            values.current.range_to = new Date(dt)
         }
 
         let search_query = formaturl(window.location.pathname);
