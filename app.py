@@ -186,6 +186,8 @@ def get_datasets_results(query: str, top_n: int=10, spell_check=False, qe=False,
             output[key] = str(value)
         output["date"] = ""
         output["authors"] = output["ownerUser"]
+        output["abstract"] = output["subtitle"] + " " + output["abstract"]
+
         # output["abstract"] = curr_formatter.remove_markdown(output['abstract'])
         if not (output["ownerUser"].startswith("http") or output["ownerUser"].startswith("https")):
             output["url"] = "https://kaggle.com/" + output["ownerUser"] + "/" + output['dataset_slug']
