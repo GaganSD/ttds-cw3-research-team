@@ -16,8 +16,8 @@ def deserialize(query: str) -> dict:
         "algorithm" : "APROX_NN",
         "datasets": False,
         "page_num" : 1,
-        "start_date_str": "01-01-1100",
-        "end_date_str": "01-10-2500" #TODO:change this in 500 years
+        "start_date_str": "1100-01-01",
+        "end_date_str": "2500-01-01" #TODO:change this in 500 years
     }
 
     queries = query.split("/")[:-1]
