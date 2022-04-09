@@ -24,7 +24,7 @@ export default function ResultsPage(props) {
 
         if (search === '' || !/^(?!\s+$).+/.test(search)) {
         }
-        else if (search.length >16){
+        else if (search.length > 25){
             setLongQuery(true);
         }
         else if (!/^[0-9a-zA-Z\s]*$/.test(search)) {
@@ -388,29 +388,29 @@ export default function ResultsPage(props) {
                                     style={{ maxWidth: '50%' }}
                                     parentCallback={TextEntered}
                                     error={true}
-                                    text={"Bad Query Was Received"}
+                                    text={"Bad Query Was Received. We only allow english alphabets and whitespace!"}
                                 />
-                                    : emptyresults ? <SearchField
-                                        initialvalue={query}
-                                        style={{ maxWidth: '50%' }}
-                                        parentCallback={TextEntered}
-                                        error={true}
-                                        text={"No Results Found! Are advanced options configured properly?"}
-                                    />
-                                        : longquery ? <SearchField
-                                            initialvalue={query}
-                                            style = {{maxWidth : '50%'}}
-                                            parentCallback = {TextEntered}
-                                            error={true}
-                                            text={"Query too long, 16 characters or less please."}
-                                        />
-                                            : <SearchField
-                                                initialvalue={query_spaced}
-                                                style={{ maxWidth: '50%' }}
-                                                parentCallback={TextEntered}
-                                                error={false}
-                                                text={"Query"}
-                                            />
+                                : emptyresults ? <SearchField
+                                    initialvalue={query}
+                                    style={{ maxWidth: '50%' }}
+                                    parentCallback={TextEntered}
+                                    error={true}
+                                    text={"No Results Found for this query & configurations."}
+                                />
+                                : longquery ? <SearchField
+                                    initialvalue={query}
+                                    style = {{maxWidth : '50%'}}
+                                    parentCallback = {TextEntered}
+                                    error={true}
+                                    text={"Query too long, 20 characters or less please."}
+                                />
+                                : <SearchField
+                                    initialvalue={query_spaced}
+                                    style={{ maxWidth: '50%' }}
+                                    parentCallback={TextEntered}
+                                    error={false}
+                                    text={"Query"}
+                                />
                                 }
                             </div>
                             <div className='SearchButton' style={{

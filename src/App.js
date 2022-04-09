@@ -46,6 +46,9 @@ function App() {
   const routeChange = () => {
     if(search === ''|| !/^(?!\s+$).+/.test(search)){
     }
+    else if (search.length > 25){
+      setLongQuery(true);
+    }
     else if( !/^[0-9a-zA-Z\s]*$/.test(search) ){
       setBadQuery(true);
  
@@ -200,7 +203,7 @@ function App() {
       // console.log("EMPTY SEARCH")
 
     }
-    else if(search.length > 16){
+    else if(search.length > 20){
       // console.log("Long query");
       setLongQuery(true);
     }
@@ -324,20 +327,21 @@ function App() {
           style={{ maxWidth: '80%' }}
           parentCallback={TextEntered}
           error={true}
-          text = {"Bad Query Was Received - Please remove special characters from your query and try again!"}
+          text = {"Bad Query Was Received. We only allow english alphabets and whitespace!"}
         />
         : emptyresults ? <SearchField
-            style = {{maxWidth:'80%'}}
-            parentCallback={TextEntered}
+          style = {{maxWidth:'80%'}}
+          parentCallback={TextEntered}
+          error={true}
+          text = {"No matching records were found!"}
+          />
+          : longquery ? <SearchField
+            initialvalue={query}
+            style = {{maxWidth : '50%'}}
+            parentCallback = {TextEntered}
             error={true}
-            text = {"No Results were shown"}
-            />
-        : longquery ? <SearchField
-            style = {{maxWidth:'80%'}}
-            parentCallback={TextEntered}
-            error={true}
-            text = {"No Results were shown"}
-            />
+            text={"Query too long, 20 characters or less please."}
+        />
         : <SearchField
             style={{maxWidth : '80%'}}
             parentCallback={TextEntered}
