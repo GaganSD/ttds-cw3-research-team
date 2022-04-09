@@ -33,7 +33,6 @@ import time
 import heapq
 import requests
 
-
 curr_formatter = Formatting()
 
 # Create Flask app
@@ -56,13 +55,13 @@ _results_cache = LRUCache(200)
 def call_top_n(N, parameters):
     N = int(N)
     results = {"Results":[]}
-    print(parameters)
     server_fail = False
     
     if parameters["search_type"] == "AUTHOR":
 
         if parameters["datasets"]:
             print("no Author search for datasets")
+            server_fail = True
         else:
             results = get_author_papers_results(query=parameters['query'],
                 start_date=parameters["start_date"], end_date=parameters["end_date"],
@@ -71,26 +70,14 @@ def call_top_n(N, parameters):
     elif parameters["algorithm"] == "APPROX_NN":
             c_response = None
             if parameters["datasets"]:
-                print("122222222222222222222222222222222222222222")
                 c_response = requests.get('http://10.138.0.7:5002/datasets/' + parameters['query'] + "/" + str(N) + "/" + parameters["start_date_str"] + "/" + parameters["end_date_str"])
             else:
-                print("4444444444444444444444444444444444444444444444")
                 c_response = requests.get('http://10.138.0.7:5002/papers/' + parameters['query'] + "/" + str(N) + "/" + parameters["start_date_str"] + "/" + parameters["end_date_str"])
-            print(c_response)
             if c_response and c_response.status_code == 200:
-                print(results)
                 results = c_response.json()
             else:
-#<<<<<<< HEAD
- #               print(f"ERROR WITH CODE: {c_response.status_code}")
-
-            #print("Failed to get a valid response from the microservice. Is it on?")
-#=======
-                print(f"ERROR WITH CODE: {results.status_code}")
+                print(f"ERROR WITH CODE: {c_response.status_code}")
                 server_fail = True
-#        except:
-#            print("Failed to get a valid response from the microservice. Is it on?")
-#>>>>>>> 475380a7ff18a4983b15a23e6a441e451df0552d
 
     elif parameters["datasets"]:
         results = get_datasets_results(query=parameters['query'],
@@ -279,7 +266,7 @@ def get_author_papers_results(query: str, top_n: int=100, preprocess: bool=True,
     return output_dict
 
 
-def authors_extensions(query: str, top_n: int=100, docs_searched: int=10, author_search_result: dict={'Results':[]}) -> dict:
+def authors_extensions(query: str, top_n: int=10, docs_searched: int=10, author_search_result: dict={'Results':[]}) -> dict:
     '''
     Call using author_search_result (results of regular author search) to avoid recalculating
     '''
@@ -288,7 +275,7 @@ def authors_extensions(query: str, top_n: int=100, docs_searched: int=10, author
     merged_coauthors = [item for sublist in coauthors for item in sublist if item not in authors]
     merged_coauthors = list(dict.fromkeys(merged_coauthors))
 
-    results = get_author_papers_results(merged_coauthors, top_n=100, preprocess=False)
+    results = get_author_papers_results(merged_coauthors, top_n, preprocess=False)
     
     return results
 

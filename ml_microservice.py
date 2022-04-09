@@ -2,7 +2,7 @@
 # ML microservice
 ########
 
-from infra.helpers import curr_day, min_day, deserialize, filter_dates, Formatting
+from infra.helpers import curr_day, min_day
 
 import scann ## NOTE: Only works on linux machines #NOTE:DL
 from flask import Flask, request
@@ -26,16 +26,15 @@ client = MongoDBClient("34.142.18.57")
 
 
 print("This will take some time..")
-# Load paper & dataset index. 
+# Load paper & dataset index.
 searcher = scann.scann_ops_pybind.load_searcher('/home/stylianosc/scann/papers/') #NOTE:DL
 searcher_dataset = scann.scann_ops_pybind.load_searcher('/home/stylianosc/scann/datasets/')
 
 df = pd.read_csv("core_algorithms/ir_eval/Datasets_dataset.csv", sep='\t')
-df.rename(columns={"description": "abstract"}, inplace=True)
+df.rename(columns={"description":"abstract"}, inplace=True)
 
 
-
-print("This will take some time..")
+print("Loading completed! Ready to serve!")
 
 
 df_papers = pd.read_csv("/home/stylianosc/scann/papers/df.csv") #NOTE:DL
@@ -58,13 +57,16 @@ def get_approx_nn_datasets_results(query: str="", top_n: int=10, start_date:date
             output[key] = str(value)
         output["date"] = ""
         output["authors"] = output["ownerUser"]
-        output["abstract"] = output["subtitle"] + " " + output["abstract"]
+#    output["abstract"] = output["description"]
+#    output["abstract"] = output["subtitle"] + " " + output["abstract"]
 
         if not (output["ownerUser"].startswith("http") or output["ownerUser"].startswith("https")):
             output["url"] = "https://kaggle.com/" + output["ownerUser"] + "/" + output['dataset_slug']
         else:
             output["url"] = output["ownerUser"]
+
         output_dict["Results"].append(output)
+
     return output_dict
 
 def get_approx_nn_papers_results(query: str="", top_n: int=10, start_date:datetime = min_day, end_date:datetime = curr_day) -> dict:
@@ -97,12 +99,14 @@ def serve_datasets(query, top_n, from_date, to_date):
     top_n = int(top_n)
     from_date = datetime.strptime(from_date, '%d-%m-%Y')
     to_date = datetime.strptime(to_date, '%d-%m-%Y')
+
     return get_approx_nn_datasets_results(query, top_n, from_date, to_date)
 
 
 @app.route("/papers/<query>/<top_n>/<from_date>/<to_date>", methods=['GET', 'POST'])
 def serve_papers(query, top_n, from_date, to_date):
     top_n = int(top_n)
+
     from_date = datetime.strptime(from_date, '%d-%m-%Y')
     to_date = datetime.strptime(to_date, '%d-%m-%Y')
 
@@ -114,5 +118,4 @@ def say_hello():
 
 print("should start now")
 if __name__ == "__main__":
-  app.run(host='0.0.0.0', port=5002,use_reloader=False,  debug=True)
-  print("yoo! like for real. try it now!")
+  app.run(host='0.0.0.0', port=5002,use_reloader=False,  debug=True, threaded=True)
