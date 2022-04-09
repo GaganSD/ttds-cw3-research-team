@@ -28,10 +28,10 @@ client = MongoDBClient("34.142.18.57")
 print("This will take some time..")
 # Load paper & dataset index. 
 searcher = scann.scann_ops_pybind.load_searcher('/home/stylianosc/scann/papers/') #NOTE:DL
-searcher_dataset = scann.scann_ops_pybind.load_searcher('/home/gagandevagiri/ttds-cw3/core_algorithms/ir_eval/datasets/')
+searcher_dataset = scann.scann_ops_pybind.load_searcher('/home/stylianosc/scann/datasets/')
 
-df_datasets = pd.read_csv("/home/gagandevagiri/ttds-cw3/core_algorithms/ir_eval/datasets/indices_dataset.csv")
-df_datasets.rename(columns={"description": "abstract"}, inplace=True)
+df = pd.read_csv("core_algorithms/ir_eval/Datasets_dataset.csv", sep='\t')
+df.rename(columns={"description": "abstract"}, inplace=True)
 
 
 
@@ -49,14 +49,21 @@ def get_approx_nn_datasets_results(query: str="", top_n: int=10, start_date:date
     query = model.encode(query, convert_to_tensor=True)
     neighbors, _ = searcher_dataset.search(query, final_num_neighbors=1000)
 
-    output_dict = {}
+    output_dict = {"Results":[]}
 
-    columns_n = ['title','subtitle','abstract', 'url']
-    #print(neighbors)
-    #print(df_datasets.columns)
-    #print(df_datasets.iloc[1][columns_n])
-    output_dict["Results"] = [df_datasets.iloc[i][columns_n].to_dict() for i in neighbors[:top_n]]
-    print(output_dict)
+    columns = ['title','subtitle', 'abstract', 'ownerUser', 'dataset_slug', 'keyword']
+    for result in neighbors[:top_n]:
+        output = df.iloc[result][columns].to_dict()
+        for key, value in output.items():
+            output[key] = str(value)
+        output["date"] = ""
+        output["authors"] = output["ownerUser"]
+        # output["abstract"] = curr_formatter.remove_markdown(output['abstract'])
+        if not (output["ownerUser"].startswith("http") or output["ownerUser"].startswith("https")):
+            output["url"] = "https://kaggle.com/" + output["ownerUser"] + "/" + output['dataset_slug']
+        else:
+            output["url"] = output["ownerUser"]
+        output_dict["Results"].append(output)
     return output_dict
 
 def get_approx_nn_papers_results(query: str="", top_n: int=10, start_date:datetime = min_day, end_date:datetime = curr_day) -> dict:
