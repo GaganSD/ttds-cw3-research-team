@@ -475,7 +475,7 @@ export default function ResultsPage(props) {
                             }}>
                                 <PaperOrDS parentCallback={getPoDS} dv={pods_text} />
                             </div>
-                        </div>
+                        </div> 
                     </Box>
                     {/* <p>moneybag yo</p> */}
                     <div className='results' style={{
