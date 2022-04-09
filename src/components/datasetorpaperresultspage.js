@@ -11,7 +11,6 @@ export default function DsPaperRadio(props) {
     },[]);
     return (
     <FormControl>
-      {/* <FormLabel id="dataset or paper">What do you want to search for?</FormLabel> */}
       <RadioGroup
         row
         aria-labelledby="demo-radio-buttons-group-label"

@@ -179,16 +179,39 @@ export default function ResultsPage(props) {
     // check if this works or else remove this.
     var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
+    function titlegenerator(text) {
+
+        if (text === "") {
+            return "Title Not Available";
+        }
+        else if (text.length > 175) {
+            return text.substring(0, 175) + "...";
+        }
+        // if last character is a period, remove it.
+        else if (text.charAt(text.length - 1) === ".") {
+            return text.substring(0, text.length - 1);
+        }
+        else {
+            return text;
+        }
+    }
+
     function abstractgenerator(text) {
 
-        if (text !== "") {
+        if (text === "") {
+            return "No description is available for this content.";
+        }
+        else {
             if (isMobile) {
                 if (text.length > 100) {
                     return text.substring(0, 100) + "...";
                 }
             } else {
-                if (text.length > 500) {
+                if (text.length > 300) {
                     return text.substring(0, 500) + "...";
+                }
+                else {
+                    return text;
                 }
             }
         }
@@ -332,7 +355,7 @@ export default function ResultsPage(props) {
                     <Box
                         sx={{
                             width: '100%',
-                            height: "5em",
+                            height: "6em",
                             backgroundColor: '#f5f5f5'
                         }}>
                         <div style={{
@@ -341,49 +364,49 @@ export default function ResultsPage(props) {
                             justifyContent: 'center'
                         }}>
                             <div style={{
-                                marginTop: '-0.8em',
-                                marginRight: '2em'
+                                marginTop: '-0.8%',
+                                marginRight: '1%'
                             }}>
                                 <a href="http://34.145.46.81:3000/">
                                     <img src={research_logo_side} height="100em" width="250em" alt="Re-Search Branch Logo"/>
                                 </a>
                             </div>
                             <div className='Options' style={{
-                                marginRight: '3em',
-                                marginTop: '1.5em'
+                                marginRight: '0.5%',
+                                marginTop: '1.5%'
                             }}>
                                 <SwipeableTemporaryDrawer hysteresis="0.52" parentCallback={getOptions} datasets={datasets} />
                             </div>
                             <div className='SearchField' style={{
-                                width: '30%',
-                                marginTop: '1.5em',
-                                marginLeft: '1em',
-                                marginRight:'3em'
+                                width: '50%',
+                                marginTop: '1.5%',
+                                marginLeft: '1%',
+                                marginRight:'1%'
                             }}>
                                 {badquery ? <SearchField
                                     initialvalue={query}
-                                    style={{ maxWidth: '80%' }}
+                                    style={{ maxWidth: '50%' }}
                                     parentCallback={TextEntered}
                                     error={true}
                                     text={"Bad Query Was Received"}
                                 />
                                     : emptyresults ? <SearchField
                                         initialvalue={query}
-                                        style={{ maxWidth: '80%' }}
+                                        style={{ maxWidth: '50%' }}
                                         parentCallback={TextEntered}
                                         error={true}
                                         text={"No Results were shown"}
                                     />
                                         : longquery ? <SearchField
                                             initialvalue={query}
-                                            style = {{maxWidth : '80%'}}
+                                            style = {{maxWidth : '50%'}}
                                             parentCallback = {TextEntered}
                                             error={true}
                                             text={"Query too long, 16 characters or less please"}
                                         />
                                             : <SearchField
                                                 initialvalue={query_spaced}
-                                                style={{ maxWidth: '80%' }}
+                                                style={{ maxWidth: '50%' }}
                                                 parentCallback={TextEntered}
                                                 error={false}
                                                 text={"Query"}
@@ -391,9 +414,9 @@ export default function ResultsPage(props) {
                                 }
                             </div>
                             <div className='SearchButton' style={{
-                                marginTop: '1.5em',
-                                marginLeft: '1em',
-                                marginBottom : '1.5em'
+                                marginTop: '1.5%',
+                                marginLeft: '1%',
+                                marginBottom : '5%'
                             }}>
                                 <ButtonGroup variant="contained" aria-label="outlined primary button group">
                                     <Button onClick={routeChange} variant="contained" style={{ display: 'flex', justifyContent: 'center' }}>
@@ -403,9 +426,8 @@ export default function ResultsPage(props) {
                                 </ButtonGroup>
                             </div>
                             <div style={{
-                                marginTop: "1em",
-                                marginLeft: "1em",
-                                marginBottom: "1.5em"
+                                marginTop: "1.%",
+                                marginLeft: "1%",
                             }}>
                                 <PaperOrDS parentCallback={getPoDS} dv={pods_text} />
                             </div>
@@ -415,43 +437,42 @@ export default function ResultsPage(props) {
                         display: 'flex',
                         justifyContent: 'center'
                     }}>
-                        {json_query_expansion.QEResults.map(curr_elem => {
-                            return <Box>{curr_elem}</Box>;
+                        {json_query_expansion.QEResults.map((curr_qe, curr_key) => {
+                            return <Box key={curr_key}>{curr_qe}</Box>;
                         })}
                     </div>
-                    {/* <p>moneybag yo</p> */}
+                        
                     <div className='results' style={{
-                        marginLeft: '10em',
-                        marginRight: '10em'
+                        marginLeft: '10%',//'10em',
+                        marginRight: '10%'
                     }}>
 
-                        {json_results.Results.map(curr_elem => {
+                        {json_results.Results.map((curr_elem, curr_key) => {
 
                             let std_date = standardize_dates(curr_elem.date);
 
-                            return <Box padding={0.2}>
+                            return <Box key={curr_key} padding={0.2}>
                                 <p>
-                                    <a href={curr_elem.url}><font size="5">{curr_elem.title}</font></a><br />
+                                    <a href={curr_elem.url}><font size="4.99">{titlegenerator(curr_elem.title)}</font></a><br />
                                     <font color="#595F6A" size="2">{fix_url(curr_elem.url)} {std_date} {authorlist(curr_elem.authors)}</font><br />
                                     <font color="#595F6A">ㅤ{abstractgenerator(curr_elem.abstract)}</font><br />
                                 </p></Box>;
                         })}
                     </div>
                     <div style={{
-                        marginBottom: ".5em",
+                        marginBottom: "1em",
                         display: "flex",
                         justifyContent: "center"
                     }}>
                         <PageButton pagenum={pagenum} disableback={gobackbuttondisabled} show={showPageButton.current} numResults = {numresults} sexyProp={(n) => {
-                            // setPageNum(n);
                             values.current.pagenum = n;
                             let path = create_url(query_spaced, values.current);
                             window.location = (window.location.origin + '/' + path);
                         }} />
                     </div>
+                    <br/> <br/>
                 </div>
             </div>
         </ThemeProvider>
     )
 }
-
