@@ -9,7 +9,6 @@ import pandas as pd
 import numpy as np
 
 from collections import defaultdict
-import tqdm
 from core_algorithms.ir_eval.preprocessing import preprocess
 
 
@@ -135,7 +134,7 @@ def proximity_search(query_params, proximity=2, index_path = 'core_algorithms/ir
             tmp_list_of_datasets = inverted_index[term_list.index(tmp_term)]['dataset'].keys() # list of dataset ids
             # # print(tmp_term, time.time()-term_start_time)
             shared_papers = list(set(list_of_datasets).intersection(set(tmp_list_of_datasets)))
-            for shared_dataset in tqdm.tqdm(shared_papers, total=len(shared_papers)):
+            for shared_dataset in shared_papers:
                 list_of_pos = inverted_index[term_list.index(term)]['dataset'][shared_dataset]['pos']
                 tmp_list_of_pos = inverted_index[term_list.index(tmp_term)]['dataset'][shared_dataset]['pos']
                 if list_of_pos[0] - tmp_list_of_pos[-1] > proximity:
