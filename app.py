@@ -285,6 +285,17 @@ def authors_extensions(query: str, top_n: int=10, docs_searched: int=10, author_
     return results
 
 
+@app.route("/SC/<query>", methods=['GET', 'POST'])
+def query_spellcheck(query: str):
+    """
+    Recommends synonyms to users
+    """
+    spellchecked = " ".join(query_spell_check(query))
+    if spellchecked == query:
+        return {"SCResults": []}
+    else:
+        return {"SCResults": spellchecked}
+
 @app.route("/QE/<query>", methods=['GET', 'POST'])
 def query_expansion(query: str):
     """

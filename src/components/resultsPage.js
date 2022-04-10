@@ -108,6 +108,8 @@ export default function ResultsPage(props) {
     const [json_results, setJsonResults] = React.useState({ "Results": [] });
     const [numresults, setNumResults] = React.useState(0)
     const [json_query_expansion, setJsonQE] = React.useState({ QEResults: [] });
+    const [json_spell_check, setJSONSC] = React.useState({ SCResults: [] });
+
     const [pods_text, setpodsText] = React.useState((ds === "true") ? "DataSets" : "Papers");
     const values = React.useRef({
         algorithm: alg,
@@ -325,6 +327,14 @@ export default function ResultsPage(props) {
 
         setSearch(searchval);
     }
+    
+    function TextEnteredSpellCheck(searchval) {
+        setSearch(searchval);
+
+        return fetch(backend_server_ip + 'SC/' + searchval).then(response => response.json()).then(data => {
+            setJSONSC(data);
+        });
+    }
 
     function getOptions(type, optval) {
         if (type === "algorithms") {
@@ -393,7 +403,7 @@ export default function ResultsPage(props) {
                                 : emptyresults ? <SearchField
                                     initialvalue={query}
                                     style={{ maxWidth: '50%' }}
-                                    parentCallback={TextEntered}
+                                    parentCallback={TextEnteredSpellCheck}
                                     error={true}
                                     text={"No Results Found for this query & configurations."}
                                 />
@@ -439,6 +449,15 @@ export default function ResultsPage(props) {
                     }}>
                         {json_query_expansion.QEResults.map((curr_qe, curr_key) => {
                             return <Box key={curr_key}>{curr_qe}</Box>;
+                        })}
+                    </div>
+
+                    <div style={{
+                        display: 'flex',
+                        justifyContent: 'center'
+                    }}>
+                        {json_spell_check.SCResults.map((curr_sc, curr_key) => {
+                            return <Box key={curr_key}>Did you mean? {curr_sc}</Box>;
                         })}
                     </div>
                         
