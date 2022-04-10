@@ -292,9 +292,10 @@ def query_spellcheck(query: str):
     """
     spellchecked = " ".join(query_spell_check(query))
     if spellchecked == query:
-        return {"SCResults": []}
+        return {"SCResults": ["Spell Checker: Found 0 errors", ""]}
     else:
-        return {"SCResults": spellchecked}
+        spellchecked = "Spell Checker - Did you mean?  " + spellchecked
+        return {"SCResults": [spellchecked, ""]}
 
 @app.route("/QE/<query>", methods=['GET', 'POST'])
 def query_expansion(query: str):
@@ -303,9 +304,9 @@ def query_expansion(query: str):
     """
     expanded_queries = list(get_query_expansion(query))
     if not expanded_queries:
-        return {"QEResults": ["No matching synonyms were found!", ""]}
+        return {"QEResults": ["Query Expansion: Found 0 synonyms", ""]}
     else:
-        expanded_queries = ", ".join(expanded_queries)
+        expanded_queries = "Expanded Queries:  " + ", ".join(expanded_queries)
         return {"QEResults": [expanded_queries, ""]}
 
 def _preprocess_query(query: str, stemming=True, remove_stopwords=True) -> dict:
