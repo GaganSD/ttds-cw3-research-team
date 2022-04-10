@@ -25,33 +25,13 @@ import '@fontsource/roboto/700.css';
 
 function App() {
 
-  // const theme = createTheme({
-  //   components: {
-  //     MuiTypography: {
-  //       defaultProps: {
-  //         variantMapping: {
-  //           h1: 'h2',
-  //           h2: 'h2',
-  //           h3: 'h2',
-  //           h4: 'h2',
-  //           h5: 'h2',
-  //           h6: 'h2',
-  //           subtitle1: 'h2',
-  //           subtitle2: 'h2',
-  //           body1: 'span',
-  //           body2: 'span',
-  //           p: 'span',
-  //         },
-  //       },
-  //     },
-  //   },
-  // });
+  const backend_server_ip = "http://34.145.46.81:5000/";
 
   let navigate = useNavigate();
   const routeChange = () => {
     if(search === ''|| !/^(?!\s+$).+/.test(search)){
     }
-    else if (search.length > 25){
+    else if (search.length > 27){
       setLongQuery(true);
     }
     else if( !/^[0-9a-zA-Z\s]*$/.test(search) ){
@@ -74,6 +54,7 @@ function App() {
   const [gobackbuttondisabled, setGoBackButtonDisabled] = React.useState(true);
   const [json_results, setJsonResults] = React.useState({"Results":[]});
   const [json_query_expansion, setJsonQE] = React.useState({QEResults:[]});
+  const [json_spell_check, setJSONSC] = React.useState({ SCResults: [] });
 
   const values = React.useRef({
     algorithm: "FEATURED",
@@ -210,7 +191,7 @@ function App() {
       // console.log("EMPTY SEARCH")
 
     }
-    else if(search.length > 20){
+    else if(search.length > 27){
       // console.log("Long query");
       setLongQuery(true);
     }
@@ -235,12 +216,16 @@ function App() {
     }
   }
 
-  function QueryExpansion() {
-    
-    return fetch('http://34.145.46.81t:5000/QE/' + search).then(response => response.json()).then(data => {
-      setJsonQE(data);
+  function suggestions() {
+
+    fetch(backend_server_ip + 'QE/' + search).then(response => response.json()).then(data => {
+        setJsonQE(data);
     });
-  }
+    fetch(backend_server_ip + 'SC/' + search).then(response => response.json()).then(data => {
+        setJSONSC(data);
+    });
+
+}
 
   function standardize_dates(string_date) {
 
@@ -347,7 +332,7 @@ function App() {
             style = {{maxWidth : '50%'}}
             parentCallback = {TextEntered}
             error={true}
-            text={"Query too long, 20 characters or less please."}
+            text={"Query too long, 27 characters or less please."}
         />
         : <SearchField
             style={{maxWidth : '80%'}}
@@ -358,12 +343,30 @@ function App() {
         }
       </div>
       <SwipeableTemporaryDrawer hysteresis="0.52" parentCallback={getOptions} datasets={datasets}/>
-      <div>
+      {/* <div>
         {json_query_expansion.QEResults.map(curr_elem => {
           return <Box>{curr_elem}</Box>;
         })}
       </div>
-      <br/>
+      <br/> */}
+
+      <div style={{
+        display: 'flex',
+        justifyContent: 'center'
+    }}>
+        {json_query_expansion.QEResults.map((curr_qe, curr_key) => {
+            return <Box key={curr_key}><font  color="#595F6A">{curr_qe}</font></Box>;
+        })}
+    </div>
+
+    <div style={{
+        display: 'flex',
+        justifyContent: 'center'
+    }}>
+        {json_spell_check.SCResults.map((curr_qe, curr_key) => {
+            return <Box key={curr_key}><font color="#595F6A">{curr_qe}</font></Box>;
+        })}
+    </div>
 
 
       <div className = 'Searchoptions' style={{
@@ -374,7 +377,7 @@ function App() {
           <Button onClick={routeChange} variant="contained" style={{display: 'flex', justifyContent:'center'}}>
           Search
           </Button>
-          <QEButton parentCallback={QueryExpansion} />
+          <QEButton parentCallback={suggestions} />
         </ButtonGroup>
 
       </div>

@@ -24,7 +24,7 @@ export default function ResultsPage(props) {
 
         if (search === '' || !/^(?!\s+$).+/.test(search)) {
         }
-        else if (search.length > 25){
+        else if (search.length > 27){
             setLongQuery(true);
         }
         else if (!/^[0-9a-zA-Z\s]*$/.test(search)) {
@@ -33,7 +33,7 @@ export default function ResultsPage(props) {
         }
         else {
             values.current.pagenum = 1;
-            console.log(values.current)
+            //console.log(values.current)
             let path = create_url(search, values.current);
             window.location = (window.location.origin + '/' + path);
         }
@@ -108,6 +108,8 @@ export default function ResultsPage(props) {
     const [json_results, setJsonResults] = React.useState({ "Results": [] });
     const [numresults, setNumResults] = React.useState(0)
     const [json_query_expansion, setJsonQE] = React.useState({ QEResults: [] });
+    const [json_spell_check, setJSONSC] = React.useState({ SCResults: [] });
+
     const [pods_text, setpodsText] = React.useState((ds === "true") ? "DataSets" : "Papers");
     const values = React.useRef({
         algorithm: alg,
@@ -242,11 +244,15 @@ export default function ResultsPage(props) {
         return domain;
     }
 
-    function QueryExpansion() {
+    function suggestions() {
 
-        return fetch(backend_server_ip + 'QE/' + search).then(response => response.json()).then(data => {
+        fetch(backend_server_ip + 'QE/' + search).then(response => response.json()).then(data => {
             setJsonQE(data);
         });
+        fetch(backend_server_ip + 'SC/' + search).then(response => response.json()).then(data => {
+            setJSONSC(data);
+        });
+
     }
 
     function extractHostname(raw_url) {
@@ -280,8 +286,8 @@ export default function ResultsPage(props) {
 
 
     const date_formatter = (date) => {
-        console.log("HERE GOES THE DATE");
-        console.log(date);
+       // console.log("HERE GOES THE DATE");
+       // console.log(date);
         if (date == null) {
             return "inf"
         }
@@ -322,7 +328,6 @@ export default function ResultsPage(props) {
 
     }
     function TextEntered(searchval) {
-
         setSearch(searchval);
     }
 
@@ -344,8 +349,6 @@ export default function ResultsPage(props) {
         }
 
     }
-
-
 
     return (
         <ThemeProvider theme={theme}>
@@ -392,17 +395,17 @@ export default function ResultsPage(props) {
                                 />
                                 : emptyresults ? <SearchField
                                     initialvalue={query}
-                                    style={{ maxWidth: '50%' }}
+                                    style={{maxWidth:'50%'}}
                                     parentCallback={TextEntered}
                                     error={true}
-                                    text={"No Results Found for this query & configurations."}
+                                    text={"No Results Found for this query/configurations."}
                                 />
                                 : longquery ? <SearchField
                                     initialvalue={query}
                                     style = {{maxWidth : '50%'}}
                                     parentCallback = {TextEntered}
                                     error={true}
-                                    text={"Query too long, 20 characters or less please."}
+                                    text={"Query too long, 27 characters or less please."}
                                 />
                                 : <SearchField
                                     initialvalue={query_spaced}
@@ -422,7 +425,7 @@ export default function ResultsPage(props) {
                                     <Button onClick={routeChange} variant="contained" style={{ display: 'flex', justifyContent: 'center' }}>
                                         Search
                                     </Button>
-                                    <QEButton parentCallback={QueryExpansion} />
+                                    <QEButton parentCallback={suggestions} />
                                 </ButtonGroup>
                             </div>
                             <div style={{
@@ -433,15 +436,25 @@ export default function ResultsPage(props) {
                             </div>
                         </div> 
                     </Box>
+
                     <div style={{
                         display: 'flex',
                         justifyContent: 'center'
                     }}>
                         {json_query_expansion.QEResults.map((curr_qe, curr_key) => {
-                            return <Box key={curr_key}>{curr_qe}</Box>;
+                            return <Box key={curr_key}><font  color="#595F6A">{curr_qe}</font></Box>;
                         })}
                     </div>
-                        
+
+                    <div style={{
+                        display: 'flex',
+                        justifyContent: 'center'
+                    }}>
+                        {json_spell_check.SCResults.map((curr_qe, curr_key) => {
+                            return <Box key={curr_key}><font color="#595F6A">{curr_qe}</font></Box>;
+                        })}
+                    </div>
+
                     <div className='results' style={{
                         marginLeft: '10%',//'10em',
                         marginRight: '10%'
