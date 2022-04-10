@@ -191,7 +191,7 @@ function App() {
       // console.log("EMPTY SEARCH")
 
     }
-    else if(search.length > 20){
+    else if(search.length > 27){
       // console.log("Long query");
       setLongQuery(true);
     }
