@@ -68,20 +68,20 @@ export default function HelpDialog(props){
                     <DialogContentText id="alert-dialog-slide-description">
                         You can use the advanced search options to refine your search. 
                         
-                        We provide three different ranking algorithms: <a href="https://ieeexplore.ieee.org/document/6809191">SCANN</a>,
-                         <a href="https://aclanthology.org/W16-2365.pdf"> Cosine TF-IDF</a>, and <a href="https://en.wikipedia.org/wiki/Okapi_BM25">BM25</a>
+                        We provide three different ranking algorithms: <a href="https://ai.googleblog.com/2020/07/announcing-scann-efficient-vector.html">SCaNN</a>, <a href="https://aclanthology.org/W16-2365.pdf">Cosine TF-IDF</a>, and <a href="https://en.wikipedia.org/wiki/Okapi_BM25">BM25.</a>
                         <br/><br/>
-                        For research papers, you can also choose between Proximity, Phrase, and Author search types. For datasets, we provide the same 
-                        options with an exception of Author Search since this field is missing in many open-source datasets.
+                        For research papers, you can also choose between Proximity, Phrase, and Author search types All of which rely on TF-IDF. For datasets, we provide the same options with an exception of Author Search since this field is missing in many open-source datasets.
 
-                        Other than this, you can filter your results with 'from' and 'to' dates in both datasets and papers or use the "Expand Query" option to get
-                        synonyms through WordNet.
+                        Other than this, you can filter your results with 'from' and 'to' dates in both datasets and papers or use the "Suggest" query for an efficient spell checker and query expansion based on the dictionary.
 
                         <br/>
                         <br/>
                         NOTE: Please note that the same author's name might vary in the paper.
                         For example, some papers list John A. Zoidberg's name as "J. Zoidberg" while others
                         can list them as "J. Zoidberg" or even just "Zoidberg". We recommend searching by lastname to deal with this.
+
+                        Have fun searching!😃
+
                     </DialogContentText>
                 </DialogContent>
 
