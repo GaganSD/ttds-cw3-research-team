@@ -51,7 +51,7 @@ function App() {
   const routeChange = () => {
     if(search === ''|| !/^(?!\s+$).+/.test(search)){
     }
-    else if (search.length > 25){
+    else if (search.length > 27){
       setLongQuery(true);
     }
     else if( !/^[0-9a-zA-Z\s]*$/.test(search) ){
@@ -347,7 +347,7 @@ function App() {
             style = {{maxWidth : '50%'}}
             parentCallback = {TextEntered}
             error={true}
-            text={"Query too long, 20 characters or less please."}
+            text={"Query too long, 27 characters or less please."}
         />
         : <SearchField
             style={{maxWidth : '80%'}}

@@ -86,12 +86,16 @@ def call_top_n(N, parameters):
                             ranking = parameters["algorithm"], top_n=N)
 
     else:
-        results = get_papers_results(query=parameters['query'],
+        try:
+            results = get_papers_results(query=parameters['query'],
                             input_type = parameters["search_type"],
                             ranking = parameters["algorithm"],
                             start_date=parameters["start_date"],
                             end_date=parameters["end_date"], top_n=N)
-
+        except:
+            print("something went wrong.")
+            server_fail = True
+            results = {"Results":[]}
     return results, server_fail
 
 def get_full_result(parameters, id):
