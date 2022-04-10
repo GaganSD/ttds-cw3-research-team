@@ -244,11 +244,15 @@ export default function ResultsPage(props) {
         return domain;
     }
 
-    function QueryExpansion() {
+    function suggestions() {
 
-        return fetch(backend_server_ip + 'QE/' + search).then(response => response.json()).then(data => {
+        fetch(backend_server_ip + 'QE/' + search).then(response => response.json()).then(data => {
             setJsonQE(data);
         });
+        fetch(backend_server_ip + 'SC/' + search).then(response => response.json()).then(data => {
+            setJSONSC(data);
+        });
+
     }
 
     function extractHostname(raw_url) {
@@ -324,16 +328,7 @@ export default function ResultsPage(props) {
 
     }
     function TextEntered(searchval) {
-
         setSearch(searchval);
-    }
-    
-    function TextEnteredSpellCheck(searchval) {
-        setSearch(searchval);
-
-        return fetch(backend_server_ip + 'SC/' + searchval).then(response => response.json()).then(data => {
-            setJSONSC(data);
-        });
     }
 
     function getOptions(type, optval) {
@@ -354,8 +349,6 @@ export default function ResultsPage(props) {
         }
 
     }
-
-
 
     return (
         <ThemeProvider theme={theme}>
@@ -402,10 +395,10 @@ export default function ResultsPage(props) {
                                 />
                                 : emptyresults ? <SearchField
                                     initialvalue={query}
-                                    style={{ maxWidth: '50%' }}
-                                    parentCallback={TextEnteredSpellCheck}
+                                    style={{maxWidth:'50%'}}
+                                    parentCallback={TextEntered}
                                     error={true}
-                                    text={"No Results Found for this query & configurations."}
+                                    text={"No Results Found for this query/configurations."}
                                 />
                                 : longquery ? <SearchField
                                     initialvalue={query}
@@ -432,7 +425,7 @@ export default function ResultsPage(props) {
                                     <Button onClick={routeChange} variant="contained" style={{ display: 'flex', justifyContent: 'center' }}>
                                         Search
                                     </Button>
-                                    <QEButton parentCallback={QueryExpansion} />
+                                    <QEButton parentCallback={suggestions} />
                                 </ButtonGroup>
                             </div>
                             <div style={{
@@ -443,12 +436,13 @@ export default function ResultsPage(props) {
                             </div>
                         </div> 
                     </Box>
+
                     <div style={{
                         display: 'flex',
                         justifyContent: 'center'
                     }}>
                         {json_query_expansion.QEResults.map((curr_qe, curr_key) => {
-                            return <Box key={curr_key}>{curr_qe}</Box>;
+                            return <Box key={curr_key}><font  color="#595F6A">{curr_qe}</font></Box>;
                         })}
                     </div>
 
@@ -456,11 +450,11 @@ export default function ResultsPage(props) {
                         display: 'flex',
                         justifyContent: 'center'
                     }}>
-                        {json_spell_check.SCResults.map((curr_sc, curr_key) => {
-                            return <Box key={curr_key}>Did you mean? {curr_sc}</Box>;
+                        {json_spell_check.SCResults.map((curr_qe, curr_key) => {
+                            return <Box key={curr_key}><font color="#595F6A">{curr_qe}</font></Box>;
                         })}
                     </div>
-                        
+
                     <div className='results' style={{
                         marginLeft: '10%',//'10em',
                         marginRight: '10%'
