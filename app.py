@@ -86,12 +86,16 @@ def call_top_n(N, parameters):
                             ranking = parameters["algorithm"], top_n=N)
 
     else:
-        results = get_papers_results(query=parameters['query'],
+        try:
+            results = get_papers_results(query=parameters['query'],
                             input_type = parameters["search_type"],
                             ranking = parameters["algorithm"],
                             start_date=parameters["start_date"],
                             end_date=parameters["end_date"], top_n=N)
-
+        except:
+            print("something went wrong.")
+            server_fail = True
+            results = {"Results":[]}
     return results, server_fail
 
 def get_full_result(parameters, id):
@@ -288,9 +292,10 @@ def query_spellcheck(query: str):
     """
     spellchecked = " ".join(query_spell_check(query))
     if spellchecked == query:
-        return {"SCResults": []}
+        return {"SCResults": ["Spell Checker: Found 0 errors", ""]}
     else:
-        return {"SCResults": spellchecked}
+        spellchecked = "Spell Checker - Did you mean?  " + spellchecked
+        return {"SCResults": [spellchecked, ""]}
 
 @app.route("/QE/<query>", methods=['GET', 'POST'])
 def query_expansion(query: str):
@@ -299,9 +304,9 @@ def query_expansion(query: str):
     """
     expanded_queries = list(get_query_expansion(query))
     if not expanded_queries:
-        return {"QEResults": ["No matching synonyms were found!", ""]}
+        return {"QEResults": ["Query Expansion: Found 0 synonyms", ""]}
     else:
-        expanded_queries = ", ".join(expanded_queries)
+        expanded_queries = "Expanded Queries:  " + ", ".join(expanded_queries)
         return {"QEResults": [expanded_queries, ""]}
 
 def _preprocess_query(query: str, stemming=True, remove_stopwords=True) -> dict:

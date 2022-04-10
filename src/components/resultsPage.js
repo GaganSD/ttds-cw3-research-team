@@ -24,7 +24,7 @@ export default function ResultsPage(props) {
 
         if (search === '' || !/^(?!\s+$).+/.test(search)) {
         }
-        else if (search.length > 25){
+        else if (search.length > 27){
             setLongQuery(true);
         }
         else if (!/^[0-9a-zA-Z\s]*$/.test(search)) {
@@ -33,7 +33,7 @@ export default function ResultsPage(props) {
         }
         else {
             values.current.pagenum = 1;
-            console.log(values.current)
+            //console.log(values.current)
             let path = create_url(search, values.current);
             window.location = (window.location.origin + '/' + path);
         }
@@ -286,8 +286,8 @@ export default function ResultsPage(props) {
 
 
     const date_formatter = (date) => {
-        console.log("HERE GOES THE DATE");
-        console.log(date);
+       // console.log("HERE GOES THE DATE");
+       // console.log(date);
         if (date == null) {
             return "inf"
         }
@@ -405,7 +405,7 @@ export default function ResultsPage(props) {
                                     style = {{maxWidth : '50%'}}
                                     parentCallback = {TextEntered}
                                     error={true}
-                                    text={"Query too long, 20 characters or less please."}
+                                    text={"Query too long, 27 characters or less please."}
                                 />
                                 : <SearchField
                                     initialvalue={query_spaced}
