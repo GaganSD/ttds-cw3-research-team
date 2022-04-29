@@ -1,41 +1,38 @@
 #############################
-# Made for TTDS coursework 3
-# Please note this files uses 
-# dependencies that only works 
-# in linux machines.
+# Made by the Re-Search team for Edinburgh's Text Technologies for Data Science Course.
+# Main Server backend:
+# - Use prod_app.py to run it in production
+# - Use app.py to run it in development
 ############################
 
-from flask import Flask, request
-from flask_cors import CORS
-from infra.LRUCache import LRUCache
-from datetime import datetime
-from infra.helpers import curr_day, min_day, deserialize, filter_dates, Formatting
-#from waitress import serve
+# rank papers
 from core_algorithms.ir_eval.ranking_paper import ranking_query_BM25 as ranking_query_bm25_paper
 from core_algorithms.ir_eval.ranking_paper import ranking_query_tfidf_cosine as ranking_query_tfidf_paper
 from core_algorithms.ir_eval.ranking_paper import phrase_search as phrase_search_paper
 from core_algorithms.ir_eval.ranking_paper import proximity_search as proximity_search_paper
-
+# rank datasets
 from core_algorithms.ir_eval.ranking import ranking_query_tfidf as ranking_query_tfidf_dataset # this will give you an error for python 3.8
 from core_algorithms.ir_eval.ranking import phrase_search as phrase_search_dataset
 from core_algorithms.ir_eval.ranking import proximity_search as proximity_search_dataset
 from core_algorithms.ir_eval.ranking import ranking_query_BM25 as ranking_query_bm25_dataset
-
+# helper infra functions
 from core_algorithms.mongoDB_API import MongoDBClient
 from core_algorithms.ir_eval.preprocessing import preprocess, author_preprocess
 from core_algorithms.adv_query_options import query_spell_check, get_query_expansion
-
-import pandas as pd
-import threading
-import datetime
-import time
+from infra.helpers import curr_day, min_day, deserialize, filter_dates, Formatting
+from infra.LRUCache import LRUCache
+# stdlib
+from datetime import datetime
 import heapq
+import threading
+# dependencies
+from flask import Flask, request
+from flask_cors import CORS
+import pandas as pd
 import requests
 
 curr_formatter = Formatting()
 
-# Create Flask app
-#def create_app():
 
 app = Flask(__name__)
 CORS(app)
@@ -45,19 +42,17 @@ print("completed.. your server will be up in less than 5 seconds..")
 
 # Load datasets for inverted index
 df = pd.read_csv("core_algorithms/ir_eval/Datasets_dataset.csv", sep='\t')
-
 df.rename(columns={"description": "abstract"}, inplace=True)
 
 client = MongoDBClient("34.142.18.57")
 _preprocessing_cache = LRUCache(1000)
 _results_cache = LRUCache(200)
 
-
 def call_top_n(N, parameters):
     N = int(N)
     results = {"Results":[]}
     server_fail = False
-    
+
     if parameters["search_type"] == "AUTHOR":
 
         if parameters["datasets"]:
@@ -112,6 +107,7 @@ def search_state_machine(search_query):
     results = {"Results":[{}]}
     parameters = deserialize(request.args['q'])
     id = request.args['q'].rpartition("/pn=")[0]
+    # # parameters JSON Format for reference
     # {
     # query: search_query : DOME
     # from_date: DD-MM-YYYY (last) :
@@ -150,7 +146,7 @@ def direct_access_to_backend():
 
 ######################### Search Functions ########################
 def get_datasets_results(query: str, top_n: int=10, spell_check=False, qe=False, 
-    input_type :str = "DEFAULT", ranking: str = "TF_IDF",) -> dict:
+        input_type :str = "DEFAULT", ranking: str = "TF_IDF",) -> dict:
     if spell_check:
         query = ' '.join(query_spell_check(query))
     if qe:
@@ -173,14 +169,12 @@ def get_datasets_results(query: str, top_n: int=10, spell_check=False, qe=False,
     columns = ['title','subtitle', 'abstract', 'ownerUser', 'dataset_slug', 'keyword']
     for result in outputs[:top_n]:
         output = df.iloc[result][columns].to_dict()
-        # output["abstract"] = output["description"]
         for key, value in output.items():
             output[key] = str(value)
         output["date"] = ""
         output["authors"] = output["ownerUser"]
         output["abstract"] = output["subtitle"] + " " + output["abstract"]
 
-        # output["abstract"] = curr_formatter.remove_markdown(output['abstract'])
         if not (output["ownerUser"].startswith("http") or output["ownerUser"].startswith("https")):
             output["url"] = "https://kaggle.com/" + output["ownerUser"] + "/" + output['dataset_slug']
         else:
@@ -189,8 +183,8 @@ def get_datasets_results(query: str, top_n: int=10, spell_check=False, qe=False,
     return output_dict
 
 def get_papers_results(query: str, top_n: int=10, spell_check=False, qe=False, 
-    input_type :str = "DEFAULT", ranking: str = "TF_IDF", 
-    start_date:datetime = min_day, end_date:datetime = curr_day) -> dict:
+        input_type :str = "DEFAULT", ranking: str = "TF_IDF", 
+        start_date:datetime = min_day, end_date:datetime = curr_day) -> dict:
 
     if spell_check:
         query = ' '.join(query_spell_check(query))
@@ -258,10 +252,10 @@ def get_author_papers_results(query: str, top_n: int=100, preprocess: bool=True,
     output_dict = {}
 
     temp_result = list(client.order_preserved_get_data(id_list= outputs[:top_n],
-                                                       start_date=start_date, end_date=end_date,
-                                                       fields=['title', 'abstract','authors', 'url', 'date'],
-                                                       limit=top_n
-                                                      )
+                        start_date=start_date, end_date=end_date,
+                        fields=['title', 'abstract','authors', 'url', 'date'],
+                        limit=top_n
+                        )
                       )
     for result in temp_result:
         result["date"] = result["date"].strftime("%d/%m/%Y")
@@ -272,9 +266,9 @@ def get_author_papers_results(query: str, top_n: int=100, preprocess: bool=True,
 
 
 def authors_extensions(query: str, top_n: int=10, docs_searched: int=10, author_search_result: dict={'Results':[]}) -> dict:
-    '''
+    """
     Call using author_search_result (results of regular author search) to avoid recalculating
-    '''
+    """
     authors  = set(author_preprocess(query))
     coauthors = [author_preprocess(i['authors'])[:10] for i in author_search_result["Results"][:docs_searched]]
     merged_coauthors = [item for sublist in coauthors for item in sublist if item not in authors]
