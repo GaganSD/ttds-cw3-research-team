@@ -1,5 +1,5 @@
 # Re-Search — An Academic Search Engine
----
+
 
 ## Introduction
 
@@ -7,7 +7,7 @@ Re-Search is an academic search engine that can be used to search open-source da
 
 🏆 This project also received the Best Project Award among 250 students / 50+ groups for the same course. 
 
----
+
 ## Features
 
 Re-Search allows you to search for publicly available datasets and research papers using three different ranking algorithms - TF-IDF, BM25, and ScaNN. It also supports Author Search (wherever the datapoint allows it), Phrase Search, and Proximity Search along with its default search type. 
@@ -17,7 +17,7 @@ Re-Search uses React for the frontend with the backend supported by Flask. It ha
 - [Proposed System Design](public/system_design.jpg)
 - [Home Page Screenshot](public/homepage_screenshot.jpg)
 
----
+
 ## Install
 
 - Install [node & npm 14.0+](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) and [Python 3.5+](https://www.python.org/downloads/)
@@ -30,7 +30,7 @@ You can run the backend files in production with ``waitress`` using the ``prod_*
 
 We'll soon publish this project on [SMASH Research Group's](https://smash.inf.ed.ac.uk/) servers in the summer.
 
----
+
 
 ## Team
 
@@ -41,7 +41,7 @@ We'll soon publish this project on [SMASH Research Group's](https://smash.inf.ed
 - Ziqian 'Leo' Ni (Core & backend)
 - Gagan Devagiri (Team Lead)
 
----
+
 
 ## License
 
