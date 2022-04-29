@@ -45,4 +45,4 @@ We'll soon publish this project on [SMASH Research Group's](https://smash.inf.ed
 
 ## License
 
-[Mozilla Public License 2.0](https://github.com/GaganSD/ttds-cw3-research-team/LICENSE) ©️ The Re-Search Team
+[Mozilla Public License 2.0](https://github.com/GaganSD/ttds-cw3-research-team/blob/main/LICENSE) ©️ The Re-Search Team
